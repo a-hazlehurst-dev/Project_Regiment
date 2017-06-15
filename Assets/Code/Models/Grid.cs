@@ -29,17 +29,13 @@ public class Grid {
 
 		for (int x = 0; x < GridWidth; x++) 
 		{
-          
 			for (int y = 0; y < GridHeight; y++) 
 			{
-
-                //TODO: code to decide what the tile should contain
-
 				GridMap [x, y] = new Tile (x, y, 0);
 			}
 		}
-			
-	}
+    }
+
 
 
 

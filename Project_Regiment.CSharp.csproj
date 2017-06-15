@@ -79,13 +79,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CameraScript.cs" />
+    <Compile Include="Assets\Code\Managers\BuildingManager.cs" />
+    <Compile Include="Assets\Code\Managers\GameManager.cs" />
+    <Compile Include="Assets\Code\Managers\GridManager.cs" />
+    <Compile Include="Assets\Code\Managers\PeasantManager.cs" />
+    <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
     <Compile Include="Assets\Code\Models\Grid.cs" />
+    <Compile Include="Assets\Code\Models\InstallableObject.cs" />
+    <Compile Include="Assets\Code\Models\Peasant.cs" />
     <Compile Include="Assets\Code\Models\Tile.cs" />
-    <Compile Include="Assets\Code\Mono\BuildingManager.cs" />
-    <Compile Include="Assets\Code\Mono\GameManager.cs" />
-    <Compile Include="Assets\Code\Mono\GridManager.cs" />
-    <Compile Include="Assets\Code\Mono\PeasentManager.cs" />
-    <Compile Include="Assets\Code\Mono\SpriteManager.cs" />
+    <Compile Include="Assets\PeasentModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
