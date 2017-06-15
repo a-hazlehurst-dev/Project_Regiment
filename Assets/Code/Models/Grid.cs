@@ -32,24 +32,10 @@ public class Grid {
           
 			for (int y = 0; y < GridHeight; y++) 
 			{
-            
-                var rndTree = Random.Range(0, 50);
-                var rndEmbelishment = Random.Range(0, 10);
-                var tree = false;
-                var embelish = false;
-                if(rndTree <= 1)
-                {
-                    //request a tree
-                    tree = true;
-                    treeCount++;
-                }
-                if(rndEmbelishment <=  4)
-                {
-                    //request embelishment
-                    embelish = true;
-                }
 
-				GridMap [x, y] = new Tile (x, y, 0,tree,embelish);
+                //TODO: code to decide what the tile should contain
+
+				GridMap [x, y] = new Tile (x, y, 0);
 			}
 		}
 			

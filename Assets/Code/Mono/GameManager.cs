@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
 	public GridManager  gridManager;
     public SpriteManager spriteManager;
-
 
 	void Awake(){
         spriteManager = GetComponent<SpriteManager>();
@@ -18,7 +15,5 @@ public class GameManager : MonoBehaviour {
 		gridManager.GridSetup (spriteManager);
 	}
 
-	void Update () {
-		
-	}
+	
 }
