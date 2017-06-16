@@ -15,7 +15,8 @@ public class PeasantManager : MonoBehaviour {
 	
     public void CreatePeasant()
     {
-        _peasants.Add(new Peasant { Id = 1, Name = "adam", Lastname = "Hazlehurst of the big boy world" });
+		if(_peasants ==null) { _peasants = new List<Peasant> ();}
+        _peasants.Add(new Peasant { Id = 1, Name = "adam", Lastname = "Hazlehurst" });
     }
 
     public Peasant GetPeasant(int id)

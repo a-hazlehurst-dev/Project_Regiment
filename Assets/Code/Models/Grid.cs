@@ -31,7 +31,7 @@ public class Grid {
 		{
 			for (int y = 0; y < GridHeight; y++) 
 			{
-				GridMap [x, y] = new Tile (x, y, 0);
+				GridMap [x, y] = new Tile (x, y, (Tile.FloorType)0);
 			}
 		}
     }

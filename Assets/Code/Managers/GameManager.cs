@@ -2,29 +2,32 @@
 
 public class GameManager : MonoBehaviour {
 
-	public GridManager  gridManager;
-    public SpriteManager spriteManager;
-    public PeasantManager peasantManager;
+
+	public static GameManager Instance { get; protected set;}
+
+	public GridManager  GridManager { get; protected set;}
+	public SpriteManager SpriteManager { get; protected set;}
+	public PeasantManager PeasantManager{ get; protected set;}
 
 	void Awake(){
-        spriteManager = GetComponent<SpriteManager>();
-        gridManager = GetComponent<GridManager> ();
-        peasantManager = GetComponent<PeasantManager>();
+		if (Instance != null) {
+			Debug.LogError ("There should only be one gamemanager");
+		}
+
+		Instance = this;
+
+		SpriteManager = GetComponent<SpriteManager>();
+		GridManager = GetComponent<GridManager> ();
+		PeasantManager = GetComponent<PeasantManager>();
 		InitGame();
 	}
 
-	void InitGame(){
-		gridManager.GridSetup (spriteManager);
-        peasantManager.CreatePeasant();
-        var peasent = peasantManager.GetPeasant(1);
-        GameObject toInstantiate = spriteManager.peasentSprites[Random.Range(0, spriteManager.peasentSprites.Length)];
-        if (toInstantiate == null)
-        {
-            Debug.Log("test");
-        }
 
-        var peasentToMake = Instantiate(toInstantiate, new Vector3(50, 50, 0), Quaternion.identity) as GameObject;
-        peasentToMake.GetComponent<PeasentModel>().data = peasent;
+
+
+	void InitGame(){
+		GridManager.GridSetup (SpriteManager);
+
     }
 
     void Update()
