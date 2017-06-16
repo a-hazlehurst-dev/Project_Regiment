@@ -7,10 +7,10 @@ using System.Linq;
 public class GridManager : MonoBehaviour 
 {
 	public Grid Grid;
-	public int GridHeight =10;
-	public int GridWidth =10;
-	public float TileWidth = 64;
-	public float TileHeight = 64;
+	public int GridHeight;
+	public int GridWidth;
+	public float TileWidth;
+	public float TileHeight;
     private SpriteManager _spriteManager;
 	
 	private Transform gridHolder;
@@ -32,9 +32,9 @@ public class GridManager : MonoBehaviour
 
     private void RenderBase()
     {
-        for (int y = Grid.GridHeight - 1; y >= 0; y--)
-        {
-            for (int x = 0; x <= Grid.GridWidth - 1; x++)
+        for (int x = 0; x < Grid.GridWidth; x++)
+        { 
+            for (int y = 0; y < Grid.GridHeight; y++)
             {
 				var tile = GetTileAt (x, y);
 

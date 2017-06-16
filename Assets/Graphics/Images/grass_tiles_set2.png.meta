@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: 837cec175c64c184b89530f7d74ae6b5
-timeCreated: 1497443516
+timeCreated: 1497637376
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: base_grass
     21300002: grass_tiles_set2_1
     21300004: grass_tiles_set2_2
+    21300006: base_grass_1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -43,7 +44,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 62
+  spritePixelsToUnits: 64
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -73,7 +74,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: base_grass
+      name: base_grass_1
       rect:
         serializedVersion: 2
         x: 137
@@ -83,32 +84,6 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: grass_tiles_set2_1
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 19
-        width: 320
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: grass_tiles_set2_2
-      rect:
-        serializedVersion: 2
-        x: 132
-        y: 164
-        width: 81
-        height: 80
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 5, y: 9, z: 12, w: 7}
       outline: []
       tessellationDetail: 0
     outline: []

@@ -22,10 +22,18 @@ public class GameManager : MonoBehaviour {
 		InitGame();
 	}
 
+    public Tile GetTileAtWorldCoordinate(Vector3 coordinate)
+    {
+        int x = Mathf.FloorToInt(coordinate.x);
+        int y = Mathf.FloorToInt(coordinate.y);
+
+        return GridManager.GetTileAt(x, y);
+    }
 
 
 
-	void InitGame(){
+
+    void InitGame(){
 		GridManager.GridSetup (SpriteManager);
 
     }
