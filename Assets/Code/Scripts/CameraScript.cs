@@ -10,11 +10,13 @@ public class CameraScript : MonoBehaviour {
 	public GameObject cursorPointer;
 
 
+
 	void Update(){
 
 		Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		currentMousePosition.z = 0;
 		Tile tileUnderMouse = GameManager.Instance.GetTileAtWorldCoordinate (currentMousePosition);
+        if (tileUnderMouse == null) return;
 
 		Vector3 cursorPosition = new Vector3 (tileUnderMouse.X, tileUnderMouse.Y, 0);
 
@@ -23,8 +25,9 @@ public class CameraScript : MonoBehaviour {
 
         if (Input.GetMouseButton(0))
         {
+            var drawMode = GameManager.Instance.GetDrawMode();
             var tile = GameManager.Instance.GetTileAtWorldCoordinate(currentMousePosition);
-            tile.Floor = Tile.FloorType.Mud;
+            tile.Floor = drawMode;
         }
 
         if (Input.GetMouseButton(1))

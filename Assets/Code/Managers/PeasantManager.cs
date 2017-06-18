@@ -8,7 +8,8 @@ public class PeasantManager : MonoBehaviour {
 
     private List<Peasant> _peasants;
 	// Use this for initialization
-	void Awake()
+	
+    public void Begin()
     {
         _peasants = new List<Peasant>();
     }
