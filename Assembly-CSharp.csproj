@@ -46,18 +46,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CameraScript.cs" />
+     <Compile Include="Assets\Code\Helper\TileRenderHelper.cs" />
      <Compile Include="Assets\Code\Managers\BuildingManager.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
      <Compile Include="Assets\Code\Managers\GridManager.cs" />
      <Compile Include="Assets\Code\Managers\PeasantManager.cs" />
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
+     <Compile Include="Assets\Code\Models\FurnitureItem.cs" />
      <Compile Include="Assets\Code\Models\Grid.cs" />
-     <Compile Include="Assets\Code\Models\InstallableObject.cs" />
-     <Compile Include="Assets\Code\Models\LooseObject.cs" />
      <Compile Include="Assets\Code\Models\Peasant.cs" />
+     <Compile Include="Assets\Code\Models\PeasentModel.cs" />
+     <Compile Include="Assets\Code\Models\StockpileItem.cs" />
      <Compile Include="Assets\Code\Models\Tile.cs" />
-     <Compile Include="Assets\PeasentModel.cs" />
+     <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
+     <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

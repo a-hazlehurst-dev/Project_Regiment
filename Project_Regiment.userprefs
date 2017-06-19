@@ -1,17 +1,21 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Models\Tile.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Managers\GridManager.cs">
     <Files>
-      <File FileName="Assets\CameraScript.cs" Line="27" Column="32" />
-      <File FileName="Assets\Code\Managers\GridManager.cs" Line="53" Column="61" />
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="30" Column="1" />
-      <File FileName="Assets\Code\Models\Tile.cs" Line="17" Column="5" />
-      <File FileName="Assets\Code\Models\Grid.cs" Line="34" Column="55" />
-      <File FileName="Assets\Code\Models\InstallableObject.cs" Line="5" Column="31" />
+      <File FileName="Assets\Code\Managers\GridManager.cs" Line="44" Column="1" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="51" Column="3" />
+      <File FileName="Assets\Code\Models\Tile.cs" Line="32" Column="30" />
+      <File FileName="Assets\Code\Models\Grid.cs" Line="53" Column="2" />
+      <File FileName="Assets\Code\Models\FurnitureItem.cs" Line="54" Column="16" />
+      <File FileName="Assets\Code\Scripts\FooterMenuViewModel.cs" Line="48" Column="41" />
+      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="49" Column="1" />
+      <File FileName="Assets\Code\Managers\SpriteManager.cs" Line="29" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <RunToCursorBreakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Scripts\CameraScript.cs" line="48" column="47" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

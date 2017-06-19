@@ -7,6 +7,8 @@ using Assets.Code.Helper;
 
 public class GridManager : MonoBehaviour 
 {
+	private Dictionary<FurnitureItem, GameObject> _furnitureGameObjectMap;
+
 	public Grid Grid;
 	public int GridHeight;
 	public int GridWidth;
@@ -18,6 +20,7 @@ public class GridManager : MonoBehaviour
 	public void GridSetup(SpriteManager spriteManager)
 	{
         _spriteManager = spriteManager;
+		_furnitureGameObjectMap = new Dictionary<FurnitureItem, GameObject> ();
 		if (Grid == null) 
 		{
 			Grid = new Grid (GridHeight, GridWidth, TileHeight, TileWidth);
@@ -29,6 +32,37 @@ public class GridManager : MonoBehaviour
        
 
     }
+
+	public void PlaceFurniture(string itemToBuild, Tile tile){
+		Debug.Log ("Placing installed Object");
+		if (Grid.FurnitureObjectPrototypes.ContainsKey (itemToBuild) == false) {
+			Debug.LogError ("FurnitureObjectPrototypes does not contain prototype for key: " + itemToBuild);
+			return;
+		}
+
+		var furnitureToInstall = FurnitureItem.PlaceFurniture (Grid.FurnitureObjectPrototypes [itemToBuild], tile);
+
+		//create graphics for installed object.
+		RenderFurnitureItem(furnitureToInstall);
+
+	}
+
+	public void RenderFurnitureItem(FurnitureItem furnitureToInstall){
+		GameObject furnitureToRender = null;
+
+		var furniture = _spriteManager.furnitureObjects ["wall"]; //FIXME wall does not exist.
+
+		GameObject instance = Instantiate(furniture, new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0), Quaternion.identity) as GameObject;
+
+		instance.name = "wall(" + furnitureToInstall.Tile.X+ ", " + furnitureToInstall.Tile.Y + ")";
+		instance.transform.SetParent(gridHolder);
+
+		furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
+	}
+
+	private void OnFurnitureChanged(FurnitureItem changedItem){
+		Debug.LogError ("OnFurnitureChanged: Not implemented.");
+	}
 
     private void RenderBase()
     {

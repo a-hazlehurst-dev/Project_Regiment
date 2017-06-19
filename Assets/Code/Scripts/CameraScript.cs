@@ -6,6 +6,8 @@ public class CameraScript : MonoBehaviour {
 
 	public int horizontalSpeed =1;
 	public int verticalSpeed = 1;
+	private int _drawMode = 0;
+	private string _drawObjectMode;
 
 	public GameObject cursorPointer;
 
@@ -25,9 +27,35 @@ public class CameraScript : MonoBehaviour {
 
         if (Input.GetMouseButton(0))
         {
-            var drawMode = GameManager.Instance.GetDrawMode();
-            var tile = GameManager.Instance.GetTileAtWorldCoordinate(currentMousePosition);
-            tile.Floor = drawMode;
+			_drawMode= GameManager.Instance.GetDrawMode();
+			_drawObjectMode= GameManager.Instance.GetDrawObjectMode();
+
+			var tile = GameManager.Instance.GetTileAtWorldCoordinate(currentMousePosition);
+
+			Tile.FloorType floorMode = Tile.FloorType.Grass;//default draw mode
+
+			if (_drawMode == 1) {
+				Debug.Log (_drawObjectMode);
+				if(_drawObjectMode.Equals("grass")){
+					floorMode =  Tile.FloorType.Grass;
+				}
+				else if(_drawObjectMode.Equals("mud")){
+					floorMode = Tile.FloorType.Mud;
+				}
+				tile.Floor = floorMode;
+
+			} else if (_drawMode == 2) {
+				if(_drawObjectMode.Equals("wall")){
+					GameManager.Instance.GridManager.PlaceFurniture ("wall", tile);
+				}
+				else if(_drawObjectMode.Equals("path")){
+					GameManager.Instance.GridManager.PlaceFurniture ("path", tile);
+				}	
+
+			}
+
+
+            
         }
 
         if (Input.GetMouseButton(1))

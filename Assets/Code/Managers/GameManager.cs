@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour {
 	public SpriteManager SpriteManager { get; protected set;}
 	public PeasantManager PeasantManager{ get; protected set;}
 
-    private Tile.FloorType _drawMode = Tile.FloorType.Grass;
+	private int _drawMode = 1;
+	private string _drawObject;
 
 	void Awake(){
 		if (Instance != null) {
@@ -34,24 +35,24 @@ public class GameManager : MonoBehaviour {
         return GridManager.GetTileAt(x, y);
     }
 
-    public void SetDrawMode(Tile.FloorType newtype)
+    public void SetDrawMode(int mode, string type)
     {
-        _drawMode = newtype;
+		_drawMode = mode;
+		_drawObject = type;
     }
 
-    public Tile.FloorType GetDrawMode()
+    public int GetDrawMode()
     {
         return _drawMode;
     }
 
+	public string GetDrawObjectMode(){
+		return _drawObject;
+	}
+
     void InitGame(){
 		GridManager.GridSetup (SpriteManager);
 
-    }
-
-    void Update()
-    {
-        
     }
 
 	

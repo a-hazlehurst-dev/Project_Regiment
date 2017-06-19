@@ -5,6 +5,8 @@ using UnityEngine;
 public class Grid {
 
 	public Tile[,] GridMap {get; protected set;}
+
+	public Dictionary<string, FurnitureItem> FurnitureObjectPrototypes;
 	public int GridHeight { get ; protected set; }
 	public int GridWidth {get; protected set;}
 	public float TileWidth { get; protected set; }
@@ -34,7 +36,17 @@ public class Grid {
 				GridMap [x, y] = new Tile (x, y,0);
 			}
 		}
+
+		CreateFurnitureObjectPrototypes ();
+
     }
+
+	private void CreateFurnitureObjectPrototypes()
+	{
+		FurnitureObjectPrototypes = new Dictionary<string, FurnitureItem> ();
+
+		FurnitureObjectPrototypes.Add ("wall", FurnitureItem.CreatePrototype ("Wall", 0, 1, 1));
+	}
 
 
 
