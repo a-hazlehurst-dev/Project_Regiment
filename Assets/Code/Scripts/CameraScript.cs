@@ -29,6 +29,7 @@ public class CameraScript : MonoBehaviour {
         {
 			_drawMode= GameManager.Instance.GetDrawMode();
 			_drawObjectMode= GameManager.Instance.GetDrawObjectMode();
+            if (_drawObjectMode== null) { return; }
 
 			var tile = GameManager.Instance.GetTileAtWorldCoordinate(currentMousePosition);
 

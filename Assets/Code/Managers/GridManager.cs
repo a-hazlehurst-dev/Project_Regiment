@@ -34,13 +34,13 @@ public class GridManager : MonoBehaviour
     }
 
 	public void PlaceFurniture(string itemToBuild, Tile tile){
-		Debug.Log ("Placing installed Object");
 		if (Grid.FurnitureObjectPrototypes.ContainsKey (itemToBuild) == false) {
 			Debug.LogError ("FurnitureObjectPrototypes does not contain prototype for key: " + itemToBuild);
 			return;
 		}
 
 		var furnitureToInstall = FurnitureItem.PlaceFurniture (Grid.FurnitureObjectPrototypes [itemToBuild], tile);
+        if(furnitureToInstall == null) { return; }
 
 		//create graphics for installed object.
 		RenderFurnitureItem(furnitureToInstall);
@@ -48,7 +48,7 @@ public class GridManager : MonoBehaviour
 	}
 
 	public void RenderFurnitureItem(FurnitureItem furnitureToInstall){
-		GameObject furnitureToRender = null;
+        GameObject furnitureToRender = null;
 
 		var furniture = _spriteManager.furnitureObjects ["wall"]; //FIXME wall does not exist.
 
