@@ -7,7 +7,7 @@ using Assets.Code.Helper;
 
 public class GridManager : MonoBehaviour 
 {
-	private Dictionary<FurnitureItem, GameObject> _furnitureGameObjectMap;
+	private Dictionary<Furniture, GameObject> _furnitureGameObjectMap;
 
 	public Grid Grid;
 	public int GridHeight;
@@ -20,7 +20,7 @@ public class GridManager : MonoBehaviour
 	public void GridSetup(SpriteManager spriteManager)
 	{
         _spriteManager = spriteManager;
-		_furnitureGameObjectMap = new Dictionary<FurnitureItem, GameObject> ();
+		_furnitureGameObjectMap = new Dictionary<Furniture, GameObject> ();
 		if (Grid == null) 
 		{
 			Grid = new Grid (GridHeight, GridWidth, TileHeight, TileWidth);
@@ -39,30 +39,81 @@ public class GridManager : MonoBehaviour
 			return;
 		}
 
-		var furnitureToInstall = FurnitureItem.PlaceFurniture (Grid.FurnitureObjectPrototypes [itemToBuild], tile);
+		var furnitureToInstall = Furniture.PlaceFurniture (Grid.FurnitureObjectPrototypes [itemToBuild], tile);
         if(furnitureToInstall == null) { return; }
 
-		//create graphics for installed object.
-		RenderFurnitureItem(furnitureToInstall);
+        //create graphics for installed object.
+        OnFurnitureCreated(furnitureToInstall);
 
 	}
 
-	public void RenderFurnitureItem(FurnitureItem furnitureToInstall){
+    GameObject GetGameObjectForInstallObject(Furniture furnitureItem)
+    {
+        if(furnitureItem.LinksToNeighbour == false)
+        {
+            return _spriteManager.furnitureObjects[furnitureItem.ObjectType];
+        }
+
+        string spriteName = furnitureItem.ObjectType + "_";
+
+        Tile t;
+        int x = furnitureItem.Tile.X;
+        int y = furnitureItem.Tile.Y;
+
+        t = GetTileAt(x, y + 1);
+        if(t!=null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        {
+            spriteName += "N";
+        }
+
+        t = GetTileAt(x+1, y );
+        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        {
+            spriteName += "E";
+        }
+
+        t = GetTileAt(x, y - 1);
+        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        {
+            spriteName += "S";
+        }
+        t = GetTileAt(x-1, y);
+        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        {
+            spriteName += "W";
+        }
+
+        Debug.Log(spriteName);
+        return _spriteManager.furnitureObjects[spriteName];
+    }
+
+	public void OnFurnitureCreated(Furniture furnitureToInstall){
         GameObject furnitureToRender = null;
 
-		var furniture = _spriteManager.furnitureObjects ["wall"]; //FIXME wall does not exist.
+        var furniture = GetGameObjectForInstallObject(furnitureToInstall) ; //FIXME wall does not exist.
+        _furnitureGameObjectMap.Add(furnitureToInstall, furniture);
+        GameObject instance = Instantiate(furniture, new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0), Quaternion.identity) as GameObject;
 
-		GameObject instance = Instantiate(furniture, new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0), Quaternion.identity) as GameObject;
+        instance.name = furnitureToInstall.ObjectType + " x: " + furnitureToInstall.Tile.X + ", " + furnitureToInstall.Tile.Y;
 
-		instance.name = "wall(" + furnitureToInstall.Tile.X+ ", " + furnitureToInstall.Tile.Y + ")";
-		instance.transform.SetParent(gridHolder);
-
+        instance.transform.SetParent(gridHolder);
+        Debug.Log("register");
 		furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
 	}
 
-	private void OnFurnitureChanged(FurnitureItem changedItem){
-		Debug.LogError ("OnFurnitureChanged: Not implemented.");
-	}
+	private void OnFurnitureChanged(Furniture furn){
+        //make sure the furnitures are correct.
+        Debug.Log("furniture changed.");
+        if (_furnitureGameObjectMap.ContainsKey(furn) == false)
+        {
+            Debug.LogError("OnFurnitureChanged: trying to change furniture not in our map.");
+            return;
+        }
+        GameObject furn_go = _furnitureGameObjectMap[furn];
+        furn_go = GetGameObjectForInstallObject(furn);
+
+
+    }
 
     private void RenderBase()
     {
@@ -94,26 +145,7 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public Tile[] GetTileNeighbours(Tile centreTile)
-    {
-        Debug.Log("Getting neighbours of tile ");
-        int x = centreTile.X;
-        int y = centreTile.Y;
-        Tile[] neighbours = new Tile[9];
-        neighbours[0] = GetTileAt(x - 1, y - 1);
-        neighbours[1] = GetTileAt(x    , y - 1);
-        neighbours[2] = GetTileAt(x + 1, y - 1);
-        neighbours[3] = GetTileAt(x - 1, y );
-        neighbours[4] = centreTile;
-        neighbours[5] = GetTileAt(x + 1, y );
-        neighbours[6] = GetTileAt(x - 1, y +1);
-        neighbours[7] = GetTileAt(x    , y +1);
-        neighbours[8] = GetTileAt(x + 1, y +1);
-
-        return neighbours;
-
-    }
-
+   
 	void OnTileTypeChanged(Tile tile_data, GameObject tile_go){
 		if (_spriteManager.grassFloorTiles.Length < (int)tile_data.Floor) {
 			Debug.LogError ("GridManager.OnTileTypeChanged cannot find floor type with index: " + tile_data.Floor);
@@ -121,15 +153,13 @@ public class GridManager : MonoBehaviour
 		else {
 
 
-            var tileNeighbours = GetTileNeighbours(tile_data);
-            var floorType = TileRenderHelper.TileToRender(tileNeighbours);
             if(tile_data.Floor == Tile.FloorType.Grass)
             {
-                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.grassFloorTiles[floorType].GetComponent<SpriteRenderer>().sprite;
+                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.grassFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
             }
             else if (tile_data.Floor == Tile.FloorType.Mud)
             {
-                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.mudFloorTiles[floorType].GetComponent<SpriteRenderer>().sprite;
+                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.mudFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
             }
         }
 	}

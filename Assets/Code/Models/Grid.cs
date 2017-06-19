@@ -6,7 +6,7 @@ public class Grid {
 
 	public Tile[,] GridMap {get; protected set;}
 
-	public Dictionary<string, FurnitureItem> FurnitureObjectPrototypes;
+	public Dictionary<string, Furniture> FurnitureObjectPrototypes;
 	public int GridHeight { get ; protected set; }
 	public int GridWidth {get; protected set;}
 	public float TileWidth { get; protected set; }
@@ -43,9 +43,9 @@ public class Grid {
 
 	private void CreateFurnitureObjectPrototypes()
 	{
-		FurnitureObjectPrototypes = new Dictionary<string, FurnitureItem> ();
+		FurnitureObjectPrototypes = new Dictionary<string, Furniture> ();
 
-		FurnitureObjectPrototypes.Add ("wall", FurnitureItem.CreatePrototype ("Wall", 0, 1, 1));
+		FurnitureObjectPrototypes.Add ("wall", Furniture.CreatePrototype ("wall", 0, 1, 1, true));
 	}
 
 

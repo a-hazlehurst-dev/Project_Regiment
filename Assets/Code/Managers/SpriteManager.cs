@@ -8,7 +8,6 @@ public class SpriteManager : MonoBehaviour {
     public GameObject[] floorEmbelishmentTiles;
     public GameObject[] naturalTiles;
 
-	public GameObject wallSprite;
 
 	public Dictionary<string, GameObject> furnitureObjects;
 
@@ -27,6 +26,12 @@ public class SpriteManager : MonoBehaviour {
     }
 
 	private void LoadFurniture(){
-		furnitureObjects.Add ("wall", wallSprite);
+
+        var wallObjects = Resources.LoadAll<GameObject>("Prefabs/Wall/Basic/");
+
+        foreach(var go in wallObjects)
+        {
+            furnitureObjects.Add(go.name, go);
+        }
 	}
 }

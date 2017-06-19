@@ -7,7 +7,7 @@ public class Tile
 
 	Action<Tile> cbTileFloorChanged;
 	FloorType _type =  FloorType.Grass;
-	protected FurnitureItem _installedFurniture;
+	public Furniture InstalledFurniture { get; protected set; }
 
 	public int X { get; protected set; }
 	public int Y { get; protected set; } 
@@ -25,20 +25,19 @@ public class Tile
 	}
 
 
-	public FurnitureItem FurnitureItem;
-	public StockpileItem StockpileItem;
+	public Inventory StockpileItem;
 
-	public bool PlaceObject(FurnitureItem itemInstance){
+	public bool PlaceObject(Furniture itemInstance){
 		if (itemInstance == null) {
-			_installedFurniture = null;
+            InstalledFurniture = null;
 			return true;
 		}
 
-		if (_installedFurniture != null) {
+		if (InstalledFurniture != null) {
 			return false;
 		}
 
-		_installedFurniture = itemInstance;
+        InstalledFurniture = itemInstance;
 		return true;
 	}
 

@@ -86,11 +86,11 @@
     <Compile Include="Assets\Code\Managers\GridManager.cs" />
     <Compile Include="Assets\Code\Managers\PeasantManager.cs" />
     <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
+    <Compile Include="Assets\Code\Models\Furniture.cs" />
     <Compile Include="Assets\Code\Models\Grid.cs" />
-    <Compile Include="Assets\Code\Models\InstallableObject.cs" />
-    <Compile Include="Assets\Code\Models\LooseObject.cs" />
     <Compile Include="Assets\Code\Models\Peasant.cs" />
     <Compile Include="Assets\Code\Models\PeasentModel.cs" />
+    <Compile Include="Assets\Code\Models\Inventory.cs" />
     <Compile Include="Assets\Code\Models\Tile.cs" />
     <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
