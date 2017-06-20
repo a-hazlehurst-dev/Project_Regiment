@@ -25,12 +25,8 @@ public class GridManager : MonoBehaviour
 		{
 			Grid = new Grid (GridHeight, GridWidth, TileHeight, TileWidth);
 		}
-
 		gridHolder = new GameObject ("Grid").transform;
-
         RenderBase();
-       
-
     }
 
 	public void PlaceFurniture(string itemToBuild, Tile tile){
@@ -44,10 +40,9 @@ public class GridManager : MonoBehaviour
 
         //create graphics for installed object.
         OnFurnitureCreated(furnitureToInstall);
-
 	}
 
-    GameObject GetGameObjectForInstallObject(Furniture furnitureItem)
+    Sprite GetGameObjectForInstallObject(Furniture furnitureItem)
     {
         if(furnitureItem.LinksToNeighbour == false)
         {
@@ -84,35 +79,41 @@ public class GridManager : MonoBehaviour
         }
 
         Debug.Log(spriteName);
+		if (!_spriteManager.furnitureObjects.ContainsKey (spriteName)) {
+			Debug.LogError ("furnitureObjects: Cannot find sprite called:" + spriteName);
+			return null;
+		}
+
         return _spriteManager.furnitureObjects[spriteName];
     }
 
 	public void OnFurnitureCreated(Furniture furnitureToInstall){
-        GameObject furnitureToRender = null;
+		
+		GameObject furnitureToRender = new GameObject(furnitureToInstall.ObjectType + "x:"+ furnitureToInstall.Tile.X + "y: "+ furnitureToInstall.Tile.Y);
 
-        var furniture = GetGameObjectForInstallObject(furnitureToInstall) ; //FIXME wall does not exist.
-        _furnitureGameObjectMap.Add(furnitureToInstall, furniture);
-        GameObject instance = Instantiate(furniture, new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0), Quaternion.identity) as GameObject;
+		furnitureToRender.AddComponent<SpriteRenderer> ().sortingLayerName = "active";
+		furnitureToRender.GetComponent<SpriteRenderer>().sprite = GetGameObjectForInstallObject(furnitureToInstall) ; //FIXME wall does not exist.
 
-        instance.name = furnitureToInstall.ObjectType + " x: " + furnitureToInstall.Tile.X + ", " + furnitureToInstall.Tile.Y;
+		GameObject instance = Instantiate(furnitureToRender, new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0), Quaternion.identity) as GameObject;
+		instance.name = furnitureToInstall.ObjectType + " x: " + furnitureToInstall.Tile.X + ", " + furnitureToInstall.Tile.Y;
+
+		_furnitureGameObjectMap.Add(furnitureToInstall, instance);
 
         instance.transform.SetParent(gridHolder);
-        Debug.Log("register");
 		furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
 	}
 
-	private void OnFurnitureChanged(Furniture furn){
-        //make sure the furnitures are correct.
-        Debug.Log("furniture changed.");
+	public void OnFurnitureChanged(Furniture furn){
+   
         if (_furnitureGameObjectMap.ContainsKey(furn) == false)
         {
             Debug.LogError("OnFurnitureChanged: trying to change furniture not in our map.");
             return;
         }
+
         GameObject furn_go = _furnitureGameObjectMap[furn];
-        furn_go = GetGameObjectForInstallObject(furn);
-
-
+		furn_go.GetComponent<SpriteRenderer>().sprite = GetGameObjectForInstallObject(furn);
+		furn_go.transform.SetParent(gridHolder);
     }
 
     private void RenderBase()
@@ -133,7 +134,6 @@ public class GridManager : MonoBehaviour
                     toInstanciate = _spriteManager.mudFloorTiles[4];
                 }
 
-               
                 GameObject instance = Instantiate(toInstanciate, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
 				instance.name = "tile_(" + tile.X + ", " + tile.Y + ")";
                 instance.transform.SetParent(gridHolder);
@@ -141,18 +141,13 @@ public class GridManager : MonoBehaviour
 				tile.RegisterFloorTypeChangedCb ( (tile_data) => { OnTileTypeChanged(tile_data, instance);});
             }
         }
-		
-
     }
-
    
 	void OnTileTypeChanged(Tile tile_data, GameObject tile_go){
 		if (_spriteManager.grassFloorTiles.Length < (int)tile_data.Floor) {
 			Debug.LogError ("GridManager.OnTileTypeChanged cannot find floor type with index: " + tile_data.Floor);
 		} 
 		else {
-
-
             if(tile_data.Floor == Tile.FloorType.Grass)
             {
                 tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.grassFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
@@ -164,16 +159,12 @@ public class GridManager : MonoBehaviour
         }
 	}
 
-
 	public Tile GetTileAt (int x, int y)
 	{
-
 		if (x > GridWidth || x < 0 || y > GridHeight || y < 0) {
 			Debug.LogError ("Tile ( " + x + ", " + y + ") does not exist");
 			return null;
 		}
 		return Grid.GridMap [x, y];
 	}
-
-
 }

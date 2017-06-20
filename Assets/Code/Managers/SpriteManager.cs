@@ -9,14 +9,14 @@ public class SpriteManager : MonoBehaviour {
     public GameObject[] naturalTiles;
 
 
-	public Dictionary<string, GameObject> furnitureObjects;
+	public Dictionary<string, Sprite> furnitureObjects;
 
     public GameObject[] interactableTiles;
     public GameObject[] peasentSprites;
 
     public void Awake()
     {
-		furnitureObjects = new Dictionary<string, GameObject> ();
+		furnitureObjects = new Dictionary<string, Sprite> ();
         LoadResources();
     }
 
@@ -27,7 +27,7 @@ public class SpriteManager : MonoBehaviour {
 
 	private void LoadFurniture(){
 
-        var wallObjects = Resources.LoadAll<GameObject>("Prefabs/Wall/Basic/");
+        var wallObjects = Resources.LoadAll<Sprite>("Images/wall/");
 
         foreach(var go in wallObjects)
         {

@@ -47,7 +47,7 @@ public class Furniture  {
 
         if (item.LinksToNeighbour)
         {
-                     
+            //inform neighbours that they have a new tile        
             int x = tile.X;
             int y = tile.Y;
 
@@ -57,18 +57,18 @@ public class Furniture  {
                 t.InstalledFurniture.cbOnChanged(t.InstalledFurniture); //we have northern neighbour with same object as us, so change it with callback;
             }
 
-            t = GameManager.Instance.GridManager.GetTileAt(x, y + 1);
+            t = GameManager.Instance.GridManager.GetTileAt(x +1, y);
             if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == item.ObjectType)
             {
                 t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
             }
 
-            t = GameManager.Instance.GridManager.GetTileAt(x, y + 1);
+            t = GameManager.Instance.GridManager.GetTileAt(x, y- 1);
             if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == item.ObjectType)
             {
                 t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
             }
-            t = GameManager.Instance.GridManager.GetTileAt(x, y + 1);
+            t = GameManager.Instance.GridManager.GetTileAt(x-1, y );
             if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == item.ObjectType)
             {
                 t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);

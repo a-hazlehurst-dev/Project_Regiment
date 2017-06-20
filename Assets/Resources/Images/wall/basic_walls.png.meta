@@ -1,17 +1,24 @@
 fileFormatVersion: 2
 guid: 8df7dc2464325e94a9b0a2c5d30ff30c
-timeCreated: 1497559999
+timeCreated: 1497949239
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: basic_wall_zero
-    21300002: basic_walls_left
-    21300004: basic_walls_right
-    21300006: basic_walls_Up
-    21300008: basic_walls_down
-    21300010: basic_walls_middle_LR
-    21300012: basic_walls_middle_up
-    21300014: basic_walls_middle
+    21300000: wall_
+    21300002: wall_E
+    21300004: wall_W
+    21300006: wall_S
+    21300008: wall_N
+    21300010: wall_EW
+    21300012: wall_NS
+    21300014: wall_NESW
+    21300016: wall_NW
+    21300018: wall_SW
+    21300020: wall_ES
+    21300022: wall_NE
+    21300024: wall_NEW
+    21300026: wall_NSW
+    21300028: wall_NES
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -78,10 +85,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: basic_wall_zero
+      name: wall_
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 894
         width: 128
         height: 128
@@ -91,11 +98,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basic_walls_left
+      name: wall_E
       rect:
         serializedVersion: 2
         x: 256
-        y: 895
+        y: 894
         width: 128
         height: 128
       alignment: 6
@@ -104,11 +111,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basic_walls_right
+      name: wall_W
       rect:
         serializedVersion: 2
         x: 384
-        y: 895
+        y: 894
         width: 128
         height: 128
       alignment: 6
@@ -117,11 +124,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basic_walls_Up
+      name: wall_S
       rect:
         serializedVersion: 2
         x: 640
-        y: 895
+        y: 894
         width: 128
         height: 128
       alignment: 6
@@ -130,7 +137,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basic_walls_down
+      name: wall_N
       rect:
         serializedVersion: 2
         x: 640
@@ -143,7 +150,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basic_walls_middle_LR
+      name: wall_EW
       rect:
         serializedVersion: 2
         x: 128
@@ -156,7 +163,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basic_walls_middle_up
+      name: wall_NS
       rect:
         serializedVersion: 2
         x: 256
@@ -169,13 +176,104 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basic_walls_middle
+      name: wall_NESW
       rect:
         serializedVersion: 2
         x: 640
         y: 384
-        width: 110
-        height: 124
+        width: 128
+        height: 128
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_NW
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 128
+        height: 128
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_SW
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 128
+        height: 128
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_ES
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 128
+        height: 128
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_NE
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_NEW
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 256
+        width: 128
+        height: 128
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_NSW
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 128
+        height: 128
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_NES
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 768
+        width: 128
+        height: 128
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
