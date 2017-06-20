@@ -47,10 +47,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Code\Helper\TileRenderHelper.cs" />
-     <Compile Include="Assets\Code\Managers\BuildingManager.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
      <Compile Include="Assets\Code\Managers\GridManager.cs" />
-     <Compile Include="Assets\Code\Managers\PeasantManager.cs" />
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
      <Compile Include="Assets\Code\Models\Furniture.cs" />
      <Compile Include="Assets\Code\Models\Grid.cs" />

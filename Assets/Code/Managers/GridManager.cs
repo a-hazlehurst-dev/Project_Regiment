@@ -16,6 +16,7 @@ public class GridManager : MonoBehaviour
 	public float TileHeight;
     private SpriteManager _spriteManager;
 	private Transform gridHolder;
+	private Transform furnitureHolder;
 
 	public void GridSetup(SpriteManager spriteManager)
 	{
@@ -26,6 +27,8 @@ public class GridManager : MonoBehaviour
 			Grid = new Grid (GridHeight, GridWidth, TileHeight, TileWidth);
 		}
 		gridHolder = new GameObject ("Grid").transform;
+		furnitureHolder = new GameObject ("Furniture").transform;
+
         RenderBase();
     }
 
@@ -78,7 +81,7 @@ public class GridManager : MonoBehaviour
             spriteName += "W";
         }
 
-        Debug.Log(spriteName);
+       
 		if (!_spriteManager.furnitureObjects.ContainsKey (spriteName)) {
 			Debug.LogError ("furnitureObjects: Cannot find sprite called:" + spriteName);
 			return null;
@@ -89,17 +92,16 @@ public class GridManager : MonoBehaviour
 
 	public void OnFurnitureCreated(Furniture furnitureToInstall){
 		
-		GameObject furnitureToRender = new GameObject(furnitureToInstall.ObjectType + "x:"+ furnitureToInstall.Tile.X + "y: "+ furnitureToInstall.Tile.Y);
+		GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
 
 		furnitureToRender.AddComponent<SpriteRenderer> ().sortingLayerName = "active";
 		furnitureToRender.GetComponent<SpriteRenderer>().sprite = GetGameObjectForInstallObject(furnitureToInstall) ; //FIXME wall does not exist.
+		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
 
-		GameObject instance = Instantiate(furnitureToRender, new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0), Quaternion.identity) as GameObject;
-		instance.name = furnitureToInstall.ObjectType + " x: " + furnitureToInstall.Tile.X + ", " + furnitureToInstall.Tile.Y;
+		_furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);
 
-		_furnitureGameObjectMap.Add(furnitureToInstall, instance);
-
-        instance.transform.SetParent(gridHolder);
+		furnitureToRender.transform.SetParent (furnitureHolder);
+		   
 		furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
 	}
 
@@ -113,7 +115,7 @@ public class GridManager : MonoBehaviour
 
         GameObject furn_go = _furnitureGameObjectMap[furn];
 		furn_go.GetComponent<SpriteRenderer>().sprite = GetGameObjectForInstallObject(furn);
-		furn_go.transform.SetParent(gridHolder);
+
     }
 
     private void RenderBase()

@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour {
 
 	public GridManager  GridManager { get; protected set;}
 	public SpriteManager SpriteManager { get; protected set;}
-	public PeasantManager PeasantManager{ get; protected set;}
 
 	private int _drawMode = 1;
 	private string _drawObject;
@@ -21,7 +20,6 @@ public class GameManager : MonoBehaviour {
 
 		Instance = this;
 		SpriteManager = GetComponent<SpriteManager>();
-        PeasantManager = GetComponent<PeasantManager>();
         GridManager = GetComponent<GridManager> ();
 	
 		InitGame();
