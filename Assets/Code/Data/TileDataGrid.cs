@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid {
+public class TileDataGrid {
 
 	public Tile[,] GridMap {get; protected set;}
 
@@ -15,7 +15,7 @@ public class Grid {
     public int treeCount = 0;
 
 
-	public Grid(int gridheight, int gridWidth, float tileHeight,float tileWidth )
+	public TileDataGrid(int gridheight, int gridWidth, float tileHeight,float tileWidth )
 	{
 		GridHeight = gridheight;
 		GridWidth = gridWidth;
@@ -39,7 +39,16 @@ public class Grid {
 
 		CreateFurnitureObjectPrototypes ();
 
-    }
+	}
+
+	public Tile GetTileAt (int x, int y)
+	{
+		if (x > GridWidth || x < 0 || y > GridHeight || y < 0) {
+			Debug.LogError ("Tile ( " + x + ", " + y + ") does not exist");
+			return null;
+		}
+		return GridMap [x, y];
+	}
 
 	private void CreateFurnitureObjectPrototypes()
 	{

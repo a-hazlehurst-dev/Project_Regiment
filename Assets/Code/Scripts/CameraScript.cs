@@ -17,7 +17,7 @@ public class CameraScript : MonoBehaviour {
 
 		Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		currentMousePosition.z = 0;
-		Tile tileUnderMouse = GameManager.Instance.GetTileAtWorldCoordinate (currentMousePosition);
+		Tile tileUnderMouse = GameManager.Instance.GetTileAt (currentMousePosition);
         if (tileUnderMouse == null) return;
 
 		Vector3 cursorPosition = new Vector3 (tileUnderMouse.X, tileUnderMouse.Y, 0);
@@ -31,7 +31,7 @@ public class CameraScript : MonoBehaviour {
 			_drawObjectMode= GameManager.Instance.GetDrawObjectMode();
             if (_drawObjectMode== null) { return; }
 
-			var tile = GameManager.Instance.GetTileAtWorldCoordinate(currentMousePosition);
+			var tile = GameManager.Instance.GetTileAt(currentMousePosition);
 
 			Tile.FloorType floorMode = Tile.FloorType.Grass;//default draw mode
 
@@ -47,10 +47,10 @@ public class CameraScript : MonoBehaviour {
 
 			} else if (_drawMode == 2) {
 				if(_drawObjectMode.Equals("wall")){
-					GameManager.Instance.GridManager.PlaceFurniture ("wall", tile);
+					GameManager.Instance.FurnitureManager.PlaceFurniture ("wall", tile);
 				}
 				else if(_drawObjectMode.Equals("path")){
-					GameManager.Instance.GridManager.PlaceFurniture ("path", tile);
+					GameManager.Instance.FurnitureManager.PlaceFurniture ("path", tile);
 				}	
 
 			}
@@ -61,7 +61,7 @@ public class CameraScript : MonoBehaviour {
 
         if (Input.GetMouseButton(1))
         {
-            var tile = GameManager.Instance.GetTileAtWorldCoordinate(currentMousePosition);
+			var tile = GameManager.Instance.GetTileAt(currentMousePosition);
             tile.Floor = Tile.FloorType.Grass;
         }
 
