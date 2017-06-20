@@ -1,24 +1,25 @@
 fileFormatVersion: 2
-guid: 8df7dc2464325e94a9b0a2c5d30ff30c
-timeCreated: 1497949239
+guid: a1a849fdad6d30648be792f2e00e50d5
+timeCreated: 1497985277
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: wall_
-    21300002: wall_E
-    21300004: wall_W
-    21300006: wall_S
-    21300008: wall_N
+    21300002: wall_S
+    21300004: wall_NS
+    21300006: wall_N
+    21300008: wall_E
     21300010: wall_EW
-    21300012: wall_NS
+    21300012: wall_W
     21300014: wall_NESW
-    21300016: wall_NW
-    21300018: wall_SW
-    21300020: wall_ES
-    21300022: wall_NE
+    21300016: wall_SW
+    21300018: wall_NW
+    21300020: wall_NE
+    21300022: wall_ES
     21300024: wall_NEW
-    21300026: wall_NSW
-    21300028: wall_NES
+    21300026: wall_NES
+    21300028: wall_NSW
+    21300030: wall_ESW
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -55,7 +56,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 64
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -89,35 +90,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 894
-        width: 128
-        height: 128
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: wall_E
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 894
-        width: 128
-        height: 128
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: wall_W
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 894
-        width: 128
-        height: 128
+        y: 448
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,36 +102,10 @@ TextureImporter:
       name: wall_S
       rect:
         serializedVersion: 2
-        x: 640
-        y: 894
-        width: 128
-        height: 128
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: wall_N
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 766
-        width: 128
-        height: 128
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: wall_EW
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 256
-        width: 128
-        height: 128
+        x: 512
+        y: 192
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +115,62 @@ TextureImporter:
       name: wall_NS
       rect:
         serializedVersion: 2
-        x: 256
-        y: 384
-        width: 128
-        height: 128
+        x: 512
+        y: 128
+        width: 64
+        height: 64
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_N
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 64
+        width: 64
+        height: 64
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_E
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 128
+        width: 64
+        height: 64
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_EW
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 128
+        width: 64
+        height: 64
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_W
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 128
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,23 +180,10 @@ TextureImporter:
       name: wall_NESW
       rect:
         serializedVersion: 2
-        x: 640
-        y: 384
-        width: 128
-        height: 128
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: wall_NW
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 256
-        width: 128
-        height: 128
+        x: 320
+        y: 128
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,23 +193,23 @@ TextureImporter:
       name: wall_SW
       rect:
         serializedVersion: 2
-        x: 256
-        y: 512
-        width: 128
-        height: 128
+        x: 128
+        y: 192
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_ES
+      name: wall_NW
       rect:
         serializedVersion: 2
-        x: 0
-        y: 512
-        width: 128
-        height: 128
+        x: 128
+        y: 64
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,9 +220,22 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
-        width: 128
-        height: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_ES
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,23 +245,10 @@ TextureImporter:
       name: wall_NEW
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 256
-        width: 128
-        height: 128
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: wall_NSW
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 768
-        width: 128
-        height: 128
+        x: 192
+        y: 384
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,10 +258,36 @@ TextureImporter:
       name: wall_NES
       rect:
         serializedVersion: 2
-        x: 1280
-        y: 768
-        width: 128
-        height: 128
+        x: 384
+        y: 384
+        width: 64
+        height: 64
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_NSW
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 384
+        width: 65
+        height: 66
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wall_ESW
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 448
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
