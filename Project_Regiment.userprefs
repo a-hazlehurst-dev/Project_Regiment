@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Managers\GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Scripts\CameraScript.cs">
     <Files>
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="18" Column="4" />
-      <File FileName="Assets\Code\Managers\TileManager.cs" Line="28" Column="58" />
-      <File FileName="Assets\Code\Managers\FurnitureManager.cs" Line="75" Column="8" />
-      <File FileName="Assets\Code\Models\Tile.cs" Line="16" Column="25" />
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="71" Column="41" />
-      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="64" Column="68" />
-      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="23" Column="25" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="14" Column="40" />
+      <File FileName="Assets\Code\Managers\TileManager.cs" Line="6" Column="1" />
+      <File FileName="Assets\Code\Managers\FurnitureManager.cs" Line="6" Column="1" />
+      <File FileName="Assets\Code\Models\Tile.cs" Line="27" Column="33" />
+      <File FileName="Assets\Code\Models\Furniture.cs" Line="103" Column="2" />
+      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="51" Column="46" />
+      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="61" Column="67" />
+      <File FileName="Assets\Code\Models\Job.cs" Line="33" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

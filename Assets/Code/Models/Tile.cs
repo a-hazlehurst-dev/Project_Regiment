@@ -24,6 +24,8 @@ public class Tile
 		}
 	}
 
+	public Job PendingFurnitureJob;
+
 
 	public Inventory StockpileItem;
 

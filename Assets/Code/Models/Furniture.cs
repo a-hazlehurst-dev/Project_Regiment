@@ -10,6 +10,7 @@ public class Furniture  {
     public bool LinksToNeighbour { get; protected set; }
 
 	Action<Furniture> cbOnChanged;
+	private Func<Tile, bool> funcPositionValidation;
 
 	protected Furniture(){
 	}
@@ -22,6 +23,8 @@ public class Furniture  {
 		item._width = width;
 		item._height = height;
         item.LinksToNeighbour = linksToNeighbour;
+
+		item.funcPositionValidation = item.IsValidPosition;
 
         return item;
 	}
@@ -86,5 +89,16 @@ public class Furniture  {
 		cbOnChanged -= callBackFunc;
 	}
 
+	public bool __IsValidPosition(Tile t){
+		return funcPositionValidation (t);
+	}
+
+	public bool IsValidPosition(Tile t){
+		if (t.InstalledFurniture != null) {
+			return false;
+		}
+
+		return true;
+	}
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour {
 	public TileManager TileManager { get; protected set; }
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
+
+
+	public Queue<Job> JobQueue { get; set;} //replace with dedicated class to manage job queues (maybe also static)
 
 	private int _drawMode = 1;
 	private string _drawObject;
@@ -18,6 +22,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		Instance = this;
+		JobQueue = new Queue<Job> ();
 		SpriteManager = GetComponent<SpriteManager>();
 		TileManager = GetComponent<TileManager> ();
 		FurnitureManager = GetComponent<FurnitureManager> ();

@@ -11,8 +11,6 @@ public class CameraScript : MonoBehaviour {
 
 	public GameObject cursorPointer;
 
-
-
 	void Update(){
 
 		Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
@@ -25,7 +23,7 @@ public class CameraScript : MonoBehaviour {
 		cursorPointer.transform.position = cursorPosition;
 
 
-        if (Input.GetMouseButton(0))
+		if (Input.GetMouseButtonUp(0))
         {
 			_drawMode= GameManager.Instance.GetDrawMode();
 			_drawObjectMode= GameManager.Instance.GetDrawObjectMode();
@@ -47,16 +45,43 @@ public class CameraScript : MonoBehaviour {
 
 			} else if (_drawMode == 2) {
 				if(_drawObjectMode.Equals("wall")){
-					GameManager.Instance.FurnitureManager.PlaceFurniture ("wall", tile);
+
+					if (GameManager.Instance.TileDataGrid.IsFurniturePlacementValid ("wall", tile) && tile.PendingFurnitureJob ==  null) {
+						//tile is valid for this furniture type and not job already in place.
+						var job = new Job (tile, (theJob) => { 
+							GameManager.Instance.FurnitureManager.PlaceFurniture ("wall",theJob.Tile);
+							tile.PendingFurnitureJob = null;
+						});
+						GameManager.Instance.JobQueue.Enqueue ( job );
+
+						tile.PendingFurnitureJob = job;
+
+						job.RegisterJobCancelledCallback ((theJob) => {
+							theJob.Tile.PendingFurnitureJob = null;
+						});
+					}
 				}
 				else if(_drawObjectMode.Equals("path")){
-					GameManager.Instance.FurnitureManager.PlaceFurniture ("path", tile);
+					if (GameManager.Instance.TileDataGrid.IsFurniturePlacementValid ("path", tile)  && tile.PendingFurnitureJob ==  null) {
+						//tile is valid for furniture.
+
+						var job = new Job (tile, (theJob) => {
+							GameManager.Instance.FurnitureManager.PlaceFurniture ("path", theJob.Tile);
+							tile.PendingFurnitureJob = null;
+						});
+						GameManager.Instance.JobQueue.Enqueue (job);
+
+						tile.PendingFurnitureJob = job;
+
+						job.RegisterJobCancelledCallback((theJob)=> { 
+							theJob.Tile.PendingFurnitureJob = null;
+						});
+					}
 				}	
 
+				Debug.Log ("Job queue size: " + GameManager.Instance.JobQueue.Count);
+
 			}
-
-
-            
         }
 
         if (Input.GetMouseButton(1))
@@ -74,6 +99,10 @@ public class CameraScript : MonoBehaviour {
 
         Camera.main.orthographicSize -= (Camera.main.orthographicSize/2) * Input.GetAxis("Mouse ScrollWheel") *1.5f;
 
+	}
+
+	void OnFurnitureJobComplete(string type, Tile t){
+		
 	}
 
 	

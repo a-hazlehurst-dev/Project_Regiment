@@ -57,6 +57,10 @@ public class TileDataGrid {
 		FurnitureObjectPrototypes.Add ("wall", Furniture.CreatePrototype ("wall", 0, 1, 1, true));
 	}
 
+	public bool IsFurniturePlacementValid(string furnitureType, Tile t){
+		return FurnitureObjectPrototypes [furnitureType].IsValidPosition (t);
+	}
+
 
 
 

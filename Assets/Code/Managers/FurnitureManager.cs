@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-using Assets.Code.Helper;
 
 public class FurnitureManager : MonoBehaviour 
 {
