@@ -48,11 +48,12 @@ public class CameraScript : MonoBehaviour {
 
 					if (GameManager.Instance.TileDataGrid.IsFurniturePlacementValid ("wall", tile) && tile.PendingFurnitureJob ==  null) {
 						//tile is valid for this furniture type and not job already in place.
-						var job = new Job (tile, (theJob) => { 
+						var job = new Job (tile, "wall", (theJob) => { 
 							GameManager.Instance.FurnitureManager.PlaceFurniture ("wall",theJob.Tile);
 							tile.PendingFurnitureJob = null;
 						});
 						GameManager.Instance.JobQueue.Enqueue ( job );
+
 
 						tile.PendingFurnitureJob = job;
 
@@ -65,7 +66,7 @@ public class CameraScript : MonoBehaviour {
 					if (GameManager.Instance.TileDataGrid.IsFurniturePlacementValid ("path", tile)  && tile.PendingFurnitureJob ==  null) {
 						//tile is valid for furniture.
 
-						var job = new Job (tile, (theJob) => {
+						var job = new Job (tile, "path", (theJob) => {
 							GameManager.Instance.FurnitureManager.PlaceFurniture ("path", theJob.Tile);
 							tile.PendingFurnitureJob = null;
 						});
@@ -78,9 +79,6 @@ public class CameraScript : MonoBehaviour {
 						});
 					}
 				}	
-
-				Debug.Log ("Job queue size: " + GameManager.Instance.JobQueue.Count);
-
 			}
         }
 

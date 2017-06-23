@@ -54,11 +54,13 @@
      <Compile Include="Assets\Code\Models\Furniture.cs" />
      <Compile Include="Assets\Code\Models\Inventory.cs" />
      <Compile Include="Assets\Code\Models\Job.cs" />
+     <Compile Include="Assets\Code\Models\JobQueue.cs" />
      <Compile Include="Assets\Code\Models\Peasant.cs" />
      <Compile Include="Assets\Code\Models\PeasentModel.cs" />
      <Compile Include="Assets\Code\Models\Tile.cs" />
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
+     <Compile Include="Assets\JobSpriteManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

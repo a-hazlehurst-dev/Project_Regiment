@@ -13,11 +13,15 @@ public class Job  {
 	Action<Job> _cbCJobCompleted;
 	Action<Job> _cbJobCancelled;
 
-	public Job(Tile tile, Action<Job> cbJobCompleted, float timeToComplete = 1f)
+	//FIXME:  hard coded a parameter for furniture. Do not like
+	public string JobObjectType { get; protected set;}
+
+	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete = 1f)
 	{
 		Tile = tile;
 		_timeToComplete = timeToComplete;
 		_cbCJobCompleted += cbJobCompleted;
+		JobObjectType = jobObjectType;
 	}
 
 	public void RegisterJobCompletedCallback(Action<Job> cb){
@@ -26,6 +30,14 @@ public class Job  {
 
 	public void RegisterJobCancelledCallback(Action<Job> cb){
 		_cbJobCancelled += cb;
+	}
+
+	public void UnRegisterJobCompletedCallback(Action<Job> cb){
+		_cbCJobCompleted -= cb;
+	}
+
+	public void UnRegisterJobCancelledCallback(Action<Job> cb){
+		_cbJobCancelled -= cb;
 	}
 
 	public void DoWork(float workTime){

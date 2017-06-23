@@ -35,7 +35,7 @@ public class FurnitureManager : MonoBehaviour
         OnFurnitureCreated(furnitureToInstall);
 	}
 
-    Sprite GetGameObjectForFurniture(Furniture furnitureItem)
+    public Sprite GetSpriteForFurniture(Furniture furnitureItem)
     {
         if(furnitureItem.LinksToNeighbour == false)
         {
@@ -80,12 +80,27 @@ public class FurnitureManager : MonoBehaviour
         return _spriteManager.furnitureObjects[spriteName];
     }
 
+	public Sprite GetSpriteForFurniture(string objectType)
+	{
+		if (_spriteManager.furnitureObjects.ContainsKey (objectType)) {
+			return _spriteManager.furnitureObjects[objectType];
+		}
+		if (_spriteManager.furnitureObjects.ContainsKey (objectType+"_")) {
+			return _spriteManager.furnitureObjects [objectType + "_"];
+
+			}
+		Debug.LogError ("GetSpriteForFurniture: Cannot find sprite called:" + objectType);
+
+		return null;
+
+	}
+
 	public void OnFurnitureCreated(Furniture furnitureToInstall){
 		
 		GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
 
 		furnitureToRender.AddComponent<SpriteRenderer> ().sortingLayerName = "active";
-		furnitureToRender.GetComponent<SpriteRenderer>().sprite = GetGameObjectForFurniture(furnitureToInstall) ; //FIXME wall does not exist.
+		furnitureToRender.GetComponent<SpriteRenderer>().sprite = GetSpriteForFurniture(furnitureToInstall) ; //FIXME wall does not exist.
 		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
 
 		_furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);
@@ -104,7 +119,7 @@ public class FurnitureManager : MonoBehaviour
         }
 
         GameObject furn_go = _furnitureGameObjectMap[furn];
-		furn_go.GetComponent<SpriteRenderer>().sprite = GetGameObjectForFurniture(furn);
+		furn_go.GetComponent<SpriteRenderer>().sprite = GetSpriteForFurniture(furn);
 
     }
 

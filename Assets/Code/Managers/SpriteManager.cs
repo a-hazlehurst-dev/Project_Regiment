@@ -34,4 +34,12 @@ public class SpriteManager : MonoBehaviour {
             furnitureObjects.Add(go.name, go);
         }
 	}
+
+	public Sprite GetFuniturePrototype(string objectType){
+
+		if (!furnitureObjects.ContainsKey (objectType)) {
+			Debug.LogError ("sprite manager could not find furniture type with key, " + objectType);
+		}
+		return furnitureObjects [objectType];
+	}
 }
