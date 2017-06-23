@@ -39,7 +39,7 @@ public class FurnitureManager : MonoBehaviour
     {
         if(furnitureItem.LinksToNeighbour == false)
         {
-            return _spriteManager.furnitureObjects[furnitureItem.ObjectType];
+			return _spriteManager.FurnitureObjects[furnitureItem.ObjectType];
         }
 
         string spriteName = furnitureItem.ObjectType + "_";
@@ -72,21 +72,21 @@ public class FurnitureManager : MonoBehaviour
         }
 
        
-		if (!_spriteManager.furnitureObjects.ContainsKey (spriteName)) {
+		if (!_spriteManager.FurnitureObjects.ContainsKey (spriteName)) {
 			Debug.LogError ("furnitureObjects: Cannot find sprite called:" + spriteName);
 			return null;
 		}
 
-        return _spriteManager.furnitureObjects[spriteName];
+		return _spriteManager.FurnitureObjects[spriteName];
     }
 
 	public Sprite GetSpriteForFurniture(string objectType)
 	{
-		if (_spriteManager.furnitureObjects.ContainsKey (objectType)) {
-			return _spriteManager.furnitureObjects[objectType];
+		if (_spriteManager.FurnitureObjects.ContainsKey (objectType)) {
+			return _spriteManager.FurnitureObjects[objectType];
 		}
-		if (_spriteManager.furnitureObjects.ContainsKey (objectType+"_")) {
-			return _spriteManager.furnitureObjects [objectType + "_"];
+		if (_spriteManager.FurnitureObjects.ContainsKey (objectType+"_")) {
+			return _spriteManager.FurnitureObjects [objectType + "_"];
 
 			}
 		Debug.LogError ("GetSpriteForFurniture: Cannot find sprite called:" + objectType);

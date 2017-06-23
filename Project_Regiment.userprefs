@@ -1,16 +1,23 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\JobSpriteManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Managers\CharacterSpriteManager.cs">
     <Files>
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="25" Column="30" />
-      <File FileName="Assets\Code\Managers\TileManager.cs" Line="67" Column="2" />
-      <File FileName="Assets\Code\Managers\FurnitureManager.cs" Line="90" Column="4" />
-      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="52" Column="55" />
-      <File FileName="Assets\Code\Models\Job.cs" Line="24" Column="32" />
-      <File FileName="Assets\JobSpriteManager.cs" Line="29" Column="3" />
-      <File FileName="Assets\Code\Models\JobQueue.cs" Line="16" Column="2" />
-      <File FileName="Assets\Code\Managers\SpriteManager.cs" Line="46" Column="1" />
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="3" Column="1" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="40" Column="29" />
+      <File FileName="Assets\Code\Data\Character.cs" Line="45" Column="27" />
+      <File FileName="Assets\Code\Managers\CharacterSpriteManager.cs" Line="24" Column="2" />
+      <File FileName="Assets\Code\Managers\TileManager.cs" Line="45" Column="24" />
+      <File FileName="Assets\Code\Managers\FurnitureManager.cs" Line="44" Column="3" />
+      <File FileName="Assets\Code\Managers\SpriteManager.cs" Line="12" Column="52" />
+      <File FileName="Assets\Code\Models\Furniture.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Models\Tile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Managers\JobSpriteManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Models\PeasentModel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Scripts\FooterMenuViewModel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Models\JobQueue.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Models\Job.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Models\Inventory.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

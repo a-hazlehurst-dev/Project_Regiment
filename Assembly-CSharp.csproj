@@ -46,9 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Code\Data\Character.cs" />
      <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
+     <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\FurnitureManager.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
+     <Compile Include="Assets\Code\Managers\JobSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\TileManager.cs" />
      <Compile Include="Assets\Code\Models\Furniture.cs" />
@@ -60,7 +63,6 @@
      <Compile Include="Assets\Code\Models\Tile.cs" />
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
-     <Compile Include="Assets\JobSpriteManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

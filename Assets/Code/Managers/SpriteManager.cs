@@ -9,20 +9,23 @@ public class SpriteManager : MonoBehaviour {
     public GameObject[] naturalTiles;
 
 
-	public Dictionary<string, Sprite> furnitureObjects;
+	public Dictionary<string, Sprite> FurnitureObjects;
+	public Dictionary<string, Sprite> CharacterObjects;
 
     public GameObject[] interactableTiles;
     public GameObject[] peasentSprites;
 
     public void Awake()
     {
-		furnitureObjects = new Dictionary<string, Sprite> ();
+		FurnitureObjects = new Dictionary<string, Sprite> ();
+		CharacterObjects = new Dictionary<string, Sprite> ();
         LoadResources();
     }
 
     public void LoadResources()
     {
 		LoadFurniture ();
+		LoadCharacters ();
     }
 
 	private void LoadFurniture(){
@@ -31,15 +34,31 @@ public class SpriteManager : MonoBehaviour {
 
         foreach(var go in wallObjects)
         {
-            furnitureObjects.Add(go.name, go);
+			FurnitureObjects.Add(go.name, go);
         }
+	}
+
+	private void LoadCharacters(){
+		var charObjects = Resources.LoadAll<Sprite>("Images/characters/");
+
+		foreach(var go in charObjects)
+		{
+			CharacterObjects.Add(go.name, go);
+		}
+	}
+
+	public Sprite GetCharacterPrototype(string objectType){
+		if (!CharacterObjects.ContainsKey (objectType)) {
+			Debug.LogError ("sprite manager could not find Character type with key, " + objectType);
+		}
+		return FurnitureObjects [objectType];
 	}
 
 	public Sprite GetFuniturePrototype(string objectType){
 
-		if (!furnitureObjects.ContainsKey (objectType)) {
+		if (!FurnitureObjects.ContainsKey (objectType)) {
 			Debug.LogError ("sprite manager could not find furniture type with key, " + objectType);
 		}
-		return furnitureObjects [objectType];
+		return FurnitureObjects [objectType];
 	}
 }

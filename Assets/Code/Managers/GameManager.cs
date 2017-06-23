@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour {
 	public TileManager TileManager { get; protected set; }
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
+	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
+
+	Action<Character> cbCharacterCreated;
+	List<Character> characters ;
 
 	public JobQueue JobQueue;
 
@@ -22,18 +26,29 @@ public class GameManager : MonoBehaviour {
 		}
 
 		Instance = this;
+		characters = new List<Character> ();
 		JobQueue = new JobQueue ();
 		SpriteManager = GetComponent<SpriteManager>();
 		TileManager = GetComponent<TileManager> ();
 		FurnitureManager = GetComponent<FurnitureManager> ();
+		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
 	
 		InitGame();
+
+	}
+
+	public void CreateCharacter(Tile t){
+		Character c = new Character (TileDataGrid.GridMap [TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
+		if (cbCharacterCreated != null) {
+			cbCharacterCreated (c);
+		}
 	}
 
 	void InitGame(){
 		TileDataGrid = new TileDataGrid (100,100,64,64);
 		TileManager.InitialiseTileMap(SpriteManager, 100,100, 64,64);
 		FurnitureManager.InitialiseFurniture (SpriteManager);
+		CharacterSpriteManager.InitialiseCharacter (SpriteManager);
 
 	}
 
@@ -60,4 +75,12 @@ public class GameManager : MonoBehaviour {
 		return _drawObject;
 	}
 
+
+	public void RegisterCharacterCreated(Action<Character> callBackFunction){
+		cbCharacterCreated += callBackFunction;
+	}
+
+	public void UnRegisterCharacterCreated(Action<Character> callBackFunction){
+		cbCharacterCreated -= callBackFunction;
+	}
 }
