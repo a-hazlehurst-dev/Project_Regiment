@@ -99,11 +99,12 @@ public class FurnitureManager : MonoBehaviour
 		
 		GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
 
-		furnitureToRender.AddComponent<SpriteRenderer> ().sortingLayerName = "active";
-		furnitureToRender.GetComponent<SpriteRenderer>().sprite = GetSpriteForFurniture(furnitureToInstall) ; //FIXME wall does not exist.
-		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
-
 		_furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);
+
+		var sr = furnitureToRender.AddComponent<SpriteRenderer> ();
+		sr.sortingLayerName = "Furniture";
+		sr.sprite = GetSpriteForFurniture(furnitureToInstall) ; //FIXME wall does not exist.
+		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
 
 		furnitureToRender.transform.SetParent (furnitureHolder);
 		   
@@ -119,7 +120,10 @@ public class FurnitureManager : MonoBehaviour
         }
 
         GameObject furn_go = _furnitureGameObjectMap[furn];
-		furn_go.GetComponent<SpriteRenderer>().sprite = GetSpriteForFurniture(furn);
+		var sr = furn_go.GetComponent<SpriteRenderer> ();
+		sr.sprite =GetSpriteForFurniture(furn);
+		sr.sortingLayerName = "Furniture";
+
 
     }
 

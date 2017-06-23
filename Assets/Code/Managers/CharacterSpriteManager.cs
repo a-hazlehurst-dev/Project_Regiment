@@ -38,7 +38,7 @@ public class CharacterSpriteManager : MonoBehaviour {
 		char_go.transform.position = new Vector3 (character.CurrentTile.X, character.CurrentTile.Y, 0);
 		var sr = char_go.AddComponent<SpriteRenderer> ();
 		sr.sprite = _spriteManager.CharacterObjects ["basic_character"];
-		sr.sortingLayerName = "active";
+		sr.sortingLayerName = "Character";
 		char_go.transform.SetParent ( characterHolder );
 	}
 }

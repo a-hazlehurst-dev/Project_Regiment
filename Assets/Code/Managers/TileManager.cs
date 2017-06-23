@@ -40,6 +40,8 @@ public class TileManager : MonoBehaviour
 
                 GameObject instance = Instantiate(toInstanciate, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
 				instance.name = "tile_(" + tile.X + ", " + tile.Y + ")";
+				var sr = instance.GetComponent<SpriteRenderer> ();
+				sr.sortingLayerName = "Floor";
                 instance.transform.SetParent(gridHolder);
 
 				tile.RegisterFloorTypeChangedCb ( (tile_data) => { OnTileTypeChanged(tile_data, instance);});

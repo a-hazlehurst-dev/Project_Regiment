@@ -7,12 +7,14 @@ public class JobSpriteManager : MonoBehaviour {
 	//this bare bones controller is going to barrow from furniture manager.
 
 	FurnitureManager _furnitureManager;
+
+	public  Transform jobHolder;
 	Dictionary<Job, GameObject>  _jobToGameObjectMap;
 	// Use this for initialization
 	void Start () {
 		_jobToGameObjectMap = new Dictionary<Job, GameObject> ();
 		_furnitureManager = GameObject.FindObjectOfType<FurnitureManager> ();
-
+		jobHolder = new GameObject ("Jobs").transform;
 		GameManager.Instance.JobQueue.RegisterJobCreatedCallBack (OnJobCreated);
 
 	}
@@ -25,11 +27,11 @@ public class JobSpriteManager : MonoBehaviour {
 
 		job_go.name = "Job: " + job.JobObjectType + ": x: " + job.Tile.X + ", y" + job.Tile.Y;
 		job_go.transform.position = new Vector3(job.Tile.X, job.Tile.Y, 0);
-		job_go.transform.SetParent (this.transform, true);
+		job_go.transform.SetParent (jobHolder, true);
 
 
 		SpriteRenderer sr = job_go.AddComponent<SpriteRenderer> ();
-		sr.sortingLayerName = "active";
+		sr.sortingLayerName = "Job";
 		sr.sprite = _furnitureManager.GetSpriteForFurniture(job.JobObjectType); 
 		sr.color = new Color (.2f, .2f, .2f, 0.5f); //transparent
 
