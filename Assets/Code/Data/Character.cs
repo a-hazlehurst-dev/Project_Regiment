@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Character {
 
@@ -11,9 +12,12 @@ public class Character {
 		get{ return Mathf.Lerp (CurrentTile.Y, destTile.Y, movementPercentage); }
 	}
 
+
+	Action<Character> cbCharacterChanged;
+
 	public Tile CurrentTile { get; protected set; }
 	Tile destTile;
-	float speed = 2f; //tiles per second.
+	float speed = 10f; //tiles per second.
 	float movementPercentage;// goes from 0 to 1, when moveing to dest tile. 1 being destination
 
 
@@ -36,7 +40,7 @@ public class Character {
 		float distThisFrame = speed * deltaTime;
 
 		//percentage distance to destination.
-		float percThisFrame = distToTravel / distThisFrame;
+		float percThisFrame = distThisFrame / distToTravel;
 
 		//increment that to movement percentage
 		movementPercentage += percThisFrame;
@@ -47,13 +51,28 @@ public class Character {
 
 			//FIXME? retain any overshot movement?;
 		}
+	
+		if (cbCharacterChanged != null) {
+			cbCharacterChanged (this);
+
+		
+		}
 	}
 
 	public void SetDestination(Tile destinationTile){
 		if (!CurrentTile.IsNeighbour (destTile, true)) {
 			Debug.Log ("Character: SetDestination : Our destination tile is not a neightbour");
 		}
-
 		destTile = destinationTile;
+	}
+
+
+	public void RegisterOnCharacterChangedCallback(Action<Character> cb){
+
+		cbCharacterChanged += cb;
+	}
+
+	public void UnRegisterOnCharacterChangedCallback(Action<Character> cb){
+		cbCharacterChanged -= cb;
 	}
 }

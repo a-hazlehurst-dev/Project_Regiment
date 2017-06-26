@@ -17,8 +17,8 @@ public class CharacterSpriteManager : MonoBehaviour {
 
 		Game.RegisterCharacterCreated (OnCharacterCreated);
 
-		Game.CreateCharacter(Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2, Game.TileDataGrid.GridWidth/2, 0)));
-
+		Character c = Game.CreateCharacter(Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2, Game.TileDataGrid.GridWidth/2, 0)));
+		c.SetDestination (Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2+5, Game.TileDataGrid.GridWidth/2, 0)));
 	}
 
 
@@ -35,10 +35,29 @@ public class CharacterSpriteManager : MonoBehaviour {
 		_characterGameObjectMap.Add (character, char_go);
 
 		char_go.name = "Character";
-		char_go.transform.position = new Vector3 (character.CurrentTile.X, character.CurrentTile.Y, 0);
+		char_go.transform.position = new Vector3 (character.X, character.Y, 0);
 		var sr = char_go.AddComponent<SpriteRenderer> ();
 		sr.sprite = _spriteManager.CharacterObjects ["basic_character"];
 		sr.sortingLayerName = "Character";
+		char_go.transform.SetParent ( characterHolder );
+
+		character.RegisterOnCharacterChangedCallback (OnCharacterChanged);
+	}
+
+	public void OnCharacterChanged(Character character){
+		if (!_characterGameObjectMap.ContainsKey (character)) {
+			Debug.Log ("OnCharacterChanged: cannot find character.");
+			return;
+		}
+
+		GameObject char_go = _characterGameObjectMap [character];
+
+		//code to change images
+		//var sr = char_go.GetComponent<SpriteRenderer> ();
+		//sr.sprite = _spriteManager.CharacterObjects ["basic_character"];
+		//sr.sortingLayerName = "Character";
+
+		char_go.transform.position = new Vector3 (character.X, character.Y, 0);
 		char_go.transform.SetParent ( characterHolder );
 	}
 }

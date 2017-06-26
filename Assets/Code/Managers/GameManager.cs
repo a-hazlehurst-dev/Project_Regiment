@@ -37,11 +37,22 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	public void CreateCharacter(Tile t){
+	void Update(){
+		
+		foreach (var c in characters) {
+			c.Update (Time.deltaTime);
+		}
+
+	}
+
+	public Character CreateCharacter(Tile t){
 		Character c = new Character (TileDataGrid.GridMap [TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
 		if (cbCharacterCreated != null) {
 			cbCharacterCreated (c);
 		}
+		characters.Add (c);
+
+		return c;
 	}
 
 	void InitGame(){
