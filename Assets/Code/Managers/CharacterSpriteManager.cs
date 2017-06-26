@@ -18,7 +18,7 @@ public class CharacterSpriteManager : MonoBehaviour {
 		Game.RegisterCharacterCreated (OnCharacterCreated);
 
 		Character c = Game.CreateCharacter(Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2, Game.TileDataGrid.GridWidth/2, 0)));
-		c.SetDestination (Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2+5, Game.TileDataGrid.GridWidth/2, 0)));
+		//c.SetDestination (Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2+5, Game.TileDataGrid.GridWidth/2, 0)));
 	}
 
 

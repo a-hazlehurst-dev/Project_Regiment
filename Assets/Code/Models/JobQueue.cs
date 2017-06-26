@@ -16,12 +16,21 @@ public class JobQueue  {
 
 	public void Enqueue(Job job){
 		_jobQueue.Enqueue (job);
-
+		Debug.Log ("job added to queue");
 		//TODO: callbacks when new job arrives.
 
 		if (cbJobCreated != null) {
 			cbJobCreated (job);
 		}
+	}
+
+	public Job DeQueue(){
+		if (_jobQueue.Count == 0) {
+			Debug.Log ("zero jobs in queue");
+			return null;
+		}
+		Debug.Log ("getting job");
+		return _jobQueue.Dequeue ();
 	}
 
 	public void RegisterJobCreatedCallBack(Action<Job> cb){

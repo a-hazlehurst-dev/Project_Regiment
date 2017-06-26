@@ -13,11 +13,13 @@ public class Character {
 	}
 
 
+	Job myJob;
+
 	Action<Character> cbCharacterChanged;
 
 	public Tile CurrentTile { get; protected set; }
 	Tile destTile;
-	float speed = 10f; //tiles per second.
+	float speed = 50; //tiles per second.
 	float movementPercentage;// goes from 0 to 1, when moveing to dest tile. 1 being destination
 
 
@@ -28,8 +30,22 @@ public class Character {
 
 	public void Update(float deltaTime){
 
+		if (myJob == null) {
+			Debug.Log ("getting job");
+			myJob = GameManager.Instance.JobQueue.DeQueue ();
+			if (myJob != null) {
+				SetDestination (myJob.Tile);
+				myJob.RegisterJobCancelledCallback (OnJobEnded);
+				myJob.RegisterJobCompletedCallback (OnJobEnded);
+			}
+		}
+
+
 		//are we there yet
-		if (CurrentTile == destTile) {
+		if (CurrentTile == destTile ) {
+			if (myJob != null) {
+				myJob.DoWork (deltaTime);
+			}
 			return;
 		}
 
@@ -74,5 +90,15 @@ public class Character {
 
 	public void UnRegisterOnCharacterChangedCallback(Action<Character> cb){
 		cbCharacterChanged -= cb;
+	}
+
+
+	public void OnJobEnded(Job j){
+		// job was completed or was cancelled.
+		if (j != myJob) {
+			Debug.LogError ("Character being told about job thats not his. you forgot to unregister old job");
+		}
+
+		myJob = null;
 	}
 }
