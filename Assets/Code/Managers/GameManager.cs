@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Assets.Code.Services.Pathfinding;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,11 +11,13 @@ public class GameManager : MonoBehaviour {
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
+   
 
 	Action<Character> cbCharacterCreated;
 	List<Character> characters ;
+    public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
-	public JobQueue JobQueue;
+    public JobQueue JobQueue;
 
 
 	private int _drawMode = 1;
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour {
 		TileManager = GetComponent<TileManager> ();
 		FurnitureManager = GetComponent<FurnitureManager> ();
 		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
+        
 	
 		InitGame();
 
@@ -58,10 +62,12 @@ public class GameManager : MonoBehaviour {
 	void InitGame(){
 		TileDataGrid = new TileDataGrid (100,100,64,64);
 		TileManager.InitialiseTileMap(SpriteManager, 100,100, 64,64);
-		FurnitureManager.InitialiseFurniture (SpriteManager);
-		CharacterSpriteManager.InitialiseCharacter (SpriteManager);
+        FurnitureManager.InitialiseFurniture (SpriteManager);
+        TileGraph = new PathTileGraph(TileDataGrid);
+        CharacterSpriteManager.InitialiseCharacter (SpriteManager);
+        
 
-	}
+    }
 
     public Tile GetTileAt(Vector3 coordinate)
     {

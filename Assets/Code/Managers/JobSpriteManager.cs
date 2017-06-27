@@ -7,8 +7,8 @@ public class JobSpriteManager : MonoBehaviour {
 	//this bare bones controller is going to barrow from furniture manager.
 
 	FurnitureManager _furnitureManager;
-
-	public  Transform jobHolder;
+    
+	private  Transform jobHolder;
 	Dictionary<Job, GameObject>  _jobToGameObjectMap;
 	// Use this for initialization
 	void Start () {

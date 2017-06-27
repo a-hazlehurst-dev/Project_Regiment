@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a1a849fdad6d30648be792f2e00e50d5
-timeCreated: 1497985277
+timeCreated: 1498586765
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -271,10 +271,10 @@ TextureImporter:
       name: wall_NSW
       rect:
         serializedVersion: 2
-        x: 639
+        x: 640
         y: 384
-        width: 65
-        height: 66
+        width: 64
+        height: 64
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -31,7 +31,6 @@ public class Character {
 	public void Update(float deltaTime){
 
 		if (myJob == null) {
-			Debug.Log ("getting job");
 			myJob = GameManager.Instance.JobQueue.DeQueue ();
 			if (myJob != null) {
 				SetDestination (myJob.Tile);
@@ -56,7 +55,7 @@ public class Character {
 		float distThisFrame = speed * deltaTime;
 
 		//percentage distance to destination.
-		float percThisFrame = distThisFrame / distToTravel;
+		float percThisFrame = distThisFrame / distToTravel ;
 
 		//increment that to movement percentage
 		movementPercentage += percThisFrame;

@@ -5,6 +5,30 @@ public class Tile
 {
 	public enum FloorType { Grass =0, Mud=1, Water=2}
 
+    public float MovementCost
+    {
+        get
+        {
+            float movement = 0f;
+            
+            if (Floor == FloorType.Grass)
+            {
+                movement += 1;
+            }
+            else if (Floor == FloorType.Mud)
+            {
+                movement+= 1.2f;
+            }
+
+            if (InstalledFurniture != null)
+            {
+                movement *= InstalledFurniture.MovementCost;
+            }
+
+            return movement;
+        }
+      
+    }
 	Action<Tile> cbTileFloorChanged;
 	FloorType _type =  FloorType.Grass;
 	public Furniture InstalledFurniture { get; protected set; }
@@ -79,5 +103,35 @@ public class Tile
 		}
 		return false;
 	}
+
+    public Tile[] GetNeighbours(bool diagOK = false)
+    {
+        Tile[] ns;
+
+        if (!diagOK)
+        {
+            ns = new Tile[4];  //N , E , S , W
+        }
+        else
+        {
+            ns = new Tile[8];// N E S W NE SE SW NW
+        }
+
+    
+        ns[0] = GameManager.Instance.TileDataGrid.GetTileAt(X, Y +1 ); //north
+        ns[1] = GameManager.Instance.TileDataGrid.GetTileAt(X + 1, Y);//East
+        ns[2] = GameManager.Instance.TileDataGrid.GetTileAt(X, Y - 1);//south
+        ns[3] = GameManager.Instance.TileDataGrid.GetTileAt(X - 1, Y);//west
+
+        if (diagOK)
+        {
+            ns[4] = GameManager.Instance.TileDataGrid.GetTileAt(X + 1, Y + 1); //NE
+            ns[5] = GameManager.Instance.TileDataGrid.GetTileAt(X + 1, Y - 1); //SE
+            ns[6] = GameManager.Instance.TileDataGrid.GetTileAt(X - 1, Y - 1); //SW
+            ns[7] = GameManager.Instance.TileDataGrid.GetTileAt(X - 1, Y + 1); //NW
+        }
+
+            return ns;
+    }
 		
 }

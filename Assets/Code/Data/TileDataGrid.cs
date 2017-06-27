@@ -43,10 +43,12 @@ public class TileDataGrid {
 
 	public Tile GetTileAt (int x, int y)
 	{
-		if (x > GridWidth || x < 0 || y > GridHeight || y < 0) {
-			Debug.LogError ("Tile ( " + x + ", " + y + ") does not exist");
+        //Debug.Log("Finding ( " + x + ", " + y + ") does not exist");
+        if (x >= GridWidth || x < 0 || y >= GridHeight || y < 0) {
+			
 			return null;
 		}
+
 		return GridMap [x, y];
 	}
 

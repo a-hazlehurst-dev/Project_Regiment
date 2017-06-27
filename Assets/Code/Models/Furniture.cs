@@ -4,7 +4,7 @@ public class Furniture  {
 
 	public  Tile Tile { get; protected set; }					//base tile of object( what you place ) object can be bigger than 1 tile.
 	public string ObjectType { get; protected set; }
-	private float _movementCost = 1f;
+	public float MovementCost { get; protected set; }
 	private int _width = 1;
 	private int _height = 1;
     public bool LinksToNeighbour { get; protected set; }
@@ -19,7 +19,7 @@ public class Furniture  {
 		Furniture item = new Furniture ();
 
 		item.ObjectType = objectType;
-		item ._movementCost= movementCost;
+		item.MovementCost= movementCost;
 		item._width = width;
 		item._height = height;
         item.LinksToNeighbour = linksToNeighbour;
@@ -34,7 +34,7 @@ public class Furniture  {
 		Furniture item = new Furniture ();
 
 		item.ObjectType = prototype.ObjectType;
-		item._movementCost = prototype._movementCost;
+		item.MovementCost = prototype.MovementCost;
 		item._width = prototype._width;
 		item._height = prototype._height;
 

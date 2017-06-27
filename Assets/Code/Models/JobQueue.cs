@@ -26,10 +26,8 @@ public class JobQueue  {
 
 	public Job DeQueue(){
 		if (_jobQueue.Count == 0) {
-			Debug.Log ("zero jobs in queue");
 			return null;
 		}
-		Debug.Log ("getting job");
 		return _jobQueue.Dequeue ();
 	}
 
