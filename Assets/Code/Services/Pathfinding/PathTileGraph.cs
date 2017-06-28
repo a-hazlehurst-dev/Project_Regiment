@@ -7,7 +7,7 @@ namespace Assets.Code.Services.Pathfinding
     {
         //pathfinding compatible graph of the world and determines the WALKABLE map of the world.
 
-        Dictionary<Tile, PathNode<Tile>> nodes;
+        public Dictionary<Tile, PathNode<Tile>> nodes;
 
         public PathTileGraph(TileDataGrid tileDataGrid)
         {
@@ -19,13 +19,13 @@ namespace Assets.Code.Services.Pathfinding
                 {
                     Tile t = tileDataGrid.GetTileAt(x, y);
 
-                    if (t.MovementCost > 0) //tiles with 0 are not walkable.
-                    {
+                    //if (t.MovementCost > 0) //tiles with 0 are not walkable.
+                    //{
                         //can be walked on.
                         var node = new PathNode<Tile>();
                         node.Data = t;
                         nodes.Add(t, node);
-                    }
+                    //}
                 }
 
             }

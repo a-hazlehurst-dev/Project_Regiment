@@ -33,6 +33,7 @@ public class FurnitureManager : MonoBehaviour
         if(furnitureToInstall == null) { return; }
         
         OnFurnitureCreated(furnitureToInstall);
+		GameManager.Instance.InvalidateTileGraph();
 	}
 
     public Sprite GetSpriteForFurniture(Furniture furnitureItem)

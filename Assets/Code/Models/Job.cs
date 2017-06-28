@@ -16,7 +16,7 @@ public class Job  {
 	//FIXME:  hard coded a parameter for furniture. Do not like
 	public string JobObjectType { get; protected set;}
 
-	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete = 1f)
+	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete = .5f)
 	{
 		Tile = tile;
 		_timeToComplete = timeToComplete;

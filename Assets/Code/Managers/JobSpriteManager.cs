@@ -23,6 +23,7 @@ public class JobSpriteManager : MonoBehaviour {
 	{
 		GameObject job_go = new GameObject();
 
+		Debug.Log ("job created: "+ job + ", " + job_go);
 		_jobToGameObjectMap.Add(job, job_go);
 
 		job_go.name = "Job: " + job.JobObjectType + ": x: " + job.Tile.X + ", y" + job.Tile.Y;

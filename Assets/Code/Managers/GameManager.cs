@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour {
 		InitGame();
 
 	}
+	public void InvalidateTileGraph(){
+		TileGraph = null;
+	}
+
+
 
 	void Update(){
 		

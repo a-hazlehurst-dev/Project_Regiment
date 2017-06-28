@@ -64,6 +64,8 @@ public class TileManager : MonoBehaviour
                 tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.mudFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
             }
         }
+
+		GameManager.Instance.InvalidateTileGraph ();
 	}
 
 

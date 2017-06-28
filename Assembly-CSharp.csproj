@@ -63,6 +63,19 @@
      <Compile Include="Assets\Code\Models\Tile.cs" />
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
+     <Compile Include="Assets\Code\Services\Pathfinding\PathAStar.cs" />
+     <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
+     <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />
+     <Compile Include="Assets\Code\Services\Pathfinding\PathTileGraph.cs" />
+     <Compile Include="Assets\Code\Utilities\FastPriorityQueue.cs" />
+     <Compile Include="Assets\Code\Utilities\FastPriorityQueueNode.cs" />
+     <Compile Include="Assets\Code\Utilities\GenericPriorityQueue.cs" />
+     <Compile Include="Assets\Code\Utilities\GenericPriorityQueueNode.cs" />
+     <Compile Include="Assets\Code\Utilities\IFixedSizePriorityQueue.cs" />
+     <Compile Include="Assets\Code\Utilities\IPriorityQueue.cs" />
+     <Compile Include="Assets\Code\Utilities\SimplePriorityQueue.cs" />
+     <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
+     <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
