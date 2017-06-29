@@ -2,10 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Data\Character.cs">
     <Files>
-      <File FileName="Assets\Code\Data\Character.cs" Line="17" Column="2" />
-      <File FileName="Assets\Code\Services\Pathfinding\PathAStar.cs" Line="24" Column="7" />
-      <File FileName="Assets\Code\Services\Pathfinding\PathTileGraph.cs" Line="27" Column="44" />
-      <File FileName="Assets\Code\Models\Job.cs" Line="51" Column="2" />
+      <File FileName="Assets\Code\Data\Character.cs" Line="114" Column="33" />
+      <File FileName="Assets\Code\Services\Pathfinding\PathAStar.cs" Line="27" Column="74" />
+      <File FileName="Assets\Code\Services\Pathfinding\PathTileGraph.cs" Line="64" Column="72" />
+      <File FileName="Assets\Code\Models\Job.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Managers\CharacterSpriteManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Managers\JobSpriteManager.cs" Line="38" Column="57" />
+      <File FileName="Assets\Code\Models\Tile.cs" Line="128" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

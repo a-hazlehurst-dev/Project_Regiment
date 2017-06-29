@@ -8,6 +8,8 @@ public class PathAStar  {
 
 	Queue<Tile> _path;
 
+
+
 	public PathAStar(TileDataGrid tileData,Tile tileStart, Tile tileEnd){
 
 		//check to see if we need to create a tile graph.

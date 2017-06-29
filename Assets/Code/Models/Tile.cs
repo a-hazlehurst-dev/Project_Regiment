@@ -104,7 +104,7 @@ public class Tile
 		return false;
 	}
 
-    public Tile[] GetNeighbours(bool diagOK = false)
+	public Tile[] GetNeighbours(bool diagOK = false)
     {
         Tile[] ns;
 
@@ -125,7 +125,7 @@ public class Tile
 
         if (diagOK)
         {
-            ns[4] = GameManager.Instance.TileDataGrid.GetTileAt(X + 1, Y + 1); //NE
+			ns[4] = GameManager.Instance.TileDataGrid.GetTileAt(X + 1, Y + 1); //NE
             ns[5] = GameManager.Instance.TileDataGrid.GetTileAt(X + 1, Y - 1); //SE
             ns[6] = GameManager.Instance.TileDataGrid.GetTileAt(X - 1, Y - 1); //SW
             ns[7] = GameManager.Instance.TileDataGrid.GetTileAt(X - 1, Y + 1); //NW

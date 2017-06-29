@@ -47,6 +47,7 @@ public class Character {
 
 		//are we there yet
 		if (CurrentTile == destTile ) {
+		//if(pathAStar != null & pathAStar.Length() ==1)
 			
 			if (myJob != null) {
 				myJob.DoWork (deltaTime);
@@ -109,8 +110,6 @@ public class Character {
 
 		//increment that to movement percentage
 		movementPercentage += percThisFrame;
-
-		Debug.Log (movementPercentage);
 
 		if (movementPercentage >= 1) {
 			CurrentTile = nextTile;

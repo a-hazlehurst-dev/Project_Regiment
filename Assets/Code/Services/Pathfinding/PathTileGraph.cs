@@ -42,7 +42,12 @@ namespace Assets.Code.Services.Pathfinding
                 {
                     if(neighbours[i]!=null && neighbours[i].MovementCost > 0)
                     {
-                        //neibours exist and is walkable.
+						//neibours exist and is walkable.
+						//check for diagonal clipping.
+						if(IsDiaganolClipping(t, neighbours[i])){
+							continue;  // dont create an edge (diag is blocked.)
+						}
+
                         PathEdge<Tile> pathEdge = new PathEdge<Tile>();
                         pathEdge.Cost = neighbours[i].MovementCost;
                         pathEdge.Node = nodes[neighbours[i]];
@@ -54,5 +59,28 @@ namespace Assets.Code.Services.Pathfinding
             }
             Debug.Log("edges created: " + edgeCount);
         }
+
+		bool IsDiaganolClipping(Tile curr, Tile neighbour){
+			if(Mathf.Abs(curr.X - neighbour.X) + Mathf.Abs(curr.Y - neighbour.Y)==2){
+				
+				int dX = curr.X - neighbour.X;
+				int dY = curr.Y - neighbour.Y;
+
+				if (GameManager.Instance.TileDataGrid.GetTileAt (curr.X -dX, curr.Y).MovementCost == 0) {
+					//is clipped.
+					return true;
+				}
+
+				if (GameManager.Instance.TileDataGrid.GetTileAt (curr.X , curr.Y - dY).MovementCost == 0) {
+					//is clipped.
+					return true;
+				}
+
+			}
+
+			return false;
+		}
     }
+
+
 }

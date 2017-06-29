@@ -24,6 +24,11 @@ public class JobSpriteManager : MonoBehaviour {
 		GameObject job_go = new GameObject();
 
 
+		if (_jobToGameObjectMap.ContainsKey (job)) {
+			Debug.Log ("ON Job Created: attempting to create a job graphic, where graphic already exists (probable, re queue not job created!");
+			return;
+		}
+
 		_jobToGameObjectMap.Add(job, job_go);
 
 		job_go.name = "Job: " + job.JobObjectType + ": x: " + job.Tile.X + ", y" + job.Tile.Y;
