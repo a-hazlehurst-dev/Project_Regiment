@@ -2,18 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Data\Character.cs">
     <Files>
-      <File FileName="Assets\Code\Data\Character.cs" Line="59" Column="16" />
-      <File FileName="Assets\Code\Services\Pathfinding\PathAStar.cs" Line="21" Column="1" />
-      <File FileName="Assets\Code\Models\Tile.cs" Line="88" Column="3" />
-      <File FileName="Assets\Code\Managers\FurnitureManager.cs" Line="36" Column="29" />
-      <File FileName="Assets\Code\Managers\TileManager.cs" Line="68" Column="1" />
+      <File FileName="Assets\Code\Data\Character.cs" Line="17" Column="2" />
+      <File FileName="Assets\Code\Services\Pathfinding\PathAStar.cs" Line="24" Column="7" />
+      <File FileName="Assets\Code\Services\Pathfinding\PathTileGraph.cs" Line="27" Column="44" />
       <File FileName="Assets\Code\Models\Job.cs" Line="51" Column="2" />
-      <File FileName="Assets\Code\Services\Pathfinding\PathTileGraph.cs" Line="28" Column="23" />
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="7" Column="2" />
-      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="20" Column="18" />
-      <File FileName="Assets\Code\Models\JobQueue.cs" Line="18" Column="17" />
-      <File FileName="Assets\Code\Managers\JobSpriteManager.cs" Line="26" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

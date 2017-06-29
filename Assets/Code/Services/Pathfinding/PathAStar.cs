@@ -17,11 +17,11 @@ public class PathAStar  {
 		//walkable list of nodes.
 		Dictionary<Tile, PathNode<Tile>> nodes = GameManager.Instance.TileGraph.nodes;
 
-		if(nodes.ContainsKey(tileStart)){
+		if(!nodes.ContainsKey(tileStart)){
 			Debug.LogError("PAthAStar: start tile isnt in the list of tile graphs");
 			return;
 		}
-		if(nodes.ContainsKey(tileEnd)){
+		if(!nodes.ContainsKey(tileEnd)){
 			Debug.LogError("PAthAStar: end tile isnt in the list of tile graphs");
 			return;
 		}

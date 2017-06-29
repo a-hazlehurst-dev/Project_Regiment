@@ -15,11 +15,8 @@ public class JobQueue  {
 	}
 
 	public void Enqueue(Job job){
-		Debug.Log(job);
-
 		_jobQueue.Enqueue (job);
 		Debug.Log ("job added to queue");
-		//TODO: callbacks when new job arrives.
 
 		if (cbJobCreated != null) {
 			

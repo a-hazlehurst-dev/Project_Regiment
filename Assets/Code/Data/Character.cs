@@ -21,7 +21,7 @@ public class Character {
 	Tile destTile;
 	Tile nextTile;  // next tile in path finding sequence;
 	PathAStar pathAStar;
-	float speed = 20; //tiles per second.
+	float speed = 5; //tiles per second.
 	float movementPercentage;// goes from 0 to 1, when moveing to dest tile. 1 being destination
 
 
@@ -30,14 +30,17 @@ public class Character {
 		CurrentTile = destTile = nextTile = currentTile; 
 	}
 
+
 	void Update_DoJob(float deltaTime){
 		
 		if (myJob == null) {
 			myJob = GameManager.Instance.JobQueue.DeQueue ();
 			if (myJob != null) {
-				SetDestination (myJob.Tile);
-				myJob.RegisterJobCancelledCallback (OnJobEnded);
+				//SetDestination (myJob.Tile);
+				destTile = myJob.Tile;
 				myJob.RegisterJobCompletedCallback (OnJobEnded);
+				myJob.RegisterJobCancelledCallback (OnJobEnded);
+	
 			}
 		}
 
@@ -52,12 +55,15 @@ public class Character {
 		}
 
 	}
+
 	public void AbandonJob(){
 		nextTile = destTile = CurrentTile;
 		pathAStar = null;
 		GameManager.Instance.JobQueue.Enqueue (myJob);
 		myJob = null;
+
 	}
+
 	void Update_DoMovement(float deltaTime){
 
 		if (CurrentTile == destTile) 
@@ -66,17 +72,20 @@ public class Character {
 			return;
 		} //already at destination.
 
+
 		if (nextTile == null || nextTile == CurrentTile) {
 			//get next tile from path finder.
 			if (pathAStar == null || pathAStar.Length()==0) {
 				pathAStar = new PathAStar (GameManager.Instance.TileDataGrid, CurrentTile, destTile);
 				if (pathAStar.Length () == 0) {
+					
 					Debug.LogError ("PathASTAR returned no path to destination.");
 					//FIXME: job should be reenqueued.
-					myJob.CancelJob ();
+					myJob.CancelJob();
 					AbandonJob ();
 					pathAStar = null;
 					return;
+				
 				}
 			}
 			//grab next waypoint from the pathing system.
@@ -89,8 +98,8 @@ public class Character {
 		//should have valid next tile.
 
 		float distToTravel = Mathf.Sqrt(
-			Mathf.Pow (CurrentTile.X - destTile.X, 2) + 
-			Mathf.Pow (CurrentTile.Y - destTile.Y, 2));
+			Mathf.Pow (CurrentTile.X - nextTile.X, 2) + 
+			Mathf.Pow (CurrentTile.Y - nextTile.Y, 2));
 
 		//distance travelled this update;
 		float distThisFrame = speed * deltaTime;
@@ -101,14 +110,14 @@ public class Character {
 		//increment that to movement percentage
 		movementPercentage += percThisFrame;
 
+		Debug.Log (movementPercentage);
+
 		if (movementPercentage >= 1) {
 			CurrentTile = nextTile;
 			movementPercentage = 0;
 
 			//FIXME? retain any overshot movement?;
 		}
-
-
 	}
 
 	public void Update(float deltaTime){
