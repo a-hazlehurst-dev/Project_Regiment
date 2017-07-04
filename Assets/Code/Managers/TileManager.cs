@@ -10,7 +10,7 @@ public class TileManager : MonoBehaviour
 	private Transform gridHolder;
 
 	// Creates the grid and acts a facade in front.
-	public void InitialiseTileMap(SpriteManager spriteManager, int gridWidth, int gridHeight, int tileWidth, int tileHeight)
+	public void InitialiseTileMap(SpriteManager spriteManager)
 	{
         _spriteManager = spriteManager;
 
@@ -22,6 +22,7 @@ public class TileManager : MonoBehaviour
 	//Maps the tile data to the tile graphics
     private void CreateInitialTileMapGraphics()
     {
+		
 		for (int x = 0; x < GameManager.Instance.TileDataGrid.GridWidth; x++)
         { 
 			for (int y = 0; y < GameManager.Instance.TileDataGrid.GridHeight; y++)

@@ -1,14 +1,21 @@
-﻿<Properties StartupItem="Assembly-CSharp.csproj">
+﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Data\TileDataGrid.cs">
     <Files>
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="99" Column="34" />
-      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="84" Column="64" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="96" Column="3" />
+      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="108" Column="28" />
+      <File FileName="Assets\Code\Models\Furniture.cs" Line="62" Column="4" />
+      <File FileName="Assets\Code\Models\Tile.cs" Line="146" Column="1" />
+      <File FileName="Assets\Code\Managers\CharacterSpriteManager.cs" Line="20" Column="1" />
+      <File FileName="Assets\Code\Managers\TileManager.cs" Line="48" Column="73" />
+      <File FileName="Assets\Code\Managers\FurnitureManager.cs" Line="25" Column="38" />
+      <File FileName="Assets\Code\Managers\SpriteManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="66" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Scripts\CameraScript.cs" line="84" column="3" />
+      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\TileDataGrid.cs" line="111" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

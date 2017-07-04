@@ -1,7 +1,10 @@
 ﻿
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
-public class Tile 
+public class Tile : IXmlSerializable
 {
 	public enum FloorType { Grass =0, Mud=1, Water=2}
 
@@ -133,5 +136,29 @@ public class Tile
 
             return ns;
     }
+
+	/// <summary>
+	/// SAVING & LOADING XML STUFF
+	/// </summary>
+
+
+
+	public XmlSchema GetSchema(){
+		return null;
+	}
+
+	public void WriteXml (XmlWriter writer){
+		writer.WriteAttributeString ("X", X.ToString ());
+		writer.WriteAttributeString ("Y", Y.ToString ());
+		writer.WriteAttributeString("Type", ((int)Floor).ToString());
+	}
+
+	public void ReadXml (XmlReader reader){
+		//X = int.Parse (reader.GetAttribute ("X"));
+		//Y  = int.Parse (reader.GetAttribute ("Y"));
+
+		Floor = (Tile.FloorType)int.Parse (reader.GetAttribute ("Type"));
+	}
+
 		
 }

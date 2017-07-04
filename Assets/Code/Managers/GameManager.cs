@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 
 	Action<Character> cbCharacterCreated;
 	List<Character> characters ;
+
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
     public JobQueue JobQueue;
@@ -35,13 +36,21 @@ public class GameManager : MonoBehaviour {
 		}
 
 		Instance = this;
+
+		characters = new List<Character> ();
+		JobQueue = new JobQueue ();
+		SpriteManager = GetComponent<SpriteManager>();
+		TileManager = GetComponent<TileManager> ();
+		FurnitureManager = GetComponent<FurnitureManager> ();
+		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
 			
 		if (!loadGameMode) {
 			InitGame ();
 		} else {
 			loadGameMode = false;
-			LoadGameFromFile ();
+			CreateGameFromSaveFile ();
 		}
+		GameObject.Find("CameraDolly").transform.position = new Vector3 (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight/2, -11);
 
 	}
 	public void InvalidateTileGraph(){
@@ -69,22 +78,30 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void InitGame(){
-		characters = new List<Character> ();
-		JobQueue = new JobQueue ();
-		SpriteManager = GetComponent<SpriteManager>();
-		TileManager = GetComponent<TileManager> ();
-		FurnitureManager = GetComponent<FurnitureManager> ();
-		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
 
 		TileDataGrid = new TileDataGrid (100,100,64,64);
-		TileManager.InitialiseTileMap(SpriteManager, 100,100, 64,64);
+		TileManager.InitialiseTileMap(SpriteManager);
         FurnitureManager.InitialiseFurniture (SpriteManager);
         TileGraph = new PathTileGraph(TileDataGrid);
         CharacterSpriteManager.InitialiseCharacter (SpriteManager);
-        
 
     }
 
+	void CreateGameFromSaveFile(){
+
+		XmlSerializer xmlSerializer = new XmlSerializer (typeof (TileDataGrid));
+		TextReader reader = new StringReader (PlayerPrefs.GetString("SaveGame00"));
+		Debug.Log (reader.ToString ());
+		FurnitureManager.InitialiseFurniture (SpriteManager);
+
+		TileDataGrid =(TileDataGrid)xmlSerializer.Deserialize (reader);
+		reader.Close ();
+
+		TileManager.InitialiseTileMap(SpriteManager);
+
+		TileGraph = new PathTileGraph(TileDataGrid);
+		CharacterSpriteManager.InitialiseCharacter (SpriteManager);
+	}
 	void NewGame(){
 		Debug.Log ("Restarting....");
 		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
@@ -98,16 +115,18 @@ public class GameManager : MonoBehaviour {
 
 		Debug.Log (writer.ToString ());
 
+		PlayerPrefs.SetString ("SaveGame00", writer.ToString());
+
 
 	}
 
 	void LoadGame(){
 		Debug.Log ("Loading...");
-		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
-	}
-	void LoadGameFromFile(){
 		loadGameMode = true;
+		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+
 	}
+
 
     public Tile GetTileAt(Vector3 coordinate)
     {

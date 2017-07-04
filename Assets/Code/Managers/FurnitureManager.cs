@@ -7,33 +7,54 @@ using System.Linq;
 public class FurnitureManager : MonoBehaviour 
 {
 	private Dictionary<Furniture, GameObject> _furnitureGameObjectMap;
+	public Dictionary<string, Furniture> FurnitureObjectPrototypes;
 
     private SpriteManager _spriteManager;
 	private Transform furnitureHolder;
+	public List<Furniture> Furnitures { get; protected set; }
 
 	void Start(){
 		_furnitureGameObjectMap = new Dictionary<Furniture, GameObject> ();
+		Furnitures = new List<Furniture> ();
 		furnitureHolder = new GameObject ("Furniture").transform;
 	}
 
 	public void InitialiseFurniture(SpriteManager spriteManager)
 	{
 		_spriteManager = spriteManager;
+		CreateFurnitureObjectPrototypes ();
+	}
+	public  void CreateFurnitureObjectPrototypes()
+	{
+		FurnitureObjectPrototypes = new Dictionary<string, Furniture> ();
+
+		FurnitureObjectPrototypes.Add ("wall", Furniture.CreatePrototype ("wall", 0, 1, 1, true));
 	}
 
+	public bool IsFurniturePlacementValid(string furnitureType, Tile t){
+		return FurnitureObjectPrototypes [furnitureType].IsValidPosition (t);
+	}
 
-	public void PlaceFurniture(string itemToBuild, Tile tile){
+	public Furniture PlaceFurniture(string itemToBuild, Tile tile){
 
-		if (GameManager.Instance.TileDataGrid.FurnitureObjectPrototypes.ContainsKey (itemToBuild) == false) {
+		if (FurnitureObjectPrototypes.ContainsKey (itemToBuild) == false) {
 			Debug.LogError ("FurnitureObjectPrototypes does not contain prototype for key: " + itemToBuild);
-			return;
+			return null;
 		}
 
-		var furnitureToInstall = Furniture.PlaceFurniture (GameManager.Instance.TileDataGrid.FurnitureObjectPrototypes [itemToBuild], tile);
-        if(furnitureToInstall == null) { return; }
+		var furnitureToInstall = Furniture.PlaceFurniture (FurnitureObjectPrototypes [itemToBuild], tile);
+        if(furnitureToInstall == null) { return null; }
+
+		Furnitures.Add (furnitureToInstall);
         
         OnFurnitureCreated(furnitureToInstall);
 		GameManager.Instance.InvalidateTileGraph();
+
+		foreach (var furn in Furnitures) {
+			OnFurnitureCreated (furn);
+		}
+		return furnitureToInstall;
+
 	}
 
     public Sprite GetSpriteForFurniture(Furniture furnitureItem)
