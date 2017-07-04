@@ -2,6 +2,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Assets.Code.Services.Pathfinding;
+using UnityEngine.SceneManagement;
+using System.Xml.Serialization;
+using System.IO;
 
 public class GameManager : MonoBehaviour {
 
@@ -11,6 +14,9 @@ public class GameManager : MonoBehaviour {
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
+
+	private int optionAction;
+	private static bool loadGameMode = false;
    
 
 	Action<Character> cbCharacterCreated;
@@ -29,15 +35,13 @@ public class GameManager : MonoBehaviour {
 		}
 
 		Instance = this;
-		characters = new List<Character> ();
-		JobQueue = new JobQueue ();
-		SpriteManager = GetComponent<SpriteManager>();
-		TileManager = GetComponent<TileManager> ();
-		FurnitureManager = GetComponent<FurnitureManager> ();
-		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
-        
-	
-		InitGame();
+			
+		if (!loadGameMode) {
+			InitGame ();
+		} else {
+			loadGameMode = false;
+			LoadGameFromFile ();
+		}
 
 	}
 	public void InvalidateTileGraph(){
@@ -65,6 +69,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void InitGame(){
+		characters = new List<Character> ();
+		JobQueue = new JobQueue ();
+		SpriteManager = GetComponent<SpriteManager>();
+		TileManager = GetComponent<TileManager> ();
+		FurnitureManager = GetComponent<FurnitureManager> ();
+		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
+
 		TileDataGrid = new TileDataGrid (100,100,64,64);
 		TileManager.InitialiseTileMap(SpriteManager, 100,100, 64,64);
         FurnitureManager.InitialiseFurniture (SpriteManager);
@@ -73,6 +84,30 @@ public class GameManager : MonoBehaviour {
         
 
     }
+
+	void NewGame(){
+		Debug.Log ("Restarting....");
+		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+	}
+	void SaveGame(){
+		Debug.Log ("Saving....");
+
+		XmlSerializer xmlSerializer = new XmlSerializer (typeof (TileDataGrid));
+		TextWriter writer = new StringWriter ();
+		xmlSerializer.Serialize (writer, TileDataGrid);
+
+		Debug.Log (writer.ToString ());
+
+
+	}
+
+	void LoadGame(){
+		Debug.Log ("Loading...");
+		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+	}
+	void LoadGameFromFile(){
+		loadGameMode = true;
+	}
 
     public Tile GetTileAt(Vector3 coordinate)
     {
@@ -104,5 +139,20 @@ public class GameManager : MonoBehaviour {
 
 	public void UnRegisterCharacterCreated(Action<Character> callBackFunction){
 		cbCharacterCreated -= callBackFunction;
+	}
+
+	public void SetGameOptions(int optionAction){
+		this.optionAction = optionAction;
+		switch (this.optionAction) {
+		case 1:
+			NewGame();
+			break;
+		case 2:
+			SaveGame();
+			break;
+		case 3:
+			LoadGame();
+			break;
+		}
 	}
 }

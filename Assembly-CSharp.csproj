@@ -63,6 +63,7 @@
      <Compile Include="Assets\Code\Models\Tile.cs" />
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
+     <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathAStar.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />

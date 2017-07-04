@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
-public class TileDataGrid {
+public class TileDataGrid : IXmlSerializable{
 
 	public Tile[,] GridMap {get; protected set;}
 
@@ -64,8 +67,27 @@ public class TileDataGrid {
 	}
 
 
+	/// <summary>
+	/// SAVING & LOADING XML STUFF
+	/// </summary>
+
+	public TileDataGrid(){
+
+	}
+
+	public XmlSchema GetSchema(){
+		return null;
+	}
+
+	public void WriteXml (XmlWriter writer){
+		writer.WriteAttributeString ("Width", GridWidth.ToString());
+		writer.WriteAttributeString("Height", GridHeight.ToString());
+	}
+
+	public void ReadXml (XmlReader reader){
 
 
+	}
 
 		
 
