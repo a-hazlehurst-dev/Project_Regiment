@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Code\Data\Character.cs" />
      <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
+     <Compile Include="Assets\Code\Managers\CharacterManager.cs" />
      <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\FurnitureManager.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
@@ -68,6 +69,7 @@
      <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathTileGraph.cs" />
+     <Compile Include="Assets\Code\Services\XML\XmlGame.cs" />
      <Compile Include="Assets\Code\Utilities\FastPriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\FastPriorityQueueNode.cs" />
      <Compile Include="Assets\Code\Utilities\GenericPriorityQueue.cs" />

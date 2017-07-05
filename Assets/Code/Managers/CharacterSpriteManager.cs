@@ -12,19 +12,16 @@ public class CharacterSpriteManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_characterGameObjectMap = new Dictionary<Character, GameObject> ();
-		characterHolder= new GameObject ("CharacterHolder").transform;
-
-		Game.RegisterCharacterCreated (OnCharacterCreated);
-
-		Game.CreateCharacter(Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2, Game.TileDataGrid.GridWidth/2, 0)));
 		
+		characterHolder = new GameObject ("CharacterHolder").transform;
 	}
 
-
-	public void InitialiseCharacter(SpriteManager spriteManager)
+	public void InitialiseCharacter(SpriteManager spriteManager, TileDataGrid tileDataGrid, CharacterManager characterManager)
 	{
+		_characterGameObjectMap = new Dictionary<Character, GameObject> ();
 		_spriteManager = spriteManager;
+		characterManager.RegisterCharacterCreated (OnCharacterCreated);
+		characterManager.CreateCharacter(tileDataGrid.GetTileAt (tileDataGrid.GridWidth/2, tileDataGrid.GridWidth/2),tileDataGrid);
 	}
 
 	public void OnCharacterCreated(Character character){

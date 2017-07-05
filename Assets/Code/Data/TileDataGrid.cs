@@ -96,11 +96,18 @@ public class TileDataGrid : IXmlSerializable{
 		writer.WriteEndElement ();
 	}
 
-	public void ReadXml (XmlReader reader){
+	public TileDataGrid ReadSetup(XmlReader reader){
 		GridWidth = int.Parse (reader.GetAttribute ("Width"));
 		GridHeight = int.Parse(reader.GetAttribute ("Height"));
 
 		CreateGrid (GridWidth,GridHeight,64,64);
+
+		return this;
+	}
+
+	public void ReadXml (XmlReader reader){
+
+		var tileDataGrid = ReadSetup (reader);
 
 		while (reader.Read ()) {
 			switch (reader.Name) {
@@ -108,7 +115,7 @@ public class TileDataGrid : IXmlSerializable{
 				ReadXML_Tiles (reader);
 				break;
 			case "Furnitures":
-				ReadXml_Furnitures (reader);
+				ReadXml_Furnitures (reader,tileDataGrid);
 				break;
 			}
 		}
@@ -116,7 +123,7 @@ public class TileDataGrid : IXmlSerializable{
 	
 	}
 
-	private void ReadXML_Tiles(XmlReader reader){
+	public void ReadXML_Tiles(XmlReader reader){
 		while (reader.Read ()) {
 			if (reader.Name != "Tile") {
 				return;
@@ -130,7 +137,7 @@ public class TileDataGrid : IXmlSerializable{
 	
 	}
 
-	private void ReadXml_Furnitures(XmlReader reader){
+	public void ReadXml_Furnitures(XmlReader reader, TileDataGrid tileDataGrid){
 		while (reader.Read ()) {
 			if (reader.Name != "Furniture") {
 				return;
@@ -138,7 +145,7 @@ public class TileDataGrid : IXmlSerializable{
 			var x  = int.Parse (reader.GetAttribute ("X"));
 			var y = int.Parse (reader.GetAttribute ("Y"));
 
-			var furn = GameManager.Instance.FurnitureManager.PlaceFurniture (reader.GetAttribute ("objectType"), GridMap [x, y]);
+			var furn = GameManager.Instance.FurnitureManager.PlaceFurniture (reader.GetAttribute ("objectType"), GridMap [x, y], tileDataGrid);
 			furn.ReadXml (reader);
 
 		}

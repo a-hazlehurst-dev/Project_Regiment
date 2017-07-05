@@ -10,24 +10,24 @@ public class TileManager : MonoBehaviour
 	private Transform gridHolder;
 
 	// Creates the grid and acts a facade in front.
-	public void InitialiseTileMap(SpriteManager spriteManager)
+	public void InitialiseTileMap(SpriteManager spriteManager, TileDataGrid tileDataGrid)
 	{
         _spriteManager = spriteManager;
 
 		gridHolder = new GameObject ("Grid").transform;
 
-		CreateInitialTileMapGraphics();
+		CreateInitialTileMapGraphics(tileDataGrid);
     }
 
 	//Maps the tile data to the tile graphics
-    private void CreateInitialTileMapGraphics()
+	private void CreateInitialTileMapGraphics(TileDataGrid TileDataGrid)
     {
 		
-		for (int x = 0; x < GameManager.Instance.TileDataGrid.GridWidth; x++)
+		for (int x = 0; x < TileDataGrid.GridWidth; x++)
         { 
-			for (int y = 0; y < GameManager.Instance.TileDataGrid.GridHeight; y++)
+			for (int y = 0; y <TileDataGrid.GridHeight; y++)
             {
-				var tile = GameManager.Instance.TileDataGrid.GetTileAt (x, y);
+				var tile = TileDataGrid.GetTileAt (x, y);
                 GameObject toInstanciate = null;
 
                 if(tile.Floor == Tile.FloorType.Grass)

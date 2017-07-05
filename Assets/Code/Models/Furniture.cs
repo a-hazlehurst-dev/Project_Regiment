@@ -13,7 +13,7 @@ public class Furniture  : IXmlSerializable{
 	private int _height = 1;
     public bool LinksToNeighbour { get; protected set; }
 
-	Action<Furniture> cbOnChanged;
+	Action<Furniture, TileDataGrid> cbOnChanged;
 	private Func<Tile, bool> funcPositionValidation;
 
 	public Furniture(){
@@ -34,7 +34,7 @@ public class Furniture  : IXmlSerializable{
 	}
 
 
-	static public Furniture PlaceFurniture(Furniture prototype,  Tile tile)
+	static public Furniture PlaceFurniture(Furniture prototype,  Tile tile, TileDataGrid tileDataGrid)
 	{
 		Furniture item = new Furniture ();
 
@@ -58,28 +58,31 @@ public class Furniture  : IXmlSerializable{
             //inform neighbours that they have a new tile        
             int x = tile.X;
             int y = tile.Y;
+			if (tileDataGrid == null) {
+				tileDataGrid = GameManager.Instance.TileDataGrid;
+			}
 
-			var t = GameManager.Instance.TileDataGrid.GetTileAt(x, y + 1);
+			var t = tileDataGrid.GetTileAt(x, y + 1);
 			if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged!=null && t.InstalledFurniture.ObjectType == item.ObjectType)
             {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture); //we have northern neighbour with same object as us, so change it with callback;
+				t.InstalledFurniture.cbOnChanged(t.InstalledFurniture, tileDataGrid); //we have northern neighbour with same object as us, so change it with callback;
             }
 
-			t = GameManager.Instance.TileDataGrid.GetTileAt(x +1, y);
+			t = tileDataGrid.GetTileAt(x +1, y);
 			if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
             {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+				t.InstalledFurniture.cbOnChanged(t.InstalledFurniture, tileDataGrid);
             }
 
-			t = GameManager.Instance.TileDataGrid.GetTileAt(x, y- 1);
+			t = tileDataGrid.GetTileAt(x, y- 1);
 			if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
             {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+				t.InstalledFurniture.cbOnChanged(t.InstalledFurniture, tileDataGrid);
             }
-			t = GameManager.Instance.TileDataGrid.GetTileAt(x-1, y );
+			t = tileDataGrid.GetTileAt(x-1, y );
 			if (t != null && t.InstalledFurniture != null  && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
             {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+				t.InstalledFurniture.cbOnChanged(t.InstalledFurniture, tileDataGrid);
             }
 
         }
@@ -87,10 +90,10 @@ public class Furniture  : IXmlSerializable{
 		return item;
 	}
 		
-	public void RegisterOnChangedCallback(Action<Furniture> callBackFunc){
+	public void RegisterOnChangedCallback(Action<Furniture, TileDataGrid> callBackFunc){
 		cbOnChanged += callBackFunc;
 	}
-	public void UnRegisterOnChangedCallback(Action<Furniture> callBackFunc){
+	public void UnRegisterOnChangedCallback(Action<Furniture, TileDataGrid> callBackFunc){
 		cbOnChanged -= callBackFunc;
 	}
 

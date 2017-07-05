@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.Xml.Serialization;
 using System.IO;
 
+
 public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance { get; protected set;}
@@ -14,13 +15,11 @@ public class GameManager : MonoBehaviour {
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
-
+	public XmlGame xmlGame;
+	public CharacterManager CharacterManager { get; protected set; }
 	private int optionAction;
-	private static bool loadGameMode = false;
    
 
-	Action<Character> cbCharacterCreated;
-	List<Character> characters ;
 
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
@@ -36,22 +35,45 @@ public class GameManager : MonoBehaviour {
 		}
 
 		Instance = this;
+		xmlGame = new XmlGame ();
 
-		characters = new List<Character> ();
+		CharacterManager = new CharacterManager ();
 		JobQueue = new JobQueue ();
 		SpriteManager = GetComponent<SpriteManager>();
 		TileManager = GetComponent<TileManager> ();
 		FurnitureManager = GetComponent<FurnitureManager> ();
 		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
-			
-		if (!loadGameMode) {
+		SpriteManager.Initialise ();
+
+		if (!XmlGame.loadGameMode) {
 			InitGame ();
 		} else {
-			loadGameMode = false;
-			CreateGameFromSaveFile ();
-		}
-		GameObject.Find("CameraDolly").transform.position = new Vector3 (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight/2, -11);
+			XmlGame.loadGameMode = false;
+			TileDataGrid = xmlGame.CreateGameFromSaveFile (SpriteManager, TileDataGrid);
 
+			TileManager.InitialiseTileMap (SpriteManager, TileDataGrid);
+			TileGraph = new PathTileGraph (TileDataGrid);
+			CharacterSpriteManager.InitialiseCharacter (SpriteManager, TileDataGrid, CharacterManager);
+		}		
+		GameObject.Find ("CameraDolly").transform.position = new Vector3 (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2, -11);
+
+	}
+
+
+
+	public void SetGameOptions(int optionAction){
+		this.optionAction = optionAction;
+		switch (this.optionAction) {
+		case 1:
+			xmlGame.NewGame();
+			break;
+		case 2:
+			xmlGame.SaveGame(TileDataGrid);
+			break;
+		case 3:
+			xmlGame.LoadGame();
+			break;
+		}
 	}
 	public void InvalidateTileGraph(){
 		TileGraph = null;
@@ -60,72 +82,21 @@ public class GameManager : MonoBehaviour {
 
 
 	void Update(){
-		
-		foreach (var c in characters) {
-			c.Update (Time.deltaTime);
-		}
-
+		CharacterManager.Update (Time.deltaTime);
 	}
 
-	public Character CreateCharacter(Tile t){
-		Character c = new Character (TileDataGrid.GridMap [TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
-		if (cbCharacterCreated != null) {
-			cbCharacterCreated (c);
-		}
-		characters.Add (c);
-
-		return c;
-	}
 
 	void InitGame(){
 
 		TileDataGrid = new TileDataGrid (100,100,64,64);
-		TileManager.InitialiseTileMap(SpriteManager);
+		TileManager.InitialiseTileMap(SpriteManager,TileDataGrid);
         FurnitureManager.InitialiseFurniture (SpriteManager);
         TileGraph = new PathTileGraph(TileDataGrid);
-        CharacterSpriteManager.InitialiseCharacter (SpriteManager);
+		CharacterSpriteManager.InitialiseCharacter (SpriteManager,TileDataGrid, CharacterManager);
 
     }
 
-	void CreateGameFromSaveFile(){
 
-		XmlSerializer xmlSerializer = new XmlSerializer (typeof (TileDataGrid));
-		TextReader reader = new StringReader (PlayerPrefs.GetString("SaveGame00"));
-		Debug.Log (reader.ToString ());
-		FurnitureManager.InitialiseFurniture (SpriteManager);
-
-		TileDataGrid =(TileDataGrid)xmlSerializer.Deserialize (reader);
-		reader.Close ();
-
-		TileManager.InitialiseTileMap(SpriteManager);
-
-		TileGraph = new PathTileGraph(TileDataGrid);
-		CharacterSpriteManager.InitialiseCharacter (SpriteManager);
-	}
-	void NewGame(){
-		Debug.Log ("Restarting....");
-		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
-	}
-	void SaveGame(){
-		Debug.Log ("Saving....");
-
-		XmlSerializer xmlSerializer = new XmlSerializer (typeof (TileDataGrid));
-		TextWriter writer = new StringWriter ();
-		xmlSerializer.Serialize (writer, TileDataGrid);
-
-		Debug.Log (writer.ToString ());
-
-		PlayerPrefs.SetString ("SaveGame00", writer.ToString());
-
-
-	}
-
-	void LoadGame(){
-		Debug.Log ("Loading...");
-		loadGameMode = true;
-		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
-
-	}
 
 
     public Tile GetTileAt(Vector3 coordinate)
@@ -152,26 +123,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	public void RegisterCharacterCreated(Action<Character> callBackFunction){
-		cbCharacterCreated += callBackFunction;
-	}
 
-	public void UnRegisterCharacterCreated(Action<Character> callBackFunction){
-		cbCharacterCreated -= callBackFunction;
-	}
 
-	public void SetGameOptions(int optionAction){
-		this.optionAction = optionAction;
-		switch (this.optionAction) {
-		case 1:
-			NewGame();
-			break;
-		case 2:
-			SaveGame();
-			break;
-		case 3:
-			LoadGame();
-			break;
-		}
-	}
+
 }

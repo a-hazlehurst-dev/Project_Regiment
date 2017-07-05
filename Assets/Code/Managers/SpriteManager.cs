@@ -15,12 +15,13 @@ public class SpriteManager : MonoBehaviour {
     public GameObject[] interactableTiles;
     public GameObject[] peasentSprites;
 
-    public void Awake()
-    {
+   
+
+	public void Initialise(){
 		FurnitureObjects = new Dictionary<string, Sprite> ();
 		CharacterObjects = new Dictionary<string, Sprite> ();
-        LoadResources();
-    }
+		LoadResources();
+	}
 
     public void LoadResources()
     {

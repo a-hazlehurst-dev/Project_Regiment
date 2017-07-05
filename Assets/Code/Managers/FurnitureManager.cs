@@ -14,13 +14,15 @@ public class FurnitureManager : MonoBehaviour
 	public List<Furniture> Furnitures { get; protected set; }
 
 	void Start(){
-		_furnitureGameObjectMap = new Dictionary<Furniture, GameObject> ();
-		Furnitures = new List<Furniture> ();
+		
+
 		furnitureHolder = new GameObject ("Furniture").transform;
 	}
 
 	public void InitialiseFurniture(SpriteManager spriteManager)
 	{
+		_furnitureGameObjectMap = new Dictionary<Furniture, GameObject> ();
+		Furnitures = new List<Furniture> ();
 		_spriteManager = spriteManager;
 		CreateFurnitureObjectPrototypes ();
 	}
@@ -35,29 +37,30 @@ public class FurnitureManager : MonoBehaviour
 		return FurnitureObjectPrototypes [furnitureType].IsValidPosition (t);
 	}
 
-	public Furniture PlaceFurniture(string itemToBuild, Tile tile){
+	public Furniture PlaceFurniture(string itemToBuild, Tile tile, TileDataGrid tileDataGrid = null){
 
 		if (FurnitureObjectPrototypes.ContainsKey (itemToBuild) == false) {
 			Debug.LogError ("FurnitureObjectPrototypes does not contain prototype for key: " + itemToBuild);
 			return null;
 		}
 
-		var furnitureToInstall = Furniture.PlaceFurniture (FurnitureObjectPrototypes [itemToBuild], tile);
+
+		var furnitureToInstall = Furniture.PlaceFurniture (FurnitureObjectPrototypes [itemToBuild], tile, tileDataGrid);
         if(furnitureToInstall == null) { return null; }
 
 		Furnitures.Add (furnitureToInstall);
         
-        OnFurnitureCreated(furnitureToInstall);
+		OnFurnitureCreated(furnitureToInstall, tileDataGrid);
 		GameManager.Instance.InvalidateTileGraph();
 
 		foreach (var furn in Furnitures) {
-			OnFurnitureCreated (furn);
+			OnFurnitureCreated (furn, tileDataGrid);
 		}
 		return furnitureToInstall;
 
 	}
 
-    public Sprite GetSpriteForFurniture(Furniture furnitureItem)
+	public Sprite GetSpriteForFurniture(Furniture furnitureItem, TileDataGrid tileDataGrid)
     {
         if(furnitureItem.LinksToNeighbour == false)
         {
@@ -69,25 +72,28 @@ public class FurnitureManager : MonoBehaviour
         Tile t;
         int x = furnitureItem.Tile.X;
         int y = furnitureItem.Tile.Y;
+		if (tileDataGrid == null) {
+			tileDataGrid = GameManager.Instance.TileDataGrid;
+		}
 
-		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y + 1);
+		t = tileDataGrid.GetTileAt(x, y + 1);
         if(t!=null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
         {
             spriteName += "N";
         }
 
-		t = GameManager.Instance.TileDataGrid.GetTileAt(x+1, y );
+		t = tileDataGrid.GetTileAt(x+1, y );
         if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
         {
             spriteName += "E";
         }
 
-		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y - 1);
+		t = tileDataGrid.GetTileAt(x, y - 1);
         if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
         {
             spriteName += "S";
         }
-		t = GameManager.Instance.TileDataGrid.GetTileAt(x-1, y);
+		t = tileDataGrid.GetTileAt(x-1, y);
         if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
         {
             spriteName += "W";
@@ -117,7 +123,7 @@ public class FurnitureManager : MonoBehaviour
 
 	}
 
-	public void OnFurnitureCreated(Furniture furnitureToInstall){
+	public void OnFurnitureCreated(Furniture furnitureToInstall, TileDataGrid tileDataGrid){
 		
 		GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
 
@@ -125,7 +131,7 @@ public class FurnitureManager : MonoBehaviour
 
 		var sr = furnitureToRender.AddComponent<SpriteRenderer> ();
 		sr.sortingLayerName = "Furniture";
-		sr.sprite = GetSpriteForFurniture(furnitureToInstall) ; //FIXME wall does not exist.
+		sr.sprite = GetSpriteForFurniture(furnitureToInstall,tileDataGrid) ; //FIXME wall does not exist.
 		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
 
 		furnitureToRender.transform.SetParent (furnitureHolder);
@@ -133,7 +139,7 @@ public class FurnitureManager : MonoBehaviour
 		furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
 	}
 
-	public void OnFurnitureChanged(Furniture furn){
+	public void OnFurnitureChanged(Furniture furn, TileDataGrid tileDataGrid){
    
         if (_furnitureGameObjectMap.ContainsKey(furn) == false)
         {
@@ -143,7 +149,7 @@ public class FurnitureManager : MonoBehaviour
 
         GameObject furn_go = _furnitureGameObjectMap[furn];
 		var sr = furn_go.GetComponent<SpriteRenderer> ();
-		sr.sprite =GetSpriteForFurniture(furn);
+		sr.sprite =GetSpriteForFurniture(furn,tileDataGrid);
 		sr.sortingLayerName = "Furniture";
 
 
