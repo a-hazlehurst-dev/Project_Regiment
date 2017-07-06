@@ -35,6 +35,7 @@ public class FurnitureController : MonoBehaviour
 	public Furniture PlaceFurniture(string itemToBuild, Tile tile){
 
 		var furnToInstall = _furnitureService.CreateFurniture(itemToBuild, tile);
+        if(furnToInstall == null) { return null; }
         
 		OnFurnitureCreated(furnToInstall);
 
@@ -110,7 +111,8 @@ public class FurnitureController : MonoBehaviour
 	}
 
 	public void OnFurnitureCreated(Furniture furnitureToInstall){
-		
+        
+        Debug.Log(furnitureToInstall.Tile);
 		GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
 
 		_furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);

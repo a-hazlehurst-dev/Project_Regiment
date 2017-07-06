@@ -17,9 +17,15 @@ public class SpriteManager : MonoBehaviour {
 
     public void Awake()
     {
-		FurnitureObjects = new Dictionary<string, Sprite> ();
-		CharacterObjects = new Dictionary<string, Sprite> ();
+		
+    }
+
+    public void Init()
+    {
+        FurnitureObjects = new Dictionary<string, Sprite>();
+        CharacterObjects = new Dictionary<string, Sprite>();
         LoadResources();
+
     }
 
     public void LoadResources()

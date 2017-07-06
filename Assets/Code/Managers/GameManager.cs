@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour {
 	private static bool loadGameMode = false;
    
 
-	Action<Character> cbCharacterCreated;
-	List<Character> characters ;
 
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
@@ -43,9 +41,10 @@ public class GameManager : MonoBehaviour {
 		_characterService = new CharacterService ();
 		_characterService.Init ();
 
-		characters = new List<Character> ();
 		JobQueue = new JobQueue ();
 		SpriteManager = GetComponent<SpriteManager>();
+        SpriteManager.Init();
+
 		TileManager = GetComponent<TileManager> ();
 		FurnitureController = GetComponent<FurnitureController> ();
 		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
@@ -57,8 +56,10 @@ public class GameManager : MonoBehaviour {
 			CreateGameFromSaveFile ();
 		}
 		GameObject.Find("CameraDolly").transform.position = new Vector3 (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight/2, -11);
+        _characterService.Create(TileDataGrid.GridMap[TileDataGrid.GridWidth/2,TileDataGrid.GridHeight/2]);
 
-	}
+
+    }
 	public void InvalidateTileGraph(){
 		TileGraph = null;
 	}
@@ -67,20 +68,10 @@ public class GameManager : MonoBehaviour {
 
 	void Update(){
 		
-		foreach (var c in characters) {
+		foreach (var c in _characterService.FindAll()) {
 			c.Update (Time.deltaTime);
 		}
 
-	}
-
-	public Character CreateCharacter(Tile t){
-		Character c = new Character (TileDataGrid.GridMap [TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
-		if (cbCharacterCreated != null) {
-			cbCharacterCreated (c);
-		}
-		characters.Add (c);
-
-		return c;
 	}
 
 	void InitGame(){
@@ -89,7 +80,7 @@ public class GameManager : MonoBehaviour {
 		TileManager.InitialiseTileMap(SpriteManager);
 		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
         TileGraph = new PathTileGraph(TileDataGrid);
-        CharacterSpriteManager.InitialiseCharacter (SpriteManager);
+        CharacterSpriteManager.InitialiseCharacter (SpriteManager, _characterService);
 
     }
 
@@ -106,7 +97,7 @@ public class GameManager : MonoBehaviour {
 		TileManager.InitialiseTileMap(SpriteManager);
 
 		TileGraph = new PathTileGraph(TileDataGrid);
-		CharacterSpriteManager.InitialiseCharacter (SpriteManager);
+		CharacterSpriteManager.InitialiseCharacter (SpriteManager,_characterService);
 	}
 	void NewGame(){
 		Debug.Log ("Restarting....");
@@ -158,13 +149,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	public void RegisterCharacterCreated(Action<Character> callBackFunction){
-		cbCharacterCreated += callBackFunction;
-	}
-
-	public void UnRegisterCharacterCreated(Action<Character> callBackFunction){
-		cbCharacterCreated -= callBackFunction;
-	}
 
 	public void SetGameOptions(int optionAction){
 		this.optionAction = optionAction;

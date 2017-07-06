@@ -6,23 +6,28 @@ public class CharacterSpriteManager : MonoBehaviour {
 
 	Dictionary<Character, GameObject> _characterGameObjectMap;
 	SpriteManager _spriteManager;
+    CharacterService _characterService;
 
 	Transform characterHolder;
-	GameManager Game  { get { return GameManager.Instance; } }
 
 	// Use this for initialization
 	void Start () {
-		_characterGameObjectMap = new Dictionary<Character, GameObject> ();
-		characterHolder= new GameObject ("CharacterHolder").transform;
-
-		Game.RegisterCharacterCreated (OnCharacterCreated);
+		
 	}
 
 
-	public void InitialiseCharacter(SpriteManager spriteManager)
+	public void InitialiseCharacter(SpriteManager spriteManager, CharacterService characterService)
 	{
 		_spriteManager = spriteManager;
-	}
+
+        _characterService = characterService;
+
+        _characterGameObjectMap = new Dictionary<Character, GameObject>();
+
+        characterHolder = new GameObject("CharacterHolder").transform;
+
+        _characterService.Register_OnCharacter_Created(OnCharacterCreated);
+    }
 
 	public void OnCharacterCreated(Character character){
 
@@ -36,6 +41,8 @@ public class CharacterSpriteManager : MonoBehaviour {
 		var sr = char_go.AddComponent<SpriteRenderer> ();
 		sr.sprite = _spriteManager.CharacterObjects ["basic_character"];
 		sr.sortingLayerName = "Character";
+
+
 		char_go.transform.SetParent ( characterHolder );
 
 		character.RegisterOnCharacterChangedCallback (OnCharacterChanged);

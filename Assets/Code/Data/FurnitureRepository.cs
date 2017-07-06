@@ -43,7 +43,11 @@ public class FurnitureService{
 
 	public Furniture CreateFurniture(string type, Tile tile){
 		var furniture = builder.CreateFurniture (type, tile);
-		cbOnCreated (furniture);
+        if(furniture == null) { return null; }
+        if (cbOnCreated != null)
+        {
+            cbOnCreated(furniture);
+        }
 		return furniture;
 	}
 
@@ -82,9 +86,10 @@ public class FurnitureBuilder{
 
 		var furn = _furniturePrototypes.Get (type);
 		var furnToPlace = Furniture.PlaceFurniture (furn, tileLocation);
+        if(furnToPlace == null) { return null; }
 		_furnitureRepository.Add (furnToPlace);
 
-		return furn;
+		return furnToPlace;
 	}
 }
 
