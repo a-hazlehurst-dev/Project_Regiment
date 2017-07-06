@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 
 public class TileDataGrid : IXmlSerializable{
 
+	private FurnitureService _furnitureService;
 	public Tile[,] GridMap {get; protected set;}
 
 	//public Dictionary<string, Furniture> FurnitureObjectPrototypes;
@@ -18,9 +19,9 @@ public class TileDataGrid : IXmlSerializable{
     public int treeCount = 0;
 
 
-	public TileDataGrid(int gridheight, int gridWidth, float tileHeight,float tileWidth )
+	public TileDataGrid(int gridheight, int gridWidth, float tileHeight,float tileWidth, FurnitureService furnitureService )
 	{
-
+		_furnitureService = furnitureService;
 		CreateGrid (gridWidth, gridheight, tileWidth, tileHeight);	
 	}
 
@@ -86,7 +87,7 @@ public class TileDataGrid : IXmlSerializable{
 
 		writer.WriteStartElement ("Furnitures");
 
-		foreach (var furn in GameManager.Instance.FurnitureManager.Furnitures) {
+		foreach (var furn in _furnitureService.FindAll()) {
 			Debug.Log ("saving furnitures.");
 			writer.WriteStartElement ("Furniture");
 			furn.WriteXml (writer);
@@ -108,7 +109,7 @@ public class TileDataGrid : IXmlSerializable{
 				ReadXML_Tiles (reader);
 				break;
 			case "Furnitures":
-				ReadXml_Furnitures (reader);
+				//ReadXml_Furnitures (reader);
 				break;
 			}
 		}
@@ -131,17 +132,17 @@ public class TileDataGrid : IXmlSerializable{
 	}
 
 	private void ReadXml_Furnitures(XmlReader reader){
-		while (reader.Read ()) {
-			if (reader.Name != "Furniture") {
-				return;
-			}
-			var x  = int.Parse (reader.GetAttribute ("X"));
-			var y = int.Parse (reader.GetAttribute ("Y"));
+//		while (reader.Read ()) {
+//			if (reader.Name != "Furniture") {
+//				return;
+//			}
+//			var x  = int.Parse (reader.GetAttribute ("X"));
+//			var y = int.Parse (reader.GetAttribute ("Y"));
+//
+////			var furn = GameManager.Instance.Furn.PlaceFurniture (reader.GetAttribute ("objectType"), GridMap [x, y]);
+//			//furn.ReadXml (reader);
+//
 
-			var furn = GameManager.Instance.FurnitureManager.PlaceFurniture (reader.GetAttribute ("objectType"), GridMap [x, y]);
-			furn.ReadXml (reader);
-
-		}
 	}
 		
 

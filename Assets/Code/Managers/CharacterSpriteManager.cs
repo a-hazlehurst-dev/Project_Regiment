@@ -16,9 +16,6 @@ public class CharacterSpriteManager : MonoBehaviour {
 		characterHolder= new GameObject ("CharacterHolder").transform;
 
 		Game.RegisterCharacterCreated (OnCharacterCreated);
-
-		Game.CreateCharacter(Game.GetTileAt (new Vector3(Game.TileDataGrid.GridWidth/2, Game.TileDataGrid.GridWidth/2, 0)));
-		
 	}
 
 
@@ -51,11 +48,6 @@ public class CharacterSpriteManager : MonoBehaviour {
 		}
 
 		GameObject char_go = _characterGameObjectMap [character];
-
-		//code to change images
-		//var sr = char_go.GetComponent<SpriteRenderer> ();
-		//sr.sprite = _spriteManager.CharacterObjects ["basic_character"];
-		//sr.sortingLayerName = "Character";
 
 		char_go.transform.position = new Vector3 (character.X, character.Y, 0);
 		char_go.transform.SetParent ( characterHolder );

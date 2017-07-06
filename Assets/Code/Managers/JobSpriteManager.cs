@@ -6,14 +6,14 @@ public class JobSpriteManager : MonoBehaviour {
 
 	//this bare bones controller is going to barrow from furniture manager.
 
-	FurnitureManager _furnitureManager;
+	FurnitureController _furnitureManager;
     
 	private  Transform jobHolder;
 	Dictionary<Job, GameObject>  _jobToGameObjectMap;
 	// Use this for initialization
 	void Start () {
 		_jobToGameObjectMap = new Dictionary<Job, GameObject> ();
-		_furnitureManager = GameObject.FindObjectOfType<FurnitureManager> ();
+		_furnitureManager = GameObject.FindObjectOfType<FurnitureController> ();
 		jobHolder = new GameObject ("Jobs").transform;
 		GameManager.Instance.JobQueue.RegisterJobCreatedCallBack (OnJobCreated);
 

@@ -47,9 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Code\Data\Character.cs" />
+     <Compile Include="Assets\Code\Data\CharacterService.cs" />
+     <Compile Include="Assets\Code\Data\FurnitureRepository.cs" />
      <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
      <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
-     <Compile Include="Assets\Code\Managers\FurnitureManager.cs" />
+     <Compile Include="Assets\Code\Managers\FurnitureController.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
      <Compile Include="Assets\Code\Managers\JobSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />

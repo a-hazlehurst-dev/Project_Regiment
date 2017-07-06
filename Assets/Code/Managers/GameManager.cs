@@ -9,12 +9,13 @@ using System.IO;
 public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance { get; protected set;}
-	public FurnitureManager FurnitureManager { get; protected set; }
+	public FurnitureController FurnitureController { get; protected set; }
 	public TileManager TileManager { get; protected set; }
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
-
+	private FurnitureService _furnitureService;
+	private CharacterService _characterService;
 	private int optionAction;
 	private static bool loadGameMode = false;
    
@@ -36,12 +37,17 @@ public class GameManager : MonoBehaviour {
 		}
 
 		Instance = this;
+		_furnitureService = new FurnitureService ();
+		_furnitureService.Init ();
+
+		_characterService = new CharacterService ();
+		_characterService.Init ();
 
 		characters = new List<Character> ();
 		JobQueue = new JobQueue ();
 		SpriteManager = GetComponent<SpriteManager>();
 		TileManager = GetComponent<TileManager> ();
-		FurnitureManager = GetComponent<FurnitureManager> ();
+		FurnitureController = GetComponent<FurnitureController> ();
 		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
 			
 		if (!loadGameMode) {
@@ -79,9 +85,9 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame(){
 
-		TileDataGrid = new TileDataGrid (100,100,64,64);
+		TileDataGrid = new TileDataGrid (100,100,64,64,_furnitureService);
 		TileManager.InitialiseTileMap(SpriteManager);
-        FurnitureManager.InitialiseFurniture (SpriteManager);
+		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
         TileGraph = new PathTileGraph(TileDataGrid);
         CharacterSpriteManager.InitialiseCharacter (SpriteManager);
 
@@ -92,7 +98,7 @@ public class GameManager : MonoBehaviour {
 		XmlSerializer xmlSerializer = new XmlSerializer (typeof (TileDataGrid));
 		TextReader reader = new StringReader (PlayerPrefs.GetString("SaveGame00"));
 		Debug.Log (reader.ToString ());
-		FurnitureManager.InitialiseFurniture (SpriteManager);
+		FurnitureController.InitialiseFurniture (SpriteManager,_furnitureService);
 
 		TileDataGrid =(TileDataGrid)xmlSerializer.Deserialize (reader);
 		reader.Close ();

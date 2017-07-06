@@ -4,56 +4,48 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class FurnitureManager : MonoBehaviour 
+public class FurnitureController : MonoBehaviour 
 {
+
+	//responsible for drawing furniture on int game.
 	private Dictionary<Furniture, GameObject> _furnitureGameObjectMap;
 	public Dictionary<string, Furniture> FurnitureObjectPrototypes;
 
     private SpriteManager _spriteManager;
 	private Transform furnitureHolder;
-	public List<Furniture> Furnitures { get; protected set; }
+	private FurnitureService _furnitureService;
 
 	void Start(){
 		_furnitureGameObjectMap = new Dictionary<Furniture, GameObject> ();
-		Furnitures = new List<Furniture> ();
+
 		furnitureHolder = new GameObject ("Furniture").transform;
 	}
 
-	public void InitialiseFurniture(SpriteManager spriteManager)
+	public void InitialiseFurniture(SpriteManager spriteManager, FurnitureService furnitureService)
 	{
 		_spriteManager = spriteManager;
-		CreateFurnitureObjectPrototypes ();
+		_furnitureService = furnitureService;
 	}
-	public  void CreateFurnitureObjectPrototypes()
-	{
-		FurnitureObjectPrototypes = new Dictionary<string, Furniture> ();
 
-		FurnitureObjectPrototypes.Add ("wall", Furniture.CreatePrototype ("wall", 0, 1, 1, true));
-	}
 
 	public bool IsFurniturePlacementValid(string furnitureType, Tile t){
-		return FurnitureObjectPrototypes [furnitureType].IsValidPosition (t);
+		return _furnitureService.IsValidPosition (furnitureType, t);
 	}
 
 	public Furniture PlaceFurniture(string itemToBuild, Tile tile){
 
-		if (FurnitureObjectPrototypes.ContainsKey (itemToBuild) == false) {
-			Debug.LogError ("FurnitureObjectPrototypes does not contain prototype for key: " + itemToBuild);
-			return null;
-		}
-
-		var furnitureToInstall = Furniture.PlaceFurniture (FurnitureObjectPrototypes [itemToBuild], tile);
-        if(furnitureToInstall == null) { return null; }
-
-		Furnitures.Add (furnitureToInstall);
+		var furnToInstall = _furnitureService.CreateFurniture(itemToBuild, tile);
         
-        OnFurnitureCreated(furnitureToInstall);
+		OnFurnitureCreated(furnToInstall);
+
 		GameManager.Instance.InvalidateTileGraph();
 
-		foreach (var furn in Furnitures) {
-			OnFurnitureCreated (furn);
+		foreach(var furn in _furnitureService.FindAll())
+		{
+			OnFurnitureCreated(furn);
 		}
-		return furnitureToInstall;
+
+		return furnToInstall;
 
 	}
 
