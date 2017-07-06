@@ -7,8 +7,8 @@ public class JobSpriteManager : MonoBehaviour {
 	//this bare bones controller is going to barrow from furniture manager.
 
 	FurnitureManager _furnitureManager;
-
-	public  Transform jobHolder;
+    
+	private  Transform jobHolder;
 	Dictionary<Job, GameObject>  _jobToGameObjectMap;
 	// Use this for initialization
 	void Start () {
@@ -23,13 +23,19 @@ public class JobSpriteManager : MonoBehaviour {
 	{
 		GameObject job_go = new GameObject();
 
+
+		if (_jobToGameObjectMap.ContainsKey (job)) {
+			Debug.Log ("ON Job Created: attempting to create a job graphic, where graphic already exists (probable, re queue not job created!");
+			return;
+		}
+
 		_jobToGameObjectMap.Add(job, job_go);
 
 		job_go.name = "Job: " + job.JobObjectType + ": x: " + job.Tile.X + ", y" + job.Tile.Y;
 		job_go.transform.position = new Vector3(job.Tile.X, job.Tile.Y, 0);
 		job_go.transform.SetParent (jobHolder, true);
 
-
+		Debug.Log ("job created: "+ job + ", (" + job_go+")");
 		SpriteRenderer sr = job_go.AddComponent<SpriteRenderer> ();
 		sr.sortingLayerName = "Job";
 		sr.sprite = _furnitureManager.GetSpriteForFurniture(job.JobObjectType); 

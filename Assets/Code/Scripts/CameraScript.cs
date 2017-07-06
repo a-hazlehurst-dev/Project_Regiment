@@ -46,7 +46,7 @@ public class CameraScript : MonoBehaviour {
 			} else if (_drawMode == 2) {
 				if(_drawObjectMode.Equals("wall")){
 
-					if (GameManager.Instance.TileDataGrid.IsFurniturePlacementValid ("wall", tile) && tile.PendingFurnitureJob ==  null) {
+					if (GameManager.Instance.FurnitureManager.IsFurniturePlacementValid ("wall", tile) && tile.PendingFurnitureJob ==  null) {
 						//tile is valid for this furniture type and not job already in place.
 						var job = new Job (tile, "wall", (theJob) => { 
 							GameManager.Instance.FurnitureManager.PlaceFurniture ("wall",theJob.Tile);
@@ -63,7 +63,7 @@ public class CameraScript : MonoBehaviour {
 					}
 				}
 				else if(_drawObjectMode.Equals("path")){
-					if (GameManager.Instance.TileDataGrid.IsFurniturePlacementValid ("path", tile)  && tile.PendingFurnitureJob ==  null) {
+					if (GameManager.Instance.FurnitureManager.IsFurniturePlacementValid ("path", tile)  && tile.PendingFurnitureJob ==  null) {
 						//tile is valid for furniture.
 
 						var job = new Job (tile, "path", (theJob) => {
