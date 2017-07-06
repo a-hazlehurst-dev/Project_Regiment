@@ -57,7 +57,7 @@ namespace Assets.Code.Services.Pathfinding
                 }
                 node.Edges = edges.ToArray();
             }
-            Debug.Log("edges created: " + edgeCount);
+           // Debug.Log("edges created: " + edgeCount);
         }
 
 		bool IsDiaganolClipping(Tile curr, Tile neighbour){

@@ -14,7 +14,8 @@ public class TileManager : MonoBehaviour
 	{
         _spriteManager = spriteManager;
 
-		gridHolder = new GameObject ("Grid").transform;
+        Debug.Log("t");
+        gridHolder = new GameObject ("Grid").transform;
 
 		CreateInitialTileMapGraphics();
     }
@@ -24,10 +25,12 @@ public class TileManager : MonoBehaviour
     {
 		
 		for (int x = 0; x < GameManager.Instance.TileDataGrid.GridWidth; x++)
-        { 
-			for (int y = 0; y < GameManager.Instance.TileDataGrid.GridHeight; y++)
+        {
+            Debug.Log("t");
+            for (int y = 0; y < GameManager.Instance.TileDataGrid.GridHeight; y++)
             {
-				var tile = GameManager.Instance.TileDataGrid.GetTileAt (x, y);
+                Debug.Log("t2");
+                var tile = GameManager.Instance.TileDataGrid.GetTileAt (x, y);
                 GameObject toInstanciate = null;
 
                 if(tile.Floor == Tile.FloorType.Grass)

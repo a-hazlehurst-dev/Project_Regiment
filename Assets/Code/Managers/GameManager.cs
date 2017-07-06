@@ -5,6 +5,7 @@ using Assets.Code.Services.Pathfinding;
 using UnityEngine.SceneManagement;
 using System.Xml.Serialization;
 using System.IO;
+using System.Xml;
 
 public class GameManager : MonoBehaviour {
 
@@ -87,12 +88,31 @@ public class GameManager : MonoBehaviour {
 	void CreateGameFromSaveFile(){
 
 		XmlSerializer xmlSerializer = new XmlSerializer (typeof (TileDataGrid));
-		TextReader reader = new StringReader (PlayerPrefs.GetString("SaveGame00"));
-		Debug.Log (reader.ToString ());
-		FurnitureController.InitialiseFurniture (SpriteManager,_furnitureService);
+	
+        var xmlReader = XmlReader.Create(new StringReader(PlayerPrefs.GetString("SaveGame00")));
+     
+        FurnitureController.InitialiseFurniture (SpriteManager,_furnitureService);
+       
+        TileDataGrid = new TileDataGrid(_furnitureService);
+        
+        while (xmlReader.Read() && xmlReader.IsStartElement())
+        {
+            if (xmlReader.Name == "TileDataGrid"){
+                TileDataGrid.LoadSetup(xmlReader);
+            }
+            if(xmlReader.Name == "Tiles" )
+            {
+                TileDataGrid.LoadTiles(xmlReader);
+            }
+            if (xmlReader.Name == "Furnitures")
+            {
+                TileDataGrid.LoadFurniture(xmlReader);
+            }
 
-		TileDataGrid =(TileDataGrid)xmlSerializer.Deserialize (reader);
-		reader.Close ();
+
+        }
+       
+        xmlReader.Close ();
 
 		TileManager.InitialiseTileMap(SpriteManager);
 

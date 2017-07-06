@@ -25,6 +25,11 @@ public class TileDataGrid : IXmlSerializable{
 		CreateGrid (gridWidth, gridheight, tileWidth, tileHeight);	
 	}
 
+    public TileDataGrid(FurnitureService furnitureService)
+    {
+        _furnitureService = furnitureService;
+    }
+
 
 	private void CreateGrid(int width, int height, float tileWidth,float tileHeight )
 	{
@@ -40,14 +45,10 @@ public class TileDataGrid : IXmlSerializable{
 				GridMap [x, y] = new Tile (x, y,0);
 			}
 		}
-
-		//GameManager.Instance.FurnitureManager.CreateFurnitureObjectPrototypes ();
-
 	}
 
 	public Tile GetTileAt (int x, int y)
 	{
-        //Debug.Log("Finding ( " + x + ", " + y + ") does not exist");
         if (x >= GridWidth || x < 0 || y >= GridHeight || y < 0) {
 			
 			return null;
@@ -81,6 +82,7 @@ public class TileDataGrid : IXmlSerializable{
 				writer.WriteStartElement ("Tile");
 				GridMap [x, y].WriteXml (writer);
 				writer.WriteEndElement ();
+                
 			}
 		}
 		writer.WriteEndElement ();
@@ -88,7 +90,7 @@ public class TileDataGrid : IXmlSerializable{
 		writer.WriteStartElement ("Furnitures");
 
 		foreach (var furn in _furnitureService.FindAll()) {
-			Debug.Log ("saving furnitures.");
+			
 			writer.WriteStartElement ("Furniture");
 			furn.WriteXml (writer);
 			writer.WriteEndElement ();
@@ -98,52 +100,63 @@ public class TileDataGrid : IXmlSerializable{
 	}
 
 	public void ReadXml (XmlReader reader){
-		GridWidth = int.Parse (reader.GetAttribute ("Width"));
-		GridHeight = int.Parse(reader.GetAttribute ("Height"));
+        return;
+	}
 
-		CreateGrid (GridWidth,GridHeight,64,64);
+    public void LoadSetup(XmlReader reader)
+    {
+        GridWidth = int.Parse(reader.GetAttribute("Width"));
+        GridHeight = int.Parse(reader.GetAttribute("Height"));
 
-		while (reader.Read ()) {
-			switch (reader.Name) {
-			case "Tiles":
-				ReadXML_Tiles (reader);
-				break;
-			case "Furnitures":
-				//ReadXml_Furnitures (reader);
-				break;
-			}
-		}
+        CreateGrid(GridWidth, GridHeight, 64, 64);
+    }
+
+    public void LoadTiles(XmlReader reader)
+    {
+        while (reader.Read())
+        {
+            if (reader.Name == "Tiles" && !reader.IsStartElement())
+            {
+                return;
+            }
+            if (reader.Name != "Tile")
+            {
+                continue;
+            }
+            
+
+            var x = int.Parse(reader.GetAttribute("X"));
+            var y = int.Parse(reader.GetAttribute("Y"));
+          
+            GridMap[x, y].ReadXml(reader);
+        }
+
+    }
+
+    public void LoadFurniture(XmlReader reader)
+    {
+        while (reader.Read())
+        {
+            if (reader.Name == "Furnitures" && !reader.IsStartElement())
+            {
+                return;
+            }
+            if (reader.Name != "Furniture")
+            {
+                continue;
+            }
+
+            var x = int.Parse(reader.GetAttribute("X"));
+            var y = int.Parse(reader.GetAttribute("Y"));
+
+            var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y]);
+            furn.ReadXml(reader);
+
+        }
+    }
 
 	
-	}
 
-	private void ReadXML_Tiles(XmlReader reader){
-		while (reader.Read ()) {
-			if (reader.Name != "Tile") {
-				return;
-			}
-
-			var x  = int.Parse (reader.GetAttribute ("X"));
-			var y = int.Parse (reader.GetAttribute ("Y"));
-		
-			GridMap [x, y].ReadXml (reader);
-		}
 	
-	}
-
-	private void ReadXml_Furnitures(XmlReader reader){
-//		while (reader.Read ()) {
-//			if (reader.Name != "Furniture") {
-//				return;
-//			}
-//			var x  = int.Parse (reader.GetAttribute ("X"));
-//			var y = int.Parse (reader.GetAttribute ("Y"));
-//
-////			var furn = GameManager.Instance.Furn.PlaceFurniture (reader.GetAttribute ("objectType"), GridMap [x, y]);
-//			//furn.ReadXml (reader);
-//
-
-	}
-		
 
 }

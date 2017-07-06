@@ -35,7 +35,7 @@ public class JobSpriteManager : MonoBehaviour {
 		job_go.transform.position = new Vector3(job.Tile.X, job.Tile.Y, 0);
 		job_go.transform.SetParent (jobHolder, true);
 
-		Debug.Log ("job created: "+ job + ", (" + job_go+")");
+		//Debug.Log ("job created: "+ job + ", (" + job_go+")");
 		SpriteRenderer sr = job_go.AddComponent<SpriteRenderer> ();
 		sr.sortingLayerName = "Job";
 		sr.sprite = _furnitureManager.GetSpriteForFurniture(job.JobObjectType); 

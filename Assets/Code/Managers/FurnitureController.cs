@@ -16,15 +16,17 @@ public class FurnitureController : MonoBehaviour
 	private FurnitureService _furnitureService;
 
 	void Start(){
-		_furnitureGameObjectMap = new Dictionary<Furniture, GameObject> ();
+		
 
 		furnitureHolder = new GameObject ("Furniture").transform;
 	}
 
 	public void InitialiseFurniture(SpriteManager spriteManager, FurnitureService furnitureService)
 	{
-		_spriteManager = spriteManager;
+        _furnitureGameObjectMap = new Dictionary<Furniture, GameObject>();
+        _spriteManager = spriteManager;
 		_furnitureService = furnitureService;
+        _furnitureService.Register_OnFurniture_Created(OnFurnitureCreated);
 	}
 
 
@@ -111,9 +113,14 @@ public class FurnitureController : MonoBehaviour
 	}
 
 	public void OnFurnitureCreated(Furniture furnitureToInstall){
-        
-        Debug.Log(furnitureToInstall.Tile);
-		GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
+
+        if (_furnitureGameObjectMap.ContainsKey(furnitureToInstall))
+        {
+            return;
+        }
+
+        GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
+       
 
 		_furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);
 

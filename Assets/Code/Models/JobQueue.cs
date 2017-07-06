@@ -16,7 +16,7 @@ public class JobQueue  {
 
 	public void Enqueue(Job job){
 		_jobQueue.Enqueue (job);
-		Debug.Log ("job added to queue");
+		//Debug.Log ("job added to queue");
 
 		if (cbJobCreated != null) {
 			
