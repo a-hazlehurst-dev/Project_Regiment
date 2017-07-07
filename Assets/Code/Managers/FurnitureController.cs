@@ -119,7 +119,7 @@ public class FurnitureController : MonoBehaviour
             return;
         }
 
-        GameObject furnitureToRender = new GameObject("wall: x: "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
+		GameObject furnitureToRender = new GameObject(furnitureToInstall.ObjectType+ " "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
        
 
 		_furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);

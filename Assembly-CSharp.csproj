@@ -46,8 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Code\Actions\FurnitureActions.cs" />
+     <Compile Include="Assets\Code\Builders\CharacterBuilder.cs" />
+     <Compile Include="Assets\Code\Builders\FurnitureBuilder.cs" />
      <Compile Include="Assets\Code\Data\Character.cs" />
-     <Compile Include="Assets\Code\Data\CharacterService.cs" />
+     <Compile Include="Assets\Code\Data\CharacterPrototypes.cs" />
+     <Compile Include="Assets\Code\Data\CharacterRepository.cs" />
+     <Compile Include="Assets\Code\Data\FurniturePrototypes.cs" />
      <Compile Include="Assets\Code\Data\FurnitureRepository.cs" />
      <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
      <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
@@ -66,6 +71,8 @@
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
      <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
+     <Compile Include="Assets\Code\Services\CharacterService.cs" />
+     <Compile Include="Assets\Code\Services\FurnitureService.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathAStar.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />

@@ -3,8 +3,19 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Furniture  : IXmlSerializable{
+
+	public Dictionary<string, object> furnParameters;
+	public Action<Furniture, float> updateActions;
+
+	public void Update(float deltaTime){
+		if (updateActions != null) {
+			updateActions (this, deltaTime);
+		}
+	}
+
 
 	public  Tile Tile { get; protected set; }					//base tile of object( what you place ) object can be bigger than 1 tile.
 	public string ObjectType { get; protected set; }
@@ -13,37 +24,52 @@ public class Furniture  : IXmlSerializable{
 	private int _height = 1;
     public bool LinksToNeighbour { get; protected set; }
 
+
 	Action<Furniture> cbOnChanged;
 	private Func<Tile, bool> funcPositionValidation;
 
+	//For Serialization
 	public Furniture(){
+		furnParameters = new Dictionary<string, object> ();
+	
 	}
 
-	static public Furniture CreatePrototype(string objectType, float movementCost = 1f, int width = 1, int height =1, bool linksToNeighbour = false){
-		Furniture item = new Furniture ();
+	//Copy Constructors
+	protected Furniture(Furniture other){
+		this.ObjectType = other.ObjectType;
+		this.MovementCost = other.MovementCost;
+		this._width = other._width;
+		this._height = other._height;
 
-		item.ObjectType = objectType;
-		item.MovementCost= movementCost;
-		item._width = width;
-		item._height = height;
-        item.LinksToNeighbour = linksToNeighbour;
+		this.LinksToNeighbour = other.LinksToNeighbour;
+		this.furnParameters = new Dictionary<string, object> (other.furnParameters);
 
-		item.funcPositionValidation = item.IsValidPosition;
+		if (other.updateActions != null) {
+			this.updateActions = (Action<Furniture,float>)other.updateActions.Clone ();
+		}
+	}
+		
 
-        return item;
+	// create furniture, only used for prototypes
+	public Furniture (string objectType, float movementCost = 1f, int width = 1, int height =1, bool linksToNeighbour = false){
+
+		this.ObjectType = objectType;
+		this.MovementCost= movementCost;
+		this._width = width;
+		this._height = height;
+		this.LinksToNeighbour = linksToNeighbour;
+		this.funcPositionValidation = this.IsValidPosition;
+		this.furnParameters = new Dictionary<string, object> ();
+	}
+
+	virtual public Furniture Clone(){
+		return new Furniture(this);
 	}
 
 
 	static public Furniture PlaceFurniture(Furniture prototype,  Tile tile)
 	{
-		Furniture item = new Furniture ();
-
-		item.ObjectType = prototype.ObjectType;
-		item.MovementCost = prototype.MovementCost;
-		item._width = prototype._width;
-		item._height = prototype._height;
-
-        item.LinksToNeighbour = prototype.LinksToNeighbour;
+		Furniture item = prototype.Clone();
 
 		item.Tile = tile;
 		if (tile.PlaceObject (item)==false)  {
@@ -55,36 +81,40 @@ public class Furniture  : IXmlSerializable{
 
         if (item.LinksToNeighbour)
         {
-            //inform neighbours that they have a new tile        
-            int x = tile.X;
-            int y = tile.Y;
-
-			var t = GameManager.Instance.TileDataGrid.GetTileAt(x, y + 1);
-			if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged!=null && t.InstalledFurniture.ObjectType == item.ObjectType)
-            {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture); //we have northern neighbour with same object as us, so change it with callback;
-            }
-
-			t = GameManager.Instance.TileDataGrid.GetTileAt(x +1, y);
-			if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
-            {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
-            }
-
-			t = GameManager.Instance.TileDataGrid.GetTileAt(x, y- 1);
-			if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
-            {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
-            }
-			t = GameManager.Instance.TileDataGrid.GetTileAt(x-1, y );
-			if (t != null && t.InstalledFurniture != null  && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
-            {
-                t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
-            }
+			InformNeightboursOfChange (tile, item);
 
         }
 
 		return item;
+	}
+	private static void InformNeightboursOfChange(Tile tile, Furniture item){
+		//used to update neighbour graphics
+		//inform neighbours that they have a new tile        
+		int x = tile.X;
+		int y = tile.Y;
+
+		var t = GameManager.Instance.TileDataGrid.GetTileAt(x, y + 1);
+		if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged!=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		{
+			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture); //we have northern neighbour with same object as us, so change it with callback;
+		}
+
+		t = GameManager.Instance.TileDataGrid.GetTileAt(x +1, y);
+		if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		{
+			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+		}
+
+		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y- 1);
+		if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		{
+			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+		}
+		t = GameManager.Instance.TileDataGrid.GetTileAt(x-1, y );
+		if (t != null && t.InstalledFurniture != null  && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		{
+			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+		}
 	}
 		
 	public void RegisterOnChangedCallback(Action<Furniture> callBackFunc){

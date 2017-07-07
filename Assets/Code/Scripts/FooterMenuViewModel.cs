@@ -48,8 +48,8 @@ public class FooterMenuViewModel : MonoBehaviour {
 		GameManager.Instance.SetDrawMode(2, "wall");
 	}
 
-	public void SetDrawModePath()
+	public void SetDrawModeDoor()
 	{
-		GameManager.Instance.SetDrawMode(2, "path");
+		GameManager.Instance.SetDrawMode(2, "door");
 	}
 }

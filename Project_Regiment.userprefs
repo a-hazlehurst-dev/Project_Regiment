@@ -1,15 +1,21 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Managers\GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Models\Furniture.cs">
     <Files>
-      <File FileName="Assets\Code\Managers\FurnitureController.cs" Line="33" Column="1" />
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="115" Column="18" />
-      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="145" Column="3" />
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="90" Column="39" />
+      <File FileName="Assets\Code\Managers\FurnitureController.cs" Line="137" Column="49" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="109" Column="38" />
+      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="143" Column="14" />
+      <File FileName="Assets\Code\Models\Furniture.cs" Line="47" Column="37" />
       <File FileName="Assets\Code\Models\Tile.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Managers\SpriteManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="70" Column="48" />
-      <File FileName="Assets\Code\Managers\CharacterSpriteManager.cs" Line="22" Column="62" />
+      <File FileName="Assets\Code\Managers\SpriteManager.cs" Line="40" Column="3" />
+      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Managers\CharacterSpriteManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Builders\CharacterBuilder.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Builders\FurnitureBuilder.cs" Line="15" Column="5" />
+      <File FileName="Assets\Code\Scripts\FooterMenuViewModel.cs" Line="49" Column="3" />
+      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="24" Column="42" />
+      <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="10" Column="1" />
+      <File FileName="Assets\Code\Data\FurniturePrototypes.cs" Line="20" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -17,7 +23,6 @@
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\TileDataGrid.cs" line="105" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\TileDataGrid.cs" line="142" column="61" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Managers\FurnitureManager.cs" line="40" column="1" />
-      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Models\Furniture.cs" line="62" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\TileDataGrid.cs" line="122" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Managers\FurnitureController.cs" line="37" column="52" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\FurnitureRepository.cs" line="55" column="1" />

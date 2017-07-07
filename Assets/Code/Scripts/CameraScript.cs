@@ -62,12 +62,12 @@ public class CameraScript : MonoBehaviour {
 						});
 					}
 				}
-				else if(_drawObjectMode.Equals("path")){
-					if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid ("path", tile)  && tile.PendingFurnitureJob ==  null) {
+				else if(_drawObjectMode.Equals("door")){
+					if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid ("door", tile)  && tile.PendingFurnitureJob ==  null) {
 						//tile is valid for furniture.
 
-						var job = new Job (tile, "path", (theJob) => {
-							GameManager.Instance.FurnitureController.PlaceFurniture ("path", theJob.Tile);
+						var job = new Job (tile, "door", (theJob) => {
+							GameManager.Instance.FurnitureController.PlaceFurniture ("door", theJob.Tile);
 							tile.PendingFurnitureJob = null;
 						});
 						GameManager.Instance.JobQueue.Enqueue (job);
