@@ -84,7 +84,9 @@ public class PathAStar  {
 				f_score [neighbour] = g_score [neighbour] = heuristic_cost_estimate(neighbour, goal);
 
 				if (!OpenSet.Contains (neighbour)) {
-					OpenSet.Enqueue (neighbour, f_score[neighbour]);
+					OpenSet.Enqueue (neighbour, f_score [neighbour]);
+				} else {
+					OpenSet.UpdatePriority (neighbour, f_score [neighbour]);
 				}
 			}//foearch neighbour
 		}//while

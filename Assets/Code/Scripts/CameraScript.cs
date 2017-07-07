@@ -31,15 +31,15 @@ public class CameraScript : MonoBehaviour {
 
 			var tile = GameManager.Instance.GetTileAt(currentMousePosition);
 
-			Tile.FloorType floorMode = Tile.FloorType.Grass;//default draw mode
+			FloorType floorMode = FloorType.Grass;//default draw mode
 
 			if (_drawMode == 1) {
 				Debug.Log (_drawObjectMode);
 				if(_drawObjectMode.Equals("grass")){
-					floorMode =  Tile.FloorType.Grass;
+					floorMode =  FloorType.Grass;
 				}
 				else if(_drawObjectMode.Equals("mud")){
-					floorMode = Tile.FloorType.Mud;
+					floorMode = FloorType.Mud;
 				}
 				tile.Floor = floorMode;
 
@@ -85,7 +85,7 @@ public class CameraScript : MonoBehaviour {
         if (Input.GetMouseButton(1))
         {
 			var tile = GameManager.Instance.GetTileAt(currentMousePosition);
-            tile.Floor = Tile.FloorType.Grass;
+            tile.Floor = FloorType.Grass;
         }
 
         if (Input.GetMouseButton(2))

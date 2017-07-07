@@ -18,7 +18,7 @@ public class Character {
 	Action<Character> cbCharacterChanged;
 
 	public Tile CurrentTile { get; protected set; }
-	Tile destTile;
+	Tile destTile; // final destination
 	Tile nextTile;  // next tile in path finding sequence;
 	PathAStar pathAStar;
 	float speed = 2; //tiles per second.
@@ -92,9 +92,7 @@ public class Character {
 				nextTile = pathAStar.Dequeue();
 			}
 	
-			//grab next waypoint from the pathing system.
-
-
+			//grab the tuke were about to enter.
 			nextTile = pathAStar.Dequeue();
 
 			if (nextTile == CurrentTile) {
@@ -108,11 +106,15 @@ public class Character {
 			Mathf.Pow (CurrentTile.X - nextTile.X, 2) + 
 			Mathf.Pow (CurrentTile.Y - nextTile.Y, 2));
 
-		if (nextTile.MovementCost == 0) {
+		if (nextTile.IsEnterable() == Enterability.Never) {
+			// did a wall get built? reset pathing. invalidate the path.
 			Debug.Log ("FIXME: character, pathed through 0 movemnt tile. (Unwalkable)");
 			nextTile = null;
 			pathAStar = null;
 			return;
+		} else if(nextTile.IsEnterable() == Enterability.Wait){
+			//cant enter now but can soon enter, could be entering a door.
+			// dont bail on the path, but slow down movement.
 		}
 
 

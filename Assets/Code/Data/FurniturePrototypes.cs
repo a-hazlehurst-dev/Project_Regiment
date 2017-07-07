@@ -18,8 +18,10 @@ public class FurniturePrototypes
         _furniturePrototypes.Add("wall", new Furniture("wall", 0, 1, 1, true));
 		_furniturePrototypes.Add("door", new Furniture("door", 2, 1, 1, true));
 
-		_furniturePrototypes ["door"].furnParameters ["openness"] = 0;
+		_furniturePrototypes ["door"].furnParameters ["openess"] = 0;
+		_furniturePrototypes ["door"].furnParameters ["is_opening"] = 0;
 		_furniturePrototypes ["door"].updateActions += FurnitureActions.Door_UpdateAction;
+		_furniturePrototypes ["door"].isEnterable = FurnitureActions.Door_IsEnterable;
 
     }
 

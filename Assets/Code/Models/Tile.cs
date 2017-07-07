@@ -5,9 +5,12 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
 
+public enum FloorType { Grass =0, Mud=1, Water=2}
+public enum Enterability { Ok, Never, Wait}
+
 public class Tile : IXmlSerializable
 {
-	public enum FloorType { Grass =0, Mud=1, Water=2}
+	
 
     public float MovementCost
     {
@@ -34,6 +37,8 @@ public class Tile : IXmlSerializable
         }
       
     }
+
+
 	Action<Tile> cbTileFloorChanged;
 	FloorType _type =  FloorType.Grass;
 	public Furniture InstalledFurniture { get; protected set; }
@@ -159,8 +164,24 @@ public class Tile : IXmlSerializable
 		//X = int.Parse (reader.GetAttribute ("X"));
 		//Y  = int.Parse (reader.GetAttribute ("Y"));
 
-		Floor = (Tile.FloorType)int.Parse (reader.GetAttribute ("Type"));
+		Floor = (FloorType)int.Parse (reader.GetAttribute ("Type"));
 	}
 
+
+
+
+	public Enterability IsEnterable(){
+		//returns true if this tyle can be entered now.
+		if (MovementCost == 0) {
+			return Enterability.Never;
+		}
+
+		//check furn return soon.
+		if(InstalledFurniture!= null && InstalledFurniture.isEnterable!=null){
+			return InstalledFurniture.isEnterable (InstalledFurniture);
+		}
+
+		return Enterability.Ok;
+	}
 		
 }

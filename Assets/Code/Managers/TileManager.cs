@@ -32,11 +32,11 @@ public class TileManager : MonoBehaviour
                 var tile = GameManager.Instance.TileDataGrid.GetTileAt (x, y);
                 GameObject toInstanciate = null;
 
-                if(tile.Floor == Tile.FloorType.Grass)
+                if(tile.Floor == FloorType.Grass)
                 {
                     toInstanciate = _spriteManager.grassFloorTiles[4];
                 }
-                else if (tile.Floor == Tile.FloorType.Mud)
+                else if (tile.Floor == FloorType.Mud)
                 {
                     toInstanciate = _spriteManager.mudFloorTiles[4];
                 }
@@ -58,11 +58,11 @@ public class TileManager : MonoBehaviour
 			Debug.LogError ("GridManager.OnTileTypeChanged cannot find floor type with index: " + tile_data.Floor);
 		} 
 		else {
-            if(tile_data.Floor == Tile.FloorType.Grass)
+            if(tile_data.Floor == FloorType.Grass)
             {
                 tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.grassFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
             }
-            else if (tile_data.Floor == Tile.FloorType.Mud)
+            else if (tile_data.Floor == FloorType.Mud)
             {
                 tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.mudFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
             }
