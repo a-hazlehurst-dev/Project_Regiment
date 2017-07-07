@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: b050433dd2ceb7f429e89016b7786215
-timeCreated: 1499433475
+timeCreated: 1499440410
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: door_
-    21300002: door_EW
+    21300002: door_NS
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -85,7 +85,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: door_EW
+      name: door_NS
       rect:
         serializedVersion: 2
         x: 366

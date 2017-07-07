@@ -21,7 +21,7 @@ public class Character {
 	Tile destTile;
 	Tile nextTile;  // next tile in path finding sequence;
 	PathAStar pathAStar;
-	float speed = 5; //tiles per second.
+	float speed = 2; //tiles per second.
 	float movementPercentage;// goes from 0 to 1, when moveing to dest tile. 1 being destination
 
 
@@ -88,9 +88,15 @@ public class Character {
 					return;
 				
 				}
+				//ignore the first tile.
+				nextTile = pathAStar.Dequeue();
 			}
+	
 			//grab next waypoint from the pathing system.
+
+
 			nextTile = pathAStar.Dequeue();
+
 			if (nextTile == CurrentTile) {
 				Debug.LogError ("UpdateMovement:+ next tile is currTile?");
 			}
@@ -102,8 +108,16 @@ public class Character {
 			Mathf.Pow (CurrentTile.X - nextTile.X, 2) + 
 			Mathf.Pow (CurrentTile.Y - nextTile.Y, 2));
 
+		if (nextTile.MovementCost == 0) {
+			Debug.Log ("FIXME: character, pathed through 0 movemnt tile. (Unwalkable)");
+			nextTile = null;
+			pathAStar = null;
+			return;
+		}
+
+
 		//distance travelled this update;
-		float distThisFrame = speed * deltaTime;
+		float distThisFrame = (speed/ nextTile.MovementCost) * deltaTime;
 
 		//percentage distance to destination.
 		float percThisFrame = distThisFrame / distToTravel ;

@@ -113,46 +113,70 @@ public class TileDataGrid : IXmlSerializable{
 
     public void LoadTiles(XmlReader reader)
     {
-        while (reader.Read())
-        {
-            if (reader.Name == "Tiles" && !reader.IsStartElement())
-            {
-                return;
-            }
-            if (reader.Name != "Tile")
-            {
-                continue;
-            }
-            
 
-            var x = int.Parse(reader.GetAttribute("X"));
-            var y = int.Parse(reader.GetAttribute("Y"));
-          
-            GridMap[x, y].ReadXml(reader);
-        }
+		if (reader.ReadToDescendant ("Tile")) {
+
+			do {
+
+				var x = int.Parse (reader.GetAttribute ("X"));
+				var y = int.Parse (reader.GetAttribute ("Y"));
+
+				GridMap [x, y].ReadXml (reader);
+			} while(reader.ReadToNextSibling ("Tile"));
+		}
+
+//        while (reader.Read())
+//        {
+//            if (reader.Name == "Tiles" && !reader.IsStartElement())
+//            {
+//                return;
+//            }
+//            if (reader.Name != "Tile")
+//            {
+//                continue;
+//            }
+//            
+//
+//            var x = int.Parse(reader.GetAttribute("X"));
+//            var y = int.Parse(reader.GetAttribute("Y"));
+//          
+//            GridMap[x, y].ReadXml(reader);
+//        }
 
     }
 
     public void LoadFurniture(XmlReader reader)
     {
-        while (reader.Read())
-        {
-            if (reader.Name == "Furnitures" && !reader.IsStartElement())
-            {
-                return;
-            }
-            if (reader.Name != "Furniture")
-            {
-                continue;
-            }
+		if (reader.ReadToDescendant ("Furniture")) {
 
-            var x = int.Parse(reader.GetAttribute("X"));
-            var y = int.Parse(reader.GetAttribute("Y"));
+			do {
 
-            var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y]);
-            furn.ReadXml(reader);
+				var x = int.Parse(reader.GetAttribute("X"));
+				var y = int.Parse(reader.GetAttribute("Y"));
 
-        }
+				var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y]);
+				furn.ReadXml(reader);
+			} while(reader.ReadToNextSibling ("Furniture"));
+		}
+
+    
+//        {
+//            if (reader.Name == "Furnitures" && !reader.IsStartElement())
+//            {
+//                return;
+//            }
+//            if (reader.Name != "Furniture")
+//            {
+//                continue;
+//            }
+//
+//            var x = int.Parse(reader.GetAttribute("X"));
+//            var y = int.Parse(reader.GetAttribute("Y"));
+//
+//            var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y]);
+//            furn.ReadXml(reader);
+//
+//        }
     }
 
 	

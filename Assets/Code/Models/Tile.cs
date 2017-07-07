@@ -3,6 +3,7 @@ using System;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using UnityEngine;
 
 public class Tile : IXmlSerializable
 {
@@ -26,6 +27,7 @@ public class Tile : IXmlSerializable
             if (InstalledFurniture != null)
             {
                 movement *= InstalledFurniture.MovementCost;
+
             }
 
             return movement;
