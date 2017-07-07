@@ -73,11 +73,15 @@ public class GameManager : MonoBehaviour {
 			c.Update (Time.deltaTime);
 		}
 
+		foreach (var f in _furnitureService.FindAll()) {
+			f.Update (Time.deltaTime);
+		}
+
 	}
 
 	void InitGame(){
 
-		TileDataGrid = new TileDataGrid (100,100,64,64,_furnitureService);
+		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService);
 		TileManager.InitialiseTileMap(SpriteManager);
 		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
         TileGraph = new PathTileGraph(TileDataGrid);
