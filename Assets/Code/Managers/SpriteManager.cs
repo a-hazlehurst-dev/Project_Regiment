@@ -42,7 +42,14 @@ public class SpriteManager : MonoBehaviour {
         {
 			FurnitureObjects.Add(go.name, go);
         }
-	}
+
+        var doorObjects = Resources.LoadAll<Sprite>("Images/door/");
+
+        foreach (var go in doorObjects)
+        {
+            FurnitureObjects.Add(go.name, go);
+        }
+    }
 
 	private void LoadCharacters(){
 		var charObjects = Resources.LoadAll<Sprite>("Images/characters/");

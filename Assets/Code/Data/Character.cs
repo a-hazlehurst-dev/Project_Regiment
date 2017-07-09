@@ -113,8 +113,9 @@ public class Character {
 			pathAStar = null;
 			return;
 		} else if(nextTile.IsEnterable() == Enterability.Wait){
-			//cant enter now but can soon enter, could be entering a door.
-			// dont bail on the path, but slow down movement.
+            //cant enter now but can soon enter, could be entering a door.
+            // dont bail on the path, but slow down movement.
+            return;
 		}
 
 

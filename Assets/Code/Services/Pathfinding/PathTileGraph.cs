@@ -29,7 +29,7 @@ namespace Assets.Code.Services.Pathfinding
                 }
 
             }
-            Debug.Log("nodes created: " + nodes.Count);
+
             int edgeCount = 0;
             foreach(var t in nodes.Keys)
             {

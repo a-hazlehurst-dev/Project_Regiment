@@ -31,7 +31,7 @@ public class CharacterSpriteManager : MonoBehaviour {
 
 	public void OnCharacterCreated(Character character){
 
-		Debug.Log ("OnCharacterCreated: was called");
+
 		GameObject char_go = new GameObject ();
 
 		_characterGameObjectMap.Add (character, char_go);

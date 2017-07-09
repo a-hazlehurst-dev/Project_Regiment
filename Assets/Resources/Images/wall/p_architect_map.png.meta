@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b050433dd2ceb7f429e89016b7786215
-timeCreated: 1499440410
+timeCreated: 1499636176
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -70,33 +70,7 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: door_
-      rect:
-        serializedVersion: 2
-        x: 315
-        y: 1240
-        width: 64
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: door_NS
-      rect:
-        serializedVersion: 2
-        x: 366
-        y: 1272
-        width: 64
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 

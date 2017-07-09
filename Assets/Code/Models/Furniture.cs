@@ -27,7 +27,7 @@ public class Furniture  : IXmlSerializable{
     public bool LinksToNeighbour { get; protected set; }
 
 
-	Action<Furniture> cbOnChanged;
+	public Action<Furniture> cbOnChanged;
 	private Func<Tile, bool> funcPositionValidation;
 
 	//For Serialization
@@ -75,7 +75,6 @@ public class Furniture  : IXmlSerializable{
 	{
 		Furniture item = prototype.Clone();
 
-		Debug.Log (prototype.MovementCost);
 		item.Tile = tile;
 		if (tile.PlaceObject (item)==false)  {
 			//if we couldnt place the object.
