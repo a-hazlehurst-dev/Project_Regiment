@@ -52,38 +52,59 @@ public class FurnitureController : MonoBehaviour
 
 	}
 
-    public Sprite GetSpriteForFurniture(Furniture furnitureItem)
+    public Sprite GetSpriteForFurniture(Furniture furn)
     {
-        if(furnitureItem.LinksToNeighbour == false)
+        var spriteName = furn.ObjectType;
+        if (furn.LinksToNeighbour == false)
         {
-			return _spriteManager.FurnitureObjects[furnitureItem.ObjectType];
+            if (furn.ObjectType == "door")
+            {
+                if (furn.furnParameters["openness"] < 0.1f)
+                {
+                    spriteName = "door_";
+                }
+                else if (furn.furnParameters["openness"] < 0.5f)
+                {
+                    spriteName = "door_2";
+                }
+                else if (furn.furnParameters["openness"] < 0.9f)
+                {
+                    spriteName = "door_3";
+                }
+                else
+                {
+                    spriteName = "door_4";
+                }
+                
+            }
+            return _spriteManager.FurnitureObjects[spriteName];
         }
 
-        string spriteName = furnitureItem.ObjectType + "_";
+        spriteName = furn.ObjectType + "_";
 
         Tile t;
-        int x = furnitureItem.Tile.X;
-        int y = furnitureItem.Tile.Y;
+        int x = furn.Tile.X;
+        int y = furn.Tile.Y;
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y + 1);
-        if(t!=null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        if(t!=null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
         {
             spriteName += "N";
         }
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x+1, y );
-        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
         {
             spriteName += "E";
         }
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y - 1);
-        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
         {
             spriteName += "S";
         }
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x-1, y);
-        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furnitureItem.ObjectType)
+        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
         {
             spriteName += "W";
         }
@@ -94,7 +115,11 @@ public class FurnitureController : MonoBehaviour
 			return null;
 		}
 
-		return _spriteManager.FurnitureObjects[spriteName];
+
+       
+
+
+        return _spriteManager.FurnitureObjects[spriteName];
     }
 
 	public Sprite GetSpriteForFurniture(string objectType)
@@ -120,9 +145,8 @@ public class FurnitureController : MonoBehaviour
         }
 
 		GameObject furnitureToRender = new GameObject(furnitureToInstall.ObjectType+ " "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
-       
 
-		_furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);
+       _furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);
 
 		var sr = furnitureToRender.AddComponent<SpriteRenderer> ();
 		sr.sortingLayerName = "Furniture";
@@ -130,8 +154,24 @@ public class FurnitureController : MonoBehaviour
 		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
 
 		furnitureToRender.transform.SetParent (furnitureHolder);
-		   
-		furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
+
+        if (furnitureToInstall.ObjectType == "door")
+        {
+            var northTile = GameManager.Instance.TileDataGrid.GetTileAt(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y + 1);
+            var southTile = GameManager.Instance.TileDataGrid.GetTileAt(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y - 1);
+
+            if (northTile != null && southTile != null && northTile.InstalledFurniture != null && southTile.InstalledFurniture != null
+                && northTile.InstalledFurniture.ObjectType == "wall" && southTile.InstalledFurniture.ObjectType == "wall")
+            {
+
+                furnitureToRender.transform.rotation = Quaternion.Euler(0, 0, 90);
+                furnitureToRender.transform.Translate(1, 0, 0, Space.World);// ugly hack for bottom left anchor
+            }
+
+        }
+
+
+        furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
 	}
 
 	public void OnFurnitureChanged(Furniture furn){
@@ -146,8 +186,7 @@ public class FurnitureController : MonoBehaviour
 		var sr = furn_go.GetComponent<SpriteRenderer> ();
 		sr.sprite =GetSpriteForFurniture(furn);
 		sr.sortingLayerName = "Furniture";
-
-
+       
     }
 
  

@@ -41,9 +41,23 @@ public class JobSpriteManager : MonoBehaviour {
 		sr.sprite = _furnitureManager.GetSpriteForFurniture(job.JobObjectType); 
 		sr.color = new Color (.2f, .2f, .2f, 0.5f); //transparent
 
+        if (job.JobObjectType == "door")
+        {
+            var northTile = GameManager.Instance.TileDataGrid.GetTileAt(job.Tile.X, job.Tile.Y + 1);
+            var southTile = GameManager.Instance.TileDataGrid.GetTileAt(job.Tile.X, job.Tile.Y - 1);
+
+            if (northTile != null && southTile != null && northTile.InstalledFurniture != null && southTile.InstalledFurniture != null
+                && northTile.InstalledFurniture.ObjectType == "wall" && southTile.InstalledFurniture.ObjectType == "wall")
+            {
+
+                job_go.transform.rotation = Quaternion.Euler(0, 0, 90);
+                job_go.transform.Translate(1, 0, 0, Space.World);// ugly hack for bottom left anchor
+            }
+
+        }
 
 
-		job.RegisterJobCompletedCallback (OnJobCompleted);
+        job.RegisterJobCompletedCallback (OnJobCompleted);
 		job.RegisterJobCancelledCallback (OnJobCompleted);
 	}
 
