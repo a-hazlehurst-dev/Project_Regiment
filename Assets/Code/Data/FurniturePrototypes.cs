@@ -15,8 +15,8 @@ public class FurniturePrototypes
     public void InitPrototypes()
     {
 		//will be loaded from xml file or json file in the feature.
-        _furniturePrototypes.Add("wall", new Furniture("wall", 0, 1, 1, true));
-		_furniturePrototypes.Add("door", new Furniture("door",1, 1, 1, false));
+        _furniturePrototypes.Add("wall", new Furniture("wall", 0, 1, 1, true, true));
+		_furniturePrototypes.Add("door", new Furniture("door",1, 1, 1, false, true));
 
 		_furniturePrototypes ["door"].furnParameters ["openness"] = 0;
 		_furniturePrototypes ["door"].furnParameters ["is_opening"] = 0;

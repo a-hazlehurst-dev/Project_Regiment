@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
 	private FurnitureService _furnitureService;
 	private CharacterService _characterService;
+	private RoomService _roomService;
 	private int optionAction;
 	private static bool loadGameMode = false;
    
@@ -42,9 +43,13 @@ public class GameManager : MonoBehaviour {
 		_characterService = new CharacterService ();
 		_characterService.Init ();
 
-		JobQueue = new JobQueue ();
+		_roomService = new RoomService ();
+		_roomService.Init ();
+
 		SpriteManager = GetComponent<SpriteManager>();
         SpriteManager.Init();
+
+		JobQueue = new JobQueue ();
 
 		TileManager = GetComponent<TileManager> ();
 		FurnitureController = GetComponent<FurnitureController> ();
@@ -81,7 +86,7 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame(){
 
-		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService);
+		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService, _roomService);
 		TileManager.InitialiseTileMap(SpriteManager);
 		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
         TileGraph = new PathTileGraph(TileDataGrid);
@@ -97,7 +102,7 @@ public class GameManager : MonoBehaviour {
      
         FurnitureController.InitialiseFurniture (SpriteManager,_furnitureService);
        
-        TileDataGrid = new TileDataGrid(_furnitureService);
+		TileDataGrid = new TileDataGrid(_furnitureService,_roomService);
         
         while (xmlReader.Read() && xmlReader.IsStartElement())
         {
@@ -123,6 +128,17 @@ public class GameManager : MonoBehaviour {
 		TileGraph = new PathTileGraph(TileDataGrid);
 		CharacterSpriteManager.InitialiseCharacter (SpriteManager,_characterService);
 	}
+
+	public Room GetOutsideRoom(){
+		return _roomService.Get ("outside");
+	}
+	public void DeleteRoom(Room r){
+		if (r.Name == "outside") {
+			Debug.LogError ("Tried to delete the outside room!");
+		}
+		_roomService.Delete(r);
+	}
+
 	void NewGame(){
 		Debug.Log ("Restarting....");
 		SceneManager.LoadScene (SceneManager.GetActiveScene().name);

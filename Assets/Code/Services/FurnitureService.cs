@@ -23,9 +23,20 @@ public class FurnitureService
     {
         var furniture = builder.CreateFurniture(type, tile);
         if (furniture == null) { return null; }
+
+		//do we need to recalculate the rooms?
+		if (furniture.RoomEnclosure) {
+
+		}
+
         if (cbOnCreated != null)
         {
             cbOnCreated(furniture);
+			if(furniture.MovementCost !=1){
+				//tiles return movement cost as a base * by furniture movement cost.
+				//a furn movecost of 1, does not effect the pathfinding.
+				GameManager.Instance.InvalidateTileGraph (); //reset pathfinding.
+			}
         }
         return furniture;
     }

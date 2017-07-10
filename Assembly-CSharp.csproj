@@ -54,6 +54,7 @@
      <Compile Include="Assets\Code\Data\CharacterRepository.cs" />
      <Compile Include="Assets\Code\Data\FurniturePrototypes.cs" />
      <Compile Include="Assets\Code\Data\FurnitureRepository.cs" />
+     <Compile Include="Assets\Code\Data\RoomRepository.cs" />
      <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
      <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\FurnitureController.cs" />
@@ -67,6 +68,7 @@
      <Compile Include="Assets\Code\Models\JobQueue.cs" />
      <Compile Include="Assets\Code\Models\Peasant.cs" />
      <Compile Include="Assets\Code\Models\PeasentModel.cs" />
+     <Compile Include="Assets\Code\Models\Room.cs" />
      <Compile Include="Assets\Code\Models\Tile.cs" />
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
@@ -77,6 +79,7 @@
      <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathTileGraph.cs" />
+     <Compile Include="Assets\Code\Services\RoomService.cs" />
      <Compile Include="Assets\Code\Utilities\FastPriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\FastPriorityQueueNode.cs" />
      <Compile Include="Assets\Code\Utilities\GenericPriorityQueue.cs" />

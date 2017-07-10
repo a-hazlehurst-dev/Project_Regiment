@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 public class TileDataGrid : IXmlSerializable{
 
 	private FurnitureService _furnitureService;
+	private RoomService _roomService;
 	public Tile[,] GridMap {get; protected set;}
 
 	//public Dictionary<string, Furniture> FurnitureObjectPrototypes;
@@ -19,15 +20,17 @@ public class TileDataGrid : IXmlSerializable{
     public int treeCount = 0;
 
 
-	public TileDataGrid(int gridheight, int gridWidth, float tileHeight,float tileWidth, FurnitureService furnitureService )
+	public TileDataGrid(int gridheight, int gridWidth, float tileHeight,float tileWidth, FurnitureService furnitureService, RoomService roomService )
 	{
 		_furnitureService = furnitureService;
+		_roomService = roomService;
 		CreateGrid (gridWidth, gridheight, tileWidth, tileHeight);	
 	}
 
-    public TileDataGrid(FurnitureService furnitureService)
+	public TileDataGrid(FurnitureService furnitureService, RoomService roomService)
     {
         _furnitureService = furnitureService;
+		_roomService = roomService;
     }
 
 
@@ -43,6 +46,7 @@ public class TileDataGrid : IXmlSerializable{
 			for (int y = 0; y < GridHeight; y++) 
 			{
 				GridMap [x, y] = new Tile (x, y,0);
+				GridMap [x, y].Room = _roomService.Get("outside");
 			}
 		}
 	}
@@ -124,25 +128,6 @@ public class TileDataGrid : IXmlSerializable{
 				GridMap [x, y].ReadXml (reader);
 			} while(reader.ReadToNextSibling ("Tile"));
 		}
-
-//        while (reader.Read())
-//        {
-//            if (reader.Name == "Tiles" && !reader.IsStartElement())
-//            {
-//                return;
-//            }
-//            if (reader.Name != "Tile")
-//            {
-//                continue;
-//            }
-//            
-//
-//            var x = int.Parse(reader.GetAttribute("X"));
-//            var y = int.Parse(reader.GetAttribute("Y"));
-//          
-//            GridMap[x, y].ReadXml(reader);
-//        }
-
     }
 
     public void LoadFurniture(XmlReader reader)
@@ -158,25 +143,6 @@ public class TileDataGrid : IXmlSerializable{
 				furn.ReadXml(reader);
 			} while(reader.ReadToNextSibling ("Furniture"));
 		}
-
-    
-//        {
-//            if (reader.Name == "Furnitures" && !reader.IsStartElement())
-//            {
-//                return;
-//            }
-//            if (reader.Name != "Furniture")
-//            {
-//                continue;
-//            }
-//
-//            var x = int.Parse(reader.GetAttribute("X"));
-//            var y = int.Parse(reader.GetAttribute("Y"));
-//
-//            var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y]);
-//            furn.ReadXml(reader);
-//
-//        }
     }
 
 	

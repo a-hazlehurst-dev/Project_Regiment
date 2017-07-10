@@ -38,10 +38,27 @@ public class Tile : IXmlSerializable
       
     }
 
+	public Tile North(){
+		return GameManager.Instance.TileDataGrid.GetTileAt (X, Y + 1);
+	}
+
+	public Tile East(){
+		return GameManager.Instance.TileDataGrid.GetTileAt (X+1, Y );
+	}
+
+	public Tile South(){
+		return GameManager.Instance.TileDataGrid.GetTileAt (X, Y - 1);
+	}
+
+	public Tile West(){
+		return GameManager.Instance.TileDataGrid.GetTileAt (X-1, Y);
+	}
+
 
 	Action<Tile> cbTileFloorChanged;
 	FloorType _type =  FloorType.Grass;
 	public Furniture InstalledFurniture { get; protected set; }
+	public Room Room;
 
 	public int X { get; protected set; }
 	public int Y { get; protected set; } 

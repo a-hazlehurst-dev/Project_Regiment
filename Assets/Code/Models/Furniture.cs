@@ -26,6 +26,8 @@ public class Furniture  : IXmlSerializable{
 	private int _height = 1;
     public bool LinksToNeighbour { get; protected set; }
 
+	public bool RoomEnclosure { get; protected set; }
+
 
 	public Action<Furniture> cbOnChanged;
 	private Func<Tile, bool> funcPositionValidation;
@@ -40,6 +42,7 @@ public class Furniture  : IXmlSerializable{
 	protected Furniture(Furniture other){
 		this.ObjectType = other.ObjectType;
 		this.MovementCost = other.MovementCost;
+		this.RoomEnclosure = other.RoomEnclosure;
 		this._width = other._width;
 		this._height = other._height;
 
@@ -55,10 +58,11 @@ public class Furniture  : IXmlSerializable{
 		
 
 	// create furniture, only used for prototypes
-	public Furniture (string objectType, float movementCost = 1f, int width = 1, int height =1, bool linksToNeighbour = false){
+	public Furniture (string objectType, float movementCost = 1f, int width = 1, int height =1, bool linksToNeighbour = false, bool roomEnclosure = false){
 
 		this.ObjectType = objectType;
 		this.MovementCost= movementCost;
+		this.RoomEnclosure = roomEnclosure;
 		this._width = width;
 		this._height = height;
 		this.LinksToNeighbour = linksToNeighbour;
