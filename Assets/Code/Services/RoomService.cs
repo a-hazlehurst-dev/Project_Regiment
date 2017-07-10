@@ -36,10 +36,14 @@ public class RoomService
 
 
 	public void Delete(Room room){
-		room.ResetRoomTilesToOutside ();
-		_roomRepository.Delete(room);
+        _roomRepository.Delete(room);
+        room.ResetRoomTilesToOutside ();
+		
 	}
 
-		
+    public void AddRoom(Room rm)
+    {
+        _roomRepository.Add(rm);
+    }
 }
 

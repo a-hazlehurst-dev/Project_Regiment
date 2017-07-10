@@ -26,8 +26,9 @@ public class FurnitureService
 
 		//do we need to recalculate the rooms?
 		if (furniture.RoomEnclosure) {
+            Room.DoRoomFloodFill(furniture);
 
-		}
+        }
 
         if (cbOnCreated != null)
         {

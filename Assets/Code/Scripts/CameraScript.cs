@@ -11,9 +11,19 @@ public class CameraScript : MonoBehaviour {
 
 	public GameObject cursorPointer;
 
+    public Tile GetMouseOverTile()
+    {
+        return GameManager.Instance.TileDataGrid.GetTileAt(Mathf.FloorToInt(GetMousePosition().x), Mathf.FloorToInt(GetMousePosition().y));
+    }
+
+    public Vector3 GetMousePosition()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
 	void Update(){
 
-		Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+        Vector3 currentMousePosition = GetMousePosition();
 		currentMousePosition.z = 0;
 		Tile tileUnderMouse = GameManager.Instance.GetTileAt (currentMousePosition);
         if (tileUnderMouse == null) return;

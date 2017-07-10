@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Room
 {
@@ -18,8 +19,15 @@ public class Room
 	public void AssignTile(Tile tile){
 		
 		if(_tiles.Contains(tile)){
+            //already in this room
 			return;
 		}
+        if(tile.Room != null)
+        {
+            //belongs to some other room
+            tile.Room._tiles.Remove(tile);
+        }
+
 		tile.Room = this;
 
 		_tiles.Add (tile);
@@ -33,24 +41,31 @@ public class Room
 	}
 
 	public static void DoRoomFloodFill(Furniture sourceFurniture){
+        Debug.Log("Creating Room");
+        var oldRoom = sourceFurniture.Tile.Room;
 
-		var oldRoom = sourceFurniture.Tile.Room;
+        //try building new room starting from north.
+        foreach(var t in sourceFurniture.Tile.GetNeighbours())
+        {
+            FloodFillRoom(t, oldRoom);
+        }
 
-		//try building new room starting from north.
-		FloodFillRoom (sourceFurniture.Tile.North (), oldRoom);
-		FloodFillRoom (sourceFurniture.Tile.East (), oldRoom);
-		FloodFillRoom (sourceFurniture.Tile.South (), oldRoom);
-		FloodFillRoom (sourceFurniture.Tile.West (), oldRoom);
-			
-		oldRoom._tiles = new List<Tile> ();
+        sourceFurniture.Tile.Room = null;
+        oldRoom._tiles.Remove(sourceFurniture.Tile);
 
 		if (oldRoom != GameManager.Instance.GetOutsideRoom ()) {
+
+            if (oldRoom._tiles.Count > 0)
+            {
+                Debug.LogError("Attempting to delete room with tiles assigned to it.");
+            }
 			GameManager.Instance.DeleteRoom (oldRoom);
 		}
 	}
 
 	protected static void FloodFillRoom(Tile tile, Room oldRoom){
-		if (tile == null) {
+       
+        if (tile == null) {
 			//empty space, cant flood
 			return;
 		}
@@ -63,8 +78,8 @@ public class Room
 			//has wall or door. cant flood
 			return;
 		}
-
-		Room newRoom = new Room (1, "Room");
+     
+        Room newRoom = new Room (1, "Room");
 
 		Queue<Tile> TilesToCheck = new Queue<Tile> ();
 		TilesToCheck.Enqueue (tile);
@@ -72,14 +87,30 @@ public class Room
 			Tile t = TilesToCheck.Dequeue ();
 			if (t.Room == oldRoom) {
 				newRoom.AssignTile (t);
-				TilesToCheck.Enqueue (t.North());
-				TilesToCheck.Enqueue (t.South());
-				TilesToCheck.Enqueue (t.East());
-				TilesToCheck.Enqueue (t.West());
+                Tile[] tn = tile.GetNeighbours();
+             
+                foreach (var t2 in tn)
+                {
+                    //if (t2.Room != null && t2.Room == GameManager.Instance.GetOutsideRoom())
+                    //{
+                    //    Debug.Log("exposed to outside.");
+                    //    t2.Room.ResetRoomTilesToOutside();
+                    //    return;
+                    //}
+                    if (t2.Room != null && t2.Room == oldRoom && t2.InstalledFurniture != null )
+                    {
+                        if (t2.InstalledFurniture.RoomEnclosure == false)
+                        {
+                            TilesToCheck.Enqueue(t2);
+                            Debug.Log("Adding new room");
+                        }
+                    }
 
-
+                }
 			}
 		}
+       
+        GameManager.Instance.AddRoom(newRoom);
 
 
 	}

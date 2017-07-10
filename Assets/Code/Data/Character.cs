@@ -21,7 +21,7 @@ public class Character {
 	Tile destTile; // final destination
 	Tile nextTile;  // next tile in path finding sequence;
 	PathAStar pathAStar;
-	float speed = 2; //tiles per second.
+	float speed = 5; //tiles per second.
 	float movementPercentage;// goes from 0 to 1, when moveing to dest tile. 1 being destination
 
 

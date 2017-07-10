@@ -70,9 +70,25 @@ public class GameManager : MonoBehaviour {
 		TileGraph = null;
 	}
 
+    public void AddRoom(Room rm)
+    {
 
+        _roomService.AddRoom(rm);
+    }
+    public Room GetOutsideRoom()
+    {
+        return _roomService.Get("outside");
+    }
+    public void DeleteRoom(Room r)
+    {
+        if (r.Name == "outside")
+        {
+            Debug.LogError("Tried to delete the outside room!");
+        }
+        _roomService.Delete(r);
+    }
 
-	void Update(){
+    void Update(){
 		
 		foreach (var c in _characterService.FindAll()) {
 			c.Update (Time.deltaTime);
@@ -129,15 +145,7 @@ public class GameManager : MonoBehaviour {
 		CharacterSpriteManager.InitialiseCharacter (SpriteManager,_characterService);
 	}
 
-	public Room GetOutsideRoom(){
-		return _roomService.Get ("outside");
-	}
-	public void DeleteRoom(Room r){
-		if (r.Name == "outside") {
-			Debug.LogError ("Tried to delete the outside room!");
-		}
-		_roomService.Delete(r);
-	}
+	
 
 	void NewGame(){
 		Debug.Log ("Restarting....");

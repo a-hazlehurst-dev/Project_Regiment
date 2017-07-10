@@ -8,7 +8,7 @@ public class Job  {
 	// this holds info for a queued up job, placing furniture, moving inventory, working at location, maybe fighting.
 
 	public Tile Tile { get; protected set; }
-	float _timeToComplete = 1f;
+	float _timeToComplete = .2f;
 
 	Action<Job> _cbCJobCompleted;
 	Action<Job> _cbJobCancelled;
@@ -16,7 +16,7 @@ public class Job  {
 	//FIXME:  hard coded a parameter for furniture. Do not like
 	public string JobObjectType { get; protected set;}
 
-	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete = 1f)
+	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete = .2f)
 	{
 		Tile = tile;
 		_timeToComplete = timeToComplete;
