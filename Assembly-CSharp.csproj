@@ -89,6 +89,7 @@
      <Compile Include="Assets\Code\Utilities\SimplePriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
+     <Compile Include="Assets\TileInspectorViewModel.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

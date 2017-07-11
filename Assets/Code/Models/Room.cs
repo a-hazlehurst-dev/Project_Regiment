@@ -42,12 +42,13 @@ public class Room
 
 	public static void DoRoomFloodFill(Furniture sourceFurniture){
         Debug.Log("Creating Room");
+		// the room that the furniture was originally assigned too.
         var oldRoom = sourceFurniture.Tile.Room;
 
         //try building new room starting from north.
         foreach(var t in sourceFurniture.Tile.GetNeighbours())
         {
-            FloodFillRoom(t, oldRoom);
+			FloodFillRoom (t, oldRoom);
         }
 
         sourceFurniture.Tile.Room = null;
@@ -59,6 +60,7 @@ public class Room
             {
                 Debug.LogError("Attempting to delete room with tiles assigned to it.");
             }
+			//odl room should not have any more tiles in it.
 			GameManager.Instance.DeleteRoom (oldRoom);
 		}
 	}
@@ -78,36 +80,39 @@ public class Room
 			//has wall or door. cant flood
 			return;
 		}
-     
+
         Room newRoom = new Room (1, "Room");
 
 		Queue<Tile> TilesToCheck = new Queue<Tile> ();
+
 		TilesToCheck.Enqueue (tile);
+
 		while (TilesToCheck.Count > 0) {
+			
 			Tile t = TilesToCheck.Dequeue ();
+
 			if (t.Room == oldRoom) {
+				Debug.Log ("checking tile: " +t.X + ", " + t.Y);
+
 				newRoom.AssignTile (t);
                 Tile[] tn = tile.GetNeighbours();
-             
+				var outside =GameManager.Instance.GetOutsideRoom();
+
                 foreach (var t2 in tn)
                 {
-                    //if (t2.Room != null && t2.Room == GameManager.Instance.GetOutsideRoom())
-                    //{
-                    //    Debug.Log("exposed to outside.");
-                    //    t2.Room.ResetRoomTilesToOutside();
-                    //    return;
-                    //}
-                    if (t2.Room != null && t2.Room == oldRoom && t2.InstalledFurniture != null )
-                    {
-                        if (t2.InstalledFurniture.RoomEnclosure == false)
-                        {
-                            TilesToCheck.Enqueue(t2);
-                            Debug.Log("Adding new room");
-                        }
-                    }
+//					if (t2.InstalledFurniture == null || t2.InstalledFurniture.RoomEnclosure == true) {
+//						newRoom.ResetRoomTilesToOutside ();
+//						return;
+//					}
+//
+					//if the neighbour, is not off the grid, is in the same room as the original tile, && the the tile is not a structure. queue it.
+					if (t2 != null && t2.Room == oldRoom && (t2.InstalledFurniture == null || t2.InstalledFurniture.RoomEnclosure == false)) {
+						TilesToCheck.Enqueue (t2);
+					}
 
                 }
 			}
+
 		}
        
         GameManager.Instance.AddRoom(newRoom);
