@@ -90,27 +90,20 @@ public class Room
 		while (TilesToCheck.Count > 0) {
 			
 			Tile t = TilesToCheck.Dequeue ();
-
 			if (t.Room == oldRoom) {
-				Debug.Log ("checking tile: " +t.X + ", " + t.Y);
-
 				newRoom.AssignTile (t);
-                Tile[] tn = tile.GetNeighbours();
-				var outside =GameManager.Instance.GetOutsideRoom();
+				Tile[] tn = t.GetNeighbours ();
 
-                foreach (var t2 in tn)
-                {
-//					if (t2.InstalledFurniture == null || t2.InstalledFurniture.RoomEnclosure == true) {
-//						newRoom.ResetRoomTilesToOutside ();
-//						return;
-//					}
-//
+				foreach (var t2 in tn) {
+					if (t2 == null) {
+						newRoom.ResetRoomTilesToOutside ();
+						return;
+					}
 					//if the neighbour, is not off the grid, is in the same room as the original tile, && the the tile is not a structure. queue it.
 					if (t2 != null && t2.Room == oldRoom && (t2.InstalledFurniture == null || t2.InstalledFurniture.RoomEnclosure == false)) {
 						TilesToCheck.Enqueue (t2);
 					}
-
-                }
+				}
 			}
 
 		}
