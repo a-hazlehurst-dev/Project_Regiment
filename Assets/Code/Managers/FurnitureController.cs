@@ -59,15 +59,15 @@ public class FurnitureController : MonoBehaviour
         {
             if (furn.ObjectType == "door")
             {
-                if (furn.furnParameters["openness"] < 0.1f)
+				if (furn.GetParameter("openness") < 0.1f)
                 {
                     spriteName = "door_";
                 }
-                else if (furn.furnParameters["openness"] < 0.5f)
+				else if (furn.GetParameter("openness") < 0.5f)
                 {
                     spriteName = "door_2";
                 }
-                else if (furn.furnParameters["openness"] < 0.9f)
+				else if (furn.GetParameter("openness") < 0.9f)
                 {
                     spriteName = "door_3";
                 }

@@ -15,13 +15,13 @@ public class GameManager : MonoBehaviour {
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
+	public InventorySpriteController InventorySpriteController { get; protected set; }
 	private FurnitureService _furnitureService;
 	private CharacterService _characterService;
+	private InventoryService _inventoryService;
 	private RoomService _roomService;
 	private int optionAction;
 	private static bool loadGameMode = false;
-   
-
 
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour {
 		_roomService = new RoomService ();
 		_roomService.Init ();
 
+		_inventoryService = new InventoryService ();
+		_inventoryService.Init ();
+
+		InventorySpriteController= GetComponent<InventorySpriteController> ();
+
+
 		SpriteManager = GetComponent<SpriteManager>();
         SpriteManager.Init();
 
@@ -54,6 +60,8 @@ public class GameManager : MonoBehaviour {
 		TileManager = GetComponent<TileManager> ();
 		FurnitureController = GetComponent<FurnitureController> ();
 		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
+
+		InventorySpriteController.Init (SpriteManager, _inventoryService);
 			
 		if (!loadGameMode) {
 			InitGame ();
@@ -66,10 +74,16 @@ public class GameManager : MonoBehaviour {
 
 
     }
+
+	public Dictionary<string ,List<Inventory>> GetInventories(){
+		return _inventoryService._inventories;
+	}
 	public void InvalidateTileGraph(){
 		TileGraph = null;
 	}
-
+	public List<Character> GetCharacters(){
+		return _characterService.FindAll ();
+	}
     public void AddRoom(Room rm)
     {
 
@@ -79,6 +93,10 @@ public class GameManager : MonoBehaviour {
     {
         return _roomService.Get("outside");
     }
+
+	public List<Room>FindRooms(){
+		return _roomService.FindRooms ();
+	}
     public void DeleteRoom(Room r)
     {
         if (r.Name == "outside")
@@ -138,6 +156,15 @@ public class GameManager : MonoBehaviour {
         }
        
         xmlReader.Close ();
+
+		// DEBUGGING REMOVE LATER
+		// Create inventory item.
+		Inventory inv = new Inventory();
+		var tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2+1);
+		_inventoryService.PlaceInventory (tile,inv) ;
+		if (_inventoryService.cbInventoryCreated != null) {
+			_inventoryService.cbInventoryCreated(tile.inventory);
+		}
 
 		TileManager.InitialiseTileMap(SpriteManager);
 

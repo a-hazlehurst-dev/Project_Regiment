@@ -26,7 +26,7 @@ public class TileInspectorViewModel : MonoBehaviour {
         if(t == null) { return; }
         if(t.Room == null) { return; }
         txtTileType[0].text = "Tile type: " + t.Floor.ToString() + "(" + t.X + ","+t.Y +")";
-        txtTileType[1].text = "Room type: " + t.Room.Name;
+		txtTileType[1].text = "Room " + GameManager.Instance.FindRooms().IndexOf(t.Room).ToString();
         if (t.InstalledFurniture != null)
         {
             txtTileType[2].text = "Furniture: " + t.InstalledFurniture.ObjectType;

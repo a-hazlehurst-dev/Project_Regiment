@@ -11,9 +11,11 @@ public class SpriteManager : MonoBehaviour {
 
 	public Dictionary<string, Sprite> FurnitureObjects;
 	public Dictionary<string, Sprite> CharacterObjects;
+	public Dictionary<string, Sprite> InventoryObjects;
 
     public GameObject[] interactableTiles;
     public GameObject[] peasentSprites;
+
 
     public void Awake()
     {
@@ -24,6 +26,7 @@ public class SpriteManager : MonoBehaviour {
     {
         FurnitureObjects = new Dictionary<string, Sprite>();
         CharacterObjects = new Dictionary<string, Sprite>();
+		InventoryObjects = new Dictionary<string, Sprite> ();
         LoadResources();
 
     }
@@ -32,6 +35,7 @@ public class SpriteManager : MonoBehaviour {
     {
 		LoadFurniture ();
 		LoadCharacters ();
+		LoadInventory ();
     }
 
 	private void LoadFurniture(){
@@ -50,6 +54,15 @@ public class SpriteManager : MonoBehaviour {
             FurnitureObjects.Add(go.name, go);
         }
     }
+
+	private void LoadInventory(){
+		var inventoryObjects = Resources.LoadAll<Sprite>("Images/Inventory/"); 
+
+		foreach (var go in inventoryObjects)
+		{
+			InventoryObjects.Add(go.name, go);
+		}
+	}
 
 	private void LoadCharacters(){
 		var charObjects = Resources.LoadAll<Sprite>("Images/characters/");

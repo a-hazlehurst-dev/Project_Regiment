@@ -59,6 +59,7 @@
      <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\FurnitureController.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
+     <Compile Include="Assets\Code\Managers\InventorySpriteController.cs" />
      <Compile Include="Assets\Code\Managers\JobSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\TileManager.cs" />
@@ -75,6 +76,7 @@
      <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
      <Compile Include="Assets\Code\Services\CharacterService.cs" />
      <Compile Include="Assets\Code\Services\FurnitureService.cs" />
+     <Compile Include="Assets\Code\Services\InventoryService.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathAStar.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />

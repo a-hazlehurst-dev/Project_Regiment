@@ -78,21 +78,9 @@ public class Tile : IXmlSerializable
 	public Job PendingFurnitureJob;
 
 
-	public Inventory StockpileItem;
+	public Inventory inventory { get; protected set; }
 
-	public bool PlaceObject(Furniture itemInstance){
-		if (itemInstance == null) {
-            InstalledFurniture = null;
-			return true;
-		}
 
-		if (InstalledFurniture != null) {
-			return false;
-		}
-
-        InstalledFurniture = itemInstance;
-		return true;
-	}
 
 	public Tile(int x, int y, FloorType floorType)
 	{
@@ -161,6 +149,52 @@ public class Tile : IXmlSerializable
             return ns;
     }
 
+	public bool PlaceFurniture(Furniture itemInstance){
+		if (itemInstance == null) {
+			InstalledFurniture = null;
+			return true;
+		}
+
+		if (InstalledFurniture != null) {
+			return false;
+		}
+
+		InstalledFurniture = itemInstance;
+		return true;
+	}
+
+	public bool PlaceInventory(Inventory inv){
+		if (inv == null) {
+			inventory = null;
+			return true;
+		}
+
+		if (inventory != null) {
+			//TODO: this will be ok, if the object types match and inventory is not full.
+			if (inventory.objectType != inv.objectType) {
+				Debug.LogError ("Cant add inventory of different type.");
+				return false;
+			}
+
+			int numToMove = inv.stackSize;
+			if (inventory.stackSize + numToMove > inventory.maxStackSize) {
+				numToMove = inventory.maxStackSize - inventory.stackSize;
+			}
+
+			inventory.stackSize += numToMove;
+			inv.stackSize -= numToMove;
+		
+			return true;
+		}
+
+		inventory = inv.Clone ();
+		inventory.Tile = this;
+
+		inv.stackSize = 0;
+
+		return true;
+	}
+
 	/// <summary>
 	/// SAVING & LOADING XML STUFF
 	/// </summary>
@@ -200,5 +234,7 @@ public class Tile : IXmlSerializable
 
 		return Enterability.Ok;
 	}
+
+
 		
 }

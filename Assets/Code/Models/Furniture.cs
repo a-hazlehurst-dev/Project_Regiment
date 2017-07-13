@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 public class Furniture  : IXmlSerializable{
 
-	public Dictionary<string, float> furnParameters;
-	public Action<Furniture, float> updateActions;
+	protected Dictionary<string, float> furnParameters;
+	protected Action<Furniture, float> updateActions;
 
 	public Func<Furniture, Enterability> isEnterable;
 
@@ -66,7 +66,7 @@ public class Furniture  : IXmlSerializable{
 		this._width = width;
 		this._height = height;
 		this.LinksToNeighbour = linksToNeighbour;
-		this.funcPositionValidation = this.IsValidPosition;
+		this.funcPositionValidation = this.DefaultIsPositionValid;
 		this.furnParameters = new Dictionary<string, float> ();
 	}
 
@@ -80,7 +80,7 @@ public class Furniture  : IXmlSerializable{
 		Furniture item = prototype.Clone();
 
 		item.Tile = tile;
-		if (tile.PlaceObject (item)==false)  {
+		if (tile.PlaceFurniture (item)==false)  {
 			//if we couldnt place the object.
 			//it was likely already occupied
 			//do NOT return the object;
@@ -136,7 +136,9 @@ public class Furniture  : IXmlSerializable{
 		return funcPositionValidation (t);
 	}
 
-	public bool IsValidPosition(Tile t){
+
+	//will be replaced by lua files, e.g door specify needs two walls.
+	public bool DefaultIsPositionValid(Tile t){
 		if (t.InstalledFurniture != null) {
 			return false;
 		}
@@ -179,6 +181,32 @@ public class Furniture  : IXmlSerializable{
 			} while(reader.ReadToNextSibling ("Param"));
 		}
 	}
+
+	public float GetParameter( string key, float default_val =0){
+		if (!furnParameters.ContainsKey (key)) {
+			return default_val;
+
+		}
+		return furnParameters [key];
+	}
+
+	public void SetParameter(string key, float value){
+		furnParameters [key] = value;
+	}
+	public void ChangeParameter(string key, float value){
+		if (!furnParameters.ContainsKey (key)) {
+			furnParameters [key] = value;
+		}
+		furnParameters [key] += value;
+	}
+
+	public void RegisterUpdateAction(Action<Furniture, float> a){
+		updateActions += a;
+	}
+	public void UnRegisterUpdateAction(Action<Furniture, float> a){
+		updateActions -= a;
+	}
+
 
 }
 

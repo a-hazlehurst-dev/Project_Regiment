@@ -49,7 +49,7 @@ public class FurnitureService
 
     public bool IsValidPosition(string objectType, Tile tile)
     {
-        return furnPrototypes.Get(objectType).IsValidPosition(tile);
+        return furnPrototypes.Get(objectType).DefaultIsPositionValid(tile);
     }
 
     public void Register_OnFurniture_Created(Action<Furniture> cbCreatedFurnititure)

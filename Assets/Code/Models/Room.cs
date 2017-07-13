@@ -107,6 +107,8 @@ public class Room
 			}
 
 		}
+
+		newRoom.temperature = oldRoom.temperature;
        
         GameManager.Instance.AddRoom(newRoom);
 

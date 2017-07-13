@@ -1,14 +1,25 @@
 ﻿using UnityEngine;
 
-public class Inventory : MonoBehaviour {
+public class Inventory  {
 
-	// Use this for initialization
-	void Start () {
-		
+	public string objectType = "clay";
+	public int maxStackSize = 50;
+	public int stackSize = 1;
+	public Tile Tile;
+	public Character Character;
+
+	public Inventory(){
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	protected Inventory(Inventory other){
+		objectType 		= other.objectType;
+		maxStackSize 	= other.maxStackSize;
+		stackSize 		= other.stackSize;
 	}
+
+	public virtual Inventory Clone(){
+		return new Inventory (this);
+	}
+
 }
