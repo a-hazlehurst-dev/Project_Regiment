@@ -1,26 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Managers\InventorySpriteController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Managers\GameManager.cs">
     <Files>
-      <File FileName="Assets\Code\Models\Inventory.cs" Line="11" Column="2" />
-      <File FileName="Assets\Code\Services\InventoryService.cs" Line="16" Column="2" />
-      <File FileName="Assets\Code\Models\Tile.cs" Line="156" Column="4" />
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="243" Column="1" />
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Managers\CharacterSpriteManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Managers\FurnitureController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Managers\SpriteManager.cs" Line="4" Column="1" />
-      <File FileName="Assets\Code\Managers\TileManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Managers\JobSpriteManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Services\CharacterService.cs" Line="30" Column="5" />
-      <File FileName="Assets\Code\Managers\InventorySpriteController.cs" Line="48" Column="52" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="220" Column="48" />
+      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="142" Column="38" />
+      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="22" Column="5" />
+      <File FileName="Assets\Code\Managers\InventorySpriteController.cs" Line="59" Column="49" />
+      <File FileName="Assets\Code\Managers\FurnitureController.cs" Line="174" Column="22" />
+      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="28" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Managers\FurnitureManager.cs" line="40" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\FurnitureRepository.cs" line="55" column="1" />
-      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Managers\InventorySpriteController.cs" line="47" column="1" />
+      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Managers\InventorySpriteController.cs" line="50" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -166,6 +166,20 @@ public class GameManager : MonoBehaviour {
 			_inventoryService.cbInventoryCreated(tile.inventory);
 		}
 
+		inv = new Inventory();
+		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2+1);
+		_inventoryService.PlaceInventory (tile,inv) ;
+		if (_inventoryService.cbInventoryCreated != null) {
+			_inventoryService.cbInventoryCreated(tile.inventory);
+		}
+
+		inv = new Inventory();
+		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2-1, TileDataGrid.GridHeight / 2+2);
+		_inventoryService.PlaceInventory (tile,inv) ;
+		if (_inventoryService.cbInventoryCreated != null) {
+			_inventoryService.cbInventoryCreated(tile.inventory);
+		}
+
 		TileManager.InitialiseTileMap(SpriteManager);
 
 		TileGraph = new PathTileGraph(TileDataGrid);
@@ -202,8 +216,8 @@ public class GameManager : MonoBehaviour {
 
     public Tile GetTileAt(Vector3 coordinate)
     {
-        int x = Mathf.FloorToInt(coordinate.x);
-        int y = Mathf.FloorToInt(coordinate.y);
+        int x = Mathf.FloorToInt(coordinate.x + .5f);
+        int y = Mathf.FloorToInt(coordinate.y + .5f);
     
 		return TileDataGrid.GetTileAt(x, y);
     }

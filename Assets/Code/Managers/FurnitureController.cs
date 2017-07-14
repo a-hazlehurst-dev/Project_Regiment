@@ -139,12 +139,13 @@ public class FurnitureController : MonoBehaviour
 
 	public void OnFurnitureCreated(Furniture furnitureToInstall){
 
+
         if (_furnitureGameObjectMap.ContainsKey(furnitureToInstall))
         {
             return;
         }
 
-		GameObject furnitureToRender = new GameObject(furnitureToInstall.ObjectType+ " "+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
+		GameObject furnitureToRender = new GameObject(furnitureToInstall.ObjectType+ " x"+ furnitureToInstall.Tile.X + ", y" +furnitureToInstall.Tile.Y);
 
        _furnitureGameObjectMap.Add(furnitureToInstall, furnitureToRender);
 
@@ -153,7 +154,7 @@ public class FurnitureController : MonoBehaviour
 		sr.sprite = GetSpriteForFurniture(furnitureToInstall) ; //FIXME wall does not exist.
 		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
 
-		furnitureToRender.transform.SetParent (furnitureHolder);
+
 
         if (furnitureToInstall.ObjectType == "door")
         {
@@ -169,6 +170,9 @@ public class FurnitureController : MonoBehaviour
             }
 
         }
+
+		Debug.Log ("test");
+		furnitureToRender.transform.SetParent (furnitureHolder);
 
 
         furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
@@ -186,6 +190,8 @@ public class FurnitureController : MonoBehaviour
 		var sr = furn_go.GetComponent<SpriteRenderer> ();
 		sr.sprite =GetSpriteForFurniture(furn);
 		sr.sortingLayerName = "Furniture";
+
+		furn_go.transform.SetParent (furnitureHolder);
        
     }
 
