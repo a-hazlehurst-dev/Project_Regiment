@@ -54,11 +54,10 @@ using UnityEngine.UI;
 
 			if (inventory.maxStackSize > 1) {	
 				GameObject ui_go = Instantiate (inv_ui_prefab);
-			ui_go.transform.SetParent (inv_go.transform);
-			//ui_go.transform.localPosition = new Vector3(0.25f, 0.25f,0); //TODO: if sprite anchor gets changed we'll have to changes ti.
-			ui_go.transform.localPosition = Vector3.zero;//TODO: if sprite anchor gets changed we'll have to changes ti.
+			    ui_go.transform.SetParent (inv_go.transform);
+			    ui_go.transform.localPosition = Vector3.zero; //TODO: if sprite anchor gets changed we'll have to changes ti.
 
-			ui_go.GetComponentInChildren<Text>().text = inventory.stackSize.ToString();
+			    ui_go.GetComponentInChildren<Text>().text = inventory.stackSize.ToString();
 			}
 
 			inv_go.transform.SetParent ( inventoryHolder );

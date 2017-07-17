@@ -14,11 +14,25 @@ public class Character {
 
 
 	Job myJob;
+	public Inventory inventory; // what im carrying. (not hear / or equipment)
 
 	Action<Character> cbCharacterChanged;
 
 	public Tile CurrentTile { get; protected set; }
-	Tile destTile; // final destination
+
+	private Tile _destTile;
+
+	Tile destTile 
+	{ 
+		get { return _destTile; }
+		set
+		{ 
+				if (_destTile != value) {
+					_destTile = value;
+					_destTile = null; // new destination will always invalidate path.
+			}
+		}
+	}
 	Tile nextTile;  // next tile in path finding sequence;
 	PathAStar pathAStar;
 	float speed = 5; //tiles per second.
@@ -34,32 +48,121 @@ public class Character {
 	void Update_DoJob(float deltaTime){
 		
 		if (myJob == null) {
-			myJob = GameManager.Instance.JobQueue.DeQueue ();
-			if (myJob != null) {
-				//SetDestination (myJob.Tile);
-				destTile = myJob.Tile;
-				myJob.RegisterJobCompletedCallback (OnJobEnded);
-				myJob.RegisterJobCancelledCallback (OnJobEnded);
-	
+			GetNewJob ();
+
+			if (myJob == null) {
+				destTile = CurrentTile;
+				return;
 			}
 		}
+		//we have a job!! and we can get to it.
+		//STEP1: doe the job have all materials it needs.
+		if (myJob.HasAllMaterial () == false) {
+			//no we are missing something.
+			//Step2, are we carry anything that is required.
+			if (inventory != null) {
+				if (myJob.DesireInventoryType (inventory)) {
+					//if so deliver them, walk to tile and drop them off.
+					if (CurrentTile == myJob.Tile) {
+						//were already at job site so drop inventory.
+						GameManager.Instance._inventoryService.PlaceInventory (myJob, inventory);
+
+						if (inventory.stackSize == 0) {
+							inventory = null;
+						} else {
+							Debug.Log ("Character is still carrying inventory, which wshould not be.");
+							inventory = null;
+						}
+
+					} else {
+						//still need to get to the site.
+						destTile = myJob.Tile;
+						return; // nothing to do.
+					}
+
+
+				} else {
+					//carrying something that the job doesnt want.
+					//dump at feet. (or werever is closest);
+					//TODO; go to nearest empty tile and dump it.
+					if (GameManager.Instance._inventoryService.PlaceInventory (CurrentTile, inventory) == false) {
+						Debug.LogError ("Tried to dump invemntory into invalid tile " + CurrentTile.X + ", " + CurrentTile.Y);
+						//FIXME: this will loose inventory perminantly.
+						inventory = null;
+					}
+				}
+			} else {
+				//job still wants materials but we arnt carrying any.
+
+
+				//are we standing in a tile where theere are goods for oour desired job
+				if (CurrentTile.inventory != null && myJob.DesireInventoryType (CurrentTile.inventory)) {
+					//pick the stuff up.
+
+				}
+
+				//FIXME : dum setup.
+				//Find first inventory type we need from inventory.
+				Inventory desired =  myJob.GetFirstDesiredInventory();
+
+				Inventory supplier = GameManager.Instance._inventoryService.GetClosestInventoryOfType (
+					desired.objectType, 
+					CurrentTile, 
+					desired.maxStackSize - desired.stackSize
+				);
+
+				if (supplier == null) {
+					Debug.Log ("No tile contains objects of type: "+ desired.objectType + " to satisfy desired amount.");
+					AbandonJob ();
+				}
+				destTile = supplier.Tile;
+				return;
+
+
+
+			}
+		
+
+
+			// if not got to a tile to collect goods.
+			// if already on tile with materials, then pick some up.
+			return; // cant continue until all mats are present.
+		}
+
+		//make sure out destinationtile is the job stie.
+
+		destTile = myJob.Tile;
 
 
 		//are we there yet
 		if (CurrentTile == destTile ) {
-		//if(pathAStar != null & pathAStar.Length() ==1)
-			
-			if (myJob != null) {
-				myJob.DoWork (deltaTime);
-			}
-
+			myJob.DoWork (deltaTime);
 		}
 
 	}
 
+
+	void GetNewJob(){
+		myJob = GameManager.Instance.JobQueue.DeQueue ();
+		if (myJob == null) {
+			return;
+		}
+		destTile = myJob.Tile;
+		myJob.RegisterJobCompletedCallback (OnJobEnded);
+		myJob.RegisterJobCancelledCallback (OnJobEnded);
+
+		//immediately check if job tile is reachable.
+
+		pathAStar = new PathAStar (GameManager.Instance.TileDataGrid, CurrentTile, destTile);
+		if (pathAStar.Length () == 0) {
+			Debug.LogError ("PathASTAR returned no path to target job tile..");
+			myJob.CancelJob();
+			AbandonJob ();
+			destTile = CurrentTile;
+		}
+	}
 	public void AbandonJob(){
 		nextTile = destTile = CurrentTile;
-		pathAStar = null;
 		GameManager.Instance.JobQueue.Enqueue (myJob);
 		myJob = null;
 
@@ -84,7 +187,6 @@ public class Character {
 					//FIXME: job should be reenqueued.
 					myJob.CancelJob();
 					AbandonJob ();
-					pathAStar = null;
 					return;
 				
 				}

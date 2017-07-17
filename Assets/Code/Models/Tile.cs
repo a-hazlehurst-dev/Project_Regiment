@@ -78,7 +78,7 @@ public class Tile : IXmlSerializable
 	public Job PendingFurnitureJob;
 
 
-	public Inventory inventory { get; protected set; }
+	public Inventory inventory { get;  set; }
 
 
 

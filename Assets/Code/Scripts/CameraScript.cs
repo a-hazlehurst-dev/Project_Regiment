@@ -11,11 +11,14 @@ public class CameraScript : MonoBehaviour {
 
 	public GameObject cursorPointer;
 
+    private Vector3 currentMousePosition;
+
     public Tile GetMouseOverTile()
     {
-        return GameManager.Instance.TileDataGrid.GetTileAt(Mathf.FloorToInt(GetMousePosition().x), Mathf.FloorToInt(GetMousePosition().y));
+        return GameManager.Instance.GetTileAt(currentMousePosition     
+            );
     }
-
+    
     public Vector3 GetMousePosition()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -23,7 +26,7 @@ public class CameraScript : MonoBehaviour {
 
 	void Update(){
 
-        Vector3 currentMousePosition = GetMousePosition();
+         currentMousePosition = GetMousePosition();
 		currentMousePosition.z = 0;
 		Tile tileUnderMouse = GameManager.Instance.GetTileAt (currentMousePosition);
         if (tileUnderMouse == null) return;
@@ -57,11 +60,21 @@ public class CameraScript : MonoBehaviour {
 				if(_drawObjectMode.Equals("wall")){
 
 					if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid ("wall", tile) && tile.PendingFurnitureJob ==  null) {
+                        Job job;
+                        if (GameManager.Instance._furnitureService.FindFurnitureRequirements().ContainsKey("wall"))
+                        {
+                            //make a clone
+                            job = GameManager.Instance._furnitureService.FindFurnitureRequirements()["wall"].Clone();
+                            // assign the tile
+                            job.Tile = tile;
+                        }
+                        else
+                        {
+                            Debug.LogError("dummy job created.");
+                             job = new Job(tile, "wall", FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
+                        }
 						//tile is valid for this furniture type and not job already in place.
-						var job = new Job (tile, "wall", (theJob) => { 
-							GameManager.Instance.FurnitureController.PlaceFurniture ("wall",theJob.Tile);
-							tile.PendingFurnitureJob = null;
-						});
+						
 						GameManager.Instance.JobQueue.Enqueue ( job );
 
 
@@ -76,10 +89,8 @@ public class CameraScript : MonoBehaviour {
 					if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid ("door", tile)  && tile.PendingFurnitureJob ==  null) {
 						//tile is valid for furniture.
 
-						var job = new Job (tile, "door", (theJob) => {
-							GameManager.Instance.FurnitureController.PlaceFurniture ("door", theJob.Tile);
-							tile.PendingFurnitureJob = null;
-						});
+						var job = new Job (tile, "door", FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
+
 						GameManager.Instance.JobQueue.Enqueue (job);
 
 						tile.PendingFurnitureJob = job;
@@ -112,6 +123,7 @@ public class CameraScript : MonoBehaviour {
 	void OnFurnitureJobComplete(string type, Tile t){
 		
 	}
+
 
 	
 

@@ -8,6 +8,7 @@ public class FurnitureService
     FurnitureBuilder builder;
     FurnitureRepository furnRepository;
     FurniturePrototypes furnPrototypes;
+   
 
     Action<Furniture> cbOnCreated;
 
@@ -17,6 +18,11 @@ public class FurnitureService
         furnPrototypes = new FurniturePrototypes();
         furnRepository = new FurnitureRepository();
         builder = new FurnitureBuilder(furnRepository, furnPrototypes);
+    }
+
+    public Dictionary<string, Job> FindFurnitureRequirements()
+    {
+        return furnPrototypes.furnitureRequirements;
     }
 
     public Furniture CreateFurniture(string type, Tile tile)

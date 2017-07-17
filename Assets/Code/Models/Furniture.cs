@@ -18,7 +18,6 @@ public class Furniture  : IXmlSerializable{
 		}
 	}
 
-
 	public  Tile Tile { get; protected set; }					//base tile of object( what you place ) object can be bigger than 1 tile.
 	public string ObjectType { get; protected set; }
 	public float MovementCost { get; protected set; }

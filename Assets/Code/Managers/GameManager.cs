@@ -16,12 +16,14 @@ public class GameManager : MonoBehaviour {
 	public TileDataGrid TileDataGrid { get; protected set; }
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
 	public InventorySpriteController InventorySpriteController { get; protected set; }
-	private FurnitureService _furnitureService;
+	public FurnitureService _furnitureService;
 	private CharacterService _characterService;
-	private InventoryService _inventoryService;
+	public InventoryService _inventoryService;
 	private RoomService _roomService;
 	private int optionAction;
 	private static bool loadGameMode = false;
+
+    
 
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour {
 		Instance = this;
 		_furnitureService = new FurnitureService ();
 		_furnitureService.Init ();
+
+        
 
 		_characterService = new CharacterService ();
 		_characterService.Init ();
@@ -74,6 +78,7 @@ public class GameManager : MonoBehaviour {
 
 
     }
+
 
 	public Dictionary<string ,List<Inventory>> GetInventories(){
 		return _inventoryService._inventories;
@@ -167,6 +172,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		inv = new Inventory();
+        inv.stackSize = 12;
 		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2+1);
 		_inventoryService.PlaceInventory (tile,inv) ;
 		if (_inventoryService.cbInventoryCreated != null) {
@@ -174,7 +180,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 		inv = new Inventory();
-		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2-1, TileDataGrid.GridHeight / 2+2);
+        inv.stackSize = 22;
+        tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2-1, TileDataGrid.GridHeight / 2+2);
 		_inventoryService.PlaceInventory (tile,inv) ;
 		if (_inventoryService.cbInventoryCreated != null) {
 			_inventoryService.cbInventoryCreated(tile.inventory);

@@ -5,14 +5,13 @@ public static class FurnitureActions
 {
 	public static void Door_UpdateAction(Furniture furn, float deltaTime){
 		if (furn.GetParameter("is_opening") >= 1) {
-			var val = furn.GetParameter ("openness");
-			furn.ChangeParameter ("openness" , val+= deltaTime * 2) ;
+			
+			furn.ChangeParameter ("openness" , deltaTime * 2) ;
 			if (furn.GetParameter ("openness") >= 1) {
 				furn.SetParameter ("is_opening", 0);
 			}
 		} else {
-			var val = furn.GetParameter ("openness");
-			furn.ChangeParameter ("openness" , val -= deltaTime * 2) ;
+			furn.ChangeParameter ("openness" , deltaTime * -2) ;
 		}
 
 		furn.SetParameter ("openness", Mathf.Clamp01 (furn.GetParameter ("openness")));
@@ -32,6 +31,14 @@ public static class FurnitureActions
 			return Enterability.Wait;
 		}
 	}
+
+    public static void JobComplete_FurnitureBuilding(Job theJob)
+    {
+        GameManager.Instance.FurnitureController.PlaceFurniture(theJob.JobObjectType, theJob.Tile);
+        theJob.Tile.PendingFurnitureJob = null;
+
+    }
+
 
 
 }

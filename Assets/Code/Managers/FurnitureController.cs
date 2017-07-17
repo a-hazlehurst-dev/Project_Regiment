@@ -155,7 +155,6 @@ public class FurnitureController : MonoBehaviour
 		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
 
 
-
         if (furnitureToInstall.ObjectType == "door")
         {
             var northTile = GameManager.Instance.TileDataGrid.GetTileAt(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y + 1);
@@ -164,16 +163,12 @@ public class FurnitureController : MonoBehaviour
             if (northTile != null && southTile != null && northTile.InstalledFurniture != null && southTile.InstalledFurniture != null
                 && northTile.InstalledFurniture.ObjectType == "wall" && southTile.InstalledFurniture.ObjectType == "wall")
             {
-
                 furnitureToRender.transform.rotation = Quaternion.Euler(0, 0, 90);
-                furnitureToRender.transform.Translate(1, 0, 0, Space.World);// ugly hack for bottom left anchor
             }
 
         }
 
-		Debug.Log ("test");
 		furnitureToRender.transform.SetParent (furnitureHolder);
-
 
         furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
 	}

@@ -49,9 +49,7 @@ public class JobSpriteManager : MonoBehaviour {
             if (northTile != null && southTile != null && northTile.InstalledFurniture != null && southTile.InstalledFurniture != null
                 && northTile.InstalledFurniture.ObjectType == "wall" && southTile.InstalledFurniture.ObjectType == "wall")
             {
-
                 job_go.transform.rotation = Quaternion.Euler(0, 0, 90);
-                job_go.transform.Translate(1, 0, 0, Space.World);// ugly hack for bottom left anchor
             }
 
         }
