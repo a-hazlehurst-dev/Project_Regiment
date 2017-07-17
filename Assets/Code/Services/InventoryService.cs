@@ -53,12 +53,12 @@ public class InventoryService
 			return false;
 		}
 
-		job._inventoryRequirements [inv.objectType].stackSize += inv.stackSize;
-		if (job._inventoryRequirements [inv.objectType].maxStackSize < job._inventoryRequirements [inv.objectType].stackSize) {
-			inv.stackSize = job._inventoryRequirements [inv.objectType].stackSize - job._inventoryRequirements [inv.objectType].maxStackSize;
+		job._inventoryRequirements [inv.objectType].StackSize += inv.StackSize;
+		if (job._inventoryRequirements [inv.objectType].maxStackSize < job._inventoryRequirements [inv.objectType].StackSize) {
+			inv.StackSize = job._inventoryRequirements [inv.objectType].StackSize - job._inventoryRequirements [inv.objectType].maxStackSize;
 			job._inventoryRequirements [inv.objectType].maxStackSize = job._inventoryRequirements [inv.objectType].maxStackSize;
 		} else {
-			inv.stackSize = 0;
+			inv.StackSize = 0;
 		}
 
 		// "inv" maybe empty stack as it was merged with another stack.
@@ -69,26 +69,40 @@ public class InventoryService
 	}
 
 	// trying to place the inventory onto a tile.
-	public bool PlaceInventory(Character character, Inventory inv){
+	public bool PlaceInventory(Character character, Inventory sourceInventory, int amount = -1){
+        if(amount < 0)
+        {
+            amount = sourceInventory.StackSize;
+        }
+        else
+        {
+            amount = Mathf.Min(amount, sourceInventory.StackSize);
+        }
+        if(character.inventory == null)
+        {
+            character.inventory = sourceInventory.Clone();
+            character.inventory.StackSize = 0;
+            _inventories[character.inventory.objectType].Add(character.inventory);
+        }
 
-		character.inventory.stackSize += inv.stackSize;
+		character.inventory.StackSize += amount;
 
-		if (character.inventory.maxStackSize <character.inventory.stackSize) {
-			inv.stackSize = character.inventory.stackSize - character.inventory.maxStackSize; // set the inv
-			character.inventory.maxStackSize = character.inventory.maxStackSize; // set the character
+		if (character.inventory.maxStackSize <character.inventory.StackSize) {
+			sourceInventory.StackSize = character.inventory.StackSize - character.inventory.maxStackSize; // set the inv
+			character.inventory.StackSize = character.inventory.maxStackSize; // set the character
 		} else {
-			inv.stackSize = 0;
+			sourceInventory.StackSize -= amount;
 		}
 
 		// "inv" maybe empty stack as it was merged with another stack.
-		CleanUpInventory(inv);
+		CleanUpInventory(sourceInventory);
 
 
 		return true;
 	}
 
 	void CleanUpInventory(Inventory inv){
-		if (inv.stackSize == 0) {
+		if (inv.StackSize == 0) {
 			if (_inventories.ContainsKey (inv.objectType)) {
 				_inventories [inv.objectType].Remove (inv);
 			}

@@ -29,7 +29,7 @@ public class Character {
 		{ 
 				if (_destTile != value) {
 					_destTile = value;
-					_destTile = null; // new destination will always invalidate path.
+					pathAStar = null; // new destination will always invalidate path.
 			}
 		}
 	}
@@ -61,13 +61,13 @@ public class Character {
 			//no we are missing something.
 			//Step2, are we carry anything that is required.
 			if (inventory != null) {
-				if (myJob.DesireInventoryType (inventory)) {
+				if (myJob.DesireInventoryType (inventory)>0) {
 					//if so deliver them, walk to tile and drop them off.
 					if (CurrentTile == myJob.Tile) {
 						//were already at job site so drop inventory.
 						GameManager.Instance._inventoryService.PlaceInventory (myJob, inventory);
 
-						if (inventory.stackSize == 0) {
+						if (inventory.StackSize == 0) {
 							inventory = null;
 						} else {
 							Debug.Log ("Character is still carrying inventory, which wshould not be.");
@@ -92,12 +92,15 @@ public class Character {
 					}
 				}
 			} else {
-				//job still wants materials but we arnt carrying any.
+                //job still wants materials but we arnt carrying any.
 
 
-				//are we standing in a tile where theere are goods for oour desired job
-				if (CurrentTile.inventory != null && myJob.DesireInventoryType (CurrentTile.inventory)) {
-					//pick the stuff up.
+                //are we standing in a tile where theere are goods for oour desired job
+              
+
+                if (CurrentTile.inventory != null && myJob.DesireInventoryType(CurrentTile.inventory) > 0) {
+                    //pick the stuff up.
+                    GameManager.Instance._inventoryService.PlaceInventory(this, CurrentTile.inventory, myJob.DesireInventoryType(CurrentTile.inventory));
 
 				}
 
@@ -108,22 +111,17 @@ public class Character {
 				Inventory supplier = GameManager.Instance._inventoryService.GetClosestInventoryOfType (
 					desired.objectType, 
 					CurrentTile, 
-					desired.maxStackSize - desired.stackSize
+					desired.maxStackSize - desired.StackSize
 				);
-
-				if (supplier == null) {
+                destTile = supplier.Tile;
+                if (supplier == null) {
 					Debug.Log ("No tile contains objects of type: "+ desired.objectType + " to satisfy desired amount.");
 					AbandonJob ();
+                    destTile = CurrentTile;
 				}
-				destTile = supplier.Tile;
+				
 				return;
-
-
-
 			}
-		
-
-
 			// if not got to a tile to collect goods.
 			// if already on tile with materials, then pick some up.
 			return; // cant continue until all mats are present.
@@ -175,7 +173,7 @@ public class Character {
 			pathAStar = null;
 			return;
 		} //already at destination.
-
+       
 
 		if (nextTile == null || nextTile == CurrentTile) {
 			//get next tile from path finder.
@@ -248,13 +246,6 @@ public class Character {
 		if (cbCharacterChanged != null) {
 			cbCharacterChanged (this);
 		}
-	}
-
-	public void SetDestination(Tile destinationTile){
-		if (!CurrentTile.IsNeighbour (destTile, true)) {
-			Debug.Log ("Character: SetDestination : Our destination tile is not a neightbour");
-		}
-		destTile = destinationTile;
 	}
 
 

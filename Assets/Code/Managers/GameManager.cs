@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		inv = new Inventory();
-        inv.stackSize = 12;
+        inv.StackSize = 12;
 		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2+1);
 		_inventoryService.PlaceInventory (tile,inv) ;
 		if (_inventoryService.cbInventoryCreated != null) {
@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		inv = new Inventory();
-        inv.stackSize = 22;
+        inv.StackSize = 22;
         tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2-1, TileDataGrid.GridHeight / 2+2);
 		_inventoryService.PlaceInventory (tile,inv) ;
 		if (_inventoryService.cbInventoryCreated != null) {

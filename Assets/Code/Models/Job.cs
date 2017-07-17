@@ -87,28 +87,28 @@ public class Job  {
 
 	public bool HasAllMaterial(){
 		foreach (var inv in _inventoryRequirements.Values) {
-			if (inv.maxStackSize > inv.stackSize) {
+			if (inv.maxStackSize > inv.StackSize) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public bool DesireInventoryType(Inventory inv){
+	public int DesireInventoryType(Inventory inv){
 		if (_inventoryRequirements.ContainsKey (inv.objectType) == false) {
-			return false;// we dont want this.
+			return 0;// we dont want this.
 		}
 
-		if (_inventoryRequirements [inv.objectType].stackSize >= _inventoryRequirements [inv.objectType].maxStackSize) {
+		if (_inventoryRequirements [inv.objectType].StackSize >= _inventoryRequirements [inv.objectType].maxStackSize) {
 			//already have enough of this material.
-			return  false;
+			return  0;
 		}
 
-		return true; //we need this stuff.
+        return _inventoryRequirements[inv.objectType].maxStackSize - _inventoryRequirements[inv.objectType].StackSize; //we need this stuff.
 	}
 
 	public Inventory GetFirstDesiredInventory(){
-		return _inventoryRequirements.Values.FirstOrDefault (x => x.maxStackSize > x.stackSize); 
+		return _inventoryRequirements.Values.FirstOrDefault (x => x.maxStackSize > x.StackSize); 
 	}
 }
 

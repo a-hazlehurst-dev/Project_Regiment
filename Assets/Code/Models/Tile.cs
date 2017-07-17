@@ -55,7 +55,7 @@ public class Tile : IXmlSerializable
 	}
 
 
-	Action<Tile> cbTileFloorChanged;
+	 Action<Tile> cbTileFloorChanged;
 	FloorType _type =  FloorType.Grass;
 	public Furniture InstalledFurniture { get; protected set; }
 	public Room Room;
@@ -176,13 +176,13 @@ public class Tile : IXmlSerializable
 				return false;
 			}
 
-			int numToMove = inv.stackSize;
-			if (inventory.stackSize + numToMove > inventory.maxStackSize) {
-				numToMove = inventory.maxStackSize - inventory.stackSize;
+			int numToMove = inv.StackSize;
+			if (inventory.StackSize + numToMove > inventory.maxStackSize) {
+				numToMove = inventory.maxStackSize - inventory.StackSize;
 			}
 
-			inventory.stackSize += numToMove;
-			inv.stackSize -= numToMove;
+			inventory.StackSize += numToMove;
+			inv.StackSize -= numToMove;
 		
 			return true;
 		}
@@ -190,7 +190,7 @@ public class Tile : IXmlSerializable
 		inventory = inv.Clone ();
 		inventory.Tile = this;
 
-		inv.stackSize = 0;
+		inv.StackSize = 0;
 
 		return true;
 	}
