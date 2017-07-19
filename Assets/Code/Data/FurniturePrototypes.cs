@@ -22,11 +22,16 @@ public class FurniturePrototypes
 
 		_furniturePrototypes.Add("door", new Furniture("door",1, 1, 1, false, true));
 
-		_furniturePrototypes ["door"].SetParameter ("openness", 0);
+
+        _furniturePrototypes ["door"].SetParameter ("openness", 0);
 		_furniturePrototypes ["door"].SetParameter("is_opening",0);
 		_furniturePrototypes ["door"].RegisterUpdateAction (FurnitureActions.Door_UpdateAction);
 		_furniturePrototypes ["door"].isEnterable = FurnitureActions.Door_IsEnterable;
 
+        _furniturePrototypes.Add("stockpile", new Furniture("stockpile", 1, 1, 1, false, false));
+        _furniturePrototypes["stockpile"].RegisterUpdateAction(FurnitureActions.Stockpile_Update_Action);
+
+        furnitureRequirements.Add("stockpile", new Job(null, "stockpile", FurnitureActions.JobComplete_FurnitureBuilding, -1f,null));
     }
 
     public Furniture Get(string furnitureType)

@@ -99,8 +99,26 @@ public class CameraScript : MonoBehaviour {
 							theJob.Tile.PendingFurnitureJob = null;
 						});
 					}
-				}	
-			}
+				}
+
+                else if (_drawObjectMode.Equals("stockpile"))
+                {
+                    if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid("stockpile", tile) && tile.PendingFurnitureJob == null)
+                    {
+                        //tile is valid for furniture.
+
+                        var job = new Job(tile, "stockpile", FurnitureActions.JobComplete_FurnitureBuilding, -1f, null);
+
+                        GameManager.Instance.JobQueue.Enqueue(job);
+
+                        tile.PendingFurnitureJob = job;
+
+                        job.RegisterJobCancelledCallback((theJob) => {
+                            theJob.Tile.PendingFurnitureJob = null;
+                        });
+                    }
+                }
+            }
         }
 
         if (Input.GetMouseButton(1))

@@ -76,7 +76,7 @@ public class Room
 			// this tile was already processed by a flood fill, cant flood
 			return;
 		}
-		if (tile.InstalledFurniture != null && tile.InstalledFurniture.RoomEnclosure) {
+		if (tile.Furniture != null && tile.Furniture.RoomEnclosure) {
 			//has wall or door. cant flood
 			return;
 		}
@@ -100,7 +100,7 @@ public class Room
 						return;
 					}
 					//if the neighbour, is not off the grid, is in the same room as the original tile, && the the tile is not a structure. queue it.
-					if (t2 != null && t2.Room == oldRoom && (t2.InstalledFurniture == null || t2.InstalledFurniture.RoomEnclosure == false)) {
+					if (t2 != null && t2.Room == oldRoom && (t2.Furniture == null || t2.Furniture.RoomEnclosure == false)) {
 						TilesToCheck.Enqueue (t2);
 					}
 				}

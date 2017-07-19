@@ -10,6 +10,8 @@ public class Furniture  : IXmlSerializable{
 	protected Dictionary<string, float> furnParameters;
 	protected Action<Furniture, float> updateActions;
 
+    List<Job> _jobs;
+
 	public Func<Furniture, Enterability> isEnterable;
 
 	public void Update(float deltaTime){
@@ -34,8 +36,14 @@ public class Furniture  : IXmlSerializable{
 	//For Serialization
 	public Furniture(){
 		furnParameters = new Dictionary<string, float> ();
+        _jobs = new List<Job>();
 	
 	}
+
+    public bool IsStockpile()
+    {
+        return ObjectType == "stockpile"; ;
+    }
 
 	//Copy Constructors
 	protected Furniture(Furniture other){
@@ -47,7 +55,7 @@ public class Furniture  : IXmlSerializable{
 
 		this.LinksToNeighbour = other.LinksToNeighbour;
 		this.furnParameters = new Dictionary<string, float> (other.furnParameters);
-
+        this._jobs = new List<Job>();
 		if (other.updateActions != null) {
 			this.updateActions = (Action<Furniture,float>)other.updateActions.Clone ();
 		}
@@ -73,7 +81,31 @@ public class Furniture  : IXmlSerializable{
 		return new Furniture(this);
 	}
 
+    public int JobCount()
+    {
+        return _jobs.Count;
+    }
 
+    public void AddJob(Job j)
+    {
+
+        _jobs.Add(j);
+        GameManager.Instance.JobQueue.Enqueue(j);
+    }
+
+    public void RemoveJob(Job j)
+    {
+        _jobs.Remove(j);
+        j.CancelJob();
+        GameManager.Instance.JobQueue.Remove(j);
+    }
+    public void ClearJobs()
+    {
+        foreach(var job in _jobs.ToArray())
+        {
+            RemoveJob(job);
+        }
+    }
 	static public Furniture PlaceFurniture(Furniture prototype,  Tile tile)
 	{
 		Furniture item = prototype.Clone();
@@ -101,26 +133,26 @@ public class Furniture  : IXmlSerializable{
 		int y = tile.Y;
 
 		var t = GameManager.Instance.TileDataGrid.GetTileAt(x, y + 1);
-		if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged!=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		if (t != null && t.Furniture != null &&  t.Furniture.cbOnChanged!=null && t.Furniture.ObjectType == item.ObjectType)
 		{
-			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture); //we have northern neighbour with same object as us, so change it with callback;
+			t.Furniture.cbOnChanged(t.Furniture); //we have northern neighbour with same object as us, so change it with callback;
 		}
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x +1, y);
-		if (t != null && t.InstalledFurniture != null &&  t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		if (t != null && t.Furniture != null &&  t.Furniture.cbOnChanged !=null && t.Furniture.ObjectType == item.ObjectType)
 		{
-			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+			t.Furniture.cbOnChanged(t.Furniture);
 		}
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y- 1);
-		if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		if (t != null && t.Furniture != null && t.Furniture.cbOnChanged !=null && t.Furniture.ObjectType == item.ObjectType)
 		{
-			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+			t.Furniture.cbOnChanged(t.Furniture);
 		}
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x-1, y );
-		if (t != null && t.InstalledFurniture != null  && t.InstalledFurniture.cbOnChanged !=null && t.InstalledFurniture.ObjectType == item.ObjectType)
+		if (t != null && t.Furniture != null  && t.Furniture.cbOnChanged !=null && t.Furniture.ObjectType == item.ObjectType)
 		{
-			t.InstalledFurniture.cbOnChanged(t.InstalledFurniture);
+			t.Furniture.cbOnChanged(t.Furniture);
 		}
 	}
 		
@@ -138,7 +170,7 @@ public class Furniture  : IXmlSerializable{
 
 	//will be replaced by lua files, e.g door specify needs two walls.
 	public bool DefaultIsPositionValid(Tile t){
-		if (t.InstalledFurniture != null) {
+		if (t.Furniture != null) {
 			return false;
 		}
 

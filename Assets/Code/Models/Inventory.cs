@@ -38,7 +38,7 @@ public class Inventory {
     {
         this.objectType = objectType;
         this.maxStackSize = maxStackSize;
-        this.StackSize = StackSize;
+        this.StackSize = currentStackSize;
     }
 
 	protected Inventory(Inventory other){

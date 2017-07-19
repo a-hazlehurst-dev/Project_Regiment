@@ -18,7 +18,7 @@ public class FooterMenuViewModel : MonoBehaviour {
 	{
 		InactivateAll ();
 
-		Vector3 position = new Vector3(5f, 180, 0);
+		Vector3 position = new Vector3(5f, 250, 0);
 		pnlFurnitureMenu.transform.position = position;
 		pnlFurnitureMenu.SetActive(true);
 	}
@@ -52,4 +52,8 @@ public class FooterMenuViewModel : MonoBehaviour {
 	{
 		GameManager.Instance.SetDrawMode(2, "door");
 	}
+    public void SetDrawModeStockPile()
+    {
+        GameManager.Instance.SetDrawMode(2, "stockpile");
+    }
 }

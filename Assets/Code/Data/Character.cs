@@ -55,8 +55,9 @@ public class Character {
 				return;
 			}
 		}
-		//we have a job!! and we can get to it.
-		//STEP1: doe the job have all materials it needs.
+        //we have a job!! and we can get to it.
+        //STEP1: doe the job have all materials it needs.
+
 		if (myJob.HasAllMaterial () == false) {
 			//no we are missing something.
 			//Step2, are we carry anything that is required.
@@ -66,6 +67,7 @@ public class Character {
 					if (CurrentTile == myJob.Tile) {
 						//were already at job site so drop inventory.
 						GameManager.Instance._inventoryService.PlaceInventory (myJob, inventory);
+                        myJob.DoWork(0);
 
 						if (inventory.StackSize == 0) {
 							inventory = null;
@@ -98,7 +100,9 @@ public class Character {
                 //are we standing in a tile where theere are goods for oour desired job
               
 
-                if (CurrentTile.inventory != null && myJob.DesireInventoryType(CurrentTile.inventory) > 0) {
+                if (CurrentTile.inventory != null 
+                    && (myJob.CanTakeFromStockpile ||CurrentTile.Furniture == null || CurrentTile.Furniture.IsStockpile() == false )
+                    && myJob.DesireInventoryType(CurrentTile.inventory) > 0) {
                     //pick the stuff up.
                     GameManager.Instance._inventoryService.PlaceInventory(this, CurrentTile.inventory, myJob.DesireInventoryType(CurrentTile.inventory));
 
@@ -111,7 +115,8 @@ public class Character {
 				Inventory supplier = GameManager.Instance._inventoryService.GetClosestInventoryOfType (
 					desired.objectType, 
 					CurrentTile, 
-					desired.maxStackSize - desired.StackSize
+					desired.maxStackSize - desired.StackSize, 
+                    myJob.CanTakeFromStockpile
 				);
                 destTile = supplier.Tile;
                 if (supplier == null) {
@@ -264,6 +269,8 @@ public class Character {
 		if (j != myJob) {
 			Debug.LogError ("Character being told about job thats not his. you forgot to unregister old job");
 		}
+        j.UnRegisterJobCancelledCallback(OnJobEnded);
+        j.UnRegisterJobCompletedCallback(OnJobEnded);
 
 		myJob = null;
 	}

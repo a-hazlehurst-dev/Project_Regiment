@@ -40,12 +40,13 @@ public class InventoryService
 				_inventories [tile.inventory.objectType] = new List<Inventory> ();
 			}
 			_inventories[tile.inventory.objectType].Add(tile.inventory);
+            cbInventoryCreated(tile.inventory);
 		}
-		Debug.Log("placed returned true");
+
 		return true;
 	}
 
-	// trying to place the inventory onto a tile.
+	// trying to place the inventory onto job.
 	public bool PlaceInventory(Job job, Inventory inv){
 
 		if (job._inventoryRequirements.ContainsKey (inv.objectType) == false) {
@@ -68,7 +69,7 @@ public class InventoryService
 		return true;
 	}
 
-	// trying to place the inventory onto a tile.
+	// trying to place the inventory onto a character
 	public bool PlaceInventory(Character character, Inventory sourceInventory, int amount = -1){
         if(amount < 0)
         {
@@ -117,7 +118,7 @@ public class InventoryService
 		}
 	}
 
-	public Inventory GetClosestInventoryOfType(string objectType, Tile t, int desiredAmount){
+	public Inventory GetClosestInventoryOfType(string objectType, Tile t, int desiredAmount, bool canTakeFromStockpile){
 		//FIXME: we are lying about returning closest item.
 		// No way to return item in optimal manner until the inventory db is more sophisticated.
 
@@ -127,7 +128,7 @@ public class InventoryService
 		}
 
 		foreach (var inv in _inventories[objectType]) {
-			if (inv.Tile != null) {
+			if (inv.Tile != null &&( canTakeFromStockpile || inv.Tile.Furniture == null ||inv.Tile.Furniture.IsStockpile() == false)) {
 				return inv;
 
 			}
@@ -136,7 +137,7 @@ public class InventoryService
 
 	}
 
-
+    
 
 
 	public void Register_OnInventory_Created(Action<Inventory> cb){

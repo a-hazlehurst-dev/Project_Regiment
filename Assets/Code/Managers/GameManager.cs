@@ -112,8 +112,9 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update(){
-		
-		foreach (var c in _characterService.FindAll()) {
+        var chars = _characterService.FindAll();
+
+        foreach (var c in chars) {
 			c.Update (Time.deltaTime);
 		}
 
@@ -164,28 +165,22 @@ public class GameManager : MonoBehaviour {
 
 		// DEBUGGING REMOVE LATER
 		// Create inventory item.
-		Inventory inv = new Inventory();
+		Inventory inv = new Inventory("clay", 50, 50);
+    
 		var tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2+1);
 		_inventoryService.PlaceInventory (tile,inv) ;
-		if (_inventoryService.cbInventoryCreated != null) {
-			_inventoryService.cbInventoryCreated(tile.inventory);
-		}
+		
 
-		inv = new Inventory();
-        inv.StackSize = 12;
-		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2+1);
+		inv = inv = new Inventory("clay", 50,8);
+   		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2+1);
 		_inventoryService.PlaceInventory (tile,inv) ;
-		if (_inventoryService.cbInventoryCreated != null) {
-			_inventoryService.cbInventoryCreated(tile.inventory);
-		}
+	
 
-		inv = new Inventory();
-        inv.StackSize = 22;
+		inv = inv = new Inventory("clay", 50, 22);
+       
         tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2-1, TileDataGrid.GridHeight / 2+2);
 		_inventoryService.PlaceInventory (tile,inv) ;
-		if (_inventoryService.cbInventoryCreated != null) {
-			_inventoryService.cbInventoryCreated(tile.inventory);
-		}
+
 
 		TileManager.InitialiseTileMap(SpriteManager);
 

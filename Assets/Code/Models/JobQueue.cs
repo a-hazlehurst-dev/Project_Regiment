@@ -15,6 +15,13 @@ public class JobQueue  {
 	}
 
 	public void Enqueue(Job job){
+
+        if(job.TimeToComplete < 0)
+        {
+            // job has a negative time, its not meant to be queued
+            job.DoWork(0);
+            return;
+        }
 		_jobQueue.Enqueue (job);
 		//Debug.Log ("job added to queue");
 
@@ -30,6 +37,20 @@ public class JobQueue  {
 		}
 		return _jobQueue.Dequeue ();
 	}
+
+    public void Remove(Job j)
+    {
+        //TODO: is there a more effective solution.
+        List<Job> jobs = new List<Job>(_jobQueue);
+
+        if(jobs.Contains(j) == false)
+        {
+           // Debug.LogError("Job Queue:: => Remove: trying to dequeue job thats not there.");
+           //most likely not on queue as character was working here.
+        }
+        jobs.Remove(j);
+        _jobQueue = new Queue<Job>(jobs);
+    }
 
 	public void RegisterJobCreatedCallBack(Action<Job> cb){
 		cbJobCreated += cb;

@@ -27,9 +27,9 @@ public class Tile : IXmlSerializable
                 movement+= 1.2f;
             }
 
-            if (InstalledFurniture != null)
+            if (Furniture != null)
             {
-                movement *= InstalledFurniture.MovementCost;
+                movement *= Furniture.MovementCost;
 
             }
 
@@ -57,7 +57,7 @@ public class Tile : IXmlSerializable
 
 	 Action<Tile> cbTileFloorChanged;
 	FloorType _type =  FloorType.Grass;
-	public Furniture InstalledFurniture { get; protected set; }
+	public Furniture Furniture { get; protected set; }
 	public Room Room;
 
 	public int X { get; protected set; }
@@ -151,15 +151,15 @@ public class Tile : IXmlSerializable
 
 	public bool PlaceFurniture(Furniture itemInstance){
 		if (itemInstance == null) {
-			InstalledFurniture = null;
+			Furniture = null;
 			return true;
 		}
 
-		if (InstalledFurniture != null) {
+		if (Furniture != null) {
 			return false;
 		}
 
-		InstalledFurniture = itemInstance;
+		Furniture = itemInstance;
 		return true;
 	}
 
@@ -228,8 +228,8 @@ public class Tile : IXmlSerializable
 		}
 
 		//check furn return soon.
-		if(InstalledFurniture!= null && InstalledFurniture.isEnterable!=null){
-			return InstalledFurniture.isEnterable (InstalledFurniture);
+		if(Furniture!= null && Furniture.isEnterable!=null){
+			return Furniture.isEnterable (Furniture);
 		}
 
 		return Enterability.Ok;

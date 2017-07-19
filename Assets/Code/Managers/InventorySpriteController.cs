@@ -45,7 +45,7 @@ public class InventorySpriteController : MonoBehaviour
     public void OnInventoryCreated(Inventory inventory)
     {
 
-        Debug.Log("Created " + inventory.objectType);
+        Debug.Log("test");
         GameObject inv_go = new GameObject();
 
         _inventoryGameObjectMapper.Add(inventory, inv_go);

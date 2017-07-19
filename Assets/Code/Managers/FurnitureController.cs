@@ -87,24 +87,24 @@ public class FurnitureController : MonoBehaviour
         int y = furn.Tile.Y;
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y + 1);
-        if(t!=null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
+        if(t!=null && t.Furniture != null && t.Furniture.ObjectType == furn.ObjectType)
         {
             spriteName += "N";
         }
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x+1, y );
-        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
+        if (t != null && t.Furniture != null && t.Furniture.ObjectType == furn.ObjectType)
         {
             spriteName += "E";
         }
 
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x, y - 1);
-        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
+        if (t != null && t.Furniture != null && t.Furniture.ObjectType == furn.ObjectType)
         {
             spriteName += "S";
         }
 		t = GameManager.Instance.TileDataGrid.GetTileAt(x-1, y);
-        if (t != null && t.InstalledFurniture != null && t.InstalledFurniture.ObjectType == furn.ObjectType)
+        if (t != null && t.Furniture != null && t.Furniture.ObjectType == furn.ObjectType)
         {
             spriteName += "W";
         }
@@ -160,8 +160,8 @@ public class FurnitureController : MonoBehaviour
             var northTile = GameManager.Instance.TileDataGrid.GetTileAt(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y + 1);
             var southTile = GameManager.Instance.TileDataGrid.GetTileAt(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y - 1);
 
-            if (northTile != null && southTile != null && northTile.InstalledFurniture != null && southTile.InstalledFurniture != null
-                && northTile.InstalledFurniture.ObjectType == "wall" && southTile.InstalledFurniture.ObjectType == "wall")
+            if (northTile != null && southTile != null && northTile.Furniture != null && southTile.Furniture != null
+                && northTile.Furniture.ObjectType == "wall" && southTile.Furniture.ObjectType == "wall")
             {
                 furnitureToRender.transform.rotation = Quaternion.Euler(0, 0, 90);
             }

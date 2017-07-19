@@ -1,29 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class Job  {
 
     // this holds info for a queued up job, placing furniture, moving inventory, working at location, maybe fighting.
 
     public Tile Tile;
-    float _timeToComplete = .2f;
+    public float TimeToComplete { get; protected set; }
 
 
     Action<Job> _cbCJobCompleted;
 	Action<Job> _cbJobCancelled;
+    Action<Job> _cbJobWorked;
+
+    public bool AcceptsAnyInventoryType = false;
 
     public Dictionary<string, Inventory> _inventoryRequirements;
 
 	//FIXME:  hard coded a parameter for furniture. Do not like
 	public string JobObjectType { get; protected set;}
 
+    public bool CanTakeFromStockpile = true;
+
 	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete ,  Inventory[] inventoryRequirements)
 	{
 		Tile = tile;
-		_timeToComplete = timeToComplete;
+		TimeToComplete = timeToComplete;
 		_cbCJobCompleted += cbJobCompleted;
-		JobObjectType = jobObjectType;
+      
+
+        JobObjectType = jobObjectType;
 
         _inventoryRequirements = new Dictionary<string, Inventory>( );
         if (inventoryRequirements != null)
@@ -39,7 +47,7 @@ public class Job  {
     protected Job(Job other)
     {
         this.Tile = other.Tile;
-        this._timeToComplete = other._timeToComplete;
+        this.TimeToComplete = other.TimeToComplete;
         this._cbCJobCompleted += other._cbCJobCompleted;
         this.JobObjectType = other.JobObjectType;
 
@@ -64,7 +72,17 @@ public class Job  {
 		_cbJobCancelled += cb;
 	}
 
-	public void UnRegisterJobCompletedCallback(Action<Job> cb){
+    public void RegisterJobWorkedCallback(Action<Job> cb)
+    {
+        _cbJobWorked += cb;
+    }
+
+    public void UnRegisterJobWorkedCallback(Action<Job> cb)
+    {
+        _cbJobWorked -= cb;
+    }
+
+    public void UnRegisterJobCompletedCallback(Action<Job> cb){
 		_cbCJobCompleted -= cb;
 	}
 
@@ -73,8 +91,24 @@ public class Job  {
 	}
 
 	public void DoWork(float workTime){
-		_timeToComplete -= workTime;
-		if (_timeToComplete <=0) {
+
+        if(HasAllMaterial() == false)
+        {
+            //job cant actually be worked, but still call cb, so sprites/animations can be updated.
+            if (_cbJobWorked != null)
+            {
+                _cbJobWorked(this);
+            }
+           /// Debug.LogError("Tried to do work on a job, were the job has not got all its materials");
+            return;
+        }
+
+        if (_cbJobWorked != null)
+        {
+            _cbJobWorked(this);
+        }
+		TimeToComplete -= workTime;
+		if (TimeToComplete <=0) {
 			if (_cbCJobCompleted != null) {
 				_cbCJobCompleted(this);
 			}
@@ -83,6 +117,8 @@ public class Job  {
 	public void CancelJob(){
 		if (_cbJobCancelled != null) 
 			_cbJobCancelled(this);
+
+        GameManager.Instance.JobQueue.Remove(this);
 	}
 
 	public bool HasAllMaterial(){
@@ -95,6 +131,10 @@ public class Job  {
 	}
 
 	public int DesireInventoryType(Inventory inv){
+        if (AcceptsAnyInventoryType)
+        {
+            return inv.maxStackSize;
+        }
 		if (_inventoryRequirements.ContainsKey (inv.objectType) == false) {
 			return 0;// we dont want this.
 		}
