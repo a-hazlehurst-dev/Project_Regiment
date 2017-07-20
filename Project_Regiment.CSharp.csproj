@@ -107,6 +107,7 @@
     <Compile Include="Assets\Code\Models\Tile.cs" />
     <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
+    <Compile Include="Assets\Code\Scripts\GameDrawMode.cs" />
     <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
     <Compile Include="Assets\Code\Services\CharacterService.cs" />
     <Compile Include="Assets\Code\Services\FurnitureService.cs" />

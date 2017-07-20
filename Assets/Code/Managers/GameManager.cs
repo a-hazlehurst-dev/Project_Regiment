@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
+using Assets.Code.Scripts;
 
 public class GameManager : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour {
 	public FurnitureService _furnitureService;
 	private CharacterService _characterService;
 	public InventoryService _inventoryService;
+    public GameDrawMode GameDrawMode { get; set; }
 	private RoomService _roomService;
 	private int optionAction;
 	private static bool loadGameMode = false;
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour {
 			Debug.LogError ("There should only be one gamemanager");
 		}
 
+        
 		Instance = this;
 		_furnitureService = new FurnitureService ();
 		_furnitureService.Init ();
@@ -53,7 +56,8 @@ public class GameManager : MonoBehaviour {
 		_inventoryService = new InventoryService ();
 		_inventoryService.Init ();
 
-		InventorySpriteController= GetComponent<InventorySpriteController> ();
+        GameDrawMode = GetComponent<GameDrawMode>();
+        InventorySpriteController = GetComponent<InventorySpriteController> ();
 
 
 		SpriteManager = GetComponent<SpriteManager>();
@@ -129,6 +133,26 @@ public class GameManager : MonoBehaviour {
 		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService, _roomService);
 		TileManager.InitialiseTileMap(SpriteManager);
 		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
+
+        // DEBUGGING REMOVE LATER
+        // Create inventory item.
+        Inventory inv = new Inventory("clay", 50, 50);
+
+        var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
+        _inventoryService.PlaceInventory(tile, inv);
+
+
+        inv = inv = new Inventory("clay", 50, 8);
+        tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
+        _inventoryService.PlaceInventory(tile, inv);
+
+
+        inv = inv = new Inventory("clay", 50, 22);
+
+        tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
+        _inventoryService.PlaceInventory(tile, inv);
+
+
         TileGraph = new PathTileGraph(TileDataGrid);
         CharacterSpriteManager.InitialiseCharacter (SpriteManager, _characterService);
 
@@ -226,19 +250,9 @@ public class GameManager : MonoBehaviour {
 
     public void SetDrawMode(int mode, string type)
     {
-		_drawMode = mode;
-		_drawObject = type;
+        GameDrawMode.FurnitureTypeToDraw = type;
+        GameDrawMode.ObjectTypeToDraw = mode;
     }
-
-    public int GetDrawMode()
-    {
-        return _drawMode;
-    }
-
-	public string GetDrawObjectMode(){
-		return _drawObject;
-	}
-
 
 
 	public void SetGameOptions(int optionAction){

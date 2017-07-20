@@ -115,10 +115,6 @@ public class FurnitureController : MonoBehaviour
 			return null;
 		}
 
-
-       
-
-
         return _spriteManager.FurnitureObjects[spriteName];
     }
 
