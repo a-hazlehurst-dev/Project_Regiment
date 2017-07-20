@@ -41,7 +41,6 @@ public class Room
 	}
 
 	public static void DoRoomFloodFill(Furniture sourceFurniture){
-        Debug.Log("Creating Room");
 		// the room that the furniture was originally assigned too.
         var oldRoom = sourceFurniture.Tile.Room;
 

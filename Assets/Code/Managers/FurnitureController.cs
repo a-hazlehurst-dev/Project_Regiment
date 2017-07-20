@@ -152,8 +152,8 @@ public class FurnitureController : MonoBehaviour
 		var sr = furnitureToRender.AddComponent<SpriteRenderer> ();
 		sr.sortingLayerName = "Furniture";
 		sr.sprite = GetSpriteForFurniture(furnitureToInstall) ; //FIXME wall does not exist.
-		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y, 0);
-
+		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X + ((furnitureToInstall.Width -1)/2f), furnitureToInstall.Tile.Y + ((furnitureToInstall.Height - 1) / 2f), 0);
+        sr.color = furnitureToInstall.Tint;
 
         if (furnitureToInstall.ObjectType == "door")
         {
@@ -184,7 +184,9 @@ public class FurnitureController : MonoBehaviour
         GameObject furn_go = _furnitureGameObjectMap[furn];
 		var sr = furn_go.GetComponent<SpriteRenderer> ();
 		sr.sprite =GetSpriteForFurniture(furn);
-		sr.sortingLayerName = "Furniture";
+        sr.color = furn.Tint;
+
+        sr.sortingLayerName = "Furniture";
 
 		furn_go.transform.SetParent (furnitureHolder);
        

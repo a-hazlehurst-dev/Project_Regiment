@@ -58,6 +58,11 @@ public class FurnitureService
         return furnPrototypes.Get(objectType).DefaultIsPositionValid(tile);
     }
 
+    public Dictionary<string,Furniture> FindPrototypes()
+    {
+        return furnPrototypes._furniturePrototypes;
+    }
+
     public void Register_OnFurniture_Created(Action<Furniture> cbCreatedFurnititure)
     {
         cbOnCreated += cbCreatedFurnititure;

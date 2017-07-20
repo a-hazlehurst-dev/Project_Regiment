@@ -58,7 +58,11 @@ public static class FurnitureActions
         //      - good gets deliverd, (reset job)
         //      - good gets picked up (reset job)
         //      - ui, filter of allowed items get changed.
-        if(furn.Tile.inventory!= null && furn.Tile.inventory.StackSize >= furn.Tile.inventory.maxStackSize)
+        if (furn.Tile.inventory != null){
+
+        }
+        
+        if (furn.Tile.inventory!= null && furn.Tile.inventory.StackSize >= furn.Tile.inventory.maxStackSize)
         {
             //we are full!!
             furn.ClearJobs();
@@ -74,20 +78,22 @@ public static class FurnitureActions
         //Either we have some, or zero inventory.
         //or something is FUBAR
 
-        Inventory[] itemsDesired = new Inventory[0];
+        Inventory[] itemsDesired;
         //(if we have stuff) then if we're still below max stacksize, then more of the same stuff plaese.
         if (furn.Tile.inventory == null)
         {
+            
             itemsDesired = Stockpile_GetItemsFromFilter();
         
         }
-        else if(furn.Tile.inventory.StackSize < furn.Tile.inventory.maxStackSize)
+        else
         {
+         
             //tile already has inventory, ut its not full.
             //(if were empty) asking for ANY loose inventory to be brought to us.)
             Inventory desiredInv = furn.Tile.inventory.Clone();
 
-            desiredInv.maxStackSize = desiredInv.StackSize;
+            desiredInv.maxStackSize -= desiredInv.StackSize;
             desiredInv.StackSize = 0;
 
             itemsDesired = new Inventory[] { desiredInv };
@@ -101,15 +107,16 @@ public static class FurnitureActions
     }
      static void Stockpile_JobWorked(Job j)
     {
-        Debug.Log("job was worked.");
+      
         j.Tile.Furniture.ClearJobs();
-
+        //TODO; when stocipile logic is in place, 
+        // 
         foreach(var inv in j._inventoryRequirements.Values)
         {
             if(    inv.StackSize > 0)
             {
-                Debug.Log("inv was worked too." + inv.StackSize);
-                GameManager.Instance._inventoryService.PlaceInventory(j, inv);
+              
+                GameManager.Instance._inventoryService.PlaceInventory(j.Tile, inv);
 
                 return; // should never end up with more than 1 inventory requirement with stacksize >0
             }

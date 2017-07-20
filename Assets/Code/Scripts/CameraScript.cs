@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
 
@@ -73,9 +71,9 @@ public class CameraScript : MonoBehaviour {
                             Debug.LogError("dummy job created.");
                              job = new Job(tile, "wall", FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
                         }
-						//tile is valid for this furniture type and not job already in place.
-						
-						GameManager.Instance.JobQueue.Enqueue ( job );
+                        //tile is valid for this furniture type and not job already in place.
+                        job.FurniturePrototype = GameManager.Instance._furnitureService.FindPrototypes()["wall"];
+                        GameManager.Instance.JobQueue.Enqueue ( job );
 
 
 						tile.PendingFurnitureJob = job;
@@ -83,22 +81,24 @@ public class CameraScript : MonoBehaviour {
 						job.RegisterJobCancelledCallback ((theJob) => {
 							theJob.Tile.PendingFurnitureJob = null;
 						});
-					}
+                        
+                    }
 				}
 				else if(_drawObjectMode.Equals("door")){
 					if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid ("door", tile)  && tile.PendingFurnitureJob ==  null) {
 						//tile is valid for furniture.
 
 						var job = new Job (tile, "door", FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
-
-						GameManager.Instance.JobQueue.Enqueue (job);
+                        job.FurniturePrototype = GameManager.Instance._furnitureService.FindPrototypes()["door"];
+                        GameManager.Instance.JobQueue.Enqueue (job);
 
 						tile.PendingFurnitureJob = job;
 
 						job.RegisterJobCancelledCallback((theJob)=> { 
 							theJob.Tile.PendingFurnitureJob = null;
 						});
-					}
+                        
+                    }
 				}
 
                 else if (_drawObjectMode.Equals("stockpile"))
@@ -108,7 +108,7 @@ public class CameraScript : MonoBehaviour {
                         //tile is valid for furniture.
 
                         var job = new Job(tile, "stockpile", FurnitureActions.JobComplete_FurnitureBuilding, -1f, null);
-
+                        job.FurniturePrototype = GameManager.Instance._furnitureService.FindPrototypes()["stockpile"];
                         GameManager.Instance.JobQueue.Enqueue(job);
 
                         tile.PendingFurnitureJob = job;
@@ -116,6 +116,26 @@ public class CameraScript : MonoBehaviour {
                         job.RegisterJobCancelledCallback((theJob) => {
                             theJob.Tile.PendingFurnitureJob = null;
                         });
+                        
+                    }
+                }
+                else if (_drawObjectMode.Equals("smelter"))
+                {
+                    if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid("smelter", tile) && tile.PendingFurnitureJob == null)
+                    {
+                        //tile is valid for furniture.
+
+                        var job = new Job(tile, "smelter", FurnitureActions.JobComplete_FurnitureBuilding, 1f, null);
+                        job.FurniturePrototype = GameManager.Instance._furnitureService.FindPrototypes()["smelter"];
+                        GameManager.Instance.JobQueue.Enqueue(job);
+
+                        tile.PendingFurnitureJob = job;
+
+                        job.RegisterJobCancelledCallback((theJob) => {
+                            theJob.Tile.PendingFurnitureJob = null;
+                        });
+
+                        
                     }
                 }
             }

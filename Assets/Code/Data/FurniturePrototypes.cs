@@ -28,10 +28,14 @@ public class FurniturePrototypes
 		_furniturePrototypes ["door"].RegisterUpdateAction (FurnitureActions.Door_UpdateAction);
 		_furniturePrototypes ["door"].isEnterable = FurnitureActions.Door_IsEnterable;
 
-        _furniturePrototypes.Add("stockpile", new Furniture("stockpile", 1, 1, 1, false, false));
+        _furniturePrototypes.Add("stockpile", new Furniture("stockpile", 1, 1, 1, true, false));
         _furniturePrototypes["stockpile"].RegisterUpdateAction(FurnitureActions.Stockpile_Update_Action);
+        _furniturePrototypes["stockpile"].Tint = new Color32(186, 30, 30, 255);
 
         furnitureRequirements.Add("stockpile", new Job(null, "stockpile", FurnitureActions.JobComplete_FurnitureBuilding, -1f,null));
+
+        _furniturePrototypes.Add("smelter", new Furniture("smelter", 5, 2, 2, false, false));
+
     }
 
     public Furniture Get(string furnitureType)

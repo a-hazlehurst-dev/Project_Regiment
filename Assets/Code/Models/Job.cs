@@ -16,7 +16,7 @@ public class Job  {
     Action<Job> _cbJobWorked;
 
     public bool AcceptsAnyInventoryType = false;
-
+    public Furniture FurniturePrototype;
     public Dictionary<string, Inventory> _inventoryRequirements;
 
 	//FIXME:  hard coded a parameter for furniture. Do not like
@@ -103,12 +103,14 @@ public class Job  {
             return;
         }
 
+        TimeToComplete -= workTime;
+
         if (_cbJobWorked != null)
         {
             _cbJobWorked(this);
         }
-		TimeToComplete -= workTime;
-		if (TimeToComplete <=0) {
+       
+        if (TimeToComplete <=0) {
 			if (_cbCJobCompleted != null) {
 				_cbCJobCompleted(this);
 			}

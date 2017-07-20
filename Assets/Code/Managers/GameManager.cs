@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void LoadGame(){
-		Debug.Log ("Loading...");
+
 		loadGameMode = true;
 		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 

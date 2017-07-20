@@ -18,7 +18,7 @@ public class FooterMenuViewModel : MonoBehaviour {
 	{
 		InactivateAll ();
 
-		Vector3 position = new Vector3(5f, 250, 0);
+		Vector3 position = new Vector3(5f, 300, 0);
 		pnlFurnitureMenu.transform.position = position;
 		pnlFurnitureMenu.SetActive(true);
 	}
@@ -33,27 +33,15 @@ public class FooterMenuViewModel : MonoBehaviour {
 		return;
 	}
 
-    public void SetDrawModeFloorGrass()
-    {
-        GameManager.Instance.SetDrawMode(1,"grass");
-    }
-    
-    public void SetDrawModeFloorMud()
-	{
-		GameManager.Instance.SetDrawMode (1,"mud");
-	}
 
-	public void SetDrawModeToWall()
-	{
-		GameManager.Instance.SetDrawMode(2, "wall");
-	}
-
-	public void SetDrawModeDoor()
-	{
-		GameManager.Instance.SetDrawMode(2, "door");
-	}
-    public void SetDrawModeStockPile()
+    public void SetFurnitureMode( string objectType)
     {
-        GameManager.Instance.SetDrawMode(2, "stockpile");
+        GameManager.Instance.SetDrawMode(2, objectType);
     }
+
+    public void SetTileMode(string tile)
+    {
+        GameManager.Instance.SetDrawMode(1, tile);
+    }
+   
 }

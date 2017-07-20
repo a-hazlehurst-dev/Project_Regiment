@@ -22,7 +22,6 @@ public class InventoryService
 	// trying to place the inventory onto a tile.
 	public bool PlaceInventory(Tile tile, Inventory inv){
 
-		Debug.Log ("placing furniture");
 		bool tileWasEmpty = tile.inventory == null;
 		if (tile.PlaceInventory (inv) == false) {
  			//tile has not accepted the inventory

@@ -60,6 +60,13 @@ public class SpriteManager : MonoBehaviour {
         {
             FurnitureObjects.Add(go.name, go);
         }
+
+        var itemObjects = Resources.LoadAll<Sprite>("Images/Items/");
+
+        foreach (var go in itemObjects)
+        {
+            FurnitureObjects.Add(go.name, go);
+        }
     }
 
 	private void LoadInventory(){

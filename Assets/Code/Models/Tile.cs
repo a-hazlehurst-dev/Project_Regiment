@@ -149,17 +149,37 @@ public class Tile : IXmlSerializable
             return ns;
     }
 
+    public bool UninstallFurniture(Furniture itemInstance)
+    {
+        //TODO: This is broken, Fix me
+
+        itemInstance = null;
+        return true;
+    }
+
 	public bool PlaceFurniture(Furniture itemInstance){
-		if (itemInstance == null) {
-			Furniture = null;
-			return true;
-		}
 
-		if (Furniture != null) {
-			return false;
-		}
+        if (itemInstance == null)
+        {
+            //FIXME : What if installing a multitile
+            return UninstallFurniture(itemInstance);
+        }
 
-		Furniture = itemInstance;
+        if (itemInstance != null && itemInstance.__IsValidPosition(this)==false)
+        {
+            Debug.Log("trying to place furniture on tile thats not avlid");
+            return false; 
+        }
+        //check the furnitures tile size footprint.
+        for (int x_off = X; x_off <(X+ itemInstance.Width); x_off++)
+        {
+            for (int y_off = Y; y_off < (Y + itemInstance.Height); y_off++)
+            {
+                Tile t = GameManager.Instance.TileDataGrid.GetTileAt(x_off, y_off);
+                t.Furniture = itemInstance;
+            }
+        }
+
 		return true;
 	}
 

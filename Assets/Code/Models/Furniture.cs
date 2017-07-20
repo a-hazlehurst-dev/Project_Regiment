@@ -14,17 +14,20 @@ public class Furniture  : IXmlSerializable{
 
 	public Func<Furniture, Enterability> isEnterable;
 
+    //every tick of the game, the update actions are run for each peice of furniture.
 	public void Update(float deltaTime){
 		if (updateActions != null) {
 			updateActions (this, deltaTime);
 		}
 	}
 
+    public Color Tint = Color.white;
+
 	public  Tile Tile { get; protected set; }					//base tile of object( what you place ) object can be bigger than 1 tile.
 	public string ObjectType { get; protected set; }
 	public float MovementCost { get; protected set; }
-	private int _width = 1;
-	private int _height = 1;
+	public int Width { get; protected set; }
+	public int Height { get; protected set; } 
     public bool LinksToNeighbour { get; protected set; }
 
 	public bool RoomEnclosure { get; protected set; }
@@ -50,17 +53,21 @@ public class Furniture  : IXmlSerializable{
 		this.ObjectType = other.ObjectType;
 		this.MovementCost = other.MovementCost;
 		this.RoomEnclosure = other.RoomEnclosure;
-		this._width = other._width;
-		this._height = other._height;
-
+		this.Width = other.Width;
+		this.Height = other.Height;
+        this.Tint = other.Tint;
 		this.LinksToNeighbour = other.LinksToNeighbour;
 		this.furnParameters = new Dictionary<string, float> (other.furnParameters);
         this._jobs = new List<Job>();
 		if (other.updateActions != null) {
 			this.updateActions = (Action<Furniture,float>)other.updateActions.Clone ();
 		}
+        if (other.funcPositionValidation != null)
+        {
+            this.funcPositionValidation = (Func<Tile, bool>)other.funcPositionValidation.Clone();
+        }
 
-		this.isEnterable = other.isEnterable;
+        this.isEnterable = other.isEnterable;
 	}
 		
 
@@ -70,8 +77,8 @@ public class Furniture  : IXmlSerializable{
 		this.ObjectType = objectType;
 		this.MovementCost= movementCost;
 		this.RoomEnclosure = roomEnclosure;
-		this._width = width;
-		this._height = height;
+		this.Width = width;
+		this.Height = height;
 		this.LinksToNeighbour = linksToNeighbour;
 		this.funcPositionValidation = this.DefaultIsPositionValid;
 		this.furnParameters = new Dictionary<string, float> ();
@@ -170,9 +177,25 @@ public class Furniture  : IXmlSerializable{
 
 	//will be replaced by lua files, e.g door specify needs two walls.
 	public bool DefaultIsPositionValid(Tile t){
-		if (t.Furniture != null) {
-			return false;
-		}
+
+        //foreach tile check they dont already have furniture.
+        for (int x_off = t.X; x_off < (t.X + Width); x_off++)
+        {
+            for (int y_off = t.Y; y_off < (t.Y + Height); y_off++)
+            {
+                Tile t2 = GameManager.Instance.TileDataGrid.GetTileAt(x_off, y_off);
+
+                if(t2 == null)
+                {
+                    return false;
+                }
+
+                if (t2.Furniture != null)
+                {
+                    return false;
+                }
+            }
+        }
 
 		return true;
 	}
@@ -200,9 +223,6 @@ public class Furniture  : IXmlSerializable{
 	}
 
 	public void ReadXml (XmlReader reader){
-		Debug.Log ("Reading Furniture");
-		//MovementCost = int.Parse (reader.GetAttribute ("movementCost"));
-
 		if (reader.ReadToDescendant ("Param")) {
 			do {
 				string k = reader.GetAttribute ("name");

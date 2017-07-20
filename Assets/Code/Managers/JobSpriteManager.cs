@@ -37,8 +37,8 @@ public class JobSpriteManager : MonoBehaviour {
 		_jobToGameObjectMap.Add(job, job_go);
 
 		job_go.name = "Job: " + job.JobObjectType + ": x: " + job.Tile.X + ", y" + job.Tile.Y;
-		job_go.transform.position = new Vector3(job.Tile.X, job.Tile.Y, 0);
-		job_go.transform.SetParent (jobHolder, true);
+        job_go.transform.position = new Vector3(job.Tile.X + ((job.FurniturePrototype.Width - 1) / 2f), job.Tile.Y + ((job.FurniturePrototype.Height - 1) / 2f), 0);
+		
 
 	
 		SpriteRenderer sr = job_go.AddComponent<SpriteRenderer> ();
@@ -58,7 +58,7 @@ public class JobSpriteManager : MonoBehaviour {
             }
 
         }
-
+        job_go.transform.SetParent(jobHolder, true);
 
         job.RegisterJobCompletedCallback (OnJobCompleted);
 		job.RegisterJobCancelledCallback (OnJobCompleted);
