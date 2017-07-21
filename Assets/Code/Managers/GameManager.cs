@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
-using Assets.Code.Scripts;
 
 public class GameManager : MonoBehaviour {
 
@@ -248,11 +247,6 @@ public class GameManager : MonoBehaviour {
 		return TileDataGrid.GetTileAt(x, y);
     }
 
-    public void SetDrawMode(int mode, string type)
-    {
-        GameDrawMode.FurnitureTypeToDraw = type;
-        GameDrawMode.ObjectTypeToDraw = mode;
-    }
 
 
 	public void SetGameOptions(int optionAction){

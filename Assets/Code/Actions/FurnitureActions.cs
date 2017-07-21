@@ -123,5 +123,10 @@ public static class FurnitureActions
         }
     }
 
+	public static void Smeltery_UpdateAction(Furniture furn, float deltaTime){
+		Debug.Log ("smelter updateaction.");
+		furn.Tile.Room.ChangeEnvironment ("temperature", 0.1f * deltaTime); //replace hardcoded value;
+	}
+
 }
 

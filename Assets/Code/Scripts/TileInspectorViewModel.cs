@@ -27,11 +27,21 @@ public class TileInspectorViewModel : MonoBehaviour {
         if(t.Room == null) { return; }
         txtTileType[0].text = "Tile type: " + t.Floor.ToString() + "(" + t.X + ","+t.Y +")";
 		txtTileType[1].text = "Room " + GameManager.Instance.FindRooms().IndexOf(t.Room).ToString();
+		txtTileType [2].text = "Details: ";
+		foreach (var environment in t.Room.GetEnvironmentNames()) {
+			Debug.Log ("rooms temp is : " + t.Room.GetEnviromenntAmount (environment));
+			var temp = "";
+			if (environment == "temperature") {
+				temp = "C";
+			}
+			txtTileType [2].text += t.Room.GetEnviromenntAmount(environment).ToString("0.0") + temp ;
+		}
+
         if (t.Furniture != null)
         {
-            txtTileType[2].text = "Furniture: " + t.Furniture.ObjectType;
+            txtTileType[3].text = "Furniture: " + t.Furniture.ObjectType;
         }
-        else { txtTileType[2].text = "Furniture: none"; }
+        else { txtTileType[3].text = "Furniture: none"; }
         
     }
 }

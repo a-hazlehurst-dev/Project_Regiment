@@ -19,4 +19,8 @@ public class FurnitureRepository
 		return _furnitures;
 	}
 
+
+	public void Remove(Furniture furn){
+		_furnitures.Remove (furn);
+	}
 }

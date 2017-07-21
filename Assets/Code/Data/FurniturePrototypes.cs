@@ -35,6 +35,7 @@ public class FurniturePrototypes
         furnitureRequirements.Add("stockpile", new Job(null, "stockpile", FurnitureActions.JobComplete_FurnitureBuilding, -1f,null));
 
         _furniturePrototypes.Add("smelter", new Furniture("smelter", 5, 2, 2, false, false));
+		_furniturePrototypes ["smelter"].RegisterUpdateAction (FurnitureActions.Smeltery_UpdateAction);
 
     }
 

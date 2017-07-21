@@ -118,7 +118,9 @@ public class Character {
 					desired.maxStackSize - desired.StackSize, 
                     myJob.CanTakeFromStockpile
 				);
-                destTile = supplier.Tile;
+				if (supplier !=null && supplier.Tile != null) {
+					destTile = supplier.Tile;
+				}
                 if (supplier == null) {
 					Debug.Log ("No tile contains objects of type: "+ desired.objectType + " to satisfy desired amount.");
 					AbandonJob ();

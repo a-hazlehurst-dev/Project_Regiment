@@ -4,6 +4,11 @@ public class FooterMenuViewModel : MonoBehaviour {
 
     public GameObject pnlFloorsMenu;
 	public GameObject pnlFurnitureMenu;
+	public GameDrawMode gameDrawMode;
+
+	void Start(){
+		gameDrawMode = GameObject.FindObjectOfType<GameDrawMode> ();
+	}
 
     public void ToggleFloorMenuVisibility()
     {
@@ -34,14 +39,19 @@ public class FooterMenuViewModel : MonoBehaviour {
 	}
 
 
+	public void SetDeconstruct(){
+		gameDrawMode.SetMode_Deconstruct ();
+	}
+
     public void SetFurnitureMode( string objectType)
     {
-        GameManager.Instance.SetDrawMode(2, objectType);
+		gameDrawMode.SetupMode_BuildFurniture (objectType);
     }
 
-    public void SetTileMode(string tile)
+    public void SetTileMode(string objectType)
     {
-        GameManager.Instance.SetDrawMode(1, tile);
+		gameDrawMode.SetupMode_BuildTiles (objectType);
+        
     }
    
 }

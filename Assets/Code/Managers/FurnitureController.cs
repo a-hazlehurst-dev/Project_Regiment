@@ -167,6 +167,7 @@ public class FurnitureController : MonoBehaviour
 		furnitureToRender.transform.SetParent (furnitureHolder);
 
         furnitureToInstall.RegisterOnChangedCallback ( OnFurnitureChanged);
+		furnitureToInstall.RegisterOnRemovedCallback (OnFurnitureRemoved);
 	}
 
 	public void OnFurnitureChanged(Furniture furn){
@@ -188,5 +189,17 @@ public class FurnitureController : MonoBehaviour
        
     }
 
+	public void OnFurnitureRemoved(Furniture furn){
+
+		if (_furnitureGameObjectMap.ContainsKey(furn) == false)
+		{
+			Debug.LogError("OnFurnitureChanged: trying to change furniture not in our map.");
+			return;
+		}
+
+		GameObject furn_go = _furnitureGameObjectMap[furn];
+		Destroy (furn_go);
+		_furnitureGameObjectMap.Remove (furn);
+	}
  
 }

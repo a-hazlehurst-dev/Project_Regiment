@@ -4,12 +4,17 @@ public class CameraScript : MonoBehaviour {
 
 	public int horizontalSpeed =1;
 	public int verticalSpeed = 1;
-	private int _drawMode = 0;
-	private string _drawObjectMode;
 
 	public GameObject cursorPointer;
 
     private Vector3 currentMousePosition;
+	public GameDrawMode GameDrawMode;
+
+
+	void Start(){
+
+		GameDrawMode = GameObject.FindObjectOfType<GameDrawMode> ();
+	}
 
     public Tile GetMouseOverTile()
     {
@@ -26,13 +31,12 @@ public class CameraScript : MonoBehaviour {
     public void DrawTiles(Tile tile)
     {
         FloorType floorMode = FloorType.Grass;//default draw mode
-
         
-        if (_drawObjectMode.Equals("grass"))
+		if (GameDrawMode.FurnitureToDraw.Equals("grass"))
         {
             floorMode = FloorType.Grass;
         }
-        else if (_drawObjectMode.Equals("mud"))
+		else if (GameDrawMode.FurnitureToDraw.Equals("mud"))
         {
             floorMode = FloorType.Mud;
         }
@@ -43,14 +47,14 @@ public class CameraScript : MonoBehaviour {
     {
 
             //if the furniture can be placed on the given tile, and their is no pending job on the tile.
-            if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid(_drawObjectMode, tile) && tile.PendingFurnitureJob == null)
+		if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid(GameDrawMode.FurnitureToDraw, tile) && tile.PendingFurnitureJob == null)
             {
                 Job job;
-                if (GameManager.Instance._furnitureService.FindFurnitureRequirements().ContainsKey(_drawObjectMode))
+			if (GameManager.Instance._furnitureService.FindFurnitureRequirements().ContainsKey(GameDrawMode.FurnitureToDraw))
                 {
                     //if there are any furniture requirements for this item ( wall needs clay), then create a new job with those requirements.
                     //make a clone
-                    job = GameManager.Instance._furnitureService.FindFurnitureRequirements()[_drawObjectMode].Clone();
+				job = GameManager.Instance._furnitureService.FindFurnitureRequirements()[GameDrawMode.FurnitureToDraw].Clone();
                     // assign the tile
                     job.Tile = tile;
                 }
@@ -58,10 +62,10 @@ public class CameraScript : MonoBehaviour {
                 {
                     //if no requirements exists for this furniture then, create a job default job without any requirements
                     Debug.LogError("dummy job created.");
-                    job = new Job(tile, _drawObjectMode, FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
+				job = new Job(tile, GameDrawMode.FurnitureToDraw, FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
                 }
                 //tile is valid for this furniture type and not job already in place.
-                job.FurniturePrototype = GameManager.Instance._furnitureService.FindPrototypes()[_drawObjectMode];
+			job.FurniturePrototype = GameManager.Instance._furnitureService.FindPrototypes()[GameDrawMode.FurnitureToDraw];
                 GameManager.Instance.JobQueue.Enqueue(job);
 
                 tile.PendingFurnitureJob = job;
@@ -87,16 +91,18 @@ public class CameraScript : MonoBehaviour {
             
         if (Input.GetMouseButtonUp(0))
         {
-			_drawMode= GameManager.Instance.GameDrawMode.ObjectTypeToDraw;
-			_drawObjectMode= GameManager.Instance.GameDrawMode.FurnitureTypeToDraw;
-            if (_drawObjectMode== null) { return; }
-
+//	
 			var tile = GameManager.Instance.GetTileAt(currentMousePosition);
 
-			if (_drawMode == 1) {
+			if (GameDrawMode.GameBuildMode == BuildMode.Floor) {
                 DrawTiles(tile);
 
-			} else if (_drawMode == 2) {
+			}else if(GameDrawMode.GameBuildMode == BuildMode.Deconstruct){
+				if(tile.Furniture!= null){
+				tile.Furniture.Deconstruct ();
+				}
+			}
+			else if (GameDrawMode.GameBuildMode == BuildMode.Furniture) {
                 DrawFurniture(tile);
             }
         }

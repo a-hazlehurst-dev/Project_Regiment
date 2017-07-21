@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Room
 {
 	int id;
-	float temperature;	
-	float cleanliness;
+
+	Dictionary<string, float> Environemnt;
+
 	public string Name { get; set; }
 	List<Tile> _tiles;
 
@@ -14,6 +16,11 @@ public class Room
 		this.id = id;
 		this.Name = name;
 		_tiles = new List<Tile> ();
+		Environemnt = new Dictionary<string, float> ();
+	}
+
+	public bool IsOutside(){
+		return this == GameManager.Instance.GetOutsideRoom ();
 	}
 
 	public void AssignTile(Tile tile){
@@ -31,6 +38,26 @@ public class Room
 		tile.Room = this;
 
 		_tiles.Add (tile);
+	}
+
+	public void ChangeEnvironment(string name, float amount){
+		if (Environemnt.ContainsKey (name)) {
+			Environemnt [name] += amount;
+		} else {
+			Environemnt [name] = amount;
+		}
+
+	}
+
+	public float GetEnviromenntAmount(string name){
+		if (Environemnt.ContainsKey (name)) {
+			return Environemnt [name];
+		}
+		return 0;
+	}
+
+	public string[] GetEnvironmentNames(){
+		return Environemnt.Keys.ToArray ();
 	}
 
 	public void ResetRoomTilesToOutside(){
@@ -53,7 +80,7 @@ public class Room
         sourceFurniture.Tile.Room = null;
         oldRoom._tiles.Remove(sourceFurniture.Tile);
 
-		if (oldRoom != GameManager.Instance.GetOutsideRoom ()) {
+		if (oldRoom.IsOutside()==false) {
 
             if (oldRoom._tiles.Count > 0)
             {
@@ -107,11 +134,15 @@ public class Room
 
 		}
 
-		newRoom.temperature = oldRoom.temperature;
+		newRoom.CopyEnvironment (oldRoom);
        
         GameManager.Instance.AddRoom(newRoom);
+	}
 
-
+	void CopyEnvironment(Room other){
+		foreach (string n in other.Environemnt.Keys) {
+			this.Environemnt [n] = other.Environemnt [n];
+		}
 	}
 }
 

@@ -30,6 +30,8 @@ public class FurnitureService
         var furniture = builder.CreateFurniture(type, tile);
         if (furniture == null) { return null; }
 
+		furniture.RegisterOnRemovedCallback (OnFurnitureRemoved);
+
 		//do we need to recalculate the rooms?
 		if (furniture.RoomEnclosure) {
             Room.DoRoomFloodFill(furniture);
@@ -48,6 +50,10 @@ public class FurnitureService
         return furniture;
     }
 
+	public void Remove(Furniture furn){
+		furnRepository.Remove (furn);
+	}
+
     public List<Furniture> FindAll()
     {
         return furnRepository.GetAll(); ;
@@ -63,6 +69,10 @@ public class FurnitureService
         return furnPrototypes._furniturePrototypes;
     }
 
+	public void OnFurnitureRemoved(Furniture furn){
+		Remove (furn);
+	}
+
     public void Register_OnFurniture_Created(Action<Furniture> cbCreatedFurnititure)
     {
         cbOnCreated += cbCreatedFurnititure;
@@ -71,5 +81,9 @@ public class FurnitureService
     {
         cbOnCreated -= cbCreatedFurnititure;
     }
+
+
+
+
 
 }

@@ -34,6 +34,7 @@ public class Furniture  : IXmlSerializable{
 
 
 	public Action<Furniture> cbOnChanged;
+	public Action<Furniture> cbOnRemoved;
 	private Func<Tile, bool> funcPositionValidation;
 
 	//For Serialization
@@ -82,6 +83,16 @@ public class Furniture  : IXmlSerializable{
 		this.LinksToNeighbour = linksToNeighbour;
 		this.funcPositionValidation = this.DefaultIsPositionValid;
 		this.furnParameters = new Dictionary<string, float> ();
+	}
+
+	public void Deconstruct(){
+
+		Tile.UnPlaceFurniture (this);
+
+		if (cbOnRemoved != null) {
+			cbOnRemoved (this);
+		}
+
 	}
 
 	virtual public Furniture Clone(){
@@ -163,12 +174,7 @@ public class Furniture  : IXmlSerializable{
 		}
 	}
 		
-	public void RegisterOnChangedCallback(Action<Furniture> callBackFunc){
-		cbOnChanged += callBackFunc;
-	}
-	public void UnRegisterOnChangedCallback(Action<Furniture> callBackFunc){
-		cbOnChanged -= callBackFunc;
-	}
+
 
 	public bool __IsValidPosition(Tile t){
 		return funcPositionValidation (t);
@@ -251,11 +257,25 @@ public class Furniture  : IXmlSerializable{
 		furnParameters [key] += value;
 	}
 
+	public void RegisterOnChangedCallback(Action<Furniture> callBackFunc){
+		cbOnChanged += callBackFunc;
+	}
+	public void UnRegisterOnChangedCallback(Action<Furniture> callBackFunc){
+		cbOnChanged -= callBackFunc;
+	}
+
 	public void RegisterUpdateAction(Action<Furniture, float> a){
 		updateActions += a;
 	}
 	public void UnRegisterUpdateAction(Action<Furniture, float> a){
 		updateActions -= a;
+	}
+
+	public void RegisterOnRemovedCallback(Action<Furniture> callBackFunc){
+		cbOnRemoved += callBackFunc;
+	}
+	public void UnRegisterOnRemovedCallback(Action<Furniture> callBackFunc){
+		cbOnRemoved-= callBackFunc;
 	}
 
 
