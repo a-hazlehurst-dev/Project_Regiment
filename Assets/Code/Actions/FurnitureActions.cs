@@ -101,6 +101,7 @@ public static class FurnitureActions
         //TODO: later on add stockpile priority so we can take from low priority and add to high priority.
         Job j = new Job(furn.Tile, null, null, 0, itemsDesired);
         j.CanTakeFromStockpile = false;
+		j.furnitureToOperate = furn;
         j.RegisterJobWorkedCallback(Stockpile_JobWorked);
         furn.AddJob(j);
 
@@ -108,7 +109,7 @@ public static class FurnitureActions
      static void Stockpile_JobWorked(Job j)
     {
       
-        j.Tile.Furniture.ClearJobs();
+		j.furnitureToOperate.ClearJobs();
         //TODO; when stocipile logic is in place, 
         // 
         foreach(var inv in j._inventoryRequirements.Values)
@@ -128,6 +129,36 @@ public static class FurnitureActions
 		//TODO: change, gas contribution, based on room volume.
 		Debug.Log ("smelter updateaction.");
 		furn.Tile.Room.ChangeEnvironment ("temperature", 0.1f * deltaTime); //replace hardcoded value;
+
+		//add a job if one does not already exist.
+		if (furn.JobCount() > 0) {
+			return;
+		}
+
+		Tile jobSpotInventory = furn.GetJobSpotTile ();
+
+		if (jobSpotInventory.inventory != null && (jobSpotInventory.inventory.StackSize >= jobSpotInventory.inventory.maxStackSize)) {
+			//stack is full dont create a job.
+			return;
+		}
+
+		Job j = new Job (
+			jobSpotInventory,
+			null,
+			Smeltery_JobCompleted,
+			1f,
+			null
+		);
+		j.furnitureToOperate = furn;
+		furn.AddJob (j);
+	}
+
+	public static void Smeltery_JobCompleted(Job job){
+
+		GameManager.Instance._inventoryService.PlaceInventory (job.Tile, new Inventory ("clay", 50, 2));
+
+		job.furnitureToOperate.RemoveJob(job);
+
 	}
 
 }

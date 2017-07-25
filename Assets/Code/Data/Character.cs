@@ -6,10 +6,19 @@ using System;
 public class Character {
 
 	public float X { 
-		get{ return Mathf.Lerp (CurrentTile.X, nextTile.X, movementPercentage); }
+		get{ 
+			if(nextTile == null){
+				return CurrentTile.X;
+			}
+
+			return Mathf.Lerp (CurrentTile.X, nextTile.X, movementPercentage); }
 	}
 	public float Y { 
-		get{ return Mathf.Lerp (CurrentTile.Y, nextTile.Y, movementPercentage); }
+		get{ 
+			if(nextTile == null){
+				return CurrentTile.Y;
+			}
+			return Mathf.Lerp (CurrentTile.Y, nextTile.Y, movementPercentage); }
 	}
 
 

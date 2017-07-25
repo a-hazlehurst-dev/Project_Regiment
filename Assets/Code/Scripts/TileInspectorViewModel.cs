@@ -29,7 +29,6 @@ public class TileInspectorViewModel : MonoBehaviour {
 		txtTileType[1].text = "Room " + GameManager.Instance.FindRooms().IndexOf(t.Room).ToString();
 		txtTileType [2].text = "Details: ";
 		foreach (var environment in t.Room.GetEnvironmentNames()) {
-			Debug.Log ("rooms temp is : " + t.Room.GetEnviromenntAmount (environment));
 			var temp = "";
 			if (environment == "temperature") {
 				temp = "C";

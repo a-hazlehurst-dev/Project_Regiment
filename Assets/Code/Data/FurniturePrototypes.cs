@@ -34,8 +34,10 @@ public class FurniturePrototypes
 
         furnitureRequirements.Add("stockpile", new Job(null, "stockpile", FurnitureActions.JobComplete_FurnitureBuilding, -1f,null));
 
-        _furniturePrototypes.Add("smelter", new Furniture("smelter", 5, 2, 2, false, false));
+        _furniturePrototypes.Add("smelter", new Furniture("smelter", 5, 2, 3, false, false));
+		_furniturePrototypes ["smelter"].jobSpotOffset = new Vector2 (1, 0);
 		_furniturePrototypes ["smelter"].RegisterUpdateAction (FurnitureActions.Smeltery_UpdateAction);
+
 
     }
 

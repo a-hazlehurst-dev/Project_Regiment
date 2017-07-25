@@ -32,6 +32,10 @@ public class Furniture  : IXmlSerializable{
 
 	public bool RoomEnclosure { get; protected set; }
 
+	//if furn can be worked by person, where is the correct spot for them to stand.
+	// relative to bottom left of sprite, (could be outside of the furn sprite, this could be common).
+	public Vector2 jobSpotOffset = Vector2.zero;
+
 
 	public Action<Furniture> cbOnChanged;
 	public Action<Furniture> cbOnRemoved;
@@ -58,6 +62,9 @@ public class Furniture  : IXmlSerializable{
 		this.Height = other.Height;
         this.Tint = other.Tint;
 		this.LinksToNeighbour = other.LinksToNeighbour;
+		this.jobSpotOffset = other.jobSpotOffset;
+
+
 		this.furnParameters = new Dictionary<string, float> (other.furnParameters);
         this._jobs = new List<Job>();
 		if (other.updateActions != null) {
@@ -83,6 +90,10 @@ public class Furniture  : IXmlSerializable{
 		this.LinksToNeighbour = linksToNeighbour;
 		this.funcPositionValidation = this.DefaultIsPositionValid;
 		this.furnParameters = new Dictionary<string, float> ();
+	}
+
+	public Tile GetJobSpotTile(){
+		return GameManager.Instance.TileDataGrid.GetTileAt (Tile.X + (int)jobSpotOffset.x, Tile.Y + (int)jobSpotOffset.y);
 	}
 
 	public void Deconstruct(){
@@ -112,7 +123,7 @@ public class Furniture  : IXmlSerializable{
 
     public void AddJob(Job j)
     {
-
+		j.furnitureToOperate = this;
         _jobs.Add(j);
         GameManager.Instance.JobQueue.Enqueue(j);
     }
@@ -121,6 +132,7 @@ public class Furniture  : IXmlSerializable{
     {
         _jobs.Remove(j);
         j.CancelJob();
+		j.furnitureToOperate = null;
         GameManager.Instance.JobQueue.Remove(j);
     }
     public void ClearJobs()

@@ -17,6 +17,7 @@ public class Job  {
 
     public bool AcceptsAnyInventoryType = false;
     public Furniture FurniturePrototype;
+	public Furniture furnitureToOperate; // peice of furn that owns the h
     public Dictionary<string, Inventory> _inventoryRequirements;
 
 	//FIXME:  hard coded a parameter for furniture. Do not like
