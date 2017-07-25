@@ -93,6 +93,12 @@ public class Furniture  : IXmlSerializable{
 			cbOnRemoved (this);
 		}
 
+		if (RoomEnclosure) {
+			Room.DoFloodFillOnRemove (this.Tile);
+		}
+
+		GameManager.Instance.InvalidateTileGraph ();
+
 	}
 
 	virtual public Furniture Clone(){

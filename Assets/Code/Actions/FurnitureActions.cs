@@ -124,6 +124,8 @@ public static class FurnitureActions
     }
 
 	public static void Smeltery_UpdateAction(Furniture furn, float deltaTime){
+
+		//TODO: change, gas contribution, based on room volume.
 		Debug.Log ("smelter updateaction.");
 		furn.Tile.Room.ChangeEnvironment ("temperature", 0.1f * deltaTime); //replace hardcoded value;
 	}

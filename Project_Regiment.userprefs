@@ -1,18 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Managers\FurnitureController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Models\Room.cs">
     <Files>
-      <File FileName="Assets\Code\Scripts\GameDrawMode.cs" Line="77" Column="41" />
-      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="102" Column="25" />
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="93" Column="13" />
-      <File FileName="Assets\Code\Models\Tile.cs" Line="157" Column="4" />
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="19" Column="16" />
-      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="37" Column="45" />
-      <File FileName="Assets\Code\Data\FurnitureRepository.cs" Line="23" Column="37" />
-      <File FileName="Assets\Code\Managers\FurnitureController.cs" Line="168" Column="3" />
-      <File FileName="Assets\Code\Models\Room.cs" Line="23" Column="1" />
-      <File FileName="Assets\Code\Data\FurniturePrototypes.cs" Line="46" Column="1" />
-      <File FileName="Assets\Code\Scripts\FooterMenuViewModel.cs" Line="49" Column="6" />
+      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="37" Column="21" />
+      <File FileName="Assets\Code\Models\Furniture.cs" Line="100" Column="47" />
+      <File FileName="Assets\Code\Models\Room.cs" Line="145" Column="35" />
+      <File FileName="Assets\Code\Services\Pathfinding\PathTileGraph.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="181" Column="38" />
+      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Models\Tile.cs" Line="152" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

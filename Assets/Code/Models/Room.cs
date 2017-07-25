@@ -67,38 +67,51 @@ public class Room
 		_tiles = new List<Tile> ();
 	}
 
-	public static void DoRoomFloodFill(Furniture sourceFurniture){
-		// the room that the furniture was originally assigned too.
-        var oldRoom = sourceFurniture.Tile.Room;
 
-        //try building new room starting from north.
-        foreach(var t in sourceFurniture.Tile.GetNeighbours())
-        {
-			FloodFillRoom (t, oldRoom);
-        }
 
-        sourceFurniture.Tile.Room = null;
-        oldRoom._tiles.Remove(sourceFurniture.Tile);
 
-		if (oldRoom.IsOutside()==false) {
+	public static void DoRoomFloodFill(Tile sourceTile){
 
-            if (oldRoom._tiles.Count > 0)
-            {
-                Debug.LogError("Attempting to delete room with tiles assigned to it.");
-            }
-			//odl room should not have any more tiles in it.
-			GameManager.Instance.DeleteRoom (oldRoom);
+        var oldRoom = sourceTile.Room; 
+
+		//check if the sourcetile had a room. (will always be the case)
+		if (oldRoom != null) {
+			//the source tile had a room, so this room has now potentially changed.
+			//
+
+			foreach (var t in sourceTile.GetNeighbours()) {
+				FloodFillRoom (t, oldRoom);
+			}
+
+			sourceTile.Room = null;
+
+			oldRoom._tiles.Remove (sourceTile);// if the old room exists, remove the source tile from it.
+
+			if (oldRoom.IsOutside () == false) {// if not removing from outside room
+
+				if (oldRoom._tiles.Count > 0) {
+					Debug.LogError ("Attempting to delete room with tiles assigned to it.");
+				}
+				//delete room, as it has no tiles.
+				GameManager.Instance.DeleteRoom (oldRoom);
+			}
 		}
 	}
+
+	public static void DoFloodFillOnRemove(Tile sourceTile){
+		FloodFillRoom (sourceTile, null);
+	}
+
 
 	protected static void FloodFillRoom(Tile tile, Room oldRoom){
        
         if (tile == null) {
-			//empty space, cant flood
+			//tile does not exist, this is probable a neighbour thats out of bounds
 			return;
 		}
 
 		if (tile.Room != oldRoom) {
+			Debug.Log ("doo i need this?");
 			// this tile was already processed by a flood fill, cant flood
 			return;
 		}
@@ -111,30 +124,48 @@ public class Room
 
 		Queue<Tile> TilesToCheck = new Queue<Tile> ();
 
+		bool isConnectedToOutside = false;
+
 		TilesToCheck.Enqueue (tile);
 
 		while (TilesToCheck.Count > 0) {
 			
 			Tile t = TilesToCheck.Dequeue ();
-			if (t.Room == oldRoom) {
+			//I want t (t) to be part of the new room
+			if (t.Room != newRoom) {
+
+				/// we the checked tile is equal to the old room. (old room changed, so check its still 
+
 				newRoom.AssignTile (t);
 				Tile[] tn = t.GetNeighbours ();
 
 				foreach (var t2 in tn) {
 					if (t2 == null) {
-						newRoom.ResetRoomTilesToOutside ();
-						return;
+
+						isConnectedToOutside = true;
+						//newRoom.ResetRoomTilesToOutside ();
+						//return;
 					}
 					//if the neighbour, is not off the grid, is in the same room as the original tile, && the the tile is not a structure. queue it.
-					if (t2 != null && t2.Room == oldRoom && (t2.Furniture == null || t2.Furniture.RoomEnclosure == false)) {
+					if (t2!=null &&t2.Room != newRoom && (t2.Furniture == null || t2.Furniture.RoomEnclosure == false)) {
 						TilesToCheck.Enqueue (t2);
 					}
 				}
 			}
 
 		}
+		if (isConnectedToOutside) {
+			newRoom.ResetRoomTilesToOutside ();
 
-		newRoom.CopyEnvironment (oldRoom);
+		}
+
+		if (oldRoom != null) {
+			//splitting the room into 2 or more, so copy old gas ratios.
+			newRoom.CopyEnvironment (oldRoom);
+		} else {
+			//mergin 1 or more rooms together, so we need to figure out the total
+			//calc the temp difference between the merged rooms.
+		}
        
         GameManager.Instance.AddRoom(newRoom);
 	}
