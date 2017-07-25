@@ -2,14 +2,14 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Models\Room.cs">
     <Files>
-      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="37" Column="21" />
+      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="36" Column="25" />
       <File FileName="Assets\Code\Models\Furniture.cs" Line="100" Column="47" />
-      <File FileName="Assets\Code\Models\Room.cs" Line="145" Column="35" />
-      <File FileName="Assets\Code\Services\Pathfinding\PathTileGraph.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Models\Room.cs" Line="84" Column="54" />
       <File FileName="Assets\Code\Managers\GameManager.cs" Line="181" Column="38" />
-      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Data\TileDataGrid.cs" Line="148" Column="44" />
       <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Models\Tile.cs" Line="152" Column="5" />
+      <File FileName="Assets\Code\Models\Tile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Managers\FurnitureController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

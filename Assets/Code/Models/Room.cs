@@ -70,7 +70,7 @@ public class Room
 
 
 
-	public static void DoRoomFloodFill(Tile sourceTile){
+	public static void DoRoomFloodFill(Tile sourceTile, bool onlyIfOutside =false){
 
         var oldRoom = sourceTile.Room; 
 
@@ -80,7 +80,11 @@ public class Room
 			//
 
 			foreach (var t in sourceTile.GetNeighbours()) {
-				FloodFillRoom (t, oldRoom);
+				if (t != null) { 
+					if (t.Room == null || onlyIfOutside == false || t.Room.IsOutside ()) {
+						FloodFillRoom (t, oldRoom);
+					}
+				}
 			}
 
 			sourceTile.Room = null;
@@ -111,7 +115,6 @@ public class Room
 		}
 
 		if (tile.Room != oldRoom) {
-			Debug.Log ("doo i need this?");
 			// this tile was already processed by a flood fill, cant flood
 			return;
 		}
@@ -127,9 +130,10 @@ public class Room
 		bool isConnectedToOutside = false;
 
 		TilesToCheck.Enqueue (tile);
-
+		int tileschecked = 0;
 		while (TilesToCheck.Count > 0) {
-			
+
+			tileschecked++;
 			Tile t = TilesToCheck.Dequeue ();
 			//I want t (t) to be part of the new room
 			if (t.Room != newRoom) {
@@ -147,13 +151,19 @@ public class Room
 						//return;
 					}
 					//if the neighbour, is not off the grid, is in the same room as the original tile, && the the tile is not a structure. queue it.
-					if (t2!=null &&t2.Room != newRoom && (t2.Furniture == null || t2.Furniture.RoomEnclosure == false)) {
-						TilesToCheck.Enqueue (t2);
+					else {
+
+						if( t2.Room != newRoom && (t2.Furniture == null || t2.Furniture.RoomEnclosure == false))
+						{
+							TilesToCheck.Enqueue (t2);
+						}
 					}
 				}
 			}
 
 		}
+
+		Debug.Log (tileschecked);
 		if (isConnectedToOutside) {
 			newRoom.ResetRoomTilesToOutside ();
 

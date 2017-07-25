@@ -139,9 +139,15 @@ public class TileDataGrid : IXmlSerializable{
 				var x = int.Parse(reader.GetAttribute("X"));
 				var y = int.Parse(reader.GetAttribute("Y"));
 
-				var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y]);
+				var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y], false);
 				furn.ReadXml(reader);
 			} while(reader.ReadToNextSibling ("Furniture"));
+
+
+			foreach (var furn in _furnitureService.FindAll()) {
+				Room.DoRoomFloodFill (furn.Tile, true);
+			}
+
 		}
     }
 

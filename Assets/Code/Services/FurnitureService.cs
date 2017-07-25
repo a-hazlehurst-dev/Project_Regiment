@@ -25,7 +25,7 @@ public class FurnitureService
         return furnPrototypes.furnitureRequirements;
     }
 
-    public Furniture CreateFurniture(string type, Tile tile)
+	public Furniture CreateFurniture(string type, Tile tile, bool doRoomFloodFill = true)
     {
         var furniture = builder.CreateFurniture(type, tile);
         if (furniture == null) { return null; }
@@ -33,7 +33,7 @@ public class FurnitureService
 		furniture.RegisterOnRemovedCallback (OnFurnitureRemoved);
 
 		//do we need to recalculate the rooms?
-		if (furniture.RoomEnclosure) {
+		if (doRoomFloodFill && furniture.RoomEnclosure) {
 			Room.DoRoomFloodFill(tile);
 
         }
