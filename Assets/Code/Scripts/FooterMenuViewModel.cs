@@ -23,7 +23,7 @@ public class FooterMenuViewModel : MonoBehaviour {
 	{
 		InactivateAll ();
 
-		Vector3 position = new Vector3(5f, 300, 0);
+		Vector3 position = new Vector3(5f, 350, 0);
 		pnlFurnitureMenu.transform.position = position;
 		pnlFurnitureMenu.SetActive(true);
 	}
