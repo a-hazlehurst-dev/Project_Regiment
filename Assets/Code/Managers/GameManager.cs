@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	public InventoryService _inventoryService;
     public GameDrawMode GameDrawMode { get; set; }
 	private RoomService _roomService;
+    public JobService JobService { get; protected set; }
 	private int optionAction;
 	private static bool loadGameMode = false;
 
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour {
 
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
-    public JobQueue JobQueue;
+    //public JobQueue JobQueue;
 
 
 	private int _drawMode = 1;
@@ -43,6 +44,9 @@ public class GameManager : MonoBehaviour {
 		Instance = this;
 		_furnitureService = new FurnitureService ();
 		_furnitureService.Init ();
+
+        JobService = new JobService();
+        JobService.Init();
 
         
 
@@ -62,7 +66,7 @@ public class GameManager : MonoBehaviour {
 		SpriteManager = GetComponent<SpriteManager>();
         SpriteManager.Init();
 
-		JobQueue = new JobQueue ();
+		//JobQueue = new JobQueue ();
 
 		TileManager = GetComponent<TileManager> ();
 		FurnitureController = GetComponent<FurnitureController> ();

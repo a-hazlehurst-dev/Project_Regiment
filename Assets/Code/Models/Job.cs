@@ -121,7 +121,8 @@ public class Job  {
 		if (_cbJobCancelled != null) 
 			_cbJobCancelled(this);
 
-        GameManager.Instance.JobQueue.Remove(this);
+        GameManager.Instance.JobService.Remove(this);
+       
 	}
 
 	public bool HasAllMaterial(){

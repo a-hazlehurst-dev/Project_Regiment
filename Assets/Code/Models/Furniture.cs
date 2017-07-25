@@ -125,7 +125,8 @@ public class Furniture  : IXmlSerializable{
     {
 		j.furnitureToOperate = this;
         _jobs.Add(j);
-        GameManager.Instance.JobQueue.Enqueue(j);
+        GameManager.Instance.JobService.Add(j);
+        //GameManager.Instance.JobQueue.Enqueue(j);
     }
 
     public void RemoveJob(Job j)
@@ -133,7 +134,8 @@ public class Furniture  : IXmlSerializable{
         _jobs.Remove(j);
         j.CancelJob();
 		j.furnitureToOperate = null;
-        GameManager.Instance.JobQueue.Remove(j);
+        GameManager.Instance.JobService.Remove(j);
+        //GameManager.Instance.JobQueue.Remove(j);
     }
     public void ClearJobs()
     {

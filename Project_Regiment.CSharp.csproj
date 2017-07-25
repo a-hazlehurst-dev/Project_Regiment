@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -83,11 +81,13 @@
     <Compile Include="Assets\Code\Actions\FurnitureActions.cs" />
     <Compile Include="Assets\Code\Builders\CharacterBuilder.cs" />
     <Compile Include="Assets\Code\Builders\FurnitureBuilder.cs" />
+    <Compile Include="Assets\Code\Builders\JobBuilder.cs" />
     <Compile Include="Assets\Code\Data\Character.cs" />
     <Compile Include="Assets\Code\Data\CharacterPrototypes.cs" />
     <Compile Include="Assets\Code\Data\CharacterRepository.cs" />
     <Compile Include="Assets\Code\Data\FurniturePrototypes.cs" />
     <Compile Include="Assets\Code\Data\FurnitureRepository.cs" />
+    <Compile Include="Assets\Code\Data\JobRepository.cs" />
     <Compile Include="Assets\Code\Data\RoomRepository.cs" />
     <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
     <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
@@ -97,6 +97,7 @@
     <Compile Include="Assets\Code\Managers\JobSpriteManager.cs" />
     <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
     <Compile Include="Assets\Code\Managers\TileManager.cs" />
+    <Compile Include="Assets\Code\Models\Enum\JobType.cs" />
     <Compile Include="Assets\Code\Models\Furniture.cs" />
     <Compile Include="Assets\Code\Models\Inventory.cs" />
     <Compile Include="Assets\Code\Models\Job.cs" />
@@ -109,9 +110,11 @@
     <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
     <Compile Include="Assets\Code\Scripts\GameDrawMode.cs" />
     <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
+    <Compile Include="Assets\Code\Scripts\TileInspectorViewModel.cs" />
     <Compile Include="Assets\Code\Services\CharacterService.cs" />
     <Compile Include="Assets\Code\Services\FurnitureService.cs" />
     <Compile Include="Assets\Code\Services\InventoryService.cs" />
+    <Compile Include="Assets\Code\Services\JobService.cs" />
     <Compile Include="Assets\Code\Services\Pathfinding\PathAStar.cs" />
     <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
     <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />
@@ -126,7 +129,8 @@
     <Compile Include="Assets\Code\Utilities\SimplePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
-    <Compile Include="Assets\Code\Scripts\TileInspectorViewModel.cs" />
+    <Compile Include="Assets\FurnitureBuildMenu.cs" />
+    <Compile Include="Assets\jobView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

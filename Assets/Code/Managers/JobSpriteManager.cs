@@ -15,7 +15,7 @@ public class JobSpriteManager : MonoBehaviour {
 		_jobToGameObjectMap = new Dictionary<Job, GameObject> ();
 		_furnitureManager = GameObject.FindObjectOfType<FurnitureController> ();
 		jobHolder = new GameObject ("Jobs").transform;
-		GameManager.Instance.JobQueue.RegisterJobCreatedCallBack (OnJobCreated);
+        GameManager.Instance.JobService.Register_Job_Created(OnJobCreated);
 
 	}
 
@@ -59,7 +59,6 @@ public class JobSpriteManager : MonoBehaviour {
 
         }
         job_go.transform.SetParent(jobHolder, true);
-
         job.RegisterJobCompletedCallback (OnJobCompleted);
 		job.RegisterJobCancelledCallback (OnJobCompleted);
 	}
@@ -68,9 +67,10 @@ public class JobSpriteManager : MonoBehaviour {
 
 		GameObject job_go = _jobToGameObjectMap [job];
 
-		job.UnRegisterJobCancelledCallback (OnJobCompleted);
-		job.UnRegisterJobCompletedCallback (OnJobCompleted);
 
-		Destroy (job_go);
+		job.UnRegisterJobCancelledCallback (OnJobCompleted);
+
+        job.UnRegisterJobCompletedCallback (OnJobCompleted);
+        Destroy (job_go);
 	}
 }

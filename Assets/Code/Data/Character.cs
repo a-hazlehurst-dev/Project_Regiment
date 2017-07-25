@@ -157,7 +157,8 @@ public class Character {
 
 
 	void GetNewJob(){
-		myJob = GameManager.Instance.JobQueue.DeQueue ();
+        myJob = GameManager.Instance.JobService.GetAndRemoveOldestJob();
+		//myJob = GameManager.Instance.JobQueue.DeQueue ();
 		if (myJob == null) {
 			return;
 		}
@@ -177,7 +178,8 @@ public class Character {
 	}
 	public void AbandonJob(){
 		nextTile = destTile = CurrentTile;
-		GameManager.Instance.JobQueue.Enqueue (myJob);
+        GameManager.Instance.JobService.Add(myJob);
+		//GameManager.Instance.JobQueue.Enqueue (myJob);
 		myJob = null;
 
 	}
@@ -281,6 +283,7 @@ public class Character {
 			Debug.LogError ("Character being told about job thats not his. you forgot to unregister old job");
 		}
         j.UnRegisterJobCancelledCallback(OnJobEnded);
+        //GameManager.Instance.JobService.Unregister_Job_Completed(OnJobEnded);
         j.UnRegisterJobCompletedCallback(OnJobEnded);
 
 		myJob = null;
