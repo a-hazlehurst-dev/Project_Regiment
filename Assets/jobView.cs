@@ -12,11 +12,7 @@ public class jobView : MonoBehaviour {
         _jobService = GameManager.Instance.JobService;
     }
 
-    void Update()
-    {
-
-    }
-
+ 
     void OnCreated(Job j)
     {
 
@@ -34,7 +30,7 @@ public class jobView : MonoBehaviour {
             
             foreach (var job in result)
             {
-                job.RegisterJobCompletedCallback(OnJobComplete);
+				job.Register_JobCompleted_Callback(OnJobComplete);
                 var temp = job;
 
                 GameObject go = (GameObject)Instantiate(ui_text);

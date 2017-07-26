@@ -35,6 +35,9 @@ public class Furniture  : IXmlSerializable{
 	//if furn can be worked by person, where is the correct spot for them to stand.
 	// relative to bottom left of sprite, (could be outside of the furn sprite, this could be common).
 	public Vector2 jobSpotOffset = Vector2.zero;
+	//if job causes a item to be spawned this is where it appears.
+	public Vector2 jobSpawnSpotOffset = Vector2.zero;
+
 
 
 	public Action<Furniture> cbOnChanged;
@@ -63,6 +66,7 @@ public class Furniture  : IXmlSerializable{
         this.Tint = other.Tint;
 		this.LinksToNeighbour = other.LinksToNeighbour;
 		this.jobSpotOffset = other.jobSpotOffset;
+		this.jobSpawnSpotOffset = other.jobSpawnSpotOffset;
 
 
 		this.furnParameters = new Dictionary<string, float> (other.furnParameters);
@@ -96,6 +100,10 @@ public class Furniture  : IXmlSerializable{
 		return GameManager.Instance.TileDataGrid.GetTileAt (Tile.X + (int)jobSpotOffset.x, Tile.Y + (int)jobSpotOffset.y);
 	}
 
+	public Tile GetSpawnSpotTile(){
+		return GameManager.Instance.TileDataGrid.GetTileAt (Tile.X + (int)jobSpawnSpotOffset.x , Tile.Y + (int)jobSpawnSpotOffset.y);
+	}
+
 	public void Deconstruct(){
 
 		Tile.UnPlaceFurniture (this);
@@ -125,25 +133,41 @@ public class Furniture  : IXmlSerializable{
     {
 		j.furnitureToOperate = this;
         _jobs.Add(j);
+		j.Register_JobStopped_Callback (OnJobStopped);
         GameManager.Instance.JobService.Add(j);
         //GameManager.Instance.JobQueue.Enqueue(j);
-    }
+	}
 
-    public void RemoveJob(Job j)
+	void OnJobStopped(Job j){
+		RemoveJob (j);
+
+
+	}
+
+	protected void RemoveJob(Job j)
     {
+		j.UnRegister_JobStopped_Callback (OnJobStopped);
         _jobs.Remove(j);
-        j.CancelJob();
 		j.furnitureToOperate = null;
-        GameManager.Instance.JobService.Remove(j);
-        //GameManager.Instance.JobQueue.Remove(j);
     }
-    public void ClearJobs()
+	public void CancelJobs(){
+		Job[] jobs_array = _jobs.ToArray ();
+		foreach(var job in jobs_array)
+		{
+			job.CancelJob ();
+		}
+	}
+
+    protected void ClearJobs()
     {
-        foreach(var job in _jobs.ToArray())
+		Job[] jobs_array = _jobs.ToArray ();
+		foreach(var job in jobs_array)
         {
             RemoveJob(job);
         }
     }
+
+
 	static public Furniture PlaceFurniture(Furniture prototype,  Tile tile)
 	{
 		Furniture item = prototype.Clone();

@@ -24,7 +24,6 @@ public class TileInspectorViewModel : MonoBehaviour {
 	void Update () {
         Tile t = camScript.GetMouseOverTile();
         if(t == null) { return; }
-        if(t.Room == null) { return; }
         txtTileType[0].text = "Tile type: " + t.Floor.ToString() + "(" + t.X + ","+t.Y +")";
 		txtTileType[1].text = "Room " + GameManager.Instance.FindRooms().IndexOf(t.Room).ToString();
 		txtTileType [2].text = "Details: ";

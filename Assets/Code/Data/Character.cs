@@ -163,8 +163,8 @@ public class Character {
 			return;
 		}
 		destTile = myJob.Tile;
-		myJob.RegisterJobCompletedCallback (OnJobEnded);
-		myJob.RegisterJobCancelledCallback (OnJobEnded);
+
+		myJob.Register_JobStopped_Callback(OnJobStopped);
 
 		//immediately check if job tile is reachable.
 
@@ -179,7 +179,6 @@ public class Character {
 	public void AbandonJob(){
 		nextTile = destTile = CurrentTile;
         GameManager.Instance.JobService.Add(myJob);
-		//GameManager.Instance.JobQueue.Enqueue (myJob);
 		myJob = null;
 
 	}
@@ -277,14 +276,12 @@ public class Character {
 	}
 
 
-	public void OnJobEnded(Job j){
-		// job was completed or was cancelled.
+	public void OnJobStopped(Job j){
+		// job was completed (if non repeating) or was cancelled.
 		if (j != myJob) {
 			Debug.LogError ("Character being told about job thats not his. you forgot to unregister old job");
 		}
-        j.UnRegisterJobCancelledCallback(OnJobEnded);
-        //GameManager.Instance.JobService.Unregister_Job_Completed(OnJobEnded);
-        j.UnRegisterJobCompletedCallback(OnJobEnded);
+		j.UnRegister_JobStopped_Callback(OnJobStopped);
 
 		myJob = null;
 	}

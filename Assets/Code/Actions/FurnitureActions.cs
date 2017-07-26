@@ -65,7 +65,7 @@ public static class FurnitureActions
         if (furn.Tile.inventory!= null && furn.Tile.inventory.StackSize >= furn.Tile.inventory.maxStackSize)
         {
             //we are full!!
-            furn.ClearJobs();
+			furn.CancelJobs();
             return;
         }
 
@@ -102,16 +102,16 @@ public static class FurnitureActions
         Job j = new Job(furn.Tile, null, null, 0, itemsDesired);
         j.CanTakeFromStockpile = false;
 		j.furnitureToOperate = furn;
-        j.RegisterJobWorkedCallback(Stockpile_JobWorked);
+		j.Register_JobWorked_Callback(Stockpile_JobWorked);
         furn.AddJob(j);
 
     }
      static void Stockpile_JobWorked(Job j)
     {
       
-		j.furnitureToOperate.ClearJobs();
+		j.CancelJob ();
+
         //TODO; when stocipile logic is in place, 
-        // 
         foreach(var inv in j._inventoryRequirements.Values)
         {
             if(    inv.StackSize > 0)
@@ -126,14 +126,25 @@ public static class FurnitureActions
 
 	public static void Smeltery_UpdateAction(Furniture furn, float deltaTime){
 
-		//TODO: change, gas contribution, based on room volume.
-		Debug.Log ("smelter updateaction.");
 		furn.Tile.Room.ChangeEnvironment ("temperature", 0.1f * deltaTime); //replace hardcoded value;
+		var spawnSpot = furn.GetSpawnSpotTile ();
 
-		//add a job if one does not already exist.
-		if (furn.JobCount() > 0) {
+		if (furn.JobCount () > 0) {
+			//add a job if one does not already exist.
+		
+				if (spawnSpot.inventory !=null && (spawnSpot.inventory.StackSize >= spawnSpot.inventory.maxStackSize))
+				{
+					furn.CancelJobs ();
+				}
+				return;
+			
+		}
+		//if we get here then there is no current job. see if spawn spot is full.
+		if (spawnSpot.inventory !=null && (spawnSpot.inventory.StackSize >= spawnSpot.inventory.maxStackSize)) {
+			//we're full dont create a job
 			return;
 		}
+		//if we get here we need to create a new job.
 
 		Tile jobSpotInventory = furn.GetJobSpotTile ();
 
@@ -147,19 +158,18 @@ public static class FurnitureActions
 			null,
 			Smeltery_JobCompleted,
 			1f,
-			null
+			null, 
+			true 	// repeats until destination tile is full.
 		);
 		j.furnitureToOperate = furn;
+	
 		furn.AddJob (j);
 	}
 
 	public static void Smeltery_JobCompleted(Job job){
-
-		GameManager.Instance._inventoryService.PlaceInventory (job.Tile, new Inventory ("clay", 50, 2));
-
-		job.furnitureToOperate.RemoveJob(job);
-
+		GameManager.Instance._inventoryService.PlaceInventory (job.furnitureToOperate.GetSpawnSpotTile(), new Inventory ("clay", 50, 10));
 	}
+
 
 }
 

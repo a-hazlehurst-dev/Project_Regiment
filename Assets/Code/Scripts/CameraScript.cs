@@ -73,7 +73,7 @@ public class CameraScript : MonoBehaviour
 
             tile.PendingFurnitureJob = job;
 
-            job.RegisterJobCancelledCallback((theJob) =>
+			job.UnRegister_JobStopped_Callback((theJob) =>
             {
                 theJob.Tile.PendingFurnitureJob = null;
             });
@@ -86,7 +86,8 @@ public class CameraScript : MonoBehaviour
         currentMousePosition = GetMousePosition();
         currentMousePosition.z = 0;
         Tile tileUnderMouse = GameManager.Instance.GetTileAt(currentMousePosition);
-        if (tileUnderMouse == null) return;
+
+		if (tileUnderMouse == null) return;
 
         Vector3 cursorPosition = new Vector3(tileUnderMouse.X, tileUnderMouse.Y, 0);
 

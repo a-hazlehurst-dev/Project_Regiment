@@ -59,8 +59,8 @@ public class JobSpriteManager : MonoBehaviour {
 
         }
         job_go.transform.SetParent(jobHolder, true);
-        job.RegisterJobCompletedCallback (OnJobCompleted);
-		job.RegisterJobCancelledCallback (OnJobCompleted);
+		job.Register_JobCompleted_Callback (OnJobCompleted);
+		job.Register_JobStopped_Callback (OnJobCompleted);
 	}
 
 	void OnJobCompleted (Job job){
@@ -68,9 +68,9 @@ public class JobSpriteManager : MonoBehaviour {
 		GameObject job_go = _jobToGameObjectMap [job];
 
 
-		job.UnRegisterJobCancelledCallback (OnJobCompleted);
+		job.UnRegister_JobStopped_Callback (OnJobCompleted);
 
-        job.UnRegisterJobCompletedCallback (OnJobCompleted);
+		job.UnRegister_JobCompleted_Callback (OnJobCompleted);
         Destroy (job_go);
 	}
 }

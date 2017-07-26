@@ -11,9 +11,14 @@ public class Job  {
     public float TimeToComplete { get; protected set; }
 
 
-    Action<Job> _cbCJobCompleted;
-	Action<Job> _cbJobCancelled;
-    Action<Job> _cbJobWorked;
+	protected float _jobTimeRequired;
+	protected bool _jobRepeats = false;
+
+
+
+    Action<Job> _cbCJobCompleted; // job was completed, shouldnwo build item or whatever
+	Action<Job> _cbJobStopped;  // job was stopped, maybe non repeating or was cancelled.
+    Action<Job> _cbJobWorked;	// gets called each time work was performed, update ui?
 
     public bool AcceptsAnyInventoryType = false;
     public Furniture FurniturePrototype;
@@ -25,12 +30,13 @@ public class Job  {
 
     public bool CanTakeFromStockpile = true;
 
-	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete ,  Inventory[] inventoryRequirements)
+	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete ,  Inventory[] inventoryRequirements, bool jobRepeats = false)
 	{
 		Tile = tile;
 		TimeToComplete = timeToComplete;
 		_cbCJobCompleted += cbJobCompleted;
-      
+		_jobTimeRequired = this.TimeToComplete = timeToComplete;
+		_jobRepeats = jobRepeats;
 
         JobObjectType = jobObjectType;
 
@@ -65,30 +71,32 @@ public class Job  {
     {
         return new Job(this);
     }
-	public void RegisterJobCompletedCallback(Action<Job> cb){
+
+
+	public void Register_JobCompleted_Callback(Action<Job> cb){
 		_cbCJobCompleted += cb;
 	}
 
-	public void RegisterJobCancelledCallback(Action<Job> cb){
-		_cbJobCancelled += cb;
+	public void Register_JobStopped_Callback(Action<Job> cb){
+		_cbJobStopped += cb;
 	}
 
-    public void RegisterJobWorkedCallback(Action<Job> cb)
+    public void Register_JobWorked_Callback(Action<Job> cb)
     {
         _cbJobWorked += cb;
     }
 
-    public void UnRegisterJobWorkedCallback(Action<Job> cb)
+    public void UnRegister_JobWorked_Callback(Action<Job> cb)
     {
         _cbJobWorked -= cb;
     }
 
-    public void UnRegisterJobCompletedCallback(Action<Job> cb){
+    public void UnRegister_JobCompleted_Callback(Action<Job> cb){
 		_cbCJobCompleted -= cb;
 	}
 
-	public void UnRegisterJobCancelledCallback(Action<Job> cb){
-		_cbJobCancelled -= cb;
+	public void UnRegister_JobStopped_Callback(Action<Job> cb){
+		_cbJobStopped -= cb;
 	}
 
 	public void DoWork(float workTime){
@@ -112,14 +120,25 @@ public class Job  {
         }
        
         if (TimeToComplete <=0) {
+			//do what ever is needed when job cycle completes
 			if (_cbCJobCompleted != null) {
 				_cbCJobCompleted(this);
 			}
+			if (_jobRepeats == false) {
+				//let all know the job has been officially concluded
+				if (_cbJobStopped != null) {
+					_cbJobStopped (this); 
+				}
+			} else {
+				//repeating job and must be reset.s
+				TimeToComplete += _jobTimeRequired;
+			}
+
 		}
 	}
 	public void CancelJob(){
-		if (_cbJobCancelled != null) 
-			_cbJobCancelled(this);
+		if (_cbJobStopped != null) 
+			_cbJobStopped(this);
 
         GameManager.Instance.JobService.Remove(this);
        
