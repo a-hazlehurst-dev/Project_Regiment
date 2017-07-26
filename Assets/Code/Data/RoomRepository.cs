@@ -26,6 +26,7 @@ public class RoomRepository
 		return _rooms.SingleOrDefault (x => x.Name == name);
 	}
 	public void Delete(Room room){
+        Debug.Log("deleying room");
 		_rooms.Remove (room);
 	}
 

@@ -48,8 +48,6 @@ public class GameManager : MonoBehaviour {
         JobService = new JobService();
         JobService.Init();
 
-        
-
 		_characterService = new CharacterService ();
 		_characterService.Init ();
 
@@ -76,12 +74,13 @@ public class GameManager : MonoBehaviour {
 			
 		if (!loadGameMode) {
 			InitGame ();
-		} else {
+            _characterService.Create(TileDataGrid.GridMap[TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
+        } else {
 			loadGameMode = false;
 			CreateGameFromSaveFile ();
 		}
 		GameObject.Find("CameraDolly").transform.position = new Vector3 (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight/2, -11);
-        _characterService.Create(TileDataGrid.GridMap[TileDataGrid.GridWidth/2,TileDataGrid.GridHeight/2]);
+        
 
 
     }
@@ -111,6 +110,7 @@ public class GameManager : MonoBehaviour {
 	}
     public void DeleteRoom(Room r)
     {
+        Debug.Log("GameManager delete");
         if (r.Name == "outside")
         {
             Debug.LogError("Tried to delete the outside room!");
@@ -133,27 +133,27 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame(){
 
-		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService, RoomService);
+		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService, RoomService, _characterService);
 		TileManager.InitialiseTileMap(SpriteManager);
 		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
 
         // DEBUGGING REMOVE LATER
         // Create inventory item.
-        Inventory inv = new Inventory("clay", 50, 50);
+        //Inventory inv = new Inventory("clay", 50, 50);
 
-        var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
-        _inventoryService.PlaceInventory(tile, inv);
-
-
-        inv = inv = new Inventory("clay", 50, 8);
-        tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
-        _inventoryService.PlaceInventory(tile, inv);
+        //var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
+        //_inventoryService.PlaceInventory(tile, inv);
 
 
-        inv = inv = new Inventory("clay", 50, 22);
+        //inv = inv = new Inventory("clay", 50, 8);
+        //tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
+        //_inventoryService.PlaceInventory(tile, inv);
 
-        tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
-        _inventoryService.PlaceInventory(tile, inv);
+
+        //inv = inv = new Inventory("clay", 50, 22);
+
+        //tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
+        //_inventoryService.PlaceInventory(tile, inv);
 
 
         TileGraph = new PathTileGraph(TileDataGrid);
@@ -168,61 +168,66 @@ public class GameManager : MonoBehaviour {
         var xmlReader = XmlReader.Create(new StringReader(PlayerPrefs.GetString("SaveGame00")));
      
         FurnitureController.InitialiseFurniture (SpriteManager,_furnitureService);
-       
-		TileDataGrid = new TileDataGrid(_furnitureService,RoomService);
+
+        CharacterSpriteManager.InitialiseCharacter(SpriteManager, _characterService);
+
+        TileDataGrid = new TileDataGrid(_furnitureService,RoomService, _characterService);
         
         while (xmlReader.Read() && xmlReader.IsStartElement())
         {
 
             if (xmlReader.Name == "TileDataGrid"){
-				Debug.Log ("Reading setup");
+
                 TileDataGrid.LoadSetup(xmlReader);
             }
 			if (xmlReader.Name == "Rooms") {
-				Debug.Log ("Reading rooms");
+			
 				TileDataGrid.LoadRooms(xmlReader);
-				Debug.Log ("ended rooms");
+			
 			}
             if(xmlReader.Name == "Tiles" )
             {
-				Debug.Log ("Reading tiles");
+			
                 TileDataGrid.LoadTiles(xmlReader);
             }
             if (xmlReader.Name == "Furnitures")
             {
-				Debug.Log ("Reading frun");
+		
                 TileDataGrid.LoadFurniture(xmlReader);
             }
+            if (xmlReader.Name == "Characters")
+            {
+       
+                TileDataGrid.LoadCharacter(xmlReader);
+            }
 
-			Debug.Log ("next");
-
-        }
+       }
        
         xmlReader.Close ();
 
 		// DEBUGGING REMOVE LATER
 		// Create inventory item.
-		Inventory inv = new Inventory("clay", 50, 50);
+		//Inventory inv = new Inventory("clay", 50, 50);
     
-		var tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2+1);
-		_inventoryService.PlaceInventory (tile,inv) ;
+		//var tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2+1);
+		//_inventoryService.PlaceInventory (tile,inv) ;
 		
 
-		inv = inv = new Inventory("clay", 50,8);
-   		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2+1);
-		_inventoryService.PlaceInventory (tile,inv) ;
+		//inv = inv = new Inventory("clay", 50,8);
+  // 		tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2+1);
+		//_inventoryService.PlaceInventory (tile,inv) ;
 	
 
-		inv = inv = new Inventory("clay", 50, 22);
+		//inv = inv = new Inventory("clay", 50, 22);
        
-        tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2-1, TileDataGrid.GridHeight / 2+2);
-		_inventoryService.PlaceInventory (tile,inv) ;
+  //      tile = TileDataGrid.GetTileAt (TileDataGrid.GridWidth / 2-1, TileDataGrid.GridHeight / 2+2);
+		//_inventoryService.PlaceInventory (tile,inv) ;
 
 
 		TileManager.InitialiseTileMap(SpriteManager);
 
 		TileGraph = new PathTileGraph(TileDataGrid);
-		CharacterSpriteManager.InitialiseCharacter (SpriteManager,_characterService);
+		
 	}
 
 	

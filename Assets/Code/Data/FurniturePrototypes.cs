@@ -17,10 +17,11 @@ public class FurniturePrototypes
     public void InitPrototypes()
     {
 		//will be loaded from xml file or json file in the feature.
-        _furniturePrototypes.Add("wall", new Furniture("wall", 0, 1, 1, true, true));
-        furnitureRequirements.Add("wall", new Job(null, "wall",FurnitureActions.JobComplete_FurnitureBuilding,1f,new Inventory[] { new Inventory( "clay", 5, 0)}));
+        _furniturePrototypes.Add("FURN_WALL", new Furniture("FURN_WALL", 0, 1, 1, true, true));
+        furnitureRequirements.Add("FURN_WALL", new Job(null, "FURN_WALL", FurnitureActions.JobComplete_FurnitureBuilding,1f,new Inventory[] { new Inventory( "clay", 5, 0)}));
+        _furniturePrototypes["FURN_WALL"].Name = "Basic Wall";
 
-		_furniturePrototypes.Add("door", new Furniture("door",1, 1, 1, false, true));
+        _furniturePrototypes.Add("door", new Furniture("door",1, 1, 1, false, true));
 
 
         _furniturePrototypes ["door"].SetParameter ("openness", 0);

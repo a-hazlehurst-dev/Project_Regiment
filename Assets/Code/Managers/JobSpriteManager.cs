@@ -52,7 +52,7 @@ public class JobSpriteManager : MonoBehaviour {
             var southTile = GameManager.Instance.TileDataGrid.GetTileAt(job.Tile.X, job.Tile.Y - 1);
 
             if (northTile != null && southTile != null && northTile.Furniture != null && southTile.Furniture != null
-                && northTile.Furniture.ObjectType == "wall" && southTile.Furniture.ObjectType == "wall")
+                && northTile.Furniture.ObjectType == "FURN_WALL" && southTile.Furniture.ObjectType == "FURN_WALL")
             {
                 job_go.transform.rotation = Quaternion.Euler(0, 0, 90);
             }

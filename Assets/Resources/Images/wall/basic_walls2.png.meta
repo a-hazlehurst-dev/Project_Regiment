@@ -1,25 +1,25 @@
 fileFormatVersion: 2
 guid: a1a849fdad6d30648be792f2e00e50d5
-timeCreated: 1500047594
+timeCreated: 1501101849
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: wall_
-    21300002: wall_S
-    21300004: wall_NS
-    21300006: wall_N
-    21300008: wall_E
-    21300010: wall_EW
-    21300012: wall_W
-    21300014: wall_NESW
-    21300016: wall_SW
-    21300018: wall_NW
-    21300020: wall_NE
-    21300022: wall_ES
-    21300024: wall_NEW
-    21300026: wall_NES
-    21300028: wall_NSW
-    21300030: wall_ESW
+    21300000: FURN_WALL_
+    21300002: FURN_WALL_S
+    21300004: FURN_WALL_NS
+    21300006: FURN_WALL_N
+    21300008: FURN_WALL_E
+    21300010: FURN_WALL_EW
+    21300012: FURN_WALL_W
+    21300014: FURN_WALL_NESW
+    21300016: FURN_WALL_SW
+    21300018: FURN_WALL_NW
+    21300020: FURN_WALL_NE
+    21300022: FURN_WALL_ES
+    21300024: FURN_WALL_NEW
+    21300026: FURN_WALL_NES
+    21300028: FURN_WALL_NSW
+    21300030: FURN_WALL_ESW
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -86,7 +86,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wall_
+      name: FURN_WALL_
       rect:
         serializedVersion: 2
         x: 0
@@ -99,7 +99,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_S
+      name: FURN_WALL_S
       rect:
         serializedVersion: 2
         x: 512
@@ -112,7 +112,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_NS
+      name: FURN_WALL_NS
       rect:
         serializedVersion: 2
         x: 512
@@ -125,7 +125,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_N
+      name: FURN_WALL_N
       rect:
         serializedVersion: 2
         x: 512
@@ -138,7 +138,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_E
+      name: FURN_WALL_E
       rect:
         serializedVersion: 2
         x: 640
@@ -151,7 +151,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_EW
+      name: FURN_WALL_EW
       rect:
         serializedVersion: 2
         x: 704
@@ -164,7 +164,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_W
+      name: FURN_WALL_W
       rect:
         serializedVersion: 2
         x: 768
@@ -177,7 +177,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_NESW
+      name: FURN_WALL_NESW
       rect:
         serializedVersion: 2
         x: 320
@@ -190,7 +190,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_SW
+      name: FURN_WALL_SW
       rect:
         serializedVersion: 2
         x: 128
@@ -203,7 +203,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_NW
+      name: FURN_WALL_NW
       rect:
         serializedVersion: 2
         x: 128
@@ -216,7 +216,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_NE
+      name: FURN_WALL_NE
       rect:
         serializedVersion: 2
         x: 0
@@ -229,7 +229,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_ES
+      name: FURN_WALL_ES
       rect:
         serializedVersion: 2
         x: 0
@@ -242,7 +242,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_NEW
+      name: FURN_WALL_NEW
       rect:
         serializedVersion: 2
         x: 192
@@ -255,7 +255,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_NES
+      name: FURN_WALL_NES
       rect:
         serializedVersion: 2
         x: 384
@@ -268,7 +268,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_NSW
+      name: FURN_WALL_NSW
       rect:
         serializedVersion: 2
         x: 640
@@ -281,7 +281,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: wall_ESW
+      name: FURN_WALL_ESW
       rect:
         serializedVersion: 2
         x: 832

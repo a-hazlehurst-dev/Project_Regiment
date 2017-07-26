@@ -39,7 +39,8 @@ public class RoomService
 	}
 
 
-	public void Delete(Room room){
+	public void Delete(Room room) { 
+         Debug.Log("Room Service delete");
 		room.ResetRoomTilesToOutside ();
         _roomRepository.Delete(room);
 	}
@@ -47,6 +48,19 @@ public class RoomService
     public void AddRoom(Room rm)
     {
         _roomRepository.Add(rm);
+    }
+
+    public void ClearEmptyRooms()
+    {
+        var rooms = _roomRepository._rooms.ToArray();
+
+        foreach(var room in rooms)
+        {
+           if( room.IsOutside())
+            {
+                _roomRepository.Delete(room);
+            }
+        }
     }
 }
 

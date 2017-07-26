@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using UnityEngine;
 
 public class CharacterService
 {
@@ -11,6 +11,7 @@ public class CharacterService
     private Action<Character> cbOnCharacterCreated;
 
 	public  void Init(){
+        Debug.Log("init");
 		_charRepository = new CharacterRepository();
 		_characterPrototypes = new CharacterPrototypes ();
         _characterBuilder = new CharacterBuilder (_charRepository, _characterPrototypes);

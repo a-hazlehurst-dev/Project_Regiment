@@ -25,7 +25,15 @@ public class TileInspectorViewModel : MonoBehaviour {
         Tile t = camScript.GetMouseOverTile();
         if(t == null) { return; }
         txtTileType[0].text = "Tile type: " + t.Floor.ToString() + "(" + t.X + ","+t.Y +")";
-		txtTileType[1].text = "Room " + GameManager.Instance.FindRooms().IndexOf(t.Room).ToString();
+
+        string roomId = "N/A";
+        if (t.Room != null)
+        {
+            roomId = "Room " + t.Room.Id.ToString();
+        }
+        txtTileType[1].text = roomId;
+
+
 		txtTileType [2].text = "Details: ";
 		if (t.Room == null) {
 			return;
@@ -40,7 +48,7 @@ public class TileInspectorViewModel : MonoBehaviour {
 
         if (t.Furniture != null)
         {
-            txtTileType[3].text = "Furniture: " + t.Furniture.ObjectType;
+            txtTileType[3].text = "Furniture: " + t.Furniture.Name;
         }
         else { txtTileType[3].text = "Furniture: none"; }
         

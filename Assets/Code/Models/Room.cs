@@ -17,6 +17,10 @@ public class Room : IXmlSerializable
 
 	public string Name { get; set; }
 	List<Tile> _tiles;
+    public int NumberOfTiles()
+    {
+        return _tiles.Count;
+    }
 
 	public Room (string name){
 		
@@ -86,14 +90,13 @@ public class Room : IXmlSerializable
 			//
 
 			foreach (var t in sourceTile.GetNeighbours()) {
-				if (t != null) { 
-					if (t.Room == null || onlyIfOutside == false || t.Room.IsOutside ()) {
+		
+					if (t.Room != null && (onlyIfOutside == false || t.Room.IsOutside ())) {
 						FloodFillRoom (t, oldRoom);
 					}
-				}
+		
 			}
-
-			Debug.Log ("Room Count:" + GameManager.Instance.RoomService.FindRooms ().Count);
+		
 
 			sourceTile.Room = null;
 
@@ -111,9 +114,13 @@ public class Room : IXmlSerializable
 
 			//old room is null, source tile was likely a wall. (may not be the case) the wall was deconstructed.
 			//
-			FloodFillRoom (sourceTile, null); 
-		}
-	}
+			FloodFillRoom (sourceTile, null);
+          
+        }
+
+        Debug.Log(GameManager.Instance.RoomService.FindRooms().Count());
+
+    }
 
 	public static void DoFloodFillOnRemove(Tile sourceTile){
 		DoRoomFloodFill (sourceTile);
@@ -144,6 +151,7 @@ public class Room : IXmlSerializable
 
 		TilesToCheck.Enqueue (tile);
 		int tileschecked = 0;
+
 		while (TilesToCheck.Count > 0) {
 
 			tileschecked++;
@@ -177,7 +185,7 @@ public class Room : IXmlSerializable
 		if (isConnectedToOutside) {
 
 			newRoom.ResetRoomTilesToOutside ();
-			Debug.Log ("Rooms:" + GameManager.Instance.RoomService.FindRooms ().Count ());
+            
 			return;
 
 		}

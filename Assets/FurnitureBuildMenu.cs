@@ -14,11 +14,13 @@ public class FurnitureBuildMenu : MonoBehaviour {
 		foreach(var key in GameManager.Instance._furnitureService.FindPrototypes().Keys){
 			GameObject go = (GameObject)Instantiate (BuildFurniturePrefab);
 			go.transform.SetParent (this.transform);
+            string objectId = key;
+            string objectName = GameManager.Instance._furnitureService.FindPrototypes()[key].Name;
 
-			go.name = "btn build " + key;
-			go.GetComponentInChildren<Text> ().text = "Build "+ key;
+            go.name = "btn build " + key;
+			go.GetComponentInChildren<Text> ().text = "Build "+ objectName;
 
-			string objectId = key;
+			
 
 			Button b = go.GetComponent<Button> ();
 			b.onClick.AddListener (delegate { gdm.SetupMode_BuildFurniture(objectId);});

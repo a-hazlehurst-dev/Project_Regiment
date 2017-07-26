@@ -20,6 +20,18 @@ public class Furniture  : IXmlSerializable{
 			updateActions (this, deltaTime);
 		}
 	}
+    private string _name = null;
+    public string Name
+    {
+        get
+        {
+            if(_name ==null || _name.Length == 0)
+            {
+                return ObjectType;
+            }
+            return _name;
+        }  set { _name = value; }
+    }
 
     public Color Tint = Color.white;
 

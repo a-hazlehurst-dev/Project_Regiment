@@ -9,6 +9,7 @@ public class TileDataGrid : IXmlSerializable{
 
 	private FurnitureService _furnitureService;
 	private RoomService _roomService;
+    private CharacterService _characterService;
 	public Tile[,] GridMap {get; protected set;}
 
 	//public Dictionary<string, Furniture> FurnitureObjectPrototypes;
@@ -20,17 +21,20 @@ public class TileDataGrid : IXmlSerializable{
     public int treeCount = 0;
 
 
-	public TileDataGrid(int gridheight, int gridWidth, float tileHeight,float tileWidth, FurnitureService furnitureService, RoomService roomService )
+	public TileDataGrid(int gridheight, int gridWidth, float tileHeight,float tileWidth, FurnitureService furnitureService, RoomService roomService, CharacterService characterService)
 	{
 		_furnitureService = furnitureService;
 		_roomService = roomService;
-		CreateGrid (gridWidth, gridheight, tileWidth, tileHeight);	
+        _characterService = characterService;
+        CreateGrid (gridWidth, gridheight, tileWidth, tileHeight);	
 	}
 
-	public TileDataGrid(FurnitureService furnitureService, RoomService roomService)
+	public TileDataGrid(FurnitureService furnitureService, RoomService roomService, CharacterService characterService)
     {
         _furnitureService = furnitureService;
 		_roomService = roomService;
+        _characterService = characterService;
+      
     }
 
 
@@ -82,7 +86,11 @@ public class TileDataGrid : IXmlSerializable{
 
 		writer.WriteStartElement ("Rooms");
 		foreach (var room in _roomService.FindRooms()) {
-
+            
+            if(room == GameManager.Instance.GetOutsideRoom())
+            {
+                continue;
+            }
 			writer.WriteStartElement ("Room");
 			room.WriteXml (writer);
 			writer.WriteEndElement ();
@@ -111,7 +119,19 @@ public class TileDataGrid : IXmlSerializable{
 		}
 
 		writer.WriteEndElement ();
-	}
+
+        writer.WriteStartElement("Characters");
+
+        foreach (var c in _characterService.FindAll())
+        {
+
+            writer.WriteStartElement("Character");
+            c.WriteXml(writer);
+            writer.WriteEndElement();
+        }
+
+        writer.WriteEndElement();
+    }
 
 	public void ReadXml (XmlReader reader){
         return;
@@ -161,28 +181,40 @@ public class TileDataGrid : IXmlSerializable{
 		}
     }
 
-	public void LoadRooms(XmlReader reader)
+    public void LoadCharacter(XmlReader reader)
+    {
+        if (reader.ReadToDescendant("Character"))
+        {
+
+            do
+            {
+                var x = int.Parse(reader.GetAttribute("X"));
+                var y = int.Parse(reader.GetAttribute("Y"));
+
+                if(_characterService == null) { Debug.Log("Null"); }
+                var c = _characterService.Create(GetTileAt(x, y));
+                 c.ReadXml(reader);
+            } while (reader.ReadToNextSibling("Character"));
+
+
+        }
+    }
+
+    public void LoadRooms(XmlReader reader)
 	{
 		if (reader.ReadToDescendant ("Room")) {
 
 			do {
 
-			//	var x = int.Parse(reader.GetAttribute("X"));
-			//	var y = int.Parse(reader.GetAttribute("Y"));
-
-			//	var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y], false);
-				//	furn.ReadXml(reader);
+			
 
 				Room r = new Room("test");
-				Debug.Log("t1");
+
 				_roomService.AddRoom(r);
-				Debug.Log("t2");
 				//rooms will have same ids due to order by which they were saved, loaded.
 				r.ReadXml(reader);
-				Debug.Log("t3");
 			} while(reader.ReadToNextSibling ("Room"));
 
-			Debug.Log ("end-read room");
 		}
 	}
 
