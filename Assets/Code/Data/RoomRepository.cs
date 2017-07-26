@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class RoomRepository
 {
@@ -27,6 +28,7 @@ public class RoomRepository
 	public void Delete(Room room){
 		_rooms.Remove (room);
 	}
+
 
 
 }

@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
-public class Room
+public class Room : IXmlSerializable
 {
-	int id;
+	public int Id 
+	{
+		get {return GameManager.Instance.RoomService.GetRoomID (this);}
+	}
 
 	Dictionary<string, float> Environemnt;
 
 	public string Name { get; set; }
 	List<Tile> _tiles;
 
-	public Room (int id, string name){
-		this.id = id;
+	public Room (string name){
+		
 		this.Name = name;
 		_tiles = new List<Tile> ();
 		Environemnt = new Dictionary<string, float> ();
@@ -87,6 +93,8 @@ public class Room
 				}
 			}
 
+			Debug.Log ("Room Count:" + GameManager.Instance.RoomService.FindRooms ().Count);
+
 			sourceTile.Room = null;
 
 			oldRoom._tiles.Remove (sourceTile);// if the old room exists, remove the source tile from it.
@@ -99,11 +107,16 @@ public class Room
 				//delete room, as it has no tiles.
 				GameManager.Instance.DeleteRoom (oldRoom);
 			}
+		} else {
+
+			//old room is null, source tile was likely a wall. (may not be the case) the wall was deconstructed.
+			//
+			FloodFillRoom (sourceTile, null); 
 		}
 	}
 
 	public static void DoFloodFillOnRemove(Tile sourceTile){
-		FloodFillRoom (sourceTile, null);
+		DoRoomFloodFill (sourceTile);
 	}
 
 
@@ -123,7 +136,7 @@ public class Room
 			return;
 		}
 
-        Room newRoom = new Room (1, "Room");
+        Room newRoom = new Room ( "Room");
 
 		Queue<Tile> TilesToCheck = new Queue<Tile> ();
 
@@ -137,14 +150,11 @@ public class Room
 			Tile t = TilesToCheck.Dequeue ();
 			//I want t (t) to be part of the new room
 			if (t.Room != newRoom) {
-
-				/// we the checked tile is equal to the old room. (old room changed, so check its still 
-
 				newRoom.AssignTile (t);
 				Tile[] tn = t.GetNeighbours ();
 
 				foreach (var t2 in tn) {
-					if (t2 == null) {
+					if (t2 == null ) {
 
 						isConnectedToOutside = true;
 						//newRoom.ResetRoomTilesToOutside ();
@@ -165,7 +175,10 @@ public class Room
 
 		Debug.Log (tileschecked);
 		if (isConnectedToOutside) {
+
 			newRoom.ResetRoomTilesToOutside ();
+			Debug.Log ("Rooms:" + GameManager.Instance.RoomService.FindRooms ().Count ());
+			return;
 
 		}
 
@@ -176,13 +189,42 @@ public class Room
 			//mergin 1 or more rooms together, so we need to figure out the total
 			//calc the temp difference between the merged rooms.
 		}
-       
-        GameManager.Instance.AddRoom(newRoom);
+
+		GameManager.Instance.RoomService.AddRoom(newRoom);
 	}
 
 	void CopyEnvironment(Room other){
 		foreach (string n in other.Environemnt.Keys) {
 			this.Environemnt [n] = other.Environemnt [n];
+		}
+	}
+
+	public XmlSchema GetSchema(){
+		return null;
+	}
+
+	public void WriteXml (XmlWriter writer){
+
+		//write environment
+		foreach (string k in Environemnt.Keys) {
+			writer.WriteStartElement ("Param");
+			writer.WriteAttributeString ("name", k);
+			writer.WriteAttributeString ("value", Environemnt[k].ToString());
+			writer.WriteEndElement ();
+
+		}
+
+	}
+
+
+	public void ReadXml (XmlReader reader){
+		if (reader.ReadToDescendant ("Param")) {
+			do {
+				string k = reader.GetAttribute ("name");
+				float v = float.Parse (reader.GetAttribute ("value"));
+				Environemnt [k] = v;
+
+			} while(reader.ReadToNextSibling ("Param"));
 		}
 	}
 }

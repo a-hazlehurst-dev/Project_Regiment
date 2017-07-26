@@ -80,6 +80,15 @@ public class TileDataGrid : IXmlSerializable{
 		writer.WriteAttributeString ("Width", GridWidth.ToString());
 		writer.WriteAttributeString("Height", GridHeight.ToString());
 
+		writer.WriteStartElement ("Rooms");
+		foreach (var room in _roomService.FindRooms()) {
+
+			writer.WriteStartElement ("Room");
+			room.WriteXml (writer);
+			writer.WriteEndElement ();
+		}
+		writer.WriteEndElement ();
+
 		writer.WriteStartElement ("Tiles");
 		for (int x = 0; x < GridWidth; x++) {
 			for (int y = 0; y < GridHeight; y++) {
@@ -89,6 +98,7 @@ public class TileDataGrid : IXmlSerializable{
                 
 			}
 		}
+
 		writer.WriteEndElement ();
 
 		writer.WriteStartElement ("Furnitures");
@@ -99,7 +109,7 @@ public class TileDataGrid : IXmlSerializable{
 			furn.WriteXml (writer);
 			writer.WriteEndElement ();
 		}
-			
+
 		writer.WriteEndElement ();
 	}
 
@@ -143,13 +153,38 @@ public class TileDataGrid : IXmlSerializable{
 				furn.ReadXml(reader);
 			} while(reader.ReadToNextSibling ("Furniture"));
 
-
-			foreach (var furn in _furnitureService.FindAll()) {
-				Room.DoRoomFloodFill (furn.Tile, true);
-			}
+			//flood fill prior to loading rooms
+			//foreach (var furn in _furnitureService.FindAll()) {
+			//	Room.DoRoomFloodFill (furn.Tile, true);
+			//}
 
 		}
     }
+
+	public void LoadRooms(XmlReader reader)
+	{
+		if (reader.ReadToDescendant ("Room")) {
+
+			do {
+
+			//	var x = int.Parse(reader.GetAttribute("X"));
+			//	var y = int.Parse(reader.GetAttribute("Y"));
+
+			//	var furn = _furnitureService.CreateFurniture(reader.GetAttribute("objectType"), GridMap[x, y], false);
+				//	furn.ReadXml(reader);
+
+				Room r = new Room("test");
+				Debug.Log("t1");
+				_roomService.AddRoom(r);
+				Debug.Log("t2");
+				//rooms will have same ids due to order by which they were saved, loaded.
+				r.ReadXml(reader);
+				Debug.Log("t3");
+			} while(reader.ReadToNextSibling ("Room"));
+
+			Debug.Log ("end-read room");
+		}
+	}
 
 	
 

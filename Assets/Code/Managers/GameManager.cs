@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 	private CharacterService _characterService;
 	public InventoryService _inventoryService;
     public GameDrawMode GameDrawMode { get; set; }
-	private RoomService _roomService;
+	public RoomService RoomService;
     public JobService JobService { get; protected set; }
 	private int optionAction;
 	private static bool loadGameMode = false;
@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour {
 		_characterService = new CharacterService ();
 		_characterService.Init ();
 
-		_roomService = new RoomService ();
-		_roomService.Init ();
+		RoomService = new RoomService ();
+		RoomService.Init ();
 
 		_inventoryService = new InventoryService ();
 		_inventoryService.Init ();
@@ -99,15 +99,15 @@ public class GameManager : MonoBehaviour {
     public void AddRoom(Room rm)
     {
 
-        _roomService.AddRoom(rm);
+        RoomService.AddRoom(rm);
     }
     public Room GetOutsideRoom()
     {
-        return _roomService.Get("outside");
+        return RoomService.Get("outside");
     }
 
 	public List<Room>FindRooms(){
-		return _roomService.FindRooms ();
+		return RoomService.FindRooms ();
 	}
     public void DeleteRoom(Room r)
     {
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour {
         {
             Debug.LogError("Tried to delete the outside room!");
         }
-        _roomService.Delete(r);
+        RoomService.Delete(r);
     }
 
     void Update(){
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame(){
 
-		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService, _roomService);
+		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService, RoomService);
 		TileManager.InitialiseTileMap(SpriteManager);
 		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
 
@@ -169,22 +169,32 @@ public class GameManager : MonoBehaviour {
      
         FurnitureController.InitialiseFurniture (SpriteManager,_furnitureService);
        
-		TileDataGrid = new TileDataGrid(_furnitureService,_roomService);
+		TileDataGrid = new TileDataGrid(_furnitureService,RoomService);
         
         while (xmlReader.Read() && xmlReader.IsStartElement())
         {
+
             if (xmlReader.Name == "TileDataGrid"){
+				Debug.Log ("Reading setup");
                 TileDataGrid.LoadSetup(xmlReader);
             }
+			if (xmlReader.Name == "Rooms") {
+				Debug.Log ("Reading rooms");
+				TileDataGrid.LoadRooms(xmlReader);
+				Debug.Log ("ended rooms");
+			}
             if(xmlReader.Name == "Tiles" )
             {
+				Debug.Log ("Reading tiles");
                 TileDataGrid.LoadTiles(xmlReader);
             }
             if (xmlReader.Name == "Furnitures")
             {
+				Debug.Log ("Reading frun");
                 TileDataGrid.LoadFurniture(xmlReader);
             }
 
+			Debug.Log ("next");
 
         }
        

@@ -241,14 +241,24 @@ public class Tile : IXmlSerializable
 	public void WriteXml (XmlWriter writer){
 		writer.WriteAttributeString ("X", X.ToString ());
 		writer.WriteAttributeString ("Y", Y.ToString ());
+		writer.WriteAttributeString ("RoomId",Room  ==null ? "-1" : Room.Id.ToString());
 		writer.WriteAttributeString("Type", ((int)Floor).ToString());
 	}
 
 	public void ReadXml (XmlReader reader){
-		//X = int.Parse (reader.GetAttribute ("X"));
-		//Y  = int.Parse (reader.GetAttribute ("Y"));
+
+		var s = reader.GetAttribute ("RoomId");
+		if (!string.IsNullOrEmpty (s)) {
+			
+			Room = GameManager.Instance.RoomService.GetRoomFromID (int.Parse(s));
+		}
+			
+
+
 
 		Floor = (FloorType)int.Parse (reader.GetAttribute ("Type"));
+
+
 	}
 
 

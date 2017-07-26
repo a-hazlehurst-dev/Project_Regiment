@@ -11,16 +11,20 @@ public class RoomService
 
 	public void Init(){
 		_roomRepository = new RoomRepository();
-		_roomRepository.Add (new Room (roomIndex, "outside")); // add the 'outside room'
+		_roomRepository.Add (new Room ( "outside")); // add the 'outside room'
 	}
 
-	public void Create(string name = "Room"){
-		roomIndex++;
-		if (name == "Room") {
-			name += roomIndex.ToString ();
-		}
-		var room = new Room (roomIndex, name);
+	public int GetRoomID(Room r){
+		return _roomRepository.FindRooms ().IndexOf (r);
 	}
+
+	public Room GetRoomFromID(int i ){
+		if (i < 0 || i > _roomRepository.FindRooms ().Count - 1) {
+			return null;
+		}
+		return _roomRepository.FindRooms () [i];
+	}
+
 
 	public List<Room> FindRooms(){
 		return _roomRepository.FindRooms ();
