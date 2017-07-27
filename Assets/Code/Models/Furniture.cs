@@ -71,6 +71,7 @@ public class Furniture  : IXmlSerializable{
 	//Copy Constructors
 	protected Furniture(Furniture other){
 		this.ObjectType = other.ObjectType;
+		this.Name = other.Name;
 		this.MovementCost = other.MovementCost;
 		this.RoomEnclosure = other.RoomEnclosure;
 		this.Width = other.Width;
@@ -264,6 +265,42 @@ public class Furniture  : IXmlSerializable{
 
 	public XmlSchema GetSchema(){
 		return null;
+	}
+
+	public void ReadXmlPrototype(XmlReader xmlReader){
+		Debug.Log ("ReadXmlPrototype: Furniture");
+
+		ObjectType = xmlReader.GetAttribute ("objectType");
+		while (xmlReader.Read ()) {
+			switch (xmlReader.Name) {
+			case "Name":
+				Name = xmlReader.ReadContentAsString ();
+				break;
+			case "MovementCost":
+				MovementCost = xmlReader.ReadContentAsFloat ();
+				break;
+			case "Width":
+				Name = xmlReader.ReadContentAsInt ();
+				break;
+			case "Height":
+				Name = xmlReader.ReadContentAsInt();
+				break;
+			case "LinksToNeighbour":
+				Name = xmlReader.ReadContentAsBoolean();
+				break;
+			case "EnclosesRoom":
+				Name = xmlReader.ReadContentAsBoolean();
+				break;
+			case "Params":
+				ReadXmlParams (xmlReader);
+				break;
+
+			}
+		}
+	}
+
+	public void ReadXmlParams(XmlReader xmlReader){
+		Debug.Log ("ReadXmlParams:");
 	}
 
 	public void WriteXml (XmlWriter writer){

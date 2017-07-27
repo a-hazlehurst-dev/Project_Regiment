@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Furnitures>
+	<Furniture objectType= "FURN_WALL">
+		<Name>Basic Wall</Name>
+		<MovementCost>0</MovementCost>
+		<Width>1</Width>
+		<Height>1</Height>
+		<LinksToNeightbour>true</LinksToNeightbour>
+		<EnclosesRoom>true</EnclosesRoom>
+
+
+		<BuildingJob>
+			<Inventory objectType ="clay" amount="4" />
+		</BuildingJob>
+
+		<DeconstructJob>
+			<Inventory objectType ="clay" amount="2" />
+		</DeconstructJob>
+
+	</Furniture>
+
+	<Furniture objectType= "FURN_BASIC_DOOR">
+		<Name>Basic Door</Name>
+		<MovementCost>0</MovementCost>
+		<Width>1</Width>
+		<Height>1</Height>
+		<LinksToNeightbour>false</LinksToNeightbour>
+		<EnclosesRoom>true</EnclosesRoom>
+
+		<BuildingJob>
+			<Inventory objectType ="clay" amount="1" />
+		</BuildingJob>
+
+		<DeconstructJob>
+			<Inventory objectType ="clay" amount="0" />
+		</DeconstructJob>
+
+		<Params>
+			<param name="openness" value ="0" />
+			<param name="is_openning" value ="0" />
+			
+		</Params>
+
+
+	</Furniture>
+</Furnitures>
+

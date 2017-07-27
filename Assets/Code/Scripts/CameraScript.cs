@@ -134,11 +134,7 @@ public class CameraScript : MonoBehaviour
 
     }
 
-    void OnFurnitureJobComplete(string type, Tile t)
-    {
-
-    }
-
+ 
 
 
 

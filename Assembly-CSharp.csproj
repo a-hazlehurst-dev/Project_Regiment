@@ -79,6 +79,7 @@
      <Compile Include="Assets\Code\Scripts\GameDrawMode.cs" />
      <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
      <Compile Include="Assets\Code\Scripts\TileInspectorViewModel.cs" />
+     <Compile Include="Assets\Code\Scripts\pnlStatusBottom.cs" />
      <Compile Include="Assets\Code\Services\CharacterService.cs" />
      <Compile Include="Assets\Code\Services\FurnitureService.cs" />
      <Compile Include="Assets\Code\Services\InventoryService.cs" />
@@ -98,7 +99,7 @@
      <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
      <Compile Include="Assets\FurnitureBuildMenu.cs" />
-     <Compile Include="Assets\jobView.cs" />
+     <None Include="Assets\Resources\XMLData\Furniture.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -144,17 +144,14 @@ public class GameManager : MonoBehaviour {
         //var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
         //_inventoryService.PlaceInventory(tile, inv);
 
-
         //inv = inv = new Inventory("clay", 50, 8);
         //tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
         //_inventoryService.PlaceInventory(tile, inv);
-
 
         //inv = inv = new Inventory("clay", 50, 22);
 
         //tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
         //_inventoryService.PlaceInventory(tile, inv);
-
 
         TileGraph = new PathTileGraph(TileDataGrid);
         CharacterSpriteManager.InitialiseCharacter (SpriteManager, _characterService);
