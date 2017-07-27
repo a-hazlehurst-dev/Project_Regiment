@@ -117,7 +117,7 @@ public static class FurnitureActions
             if(    inv.StackSize > 0)
             {
               
-                GameManager.Instance._inventoryService.PlaceInventory(j.Tile, inv);
+                GameManager.Instance.InventoryService.PlaceInventory(j.Tile, inv);
 
                 return; // should never end up with more than 1 inventory requirement with stacksize >0
             }
@@ -167,7 +167,7 @@ public static class FurnitureActions
 	}
 
 	public static void Smeltery_JobCompleted(Job job){
-		GameManager.Instance._inventoryService.PlaceInventory (job.furnitureToOperate.GetSpawnSpotTile(), new Inventory ("clay", 50, 10));
+		GameManager.Instance.InventoryService.PlaceInventory (job.furnitureToOperate.GetSpawnSpotTile(), new Inventory ("clay", 50, 10));
 	}
 
 

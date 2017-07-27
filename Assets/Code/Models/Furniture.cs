@@ -60,8 +60,9 @@ public class Furniture  : IXmlSerializable{
 	public Furniture(){
 		furnParameters = new Dictionary<string, float> ();
         _jobs = new List<Job>();
-	
-	}
+        this.funcPositionValidation = this.DefaultIsPositionValid;
+
+    }
 
     public bool IsStockpile()
     {
@@ -105,7 +106,7 @@ public class Furniture  : IXmlSerializable{
 		this.Width = width;
 		this.Height = height;
 		this.LinksToNeighbour = linksToNeighbour;
-		this.funcPositionValidation = this.DefaultIsPositionValid;
+		
 		this.furnParameters = new Dictionary<string, float> ();
 	}
 
@@ -240,7 +241,7 @@ public class Furniture  : IXmlSerializable{
 
 	//will be replaced by lua files, e.g door specify needs two walls.
 	public bool DefaultIsPositionValid(Tile t){
-
+     
         //foreach tile check they dont already have furniture.
         for (int x_off = t.X; x_off < (t.X + Width); x_off++)
         {
@@ -267,32 +268,75 @@ public class Furniture  : IXmlSerializable{
 		return null;
 	}
 
-	public void ReadXmlPrototype(XmlReader xmlReader){
+	public void ReadXmlPrototype(XmlReader readerParent){
 		Debug.Log ("ReadXmlPrototype: Furniture");
 
-		ObjectType = xmlReader.GetAttribute ("objectType");
+        ObjectType = readerParent.GetAttribute("objectType");
+
+        XmlReader xmlReader = readerParent.ReadSubtree(); 
+
+
+		
 		while (xmlReader.Read ()) {
+            Debug.Log("Node: " + xmlReader.Name);
+
+
 			switch (xmlReader.Name) {
 			case "Name":
-				Name = xmlReader.ReadContentAsString ();
+                xmlReader.Read();
+                Name = xmlReader.ReadContentAsString ();
 				break;
 			case "MovementCost":
-				MovementCost = xmlReader.ReadContentAsFloat ();
+                xmlReader.Read();
+                MovementCost = xmlReader.ReadContentAsFloat ();
 				break;
 			case "Width":
-				Name = xmlReader.ReadContentAsInt ();
+                xmlReader.Read();
+				Width = xmlReader.ReadContentAsInt ();
 				break;
 			case "Height":
-				Name = xmlReader.ReadContentAsInt();
+                    xmlReader.Read();
+                    Height = xmlReader.ReadContentAsInt();
 				break;
 			case "LinksToNeighbour":
-				Name = xmlReader.ReadContentAsBoolean();
+                    xmlReader.Read();
+                    LinksToNeighbour = xmlReader.ReadContentAsBoolean();
 				break;
 			case "EnclosesRoom":
-				Name = xmlReader.ReadContentAsBoolean();
+                    xmlReader.Read();
+                    RoomEnclosure = xmlReader.ReadContentAsBoolean();
 				break;
-			case "Params":
-				ReadXmlParams (xmlReader);
+                case "BuildingJob":
+                    float jobTime = float.Parse(xmlReader.GetAttribute("jobTime"));
+                    List<Inventory> invs = new List<Inventory>();
+
+                    XmlReader invReader = xmlReader.ReadSubtree();
+
+                    while (invReader.Read()){
+                        if(invReader.Name == "Inventory")
+                        {
+                            invs.Add( 
+                                new Inventory(
+                                    invReader.GetAttribute("objectType"),
+                                    int.Parse(invReader.GetAttribute("amount")),
+                                    0
+                                ));
+                        }
+                    }
+
+                    Job j = new Job(
+                        null, 
+                        ObjectType,
+                        FurnitureActions.JobComplete_FurnitureBuilding,
+                        jobTime,
+                        invs.ToArray());
+
+                    GameManager.Instance.FurnitureService.furnPrototypes.RegisterJobFurniturePrototype(j, this);
+                                     
+                    break;
+                case "Params":
+              
+                    ReadXmlParams (xmlReader);
 				break;
 
 			}

@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour {
 	public TileDataGrid TileDataGrid { get; protected set; }
 	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
 	public InventorySpriteController InventorySpriteController { get; protected set; }
-	public FurnitureService _furnitureService;
-	private CharacterService _characterService;
-	public InventoryService _inventoryService;
+	public FurnitureService FurnitureService;
+	private CharacterService CharacterService;
+	public InventoryService InventoryService;
     public GameDrawMode GameDrawMode { get; set; }
 	public RoomService RoomService;
     public JobService JobService { get; protected set; }
@@ -36,45 +36,41 @@ public class GameManager : MonoBehaviour {
 	private string _drawObject;
 
 	void OnEnable(){
-		if (Instance != null) {
-			Debug.LogError ("There should only be one gamemanager");
+		if (Instance != null)
+        {
 		}
-
         
 		Instance = this;
-		_furnitureService = new FurnitureService ();
-		_furnitureService.Init ();
+		FurnitureService = new FurnitureService ();
+		FurnitureService.Init ();
 
         JobService = new JobService();
         JobService.Init();
 
-		_characterService = new CharacterService ();
-		_characterService.Init ();
+		CharacterService = new CharacterService ();
+		CharacterService.Init ();
 
 		RoomService = new RoomService ();
 		RoomService.Init ();
 
-		_inventoryService = new InventoryService ();
-		_inventoryService.Init ();
+		InventoryService = new InventoryService ();
+		InventoryService.Init ();
 
         GameDrawMode = GetComponent<GameDrawMode>();
         InventorySpriteController = GetComponent<InventorySpriteController> ();
 
-
 		SpriteManager = GetComponent<SpriteManager>();
         SpriteManager.Init();
-
-		//JobQueue = new JobQueue ();
 
 		TileManager = GetComponent<TileManager> ();
 		FurnitureController = GetComponent<FurnitureController> ();
 		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
 
-		InventorySpriteController.Init (SpriteManager, _inventoryService);
+		InventorySpriteController.Init (SpriteManager, InventoryService);
 			
 		if (!loadGameMode) {
 			InitGame ();
-            _characterService.Create(TileDataGrid.GridMap[TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
+            CharacterService.Create(TileDataGrid.GridMap[TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
         } else {
 			loadGameMode = false;
 			CreateGameFromSaveFile ();
@@ -87,13 +83,13 @@ public class GameManager : MonoBehaviour {
 
 
 	public Dictionary<string ,List<Inventory>> GetInventories(){
-		return _inventoryService._inventories;
+		return InventoryService._inventories;
 	}
 	public void InvalidateTileGraph(){
 		TileGraph = null;
 	}
 	public List<Character> GetCharacters(){
-		return _characterService.FindAll ();
+		return CharacterService.FindAll ();
 	}
     public void AddRoom(Room rm)
     {
@@ -119,13 +115,13 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update(){
-        var chars = _characterService.FindAll();
+        var chars = CharacterService.FindAll();
 
         foreach (var c in chars) {
 			c.Update (Time.deltaTime);
 		}
 
-		foreach (var f in _furnitureService.FindAll()) {
+		foreach (var f in FurnitureService.FindAll()) {
 			f.Update (Time.deltaTime);
 		}
 
@@ -133,28 +129,28 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame(){
 
-		TileDataGrid = new TileDataGrid (10,10,64,64,_furnitureService, RoomService, _characterService);
+		TileDataGrid = new TileDataGrid (10,10,64,64,FurnitureService, RoomService, CharacterService);
 		TileManager.InitialiseTileMap(SpriteManager);
-		FurnitureController.InitialiseFurniture (SpriteManager ,_furnitureService);
+		FurnitureController.InitialiseFurniture (SpriteManager ,FurnitureService);
 
         // DEBUGGING REMOVE LATER
         // Create inventory item.
-        //Inventory inv = new Inventory("clay", 50, 50);
+        Inventory inv = new Inventory("clay", 50, 50);
 
-        //var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
-        //_inventoryService.PlaceInventory(tile, inv);
+        var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
+        InventoryService.PlaceInventory(tile, inv);
 
-        //inv = inv = new Inventory("clay", 50, 8);
-        //tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
-        //_inventoryService.PlaceInventory(tile, inv);
+        inv = inv = new Inventory("clay", 50, 8);
+        tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
+        InventoryService.PlaceInventory(tile, inv);
 
-        //inv = inv = new Inventory("clay", 50, 22);
+        inv = inv = new Inventory("clay", 50, 22);
 
-        //tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
-        //_inventoryService.PlaceInventory(tile, inv);
+        tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
+        InventoryService.PlaceInventory(tile, inv);
 
         TileGraph = new PathTileGraph(TileDataGrid);
-        CharacterSpriteManager.InitialiseCharacter (SpriteManager, _characterService);
+        CharacterSpriteManager.InitialiseCharacter (SpriteManager, CharacterService);
 
     }
 
@@ -164,11 +160,11 @@ public class GameManager : MonoBehaviour {
 	
         var xmlReader = XmlReader.Create(new StringReader(PlayerPrefs.GetString("SaveGame00")));
      
-        FurnitureController.InitialiseFurniture (SpriteManager,_furnitureService);
+        FurnitureController.InitialiseFurniture (SpriteManager,FurnitureService);
 
-        CharacterSpriteManager.InitialiseCharacter(SpriteManager, _characterService);
+        CharacterSpriteManager.InitialiseCharacter(SpriteManager, CharacterService);
 
-        TileDataGrid = new TileDataGrid(_furnitureService,RoomService, _characterService);
+        TileDataGrid = new TileDataGrid(FurnitureService,RoomService, CharacterService);
         
         while (xmlReader.Read() && xmlReader.IsStartElement())
         {

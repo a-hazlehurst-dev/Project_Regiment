@@ -7,7 +7,7 @@ public class FurnitureService
 
     FurnitureBuilder builder;
     FurnitureRepository furnRepository;
-    FurniturePrototypes furnPrototypes;
+    public FurniturePrototypes furnPrototypes;
    
 
     Action<Furniture> cbOnCreated;
@@ -16,8 +16,10 @@ public class FurnitureService
     {
 
         furnPrototypes = new FurniturePrototypes();
+        
         furnRepository = new FurnitureRepository();
         builder = new FurnitureBuilder(furnRepository, furnPrototypes);
+        furnPrototypes.InitPrototypes();
     }
 
     public Dictionary<string, Job> FindFurnitureRequirements()
@@ -25,7 +27,8 @@ public class FurnitureService
         return furnPrototypes.furnitureRequirements;
     }
 
-	public Furniture CreateFurniture(string type, Tile tile, bool doRoomFloodFill = true)
+   
+    public Furniture CreateFurniture(string type, Tile tile, bool doRoomFloodFill = true)
     {
         var furniture = builder.CreateFurniture(type, tile);
         if (furniture == null) { return null; }

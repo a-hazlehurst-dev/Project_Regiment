@@ -26,7 +26,7 @@ public class GameDrawMode  : MonoBehaviour
 		if (GameBuildMode == BuildMode.Floor || GameBuildMode == BuildMode.Deconstruct)
 			return true;
 		if (GameBuildMode == BuildMode.Furniture) {
-			Furniture proto = GameManager.Instance._furnitureService.FindPrototypes () [FurnitureToDraw];
+			Furniture proto = GameManager.Instance.FurnitureService.FindPrototypes () [FurnitureToDraw];
 			return proto.Width == 1 && proto.Height == 1;
 		}
 
@@ -66,7 +66,7 @@ public class GameDrawMode  : MonoBehaviour
 		}
 		//transparent
 
-		Furniture furnPrototypes = GameManager.Instance._furnitureService.FindPrototypes () [furnitureType];
+		Furniture furnPrototypes = GameManager.Instance.FurnitureService.FindPrototypes () [furnitureType];
 
 		furniturePreview.transform.position = new Vector3 (t.X + ((furnPrototypes.Width - 1) / 2f), t.Y + ((furnPrototypes.Height - 1) / 2f), 0);
 

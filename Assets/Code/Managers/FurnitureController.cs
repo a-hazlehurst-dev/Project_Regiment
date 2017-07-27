@@ -57,23 +57,23 @@ public class FurnitureController : MonoBehaviour
         var spriteName = furn.ObjectType;
         if (furn.LinksToNeighbour == false)
         {
-            if (furn.ObjectType == "door")
+            if (furn.ObjectType == "FURN_BASIC_DOOR")
             {
 				if (furn.GetParameter("openness") < 0.1f)
                 {
-                    spriteName = "door_";
+                    spriteName = furn.ObjectType + "_";
                 }
 				else if (furn.GetParameter("openness") < 0.5f)
                 {
-                    spriteName = "door_2";
+                    spriteName = furn.ObjectType + "_2";
                 }
 				else if (furn.GetParameter("openness") < 0.9f)
                 {
-                    spriteName = "door_3";
+                    spriteName = furn.ObjectType + "_3";
                 }
                 else
                 {
-                    spriteName = "door_4";
+                    spriteName = furn.ObjectType + "_4";
                 }
                 
             }
@@ -151,7 +151,7 @@ public class FurnitureController : MonoBehaviour
 		furnitureToRender.transform.position = new Vector3(furnitureToInstall.Tile.X + ((furnitureToInstall.Width -1)/2f), furnitureToInstall.Tile.Y + ((furnitureToInstall.Height - 1) / 2f), 0);
         sr.color = furnitureToInstall.Tint;
 
-        if (furnitureToInstall.ObjectType == "door")
+        if (furnitureToInstall.ObjectType == "FURN_BASIC_DOOR")
         {
             var northTile = GameManager.Instance.TileDataGrid.GetTileAt(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y + 1);
             var southTile = GameManager.Instance.TileDataGrid.GetTileAt(furnitureToInstall.Tile.X, furnitureToInstall.Tile.Y - 1);

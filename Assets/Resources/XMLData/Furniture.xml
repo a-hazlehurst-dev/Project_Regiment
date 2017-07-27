@@ -3,13 +3,11 @@
 	<Furniture objectType= "FURN_WALL">
 		<Name>Basic Wall</Name>
 		<MovementCost>0</MovementCost>
-		<Width>1</Width>
-		<Height>1</Height>
-		<LinksToNeightbour>true</LinksToNeightbour>
+    <LinksToNeighbour>true</LinksToNeighbour>
 		<EnclosesRoom>true</EnclosesRoom>
 
 
-		<BuildingJob>
+		<BuildingJob jobTime="1">
 			<Inventory objectType ="clay" amount="4" />
 		</BuildingJob>
 
@@ -21,13 +19,11 @@
 
 	<Furniture objectType= "FURN_BASIC_DOOR">
 		<Name>Basic Door</Name>
-		<MovementCost>0</MovementCost>
-		<Width>1</Width>
-		<Height>1</Height>
-		<LinksToNeightbour>false</LinksToNeightbour>
+
+    <LinksToNeighbour>false</LinksToNeighbour>
 		<EnclosesRoom>true</EnclosesRoom>
 
-		<BuildingJob>
+		<BuildingJob jobTime="1">
 			<Inventory objectType ="clay" amount="1" />
 		</BuildingJob>
 
@@ -43,5 +39,19 @@
 
 
 	</Furniture>
+  <Furniture objectType= "FURN_STOCKPILE">
+    <Name>Stockpile</Name>
+    <LinksToNeighbour>true</LinksToNeighbour>
+    <EnclosesRoom>false</EnclosesRoom>
+  </Furniture>
+
+  <Furniture objectType= "FURN_SMELTER">
+    <Name>Smelter</Name>
+    <MovementCost>10</MovementCost>
+    <Width>2</Width>
+    <Height>3</Height>
+    <LinksToNeighbour>false</LinksToNeighbour>
+    <EnclosesRoom>false</EnclosesRoom>
+  </Furniture>
 </Furnitures>
 

@@ -78,7 +78,7 @@ public class Character: IXmlSerializable
 					//if so deliver them, walk to tile and drop them off.
 					if (CurrentTile == myJob.Tile) {
 						//were already at job site so drop inventory.
-						GameManager.Instance._inventoryService.PlaceInventory (myJob, inventory);
+						GameManager.Instance.InventoryService.PlaceInventory (myJob, inventory);
                         myJob.DoWork(0);
 
 						if (inventory.StackSize == 0) {
@@ -99,7 +99,7 @@ public class Character: IXmlSerializable
 					//carrying something that the job doesnt want.
 					//dump at feet. (or werever is closest);
 					//TODO; go to nearest empty tile and dump it.
-					if (GameManager.Instance._inventoryService.PlaceInventory (CurrentTile, inventory) == false) {
+					if (GameManager.Instance.InventoryService.PlaceInventory (CurrentTile, inventory) == false) {
 						Debug.LogError ("Tried to dump invemntory into invalid tile " + CurrentTile.X + ", " + CurrentTile.Y);
 						//FIXME: this will loose inventory perminantly.
 						inventory = null;
@@ -116,7 +116,7 @@ public class Character: IXmlSerializable
                     && (myJob.CanTakeFromStockpile ||CurrentTile.Furniture == null || CurrentTile.Furniture.IsStockpile() == false )
                     && myJob.DesireInventoryType(CurrentTile.inventory) > 0) {
                     //pick the stuff up.
-                    GameManager.Instance._inventoryService.PlaceInventory(this, CurrentTile.inventory, myJob.DesireInventoryType(CurrentTile.inventory));
+                    GameManager.Instance.InventoryService.PlaceInventory(this, CurrentTile.inventory, myJob.DesireInventoryType(CurrentTile.inventory));
 
 				}
 
@@ -124,7 +124,7 @@ public class Character: IXmlSerializable
 				//Find first inventory type we need from inventory.
 				Inventory desired =  myJob.GetFirstDesiredInventory();
 
-				Inventory supplier = GameManager.Instance._inventoryService.GetClosestInventoryOfType (
+				Inventory supplier = GameManager.Instance.InventoryService.GetClosestInventoryOfType (
 					desired.objectType, 
 					CurrentTile, 
 					desired.maxStackSize - desired.StackSize, 

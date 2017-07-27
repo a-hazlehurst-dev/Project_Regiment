@@ -13,7 +13,7 @@ public class FurniturePrototypes
     {
         _furniturePrototypes = new Dictionary<string, Furniture>();
         furnitureRequirements = new Dictionary<string, Job>();
-        InitPrototypes();
+        
     }
 
 //    public void InitPrototypes()
@@ -43,6 +43,11 @@ public class FurniturePrototypes
 //
 //
 //    }
+
+    public void RegisterJobFurniturePrototype(Job j, Furniture f)
+    {
+        furnitureRequirements[f.ObjectType] = j;
+    }
 
 	public void InitPrototypes(){
 		//TODO: Read from xml files

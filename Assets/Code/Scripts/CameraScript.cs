@@ -52,11 +52,11 @@ public class CameraScript : MonoBehaviour
         if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid(GameDrawMode.FurnitureToDraw, tile) && tile.PendingFurnitureJob == null)
         {
             Job job;
-            if (GameManager.Instance._furnitureService.FindFurnitureRequirements().ContainsKey(GameDrawMode.FurnitureToDraw))
+            if (GameManager.Instance.FurnitureService.FindFurnitureRequirements().ContainsKey(GameDrawMode.FurnitureToDraw))
             {
                 //if there are any furniture requirements for this item ( wall needs clay), then create a new job with those requirements.
                 //make a clone
-                job = GameManager.Instance._furnitureService.FindFurnitureRequirements()[GameDrawMode.FurnitureToDraw].Clone();
+                job = GameManager.Instance.FurnitureService.FindFurnitureRequirements()[GameDrawMode.FurnitureToDraw].Clone();
                 // assign the tile
                 job.Tile = tile;
             }
@@ -67,7 +67,7 @@ public class CameraScript : MonoBehaviour
                 job = new Job(tile, GameDrawMode.FurnitureToDraw, FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
             }
             //tile is valid for this furniture type and not job already in place.
-            job.FurniturePrototype = GameManager.Instance._furnitureService.FindPrototypes()[GameDrawMode.FurnitureToDraw];
+            job.FurniturePrototype = GameManager.Instance.FurnitureService.FindPrototypes()[GameDrawMode.FurnitureToDraw];
             GameManager.Instance.JobService.Add(job);
             //GameManager.Instance.JobQueue.Enqueue(job);
 

@@ -1,13 +1,13 @@
 fileFormatVersion: 2
 guid: 88b9debf114aa034f9bb5ddd3ad3eeca
-timeCreated: 1500047486
+timeCreated: 1501183491
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: door_
-    21300002: door_2
-    21300004: door_3
-    21300006: door_4
+    21300000: FURN_BASIC_DOOR_
+    21300002: FURN_BASIC_DOOR_2
+    21300004: FURN_BASIC_DOOR_3
+    21300006: FURN_BASIC_DOOR_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -74,7 +74,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: door_
+      name: FURN_BASIC_DOOR_
       rect:
         serializedVersion: 2
         x: 0
@@ -87,7 +87,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: door_2
+      name: FURN_BASIC_DOOR_2
       rect:
         serializedVersion: 2
         x: 0
@@ -100,7 +100,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: door_3
+      name: FURN_BASIC_DOOR_3
       rect:
         serializedVersion: 2
         x: 0
@@ -113,7 +113,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: door_4
+      name: FURN_BASIC_DOOR_4
       rect:
         serializedVersion: 2
         x: 0

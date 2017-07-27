@@ -111,6 +111,7 @@
     <Compile Include="Assets\Code\Scripts\GameDrawMode.cs" />
     <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
     <Compile Include="Assets\Code\Scripts\TileInspectorViewModel.cs" />
+    <Compile Include="Assets\Code\Scripts\pnlStatusBottom.cs" />
     <Compile Include="Assets\Code\Services\CharacterService.cs" />
     <Compile Include="Assets\Code\Services\FurnitureService.cs" />
     <Compile Include="Assets\Code\Services\InventoryService.cs" />
@@ -130,7 +131,9 @@
     <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
     <Compile Include="Assets\FurnitureBuildMenu.cs" />
-    <Compile Include="Assets\jobView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources\XMLData\Furniture.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
