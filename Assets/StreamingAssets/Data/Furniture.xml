@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Furnitures>
+	<Furniture objectType= "FURN_WALL">
+		<Name>Basic Wall</Name>
+		<Width>1</Width>
+		<Height>1</Height>
+		<MovementCost>0</MovementCost>
+    <LinksToNeighbour>true</LinksToNeighbour>
+		<EnclosesRoom>true</EnclosesRoom>
+
+
+		<BuildingJob jobTime="1">
+			<Inventory objectType ="clay" amount="4" />
+		</BuildingJob>
+
+		<DeconstructJob>
+			<Inventory objectType ="clay" amount="2" />
+		</DeconstructJob>
+
+	</Furniture>
+
+	<Furniture objectType= "FURN_BASIC_DOOR">
+		<Name>Basic Door</Name>
+		<Width>1</Width>
+		<Height>1</Height>
+    	<LinksToNeighbour>false</LinksToNeighbour>
+		<EnclosesRoom>true</EnclosesRoom>
+
+		<BuildingJob jobTime="1">
+			<Inventory objectType ="clay" amount="1" />
+		</BuildingJob>
+
+		<DeconstructJob>
+			<Inventory objectType ="clay" amount="0" />
+		</DeconstructJob>
+
+		<Params>
+			<param name="openness" value ="0" />
+			<param name="is_openning" value ="0" />
+			
+		</Params>
+
+
+	</Furniture>
+  <Furniture objectType= "FURN_STOCKPILE">
+  	<Width>1</Width>
+	<Height>1</Height>
+    <Name>Stockpile</Name>
+    <LinksToNeighbour>true</LinksToNeighbour>
+    <EnclosesRoom>false</EnclosesRoom>
+  </Furniture>
+
+  <Furniture objectType= "FURN_SMELTER">
+    <Name>Smelter</Name>
+    <MovementCost>10</MovementCost>
+    <Width>2</Width>
+    <Height>3</Height>
+    <LinksToNeighbour>false</LinksToNeighbour>
+    <EnclosesRoom>false</EnclosesRoom>
+
+    <OnUpdate FunctionName="OnUpdate_Smelter" /> 
+  </Furniture>
+</Furnitures>
+

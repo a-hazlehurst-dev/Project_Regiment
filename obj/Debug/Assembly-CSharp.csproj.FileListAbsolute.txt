@@ -29,3 +29,4 @@ D:\dev\other\Project_Regiment\Temp\bin\Debug\UnityEngine.HoloLens.xml
 D:\dev\other\Project_Regiment\Temp\bin\Debug\UnityEngine.VR.xml
 D:\dev\other\Project_Regiment\obj\Debug\Assembly-CSharp.dll
 D:\dev\other\Project_Regiment\obj\Debug\Assembly-CSharp.pdb
+D:\dev\other\Project_Regiment\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb

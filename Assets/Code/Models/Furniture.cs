@@ -4,11 +4,14 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
 using System.Collections.Generic;
+using MoonSharp.Interpreter;
 
+[MoonSharpUserData]
 public class Furniture  : IXmlSerializable{
 
 	protected Dictionary<string, float> furnParameters;
-	protected Action<Furniture, float> updateActions;
+	//protected Action<Furniture, float> updateActions;
+	protected List<string> _updateActions;
 
     List<Job> _jobs;
 
@@ -16,8 +19,9 @@ public class Furniture  : IXmlSerializable{
 
     //every tick of the game, the update actions are run for each peice of furniture.
 	public void Update(float deltaTime){
-		if (updateActions != null) {
-			updateActions (this, deltaTime);
+		if (_updateActions != null) {
+			//updateActions (this, deltaTime);
+			FurnitureActions.CallFunctionsWithFurniture(_updateActions.ToArray(), this, deltaTime);
 		}
 	}
     private string _name = null;
@@ -58,6 +62,7 @@ public class Furniture  : IXmlSerializable{
 
 	//For Serialization
 	public Furniture(){
+		_updateActions = new List<string> ();
 		furnParameters = new Dictionary<string, float> ();
         _jobs = new List<Job>();
         this.funcPositionValidation = this.DefaultIsPositionValid;
@@ -85,8 +90,8 @@ public class Furniture  : IXmlSerializable{
 
 		this.furnParameters = new Dictionary<string, float> (other.furnParameters);
         this._jobs = new List<Job>();
-		if (other.updateActions != null) {
-			this.updateActions = (Action<Furniture,float>)other.updateActions.Clone ();
+		if (other._updateActions != null) {
+			this._updateActions = new List<string>( other._updateActions);
 		}
         if (other.funcPositionValidation != null)
         {
@@ -98,17 +103,17 @@ public class Furniture  : IXmlSerializable{
 		
 
 	// create furniture, only used for prototypes
-	public Furniture (string objectType, float movementCost = 1f, int width = 1, int height =1, bool linksToNeighbour = false, bool roomEnclosure = false){
-
-		this.ObjectType = objectType;
-		this.MovementCost= movementCost;
-		this.RoomEnclosure = roomEnclosure;
-		this.Width = width;
-		this.Height = height;
-		this.LinksToNeighbour = linksToNeighbour;
-		
-		this.furnParameters = new Dictionary<string, float> ();
-	}
+//	public Furniture (string objectType, float movementCost = 1f, int width = 1, int height =1, bool linksToNeighbour = false, bool roomEnclosure = false){
+//
+//		this.ObjectType = objectType;
+//		this.MovementCost= movementCost;
+//		this.RoomEnclosure = roomEnclosure;
+//		this.Width = width;
+//		this.Height = height;
+//		this.LinksToNeighbour = linksToNeighbour;
+//		
+//		this.furnParameters = new Dictionary<string, float> ();
+//	}
 
 	public Tile GetJobSpotTile(){
 		return GameManager.Instance.TileDataGrid.GetTileAt (Tile.X + (int)jobSpotOffset.x, Tile.Y + (int)jobSpotOffset.y);
@@ -278,7 +283,6 @@ public class Furniture  : IXmlSerializable{
 
 		
 		while (xmlReader.Read ()) {
-            Debug.Log("Node: " + xmlReader.Name);
 
 
 			switch (xmlReader.Name) {
@@ -334,8 +338,13 @@ public class Furniture  : IXmlSerializable{
                     GameManager.Instance.FurnitureService.furnPrototypes.RegisterJobFurniturePrototype(j, this);
                                      
                     break;
+
+			case "OnUpdate":
+				string functionName = xmlReader.GetAttribute ("FunctionName");
+				RegisterUpdateAction (functionName);
+					
+					break;
                 case "Params":
-              
                     ReadXmlParams (xmlReader);
 				break;
 
@@ -344,7 +353,7 @@ public class Furniture  : IXmlSerializable{
 	}
 
 	public void ReadXmlParams(XmlReader xmlReader){
-		Debug.Log ("ReadXmlParams:");
+
 	}
 
 	public void WriteXml (XmlWriter writer){
@@ -401,11 +410,11 @@ public class Furniture  : IXmlSerializable{
 		cbOnChanged -= callBackFunc;
 	}
 
-	public void RegisterUpdateAction(Action<Furniture, float> a){
-		updateActions += a;
+	public void RegisterUpdateAction(string luaFuncName){
+		_updateActions.Add (luaFuncName);
 	}
-	public void UnRegisterUpdateAction(Action<Furniture, float> a){
-		updateActions -= a;
+	public void UnRegisterUpdateAction(string luaFuncName){
+		_updateActions.Remove(luaFuncName);
 	}
 
 	public void RegisterOnRemovedCallback(Action<Furniture> callBackFunc){

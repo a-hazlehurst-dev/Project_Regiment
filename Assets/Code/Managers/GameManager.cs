@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour {
 		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
 
 		InventorySpriteController.Init (SpriteManager, InventoryService);
+
+
 			
 		if (!loadGameMode) {
 			InitGame ();

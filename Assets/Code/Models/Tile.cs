@@ -4,10 +4,11 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
+using MoonSharp.Interpreter;
 
 public enum FloorType { Grass =0, Mud=1, Water=2}
 public enum Enterability { Ok, Never, Wait}
-
+[MoonSharpUserData]
 public class Tile : IXmlSerializable
 {
 	

@@ -49,13 +49,33 @@ public class FurniturePrototypes
         furnitureRequirements[f.ObjectType] = j;
     }
 
+
+
+	void LoadFurnitureLua(){
+		string luaPath = "";
+		string filePath = System.IO.Path.Combine (Application.streamingAssetsPath, "LUA");
+		filePath= System.IO.Path.Combine(filePath, "FurnitureActions.lua");
+		//Debug.Log (filePath);
+		string luaCode = File.ReadAllText (filePath);
+
+		new FurnitureActions (luaCode);
+	}
+
 	public void InitPrototypes(){
 		//TODO: Read from xml files
-		//In the future instead of using unity resources system, we'll read in from regular file or hd
-		// hopefully get passed a data stream instead of hard coded paths.
-		var furnText = Resources.Load<TextAsset> ("XMLData/Furniture");
+		LoadFurnitureLua();
 
-		var xmlReader = XmlTextReader.Create(new StringReader(furnText.text));
+
+
+		//loads furn xml data
+		string filePath = System.IO.Path.Combine (Application.streamingAssetsPath, "Data");
+		filePath= System.IO.Path.Combine(filePath, "Furniture.xml");
+		string furnitureXmlText = File.ReadAllText (filePath);
+
+		//Debug.Log (furnitureXmlText);
+
+		var xmlReader = XmlTextReader.Create(new StringReader(furnitureXmlText));
+
 		int furnProtoCount = 0;
 		if (xmlReader.ReadToDescendant ("Furnitures")) {
 			if (xmlReader.ReadToDescendant ("Furniture")) {
@@ -76,7 +96,7 @@ public class FurniturePrototypes
 			Debug.LogError ("Did not find furnitures element in proto definition file.");
 		}
 
-		Debug.Log ("furn prototypes found in file: "+ furnProtoCount);
+
 
 		//will come from lua file in future for now we need to run as hardcoded.
 		//_furniturePrototypes ["FURN_BASIC_DOOR"].RegisterUpdateAction (FurnitureActions.Door_UpdateAction);

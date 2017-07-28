@@ -99,7 +99,7 @@
      <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
      <Compile Include="Assets\FurnitureBuildMenu.cs" />
-     <None Include="Assets\Resources\XMLData\Furniture.xml" />
+     <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -121,6 +121,10 @@
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{E8051E87-B345-7791-56CD-B65A8CE2D05E}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
