@@ -5,11 +5,11 @@
 		<Width>1</Width>
 		<Height>1</Height>
 		<MovementCost>0</MovementCost>
-    <LinksToNeighbour>true</LinksToNeighbour>
+    	<LinksToNeighbour>true</LinksToNeighbour>
 		<EnclosesRoom>true</EnclosesRoom>
 
 
-		<BuildingJob jobTime="1">
+		<BuildingJob jobTime="0.2">
 			<Inventory objectType ="clay" amount="4" />
 		</BuildingJob>
 
@@ -34,10 +34,13 @@
 			<Inventory objectType ="clay" amount="0" />
 		</DeconstructJob>
 
+		<OnUpdate FunctionName="OnUpdate_Door" /> 
+
+		<IsEnterable FunctionName="IsEnterable_Door" /> 
+
 		<Params>
 			<param name="openness" value ="0" />
-			<param name="is_openning" value ="0" />
-			
+			<param name="is_opening" value ="0" />
 		</Params>
 
 
@@ -59,6 +62,8 @@
     <EnclosesRoom>false</EnclosesRoom>
 
     <OnUpdate FunctionName="OnUpdate_Smelter" /> 
+
+
   </Furniture>
 </Furnitures>
 

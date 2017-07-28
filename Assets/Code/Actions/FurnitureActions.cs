@@ -32,6 +32,15 @@ public  class FurnitureActions
 
 	}
 
+	public static DynValue CallFunction(string functionName, params object[] args){
+
+		var func =_Instance._lua.Globals [functionName];
+
+		return _Instance._lua.Call (func, args);
+
+	}
+
+
 	public static void JobComplete_FurnitureBuilding(Job theJob)
 	    {
 	        GameManager.Instance.FurnitureController.PlaceFurniture(theJob.JobObjectType, theJob.Tile);

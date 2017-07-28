@@ -8,6 +8,8 @@ using MoonSharp.Interpreter;
 
 public enum FloorType { Grass =0, Mud=1, Water=2}
 public enum Enterability { Ok, Never, Wait}
+
+
 [MoonSharpUserData]
 public class Tile : IXmlSerializable
 {
@@ -272,8 +274,8 @@ public class Tile : IXmlSerializable
 		}
 
 		//check furn return soon.
-		if(Furniture!= null && Furniture.isEnterable!=null){
-			return Furniture.isEnterable (Furniture);
+		if(Furniture!= null){
+			return Furniture.IsEnterable();
 		}
 
 		return Enterability.Ok;

@@ -15,7 +15,8 @@ public class Furniture  : IXmlSerializable{
 
     List<Job> _jobs;
 
-	public Func<Furniture, Enterability> isEnterable;
+	//public Func<Furniture, Enterability> isEnterable;
+	protected string isEnterableAction;
 
     //every tick of the game, the update actions are run for each peice of furniture.
 	public void Update(float deltaTime){
@@ -24,6 +25,17 @@ public class Furniture  : IXmlSerializable{
 			FurnitureActions.CallFunctionsWithFurniture(_updateActions.ToArray(), this, deltaTime);
 		}
 	}
+	public Enterability IsEnterable(){
+		if (isEnterableAction == null || isEnterableAction.Length == 0) {
+			return Enterability.Ok;
+		}
+
+		//FurnitureActions.CallFunctionsWithFurniture(isEnterableActions.ToArray(),this);
+		DynValue result = FurnitureActions.CallFunction( isEnterableAction, this );
+
+		return (Enterability)result.Number;
+	}
+
     private string _name = null;
     public string Name
     {
@@ -66,6 +78,7 @@ public class Furniture  : IXmlSerializable{
 		furnParameters = new Dictionary<string, float> ();
         _jobs = new List<Job>();
         this.funcPositionValidation = this.DefaultIsPositionValid;
+		this.isEnterableAction = "";
 
     }
 
@@ -90,15 +103,19 @@ public class Furniture  : IXmlSerializable{
 
 		this.furnParameters = new Dictionary<string, float> (other.furnParameters);
         this._jobs = new List<Job>();
+
 		if (other._updateActions != null) {
 			this._updateActions = new List<string>( other._updateActions);
 		}
+
         if (other.funcPositionValidation != null)
         {
             this.funcPositionValidation = (Func<Tile, bool>)other.funcPositionValidation.Clone();
         }
 
-        this.isEnterable = other.isEnterable;
+		if (this.isEnterableAction != null) {
+			this.isEnterableAction = other.isEnterableAction;
+		}
 	}
 		
 
@@ -344,16 +361,31 @@ public class Furniture  : IXmlSerializable{
 				RegisterUpdateAction (functionName);
 					
 					break;
+
+			case "IsEnterable":
+				isEnterableAction =  xmlReader.GetAttribute ("FunctionName");
+
+				break;
                 case "Params":
                     ReadXmlParams (xmlReader);
-				break;
+					break;
 
 			}
 		}
 	}
 
-	public void ReadXmlParams(XmlReader xmlReader){
 
+
+	public void ReadXmlParams(XmlReader xmlReader){
+		XmlReader invReader = xmlReader.ReadSubtree();
+
+		while (invReader.Read ()) {
+			Debug.Log ("param?name>" + invReader.GetAttribute("name"));
+			if (invReader.Name == "param") {
+				SetParameter(invReader.GetAttribute("name"), int.Parse(invReader.GetAttribute("value")));
+			}
+
+		}
 	}
 
 	public void WriteXml (XmlWriter writer){
@@ -385,13 +417,18 @@ public class Furniture  : IXmlSerializable{
 		}
 	}
 
-	public float GetParameter( string key, float default_val =0){
+	public float GetParameter( string key, float default_val){
 		if (!furnParameters.ContainsKey (key)) {
 			return default_val;
 
 		}
 		return furnParameters [key];
 	}
+
+	public float GetParameter( string key){
+		return GetParameter (key, 0);
+	}
+	
 
 	public void SetParameter(string key, float value){
 		furnParameters [key] = value;
@@ -416,6 +453,8 @@ public class Furniture  : IXmlSerializable{
 	public void UnRegisterUpdateAction(string luaFuncName){
 		_updateActions.Remove(luaFuncName);
 	}
+
+
 
 	public void RegisterOnRemovedCallback(Action<Furniture> callBackFunc){
 		cbOnRemoved += callBackFunc;
