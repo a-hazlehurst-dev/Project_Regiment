@@ -23,19 +23,18 @@ end
 
 function OnUpdate_Door(furniture, deltaTime)
 
-	if (furniture.GetParameter("is_opening") >= 1.0) then
 
-		furniture.ChangeParameter ("openness" , deltaTime * 2)  --FIXME: param for opening speed.
+
+	if (furniture.GetParameter("is_opening") >= 1.0) then
+		
+	    furniture.ChangeParameter ("openness" , deltaTime * 2)  --FIXME: param for opening speed.
 
 		if (furniture.GetParameter ("openness") >= 1) then
 			furniture.SetParameter ("is_opening", 0)
-		
-		else 
-			furniture.ChangeParameter ("openness" , deltaTime * -2) 
-			
 		end
-
-
+		
+	else 
+		furniture.ChangeParameter ("openness" , deltaTime * -2) 
 	end
 		
 	furniture.SetParameter ("openness", Clamp01(furniture.GetParameter ("openness")))

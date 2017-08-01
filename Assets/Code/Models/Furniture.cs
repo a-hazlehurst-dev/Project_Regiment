@@ -417,7 +417,7 @@ public class Furniture  : IXmlSerializable{
 		return GetParameter (key, 0);
 	}
 	
-
+    
 	public void SetParameter(string key, float value){
 		furnParameters [key] = value;
 	}
