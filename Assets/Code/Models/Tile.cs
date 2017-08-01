@@ -7,7 +7,7 @@ using UnityEngine;
 using MoonSharp.Interpreter;
 
 public enum FloorType { Grass =0, Mud=1, Water=2}
-public enum Enterability { Ok, Never, Wait}
+public enum Enterability { Ok =0, Never= 1, Wait = 2}
 
 
 [MoonSharpUserData]

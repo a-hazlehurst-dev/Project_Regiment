@@ -26,8 +26,11 @@ public  class FurnitureActions
 			if(func == null){
 				Debug.LogError("'"+fn+"'"+ " is not a lua function");
 			}
+
+			Debug.Log ("Calling+ " + fn);
 			var result = _Instance._lua.Call (func, furn ,deltaTime);
-			Debug.Log (result);
+			Debug.Log ("found:  " + result);
+
 		}
 
 	}
@@ -36,7 +39,9 @@ public  class FurnitureActions
 
 		var func =_Instance._lua.Globals [functionName];
 
-		return _Instance._lua.Call (func, args);
+		var result = _Instance._lua.Call (func, args);
+
+		return result;
 
 	}
 

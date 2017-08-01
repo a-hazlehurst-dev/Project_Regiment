@@ -23,42 +23,44 @@ end
 
 function OnUpdate_Door(furniture, deltaTime)
 
-	furniture.SetParameter ("is_opening", 1);
-
-	if (furniture.GetParameter("is_opening") >= 1) then
+	if (furniture.GetParameter("is_opening") >= 1.0) then
 
 		furniture.ChangeParameter ("openness" , deltaTime * 2)  --FIXME: param for opening speed.
 
 		if (furniture.GetParameter ("openness") >= 1) then
-
-			furniture.SetParameter ("is_opening", 0);
+			furniture.SetParameter ("is_opening", 0)
 		
 		else 
-			furniture.ChangeParameter ("openness" , deltaTime * -2) ;
+			furniture.ChangeParameter ("openness" , deltaTime * -2) 
+			
 		end
+
+
 	end
 		
-	furniture.SetParameter ("openness", Clamp01(furniture.GetParameter ("openness")));
+	furniture.SetParameter ("openness", Clamp01(furniture.GetParameter ("openness")))
 
 	if (furniture.cbOnChanged != nil) then
 
-        furniture.cbOnChanged(furniture);
+        furniture.cbOnChanged(furniture)
 
 	end
 
-end
 
+	return furniture.GetParameter ("openness") 
+end
 
 
 function IsEnterable_Door(furniture)
 	furniture.SetParameter("is_opening", 1)
+	
+	if(furniture.GetParameter("openness")>=1.0) then
 
-	if(furniture.GetParameter("openness")>=1) then
-
-		return Enterability.Ok
+		return 0 --Enterability.OK
 
 	end
 
-	return Enterability.Wait
+	return 2 -- enterability.Wait
+	
 
 end

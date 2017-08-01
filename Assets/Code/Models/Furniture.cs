@@ -20,19 +20,23 @@ public class Furniture  : IXmlSerializable{
 
     //every tick of the game, the update actions are run for each peice of furniture.
 	public void Update(float deltaTime){
+		
 		if (_updateActions != null) {
 			//updateActions (this, deltaTime);
 			FurnitureActions.CallFunctionsWithFurniture(_updateActions.ToArray(), this, deltaTime);
 		}
 	}
 	public Enterability IsEnterable(){
-		if (isEnterableAction == null || isEnterableAction.Length == 0) {
+		Debug.Log("is openning:" + GetParameter("is_opening"));
+		Debug.Log("openness" + GetParameter("openness"));
+
+		if (string.IsNullOrEmpty(isEnterableAction)) {
+
 			return Enterability.Ok;
 		}
 
-		//FurnitureActions.CallFunctionsWithFurniture(isEnterableActions.ToArray(),this);
 		DynValue result = FurnitureActions.CallFunction( isEnterableAction, this );
-
+		Debug.Log ("Isenterable: "+ (Enterability)result.Number);
 		return (Enterability)result.Number;
 	}
 
@@ -113,24 +117,10 @@ public class Furniture  : IXmlSerializable{
             this.funcPositionValidation = (Func<Tile, bool>)other.funcPositionValidation.Clone();
         }
 
-		if (this.isEnterableAction != null) {
-			this.isEnterableAction = other.isEnterableAction;
-		}
+		this.isEnterableAction = other.isEnterableAction;
 	}
 		
 
-	// create furniture, only used for prototypes
-//	public Furniture (string objectType, float movementCost = 1f, int width = 1, int height =1, bool linksToNeighbour = false, bool roomEnclosure = false){
-//
-//		this.ObjectType = objectType;
-//		this.MovementCost= movementCost;
-//		this.RoomEnclosure = roomEnclosure;
-//		this.Width = width;
-//		this.Height = height;
-//		this.LinksToNeighbour = linksToNeighbour;
-//		
-//		this.furnParameters = new Dictionary<string, float> ();
-//	}
 
 	public Tile GetJobSpotTile(){
 		return GameManager.Instance.TileDataGrid.GetTileAt (Tile.X + (int)jobSpotOffset.x, Tile.Y + (int)jobSpotOffset.y);
@@ -359,14 +349,14 @@ public class Furniture  : IXmlSerializable{
 			case "OnUpdate":
 				string functionName = xmlReader.GetAttribute ("FunctionName");
 				RegisterUpdateAction (functionName);
-					
-					break;
+				break;
 
 			case "IsEnterable":
-				isEnterableAction =  xmlReader.GetAttribute ("FunctionName");
-
+				
+				isEnterableAction = xmlReader.GetAttribute ("FunctionName");
+				Debug.Log ("setting: " + isEnterableAction);
 				break;
-                case "Params":
+            case "Params":
                     ReadXmlParams (xmlReader);
 					break;
 
@@ -378,9 +368,7 @@ public class Furniture  : IXmlSerializable{
 
 	public void ReadXmlParams(XmlReader xmlReader){
 		XmlReader invReader = xmlReader.ReadSubtree();
-
 		while (invReader.Read ()) {
-			Debug.Log ("param?name>" + invReader.GetAttribute("name"));
 			if (invReader.Name == "param") {
 				SetParameter(invReader.GetAttribute("name"), int.Parse(invReader.GetAttribute("value")));
 			}
