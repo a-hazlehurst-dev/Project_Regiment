@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MoonSharp.Interpreter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
+
+[MoonSharpUserData]
 public class Job  {
 
     // this holds info for a queued up job, placing furniture, moving inventory, working at location, maybe fighting.
@@ -19,8 +21,10 @@ public class Job  {
     Action<Job> _cbCJobCompleted; // job was completed, shouldnwo build item or whatever
 	Action<Job> _cbJobStopped;  // job was stopped, maybe non repeating or was cancelled.
     Action<Job> _cbJobWorked;	// gets called each time work was performed, update ui?
+    List<string> _cbLuaJobWorked;
 
-    public bool AcceptsAnyInventoryType = false;
+
+        public bool AcceptsAnyInventoryType = false;
     public Furniture FurniturePrototype;
 	public Furniture furnitureToOperate; // peice of furn that owns the h
     public Dictionary<string, Inventory> _inventoryRequirements;
@@ -90,6 +94,17 @@ public class Job  {
     {
         _cbJobWorked -= cb;
     }
+
+    public void Register_JobWorked_Callback(string cb)
+    {
+        _cbLuaJobWorked.Add(cb);
+    }
+
+    public void UnRegister_JobWorked_Callback(string cb)
+    {
+        _cbLuaJobWorked.Add(cb);
+    }
+
 
     public void UnRegister_JobCompleted_Callback(Action<Job> cb){
 		_cbCJobCompleted -= cb;

@@ -48,10 +48,13 @@
 	</Furniture>
   <Furniture objectType= "FURN_STOCKPILE">
   	<Width>1</Width>
-	<Height>1</Height>
+	  <Height>1</Height>
     <Name>Stockpile</Name>
     <LinksToNeighbour>true</LinksToNeighbour>
     <EnclosesRoom>false</EnclosesRoom>
+    
+     <OnUpdate FunctionName="OnUpdate_Stockpile" /> 
+    
   </Furniture>
 
   <Furniture objectType= "FURN_SMELTER">

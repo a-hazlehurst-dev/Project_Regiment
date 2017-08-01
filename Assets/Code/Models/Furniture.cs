@@ -27,8 +27,6 @@ public class Furniture  : IXmlSerializable{
 		}
 	}
 	public Enterability IsEnterable(){
-		Debug.Log("is openning:" + GetParameter("is_opening"));
-		Debug.Log("openness" + GetParameter("openness"));
 
 		if (string.IsNullOrEmpty(isEnterableAction)) {
 
@@ -36,7 +34,6 @@ public class Furniture  : IXmlSerializable{
 		}
 
 		DynValue result = FurnitureActions.CallFunction( isEnterableAction, this );
-		Debug.Log ("Isenterable: "+ (Enterability)result.Number);
 		return (Enterability)result.Number;
 	}
 

@@ -63,3 +63,70 @@ function IsEnterable_Door(furniture)
 	
 
 end
+
+
+--[[
+
+function OnUpdate_Stockpile( furniture, deltaTime )
+	if(true) then
+		return 
+	end
+
+	if (furniture.Tile.inventory != nil and furniture.Tile.inventory.StackSize >= furniture.Tile.inventory.maxStackSize)    then
+    
+        furniture.CancelJobs();
+        return;
+	end
+
+	return;
+
+	if (furniture.JobCount() > 0) then
+		-- already have a job.
+       return;
+	end
+
+
+    itemsDesired = {}
+  
+	if (furniture.Tile.inventory == nil) then
+
+        itemsDesired = Stockpile_GetItemsFromFilter()
+	else
+
+        desInv = furniture.Tile.inventory.Clone()
+
+        desInv.maxStackSize -= desiredInv.StackSize
+        desInv.StackSize = 0
+        itemsDesired = { desInv }
+	end
+
+
+
+	j = Job.__new(furniture.Tile, nil,nil,0,itemsDesired, false)
+
+	j.CanTakeFromStockpile = false
+	j.furnitureToOperate = furniture
+	j.Register_JobWorked_Callback("Stockpile_JobWorked")
+	furniture.AddJob(j)
+end
+
+function  Stockpile_GetItemsFromFilter() 
+
+	-- should be removed from lua. instead call c# to get the list.
+	return Inventory.__new("clay", 50, 0) 
+end
+
+function Stockpile_JobWorked(job)	
+	job.CancelJobs()
+
+	for k,inv in pairs (job._inventoryRequirements) do
+		if (inv.StackSize > 0) then
+			GameManager.Instance.InventoryService.PlaceInventory(job.Tile, inv)
+			return
+		end
+	end
+
+end
+
+--]]
+
