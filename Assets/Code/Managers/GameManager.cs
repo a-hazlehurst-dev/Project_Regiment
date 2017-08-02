@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
+using MoonSharp.Interpreter;
 
+
+[MoonSharpUserData]
 public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance { get; protected set;}

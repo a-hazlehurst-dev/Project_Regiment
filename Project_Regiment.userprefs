@@ -2,17 +2,22 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Actions\FurnitureActions.cs">
     <Files>
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="425" Column="43" />
-      <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="31" Column="59" />
-      <File FileName="Assets\Code\Data\FurniturePrototypes.cs" Line="65" Column="30" />
       <File FileName="Assets\Code\Services\CharacterService.cs" Line="1" Column="1" />
       <File FileName="Assets\Code\Models\Tile.cs" Line="278" Column="21" />
-      <File FileName="Assets\Code\Models\Room.cs" Line="122" Column="1" />
+      <File FileName="Assets\Code\Models\Room.cs" Line="1" Column="1" />
       <File FileName="Assets\Plugins\MoonSharp\Interpreter\Tree\NodeBase.cs" Line="1" Column="1" />
       <File FileName="Assets\Code\Models\Enum\JobType.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Data\Character.cs" Line="229" Column="16" />
-      <File FileName="Assets\Code\Managers\JobSpriteManager.cs" Line="18" Column="1" />
-      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Tree\Expression_.cs" Line="236" Column="5" />
+      <File FileName="Assets\Code\Data\Character.cs" Line="137" Column="1" />
+      <File FileName="Assets\Code\Managers\JobSpriteManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Tree\Expression_.cs" Line="234" Column="1" />
+      <File FileName="Assets\Code\Managers\GameManager.cs" Line="12" Column="10" />
+      <File FileName="Assets\Code\Models\Inventory.cs" Line="13" Column="35" />
+      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Interop\Converters\ScriptToClrConversions.cs" Line="190" Column="1" />
+      <File FileName="Assets\Code\Models\Job.cs" Line="58" Column="2" />
+      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Interop\Converters\ClrToScriptConversions.cs" Line="151" Column="1" />
+      <File FileName="Assets\Code\Services\InventoryService.cs" Line="7" Column="8" />
+      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="15" Column="35" />
+      <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="78" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

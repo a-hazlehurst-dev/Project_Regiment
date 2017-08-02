@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using MoonSharp.Interpreter;
 
+
+[MoonSharpUserData]
 public class InventoryService
 {
 

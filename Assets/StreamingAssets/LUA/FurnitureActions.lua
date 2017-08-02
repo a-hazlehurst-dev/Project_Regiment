@@ -23,8 +23,6 @@ end
 
 function OnUpdate_Door(furniture, deltaTime)
 
-
-
 	if (furniture.GetParameter("is_opening") >= 1.0) then
 		
 	    furniture.ChangeParameter ("openness" , deltaTime * 2)  --FIXME: param for opening speed.
@@ -39,7 +37,7 @@ function OnUpdate_Door(furniture, deltaTime)
 		
 	furniture.SetParameter ("openness", Clamp01(furniture.GetParameter ("openness")))
 
-	if (furniture.cbOnChanged != nil) then
+	if (furniture.cbOnChanged ~= nil) then
 
         furniture.cbOnChanged(furniture)
 
@@ -65,29 +63,23 @@ function IsEnterable_Door(furniture)
 end
 
 
---[[
-
 function OnUpdate_Stockpile( furniture, deltaTime )
-	if(true) then
-		return 
-	end
 
-	if (furniture.Tile.inventory != nil and furniture.Tile.inventory.StackSize >= furniture.Tile.inventory.maxStackSize)    then
+
+	if (furniture.Tile.inventory ~= nil and furniture.Tile.inventory.StackSize >= furniture.Tile.inventory.maxStackSize)    then
     
-        furniture.CancelJobs();
-        return;
+        furniture.CancelJobs()
+        return
 	end
 
-	return;
 
 	if (furniture.JobCount() > 0) then
 		-- already have a job.
-       return;
+       return
 	end
 
-
     itemsDesired = {}
-  
+
 	if (furniture.Tile.inventory == nil) then
 
         itemsDesired = Stockpile_GetItemsFromFilter()
@@ -95,7 +87,7 @@ function OnUpdate_Stockpile( furniture, deltaTime )
 
         desInv = furniture.Tile.inventory.Clone()
 
-        desInv.maxStackSize -= desiredInv.StackSize
+        desInv.maxStackSize = desInv.maxStackSize-desiredInv.StackSize
         desInv.StackSize = 0
         itemsDesired = { desInv }
 	end
@@ -108,16 +100,18 @@ function OnUpdate_Stockpile( furniture, deltaTime )
 	j.furnitureToOperate = furniture
 	j.Register_JobWorked_Callback("Stockpile_JobWorked")
 	furniture.AddJob(j)
+	
 end
+
 
 function  Stockpile_GetItemsFromFilter() 
 
 	-- should be removed from lua. instead call c# to get the list.
-	return Inventory.__new("clay", 50, 0) 
+	return {Inventory.__new("clay", 50, 0) }
 end
 
 function Stockpile_JobWorked(job)	
-	job.CancelJobs()
+	job.CancelJob()
 
 	for k,inv in pairs (job._inventoryRequirements) do
 		if (inv.StackSize > 0) then
@@ -128,5 +122,5 @@ function Stockpile_JobWorked(job)
 
 end
 
---]]
+
 

@@ -49,6 +49,7 @@
   <Furniture objectType= "FURN_STOCKPILE">
   	<Width>1</Width>
 	  <Height>1</Height>
+	  	<MovementCost>1</MovementCost>
     <Name>Stockpile</Name>
     <LinksToNeighbour>true</LinksToNeighbour>
     <EnclosesRoom>false</EnclosesRoom>

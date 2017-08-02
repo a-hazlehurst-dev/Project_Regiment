@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using MoonSharp.Interpreter;
 
+
+[MoonSharpUserData]
 public class Inventory {
 
     public string objectType = "clay";

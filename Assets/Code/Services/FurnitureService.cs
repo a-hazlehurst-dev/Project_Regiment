@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using MoonSharp.Interpreter;
 
+[MoonSharpUserData]
 public class FurnitureService
 {
     // this service will knit togehter functionality to control furniture.

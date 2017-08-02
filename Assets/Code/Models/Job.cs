@@ -43,6 +43,7 @@ public class Job  {
 		_jobRepeats = jobRepeats;
 
         JobObjectType = jobObjectType;
+		_cbLuaJobWorked = new List<string> ();
 
         _inventoryRequirements = new Dictionary<string, Inventory>( );
         if (inventoryRequirements != null)
@@ -61,6 +62,8 @@ public class Job  {
         this.TimeToComplete = other.TimeToComplete;
         this._cbCJobCompleted += other._cbCJobCompleted;
         this.JobObjectType = other.JobObjectType;
+
+		_cbLuaJobWorked = other._cbLuaJobWorked;
 
         this._inventoryRequirements = new Dictionary<string, Inventory>();
         if (other._inventoryRequirements != null)
@@ -123,6 +126,12 @@ public class Job  {
             {
                 _cbJobWorked(this);
             }
+
+			if (_cbLuaJobWorked != null) {
+				foreach (var luaFunction in _cbLuaJobWorked) {
+					FurnitureActions.CallFunction (luaFunction, this);
+				}
+			}
            /// Debug.LogError("Tried to do work on a job, were the job has not got all its materials");
             return;
         }
@@ -133,6 +142,12 @@ public class Job  {
         {
             _cbJobWorked(this);
         }
+
+		if (_cbLuaJobWorked != null) {
+			foreach (var luaFunction in _cbLuaJobWorked) {
+				FurnitureActions.CallFunction (luaFunction, this);
+			}
+		}
        
         if (TimeToComplete <=0) {
 			//do what ever is needed when job cycle completes
