@@ -31,9 +31,6 @@ public class Inventory {
     public Character Character;
     private int _stackSize = 1;
 
-
-
-
     public Inventory() {
 
     }

@@ -10,6 +10,7 @@ end
 
 function OnUpdate_Smelter(furniture, deltaTime)
 
+
 	if (furniture.tile.room == nil) then
 		return "furniture's room was null"
 	end

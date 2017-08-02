@@ -140,12 +140,12 @@ public class GameManager : MonoBehaviour {
 
         // DEBUGGING REMOVE LATER
         // Create inventory item.
-        Inventory inv = new Inventory("clay", 50, 50);
+        Inventory inv = new Inventory("metal_ore_copper", 50, 50);
 
         var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
         InventoryService.PlaceInventory(tile, inv);
 
-        inv = inv = new Inventory("clay", 50, 8);
+        inv = inv = new Inventory("metal_coal", 50, 8);
         tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
         InventoryService.PlaceInventory(tile, inv);
 
@@ -228,8 +228,6 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-	
-
 	void NewGame(){
 		Debug.Log ("Restarting....");
 		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
@@ -247,14 +245,12 @@ public class GameManager : MonoBehaviour {
 
 
 	}
-
 	void LoadGame(){
 
 		loadGameMode = true;
 		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 
 	}
-
 
     public Tile GetTileAt(Vector3 coordinate)
     {
@@ -263,8 +259,6 @@ public class GameManager : MonoBehaviour {
     
 		return TileDataGrid.GetTileAt(x, y);
     }
-
-
 
 	public void SetGameOptions(int optionAction){
 		this.optionAction = optionAction;

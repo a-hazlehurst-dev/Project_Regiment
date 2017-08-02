@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 public  class CharacterDoJobAction
 {
 	public static  bool DoIHaveAJob(Character character){
@@ -16,7 +15,7 @@ public  class CharacterDoJobAction
 		return true;
 	}
 
-	public static bool DoesJobMeetRequirements(Character character){
+	public static bool HaveWeMetTheJobsRequirements(Character character){
 		if (!character.Job.HasAllMaterial ()) {
 
 			if (character.Inventory != null) {
@@ -30,18 +29,30 @@ public  class CharacterDoJobAction
 		return true;
 	}
 
-	private void ProcessCarriedMaterial(Character character){
+	private static void ProcessCarriedMaterial(Character character){
 		//if im carrying the correct material
 		if (character.Job.DesireInventoryType (character.Inventory)>0) {
 			MoveToJobTileAndDropMaterialOff (character);
 		} else {
-			DumpUnwantedMaterials();
+			DumpUnwantedMaterials(character);
 		}
 	}
-	private void MoveToJobTileAndDropMaterialOff(Character character){
+
+    private static void DumpUnwantedMaterials(Character character)
+    {
+        //carrying something that the job doesnt want.
+        //dump at feet. (or werever is closest);
+        //TODO; go to nearest empty tile and dump it.
+        if (GameManager.Instance.InventoryService.PlaceInventory(character.CurrentTile, character.Inventory) == false)
+        {
+            //FIXME: this will loose inventory perminantly.
+            character.Inventory = null;
+        }
+    }
+    private static void MoveToJobTileAndDropMaterialOff(Character character){
 		if (character.CurrentTile == character.Job.Tile) {
 			//were already at job site so drop inventory.
-			DropoffJobMaterials();
+			DropoffJobMaterials(character);
 
 		} else {
 			//still need to get to the site.
@@ -49,14 +60,28 @@ public  class CharacterDoJobAction
 			return; // nothing to do.
 		}
 	}
-	private void GetRequiredMaterial(Character character){
+
+    private  static void DropoffJobMaterials(Character character)
+    {
+        GameManager.Instance.InventoryService.PlaceInventory(character.Job, character.Inventory);
+        character.Job.DoWork(0);
+
+        if (character.Inventory.StackSize == 0)
+        {
+            character.Inventory = null;
+        }
+        else
+        {
+            character.Inventory = null;
+        }
+    }
+    private static void GetRequiredMaterial(Character character){
 
 		if (character.CurrentTile.inventory != null 
 			&& (character.Job.CanTakeFromStockpile ||character.CurrentTile.Furniture == null || character.CurrentTile.Furniture.IsStockpile() == false )
 			&& character.Job.DesireInventoryType(character.CurrentTile.inventory) > 0) {
 			//pick the stuff up.
-			GameManager.Instance.InventoryService.PlaceInventory(this, character.CurrentTile.inventory, character.Job.DesireInventoryType(character.CurrentTile.inventory));
-
+			GameManager.Instance.InventoryService.PlaceInventory(character, character.CurrentTile.inventory, character.Job.DesireInventoryType(character.CurrentTile.inventory));
 		}
 
 		//FIXME : dum setup.
@@ -80,6 +105,16 @@ public  class CharacterDoJobAction
 
 		return;
 	}
+
+    public static void GoToJobLocationAndWork(Character character, float deltaTime)
+    {
+        character.DestinationTile = character.Job.Tile;
+
+        if (character.CurrentTile == character.DestinationTile)
+        {
+            character.Job.DoWork(deltaTime);
+        }
+    }
 }
 
 

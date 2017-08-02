@@ -7,17 +7,16 @@ using System.Xml.Schema;
 
 public class Character: IXmlSerializable
 {
-
-	public Job Job { get; protected set;}
 	private Tile _destTile;
-	private Tile _nextTileInPath;  // next tile in path finding sequence;
+	private Tile _nextTileInPath;  
 	private PathAStar pathAStar;
-	private float _speed = 5; //tiles per second.
-	private float _movementPercentage;// goes from 0 to 1, when moveing to dest tile. 1 being destination
+	private float _speed = 5; 
+	private float _movementPercentage;
 	private Action<Character> cbCharacterChanged;
 
+    public Job Job { get; protected set; }
 
-	public float X { 
+    public float X { 
 		get
 		{ 
 			if(_nextTileInPath == null){return CurrentTile.X;}
@@ -45,7 +44,7 @@ public class Character: IXmlSerializable
 		}
 	}
 
-	public Inventory Inventory { get; set; } // what im carrying. (not hear / or equipment)
+	public Inventory Inventory { get; set; }
 	public Tile CurrentTile { get; protected set; }
 
 	public Character(Tile currentTile){
@@ -54,57 +53,17 @@ public class Character: IXmlSerializable
 	public void SetTileAsCurrent(){
 		DestinationTile = CurrentTile;
 	}
-	private void DropoffJobMaterials(){
-		GameManager.Instance.InventoryService.PlaceInventory (Job, Inventory);
-		Job.DoWork(0);
-
-		if (Inventory.StackSize == 0) {
-			Inventory = null;
-		} else {
-			Debug.Log ("Character is still carrying inventory, which wshould not be.");
-			Inventory = null;
-		}
-	}
-
-	private void DumpUnwantedMaterials(){
-		//carrying something that the job doesnt want.
-		//dump at feet. (or werever is closest);
-		//TODO; go to nearest empty tile and dump it.
-		if (GameManager.Instance.InventoryService.PlaceInventory (CurrentTile, Inventory) == false) {
-			Debug.LogError ("Tried to dump invemntory into invalid tile " + CurrentTile.X + ", " + CurrentTile.Y);
-			//FIXME: this will loose inventory perminantly.
-			Inventory = null;
-		}
-	}
-
-
-
-
-
-
-	private void GoToJobLocationAndWork(float deltaTime){
-		DestinationTile = Job.Tile;
-
-		if (CurrentTile == DestinationTile ) {
-			Job.DoWork (deltaTime);
-		}
-	}
-
-
-
-
-
+	
 	private void Update_DoJob(float deltaTime)
 	{
 		if(!CharacterDoJobAction.DoIHaveAJob(this)) {return;}
-		if(!CharacterDoJobAction.DoesJobMeetRequirements ()) { return; }
-		GoToJobLocationAndWork (deltaTime);
+		if(!CharacterDoJobAction.HaveWeMetTheJobsRequirements(this)) { return; }
+		CharacterDoJobAction.GoToJobLocationAndWork (this, deltaTime);
 	}
-
 
 	public void GetNewJob(){
         Job = GameManager.Instance.JobService.GetAndRemoveOldestJob();
-		//myJob = GameManager.Instance.JobQueue.DeQueue ();
+	
 		if (Job == null) {
 			return;
 		}
@@ -122,6 +81,7 @@ public class Character: IXmlSerializable
 			DestinationTile = CurrentTile;
 		}
 	}
+
 	public void AbandonJob(){
 		_nextTileInPath = DestinationTile = CurrentTile;
         GameManager.Instance.JobService.Add(Job);
@@ -205,7 +165,6 @@ public class Character: IXmlSerializable
 
 		Update_DoMovement (deltaTime);
 
-
 		if (cbCharacterChanged != null) {
 			cbCharacterChanged (this);
 		}
@@ -246,7 +205,5 @@ public class Character: IXmlSerializable
     {
         writer.WriteAttributeString("X", CurrentTile.X.ToString());
         writer.WriteAttributeString("Y", CurrentTile.Y.ToString());
-
-     
     }
 }
