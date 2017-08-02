@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 
 [MoonSharpUserData]
@@ -19,9 +20,11 @@ public class Job  {
 
 
     Action<Job> _cbCJobCompleted; // job was completed, shouldnwo build item or whatever
+	List<string> _cbLuaJobCompleted;
 	Action<Job> _cbJobStopped;  // job was stopped, maybe non repeating or was cancelled.
     Action<Job> _cbJobWorked;	// gets called each time work was performed, update ui?
-    List<string> _cbLuaJobWorked;
+	List<string> _cbLuaJobWorked;
+
 
 
         public bool AcceptsAnyInventoryType = false;
@@ -44,6 +47,7 @@ public class Job  {
 
         JobObjectType = jobObjectType;
 		_cbLuaJobWorked = new List<string> ();
+		_cbLuaJobCompleted= new List<string> ();
 
         _inventoryRequirements = new Dictionary<string, Inventory>( );
         if (inventoryRequirements != null)
@@ -56,6 +60,8 @@ public class Job  {
        
 	}
 
+
+
     protected Job(Job other)
     {
         this.Tile = other.Tile;
@@ -63,7 +69,8 @@ public class Job  {
         this._cbCJobCompleted += other._cbCJobCompleted;
         this.JobObjectType = other.JobObjectType;
 
-		_cbLuaJobWorked = other._cbLuaJobWorked;
+		_cbLuaJobWorked = new List<string> (other._cbLuaJobWorked);
+		_cbLuaJobCompleted = new List<string> (other._cbLuaJobCompleted);
 
         this._inventoryRequirements = new Dictionary<string, Inventory>();
         if (other._inventoryRequirements != null)
@@ -83,6 +90,16 @@ public class Job  {
 	public void Register_JobCompleted_Callback(Action<Job> cb){
 		_cbCJobCompleted += cb;
 	}
+	public void UnRegister_JobCompleted_Callback(Action<Job> cb){
+		_cbCJobCompleted -= cb;
+	}
+	public void Register_JobCompleted_Callback(string cb){
+		_cbLuaJobCompleted.Add (cb);
+	}
+
+	public void UnRegister_JobCompleted_Callback(string cb){
+		_cbLuaJobCompleted.Remove (cb);
+	}
 
 	public void Register_JobStopped_Callback(Action<Job> cb){
 		_cbJobStopped += cb;
@@ -98,6 +115,8 @@ public class Job  {
         _cbJobWorked -= cb;
     }
 
+
+
     public void Register_JobWorked_Callback(string cb)
     {
         _cbLuaJobWorked.Add(cb);
@@ -109,9 +128,7 @@ public class Job  {
     }
 
 
-    public void UnRegister_JobCompleted_Callback(Action<Job> cb){
-		_cbCJobCompleted -= cb;
-	}
+   
 
 	public void UnRegister_JobStopped_Callback(Action<Job> cb){
 		_cbJobStopped -= cb;
@@ -129,6 +146,8 @@ public class Job  {
 
 			if (_cbLuaJobWorked != null) {
 				foreach (var luaFunction in _cbLuaJobWorked) {
+					Debug.Log (this.Tile.inventory);
+					
 					FurnitureActions.CallFunction (luaFunction, this);
 				}
 			}
@@ -145,6 +164,7 @@ public class Job  {
 
 		if (_cbLuaJobWorked != null) {
 			foreach (var luaFunction in _cbLuaJobWorked) {
+				Debug.Log ("JobWorked: " + luaFunction);
 				FurnitureActions.CallFunction (luaFunction, this);
 			}
 		}
@@ -154,6 +174,13 @@ public class Job  {
 			if (_cbCJobCompleted != null) {
 				_cbCJobCompleted(this);
 			}
+			foreach (string luaFunc in _cbLuaJobCompleted) {
+				if (luaFunc != null) {
+					FurnitureActions.CallFunction (luaFunc, this);
+				}
+			}
+
+
 			if (_jobRepeats == false) {
 				//let all know the job has been officially concluded
 				if (_cbJobStopped != null) {

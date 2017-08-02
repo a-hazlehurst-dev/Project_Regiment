@@ -63,7 +63,6 @@ public class CameraScript : MonoBehaviour
             else
             {
                 //if no requirements exists for this furniture then, create a job default job without any requirements
-                Debug.LogError("dummy job created.");
                 job = new Job(tile, GameDrawMode.FurnitureToDraw, FurnitureActions.JobComplete_FurnitureBuilding, .2f, null);
             }
             //tile is valid for this furniture type and not job already in place.

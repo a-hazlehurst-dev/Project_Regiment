@@ -24,6 +24,7 @@ public class JobService {
     public Job GetAndRemoveOldestJob()
     {
         var count = _jobRepository.FindAll().Count;
+
         if (count > 0)
         {
             var job = _jobRepository.FindAll()[count - 1];

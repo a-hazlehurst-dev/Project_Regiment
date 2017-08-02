@@ -58,8 +58,9 @@ public class Character: IXmlSerializable
 
 
 	void Update_DoJob(float deltaTime){
-		
+		Debug.Log ("working");Debug.Log (GameManager.Instance.JobService.FindAll ().Count+ " jobs");
 		if (myJob == null) {
+			
 			GetNewJob ();
 
 			if (myJob == null) {
@@ -73,6 +74,7 @@ public class Character: IXmlSerializable
 		if (myJob.HasAllMaterial () == false) {
 			//no we are missing something.
 			//Step2, are we carry anything that is required.
+			Debug.Log("need mat");
 			if (inventory != null) {
 				if (myJob.DesireInventoryType (inventory)>0) {
 					//if so deliver them, walk to tile and drop them off.
@@ -106,6 +108,7 @@ public class Character: IXmlSerializable
 					}
 				}
 			} else {
+				Debug.Log("still need mat, i have non");
                 //job still wants materials but we arnt carrying any.
 
 

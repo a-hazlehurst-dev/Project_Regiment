@@ -1,23 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Actions\FurnitureActions.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Models\Inventory.cs">
     <Files>
-      <File FileName="Assets\Code\Services\CharacterService.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Models\Tile.cs" Line="278" Column="21" />
-      <File FileName="Assets\Code\Models\Room.cs" Line="1" Column="1" />
-      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Tree\NodeBase.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Models\Enum\JobType.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Data\Character.cs" Line="137" Column="1" />
-      <File FileName="Assets\Code\Managers\JobSpriteManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Tree\Expression_.cs" Line="234" Column="1" />
-      <File FileName="Assets\Code\Managers\GameManager.cs" Line="12" Column="10" />
-      <File FileName="Assets\Code\Models\Inventory.cs" Line="13" Column="35" />
-      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Interop\Converters\ScriptToClrConversions.cs" Line="190" Column="1" />
-      <File FileName="Assets\Code\Models\Job.cs" Line="58" Column="2" />
-      <File FileName="Assets\Plugins\MoonSharp\Interpreter\Interop\Converters\ClrToScriptConversions.cs" Line="151" Column="1" />
-      <File FileName="Assets\Code\Services\InventoryService.cs" Line="7" Column="8" />
-      <File FileName="Assets\Code\Services\FurnitureService.cs" Line="15" Column="35" />
-      <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="78" Column="27" />
+      <File FileName="Assets\Code\Managers\TileManager.cs" Line="23" Column="48" />
+      <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="36" Column="1" />
+      <File FileName="Assets\Code\Models\Job.cs" Line="38" Column="17" />
+      <File FileName="Assets\Code\Models\Furniture.cs" Line="159" Column="22" />
+      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Data\Character.cs" Line="83" Column="55" />
+      <File FileName="Assets\Code\Services\JobService.cs" Line="16" Column="20" />
+      <File FileName="Assets\Code\Services\InventoryService.cs" Line="55" Column="4" />
+      <File FileName="Assets\Code\Models\Inventory.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -28,6 +21,8 @@
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Models\Room.cs" line="82" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Models\Room.cs" line="126" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\jobView.cs" line="19" column="1" />
+      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\Character.cs" line="78" column="1" />
+      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\Character.cs" line="118" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -154,17 +154,15 @@ public class Furniture  : IXmlSerializable{
 
     public void AddJob(Job j)
     {
+		Debug.Log ("Adding Job: " + j.FurniturePrototype);
 		j.furnitureToOperate = this;
         _jobs.Add(j);
 		j.Register_JobStopped_Callback (OnJobStopped);
         GameManager.Instance.JobService.Add(j);
-        //GameManager.Instance.JobQueue.Enqueue(j);
 	}
 
 	void OnJobStopped(Job j){
 		RemoveJob (j);
-
-
 	}
 
 	protected void RemoveJob(Job j)

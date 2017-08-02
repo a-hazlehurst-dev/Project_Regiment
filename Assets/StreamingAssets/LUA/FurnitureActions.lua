@@ -8,16 +8,50 @@ function Clamp01(value)
 
 end
 
-
 function OnUpdate_Smelter(furniture, deltaTime)
 
-	if(furniture.tile.room ==nil) then
+	if (furniture.tile.room == nil) then
 		return "furniture's room was null"
 	end
 
 	if (furniture.Tile.Room.GetEnviromenntAmount("temperature")  <1.2) then
 		furniture.Tile.Room.ChangeEnvironment ("temperature", 0.1 * deltaTime)
 	end
+
+	spawnSpot = furniture.GetSpawnSpotTile ()
+
+	if (furniture.JobCount () > 0) then
+		if (spawnSpot.inventory ~= nil and (spawnSpot.inventory.StackSize >= spawnSpot.inventory.maxStackSize)) then
+			furniture.CancelJobs ()
+			return
+		end			
+	end
+
+
+	if (spawnSpot.inventory ~= nil and (spawnSpot.inventory.StackSize >= spawnSpot.inventory.maxStackSize)) then
+		return
+	end
+
+	jobSpotInventory = furniture.GetJobSpotTile ()
+
+	j = Job.__new(
+			jobSpotInventory,
+			nil,
+			nil,
+			1,
+			nil, 
+			true 
+		)
+	j.Register_JobCompleted_Callback("Smeltery_JobCompleted")
+	j.furnitureToOperate = furniture
+
+	furniture.AddJob (j)
+
+	
+end
+
+function Smeltery_JobCompleted(job)
+		GameManager.Instance.InventoryService.PlaceInventory (job.furnitureToOperate.GetSpawnSpotTile(), Inventory.__new("clay", 50, 10));
 end
 
 
@@ -69,25 +103,24 @@ function OnUpdate_Stockpile( furniture, deltaTime )
 	if (furniture.Tile.inventory ~= nil and furniture.Tile.inventory.StackSize >= furniture.Tile.inventory.maxStackSize)    then
     
         furniture.CancelJobs()
-        return
+        return "StockPile has zero stack, this is wrong"
 	end
 
 
 	if (furniture.JobCount() > 0) then
 		-- already have a job.
-       return
+       return "StockPile areadu has a job on it."
 	end
-
-    itemsDesired = {}
+	itemsDesired = {}
 
 	if (furniture.Tile.inventory == nil) then
-
+		--creates a job for a new stack, gets all inventory types that can be used on this tile.
         itemsDesired = Stockpile_GetItemsFromFilter()
 	else
+		--creates a job for an existsing stack
+        desInv = furniture.Tile.inventory.Clone() -- clone the existing inventory and use that desired inventory
 
-        desInv = furniture.Tile.inventory.Clone()
-
-        desInv.maxStackSize = desInv.maxStackSize-desiredInv.StackSize
+        desInv.maxStackSize = desInv.maxStackSize-desInv.StackSize -- we know only want 45.
         desInv.StackSize = 0
         itemsDesired = { desInv }
 	end
@@ -100,6 +133,7 @@ function OnUpdate_Stockpile( furniture, deltaTime )
 	j.furnitureToOperate = furniture
 	j.Register_JobWorked_Callback("Stockpile_JobWorked")
 	furniture.AddJob(j)
+	return "ended"
 	
 end
 
@@ -107,7 +141,7 @@ end
 function  Stockpile_GetItemsFromFilter() 
 
 	-- should be removed from lua. instead call c# to get the list.
-	return {Inventory.__new("clay", 50, 0) }
+	return { Inventory.__new("clay", 50, 0) }
 end
 
 function Stockpile_JobWorked(job)	

@@ -33,10 +33,8 @@ public  class FurnitureActions
 				Debug.LogError("'"+fn+"'"+ " is not a lua function");
 			}
 
-			Debug.Log ("Calling+ " + fn);
+			Debug.Log ("Calling: "+ fn);
 			var result = _Instance._lua.Call (func, furn ,deltaTime);
-			Debug.Log ("found:  " + result);
-
 		}
 
 	}
@@ -44,8 +42,9 @@ public  class FurnitureActions
 	public static DynValue CallFunction(string functionName, params object[] args){
 
 		var func =_Instance._lua.Globals [functionName];
-
+		Debug.Log ("Calling: "+ functionName);
 		var result = _Instance._lua.Call (func, args);
+		Debug.Log (result.String);
 
 		return result;
 
