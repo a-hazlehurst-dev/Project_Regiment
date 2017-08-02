@@ -14,7 +14,7 @@ function OnUpdate_Smelter(furniture, deltaTime)
 		return "furniture's room was null"
 	end
 
-	if (furniture.Tile.Room.GetEnviromenntAmount("temperature")  <1.2) then
+	if (furniture.Tile.Room.GetEnviromenntAmount("temperature")  <5.0) then
 		furniture.Tile.Room.ChangeEnvironment ("temperature", 0.1 * deltaTime)
 	end
 

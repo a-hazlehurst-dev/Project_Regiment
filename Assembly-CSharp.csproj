@@ -51,6 +51,7 @@
      <Compile Include="Assets\Code\Builders\FurnitureBuilder.cs" />
      <Compile Include="Assets\Code\Builders\JobBuilder.cs" />
      <Compile Include="Assets\Code\Data\Character.cs" />
+     <Compile Include="Assets\Code\Data\CharacterDoJobAction.cs" />
      <Compile Include="Assets\Code\Data\CharacterPrototypes.cs" />
      <Compile Include="Assets\Code\Data\CharacterRepository.cs" />
      <Compile Include="Assets\Code\Data\FurniturePrototypes.cs" />
@@ -99,6 +100,7 @@
      <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
      <Compile Include="Assets\FurnitureBuildMenu.cs" />
+     <Compile Include="Assets\Helpes\CharacterJobHelper.cs" />
      <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

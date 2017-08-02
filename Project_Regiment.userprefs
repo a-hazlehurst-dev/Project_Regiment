@@ -1,16 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Models\Inventory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\Data\CharacterDoJobAction.cs">
     <Files>
-      <File FileName="Assets\Code\Managers\TileManager.cs" Line="23" Column="48" />
-      <File FileName="Assets\Code\Actions\FurnitureActions.cs" Line="36" Column="1" />
-      <File FileName="Assets\Code\Models\Job.cs" Line="38" Column="17" />
-      <File FileName="Assets\Code\Models\Furniture.cs" Line="159" Column="22" />
-      <File FileName="Assets\Code\Scripts\CameraScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Code\Data\Character.cs" Line="83" Column="55" />
-      <File FileName="Assets\Code\Services\JobService.cs" Line="16" Column="20" />
-      <File FileName="Assets\Code\Services\InventoryService.cs" Line="55" Column="4" />
-      <File FileName="Assets\Code\Models\Inventory.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\Data\Character.cs" Line="83" Column="2" />
+      <File FileName="Assets\Code\Data\CharacterDoJobAction.cs" Line="49" Column="29" />
+      <File FileName="Assets\Code\Services\JobService.cs" Line="6" Column="42" />
+      <File FileName="Assets\StreamingAssets\LUA\FurnitureActions.lua" Line="22" Column="1" />
+      <File FileName="Assets\Helpes\CharacterJobHelper.cs" Line="10" Column="1" />
+      <File FileName="Assets\Code\Models\Job.cs" Line="204" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -21,8 +18,6 @@
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Models\Room.cs" line="82" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Models\Room.cs" line="126" column="1" />
       <Breakpoint file="D:\dev\other\Project_Regiment\Assets\jobView.cs" line="19" column="1" />
-      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\Character.cs" line="78" column="1" />
-      <Breakpoint file="D:\dev\other\Project_Regiment\Assets\Code\Data\Character.cs" line="118" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

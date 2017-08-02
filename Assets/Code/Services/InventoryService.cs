@@ -81,18 +81,18 @@ public class InventoryService
         {
             amount = Mathf.Min(amount, sourceInventory.StackSize);
         }
-        if(character.inventory == null)
+        if(character.Inventory == null)
         {
-            character.inventory = sourceInventory.Clone();
-            character.inventory.StackSize = 0;
-            _inventories[character.inventory.objectType].Add(character.inventory);
+            character.Inventory = sourceInventory.Clone();
+            character.Inventory.StackSize = 0;
+            _inventories[character.Inventory.objectType].Add(character.Inventory);
         }
 
-		character.inventory.StackSize += amount;
+		character.Inventory.StackSize += amount;
 
-		if (character.inventory.maxStackSize <character.inventory.StackSize) {
-			sourceInventory.StackSize = character.inventory.StackSize - character.inventory.maxStackSize; // set the inv
-			character.inventory.StackSize = character.inventory.maxStackSize; // set the character
+		if (character.Inventory.maxStackSize <character.Inventory.StackSize) {
+			sourceInventory.StackSize = character.Inventory.StackSize - character.Inventory.maxStackSize; // set the inv
+			character.Inventory.StackSize = character.Inventory.maxStackSize; // set the character
 		} else {
 			sourceInventory.StackSize -= amount;
 		}
@@ -114,7 +114,7 @@ public class InventoryService
 				inv.Tile = null;
 			}
 			if (inv.Character != null) {
-				inv.Character.inventory = null;
+				inv.Character.Inventory = null;
 				inv.Character = null;
 			}
 		}
