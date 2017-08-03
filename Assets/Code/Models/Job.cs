@@ -12,11 +12,15 @@ public class Job  {
 
     public Tile Tile;
     public float TimeToComplete { get; protected set; }
-
-
-	protected float _jobTimeRequired;
+    public bool CanTakeFromStockpile = true;
+    //FIXME:  hard coded a parameter for furniture. Do not like
+    public string JobObjectType { get; protected set; }
+    protected float _jobTimeRequired;
 	protected bool _jobRepeats = false;
-
+    public bool AcceptsAnyInventoryType = false;
+    public Furniture FurniturePrototype;
+    public Furniture furnitureToOperate; // peice of furn that owns the h
+    public Dictionary<string, Inventory> _inventoryRequirements;
 
 
     Action<Job> _cbCJobCompleted; // job was completed, shouldnwo build item or whatever
@@ -25,19 +29,9 @@ public class Job  {
     Action<Job> _cbJobWorked;	// gets called each time work was performed, update ui?
 	List<string> _cbLuaJobWorked;
 
+    #region constructors
 
-
-        public bool AcceptsAnyInventoryType = false;
-    public Furniture FurniturePrototype;
-	public Furniture furnitureToOperate; // peice of furn that owns the h
-    public Dictionary<string, Inventory> _inventoryRequirements;
-
-	//FIXME:  hard coded a parameter for furniture. Do not like
-	public string JobObjectType { get; protected set;}
-
-    public bool CanTakeFromStockpile = true;
-
-	public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete ,  Inventory[] inventoryRequirements, bool jobRepeats = false)
+    public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete ,  Inventory[] inventoryRequirements, bool jobRepeats = false)
 	{
 		Tile = tile;
 		TimeToComplete = timeToComplete;
@@ -87,7 +81,11 @@ public class Job  {
     }
 
 
-	public void Register_JobCompleted_Callback(Action<Job> cb){
+    #endregion
+
+    #region CallBacks
+
+    public void Register_JobCompleted_Callback(Action<Job> cb){
 		_cbCJobCompleted += cb;
 	}
 	public void UnRegister_JobCompleted_Callback(Action<Job> cb){
@@ -134,7 +132,11 @@ public class Job  {
 		_cbJobStopped -= cb;
 	}
 
-	public void DoWork(float workTime){
+    #endregion
+
+    #region JobActions
+
+    public void DoWork(float workTime){
 
         if(HasAllMaterial() == false)
         {
@@ -193,6 +195,7 @@ public class Job  {
 
 		}
 	}
+
 	public void CancelJob(){
 		if (_cbJobStopped != null) 
 			_cbJobStopped(this);
@@ -201,7 +204,10 @@ public class Job  {
        
 	}
 
-	public bool HasAllMaterial(){
+    #endregion
+
+    #region JobRequirements
+    public bool HasAllMaterial(){
 		foreach (var inv in _inventoryRequirements.Values) {
 			if (inv.maxStackSize > inv.StackSize) {
 				return false;
@@ -228,7 +234,13 @@ public class Job  {
 	}
 
 	public Inventory GetFirstDesiredInventory(){
+        //FIXME: cant always just return the first one, as their may not be enough material to collect the first type.
+        //TODO: probably need to check see what items are available to drop off.
+        //Maybe this should be changed so that an unstored item instead creates a job and says store me.
+
 		return _inventoryRequirements.Values.FirstOrDefault (x => x.maxStackSize > x.StackSize); 
 	}
+
+    #endregion
 }
 

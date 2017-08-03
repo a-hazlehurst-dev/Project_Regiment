@@ -21,9 +21,10 @@ public class InventoryService
 
 	}
 
+    #region constructors
 
-	// trying to place the inventory onto a tile.
-	public bool PlaceInventory(Tile tile, Inventory inv){
+    // trying to place the inventory onto a tile.
+    public bool PlaceInventory(Tile tile, Inventory inv){
 
 		bool tileWasEmpty = tile.inventory == null;
 		if (tile.PlaceInventory (inv) == false) {
@@ -104,7 +105,9 @@ public class InventoryService
 		return true;
 	}
 
-	void CleanUpInventory(Inventory inv){
+    #endregion
+
+    void CleanUpInventory(Inventory inv){
 		if (inv.StackSize == 0) {
 			if (_inventories.ContainsKey (inv.objectType)) {
 				_inventories [inv.objectType].Remove (inv);
@@ -139,10 +142,10 @@ public class InventoryService
 
 	}
 
-    
+    #region Callbacks
 
 
-	public void Register_OnInventory_Created(Action<Inventory> cb){
+    public void Register_OnInventory_Created(Action<Inventory> cb){
 		cbInventoryCreated += cb;
 	}
 
@@ -157,6 +160,6 @@ public class InventoryService
 	public void UnRegister_OnInventory_Changed(Action<Inventory> cb){
 		cbInventoryChanged -= cb;
 	}
-
+    #endregion
 }
 

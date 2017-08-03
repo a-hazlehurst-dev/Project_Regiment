@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: af07cb38cc6988d42bb5be81e6d4edd7
-timeCreated: 1501708837
+timeCreated: 1501777168
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: metal_coal
     21300002: metal_ore_copper
-    21300004: metals_ingot_copper
+    21300004: metal_ingot_copper
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -81,7 +81,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -94,12 +94,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: metals_ingot_copper
+      name: metal_ingot_copper
       rect:
         serializedVersion: 2
         x: 0
@@ -107,7 +107,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

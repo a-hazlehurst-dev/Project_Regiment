@@ -52,7 +52,7 @@ function OnUpdate_Smelter(furniture, deltaTime)
 end
 
 function Smeltery_JobCompleted(job)
-		GameManager.Instance.InventoryService.PlaceInventory (job.furnitureToOperate.GetSpawnSpotTile(), Inventory.__new("clay", 50, 10));
+		GameManager.Instance.InventoryService.PlaceInventory (job.furnitureToOperate.GetSpawnSpotTile(), Inventory.__new("metal_ingot_copper", 50, 10));
 end
 
 
@@ -142,7 +142,7 @@ end
 function  Stockpile_GetItemsFromFilter() 
 
 	-- should be removed from lua. instead call c# to get the list.
-	return { Inventory.__new("clay", 50, 0) }
+	return { Inventory.__new("clay", 50, 0), Inventory.__new("metal_ingot_copper", 50, 0), Inventory.__new("metal_ore_copper", 50, 0),Inventory.__new("metal_coal", 50, 0) }
 end
 
 function Stockpile_JobWorked(job)	

@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour {
         tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
         InventoryService.PlaceInventory(tile, inv);
 
-        inv = inv = new Inventory("clay", 50, 22);
+        //inv = inv = new Inventory("clay", 50, 22);
 
         tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
         InventoryService.PlaceInventory(tile, inv);

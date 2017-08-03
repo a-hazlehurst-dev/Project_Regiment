@@ -84,8 +84,8 @@ public  class CharacterDoJobAction
 			GameManager.Instance.InventoryService.PlaceInventory(character, character.CurrentTile.inventory, character.Job.DesireInventoryType(character.CurrentTile.inventory));
 		}
 
-		//FIXME : dum setup.
-		//Find first inventory type we need from inventory.
+		//FIXME : cant always jus
+		
 		Inventory desired =  character.Job.GetFirstDesiredInventory();
 
 		Inventory supplier = GameManager.Instance.InventoryService.GetClosestInventoryOfType (
