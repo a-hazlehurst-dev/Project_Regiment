@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: c86237e5ee5a48b41b5965d6dd3f10b6
-timeCreated: 1500047467
+timeCreated: 1501856224
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: grass_middle
-    21300002: mud
+    21300000: grass_
+    21300002: mud_
     21300004: grass_to_mud_BL
     21300006: grass_to_mud_SW
     21300008: grass_to_mud_W
@@ -89,7 +89,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: grass_middle
+      name: grass_
       rect:
         serializedVersion: 2
         x: 65
@@ -102,7 +102,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mud
+      name: mud_
       rect:
         serializedVersion: 2
         x: 384
