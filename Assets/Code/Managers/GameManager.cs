@@ -13,15 +13,22 @@ using MoonSharp.Interpreter;
 public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance { get; protected set;}
-	public FurnitureController FurnitureController { get; protected set; }
-	public TileManager TileManager { get; protected set; }
+
+    public FurnitureService FurnitureService;
+    public CharacterService CharacterService;
+    public InventoryService InventoryService;
+
+
+
+	public BaseTileRenderer BaseTileRenderer { get; protected set; }
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
-	public CharacterSpriteManager CharacterSpriteManager { get; protected set; }
-	public InventorySpriteController InventorySpriteController { get; protected set; }
-	public FurnitureService FurnitureService;
-	private CharacterService CharacterService;
-	public InventoryService InventoryService;
+
+    public FurnitureSpriteRenderer FurnitureSpriteRenderer { get; protected set; }
+    public CharacterSpriteRenderer CharacterSpriteRenderer { get; protected set; }
+	public InventorySpriteRenderer InventorySpriteRenderer { get; protected set; }
+
+	
     public GameDrawMode GameDrawMode { get; set; }
 	public RoomService RoomService;
     public JobService JobService { get; protected set; }
@@ -60,16 +67,16 @@ public class GameManager : MonoBehaviour {
 		InventoryService.Init ();
 
         GameDrawMode = GetComponent<GameDrawMode>();
-        InventorySpriteController = GetComponent<InventorySpriteController> ();
+        InventorySpriteRenderer = GetComponent<InventorySpriteRenderer> ();
 
 		SpriteManager = GetComponent<SpriteManager>();
         SpriteManager.Init();
 
-		TileManager = GetComponent<TileManager> ();
-		FurnitureController = GetComponent<FurnitureController> ();
-		CharacterSpriteManager = GetComponent<CharacterSpriteManager> ();
+		BaseTileRenderer = GetComponent<BaseTileRenderer> ();
+		FurnitureSpriteRenderer = GetComponent<FurnitureSpriteRenderer> ();
+		CharacterSpriteRenderer = GetComponent<CharacterSpriteRenderer> ();
 
-		InventorySpriteController.Init (SpriteManager, InventoryService);
+		InventorySpriteRenderer.Init (SpriteManager, InventoryService);
 
 
 			
@@ -135,8 +142,8 @@ public class GameManager : MonoBehaviour {
 	void InitGame(){
 
 		TileDataGrid = new TileDataGrid (10,10,64,64,FurnitureService, RoomService, CharacterService);
-		TileManager.InitialiseTileMap(SpriteManager);
-		FurnitureController.InitialiseFurniture (SpriteManager ,FurnitureService);
+		BaseTileRenderer.InitialiseTileMap(SpriteManager);
+		FurnitureSpriteRenderer.InitialiseFurniture (SpriteManager ,FurnitureService);
 
         // DEBUGGING REMOVE LATER
         // Create inventory item.
@@ -155,7 +162,7 @@ public class GameManager : MonoBehaviour {
         InventoryService.PlaceInventory(tile, inv);
 
         TileGraph = new PathTileGraph(TileDataGrid);
-        CharacterSpriteManager.InitialiseCharacter (SpriteManager, CharacterService);
+        CharacterSpriteRenderer.InitialiseCharacter (SpriteManager, CharacterService);
 
     }
 
@@ -165,9 +172,9 @@ public class GameManager : MonoBehaviour {
 	
         var xmlReader = XmlReader.Create(new StringReader(PlayerPrefs.GetString("SaveGame00")));
      
-        FurnitureController.InitialiseFurniture (SpriteManager,FurnitureService);
+        FurnitureSpriteRenderer.InitialiseFurniture (SpriteManager,FurnitureService);
 
-        CharacterSpriteManager.InitialiseCharacter(SpriteManager, CharacterService);
+        CharacterSpriteRenderer.InitialiseCharacter(SpriteManager, CharacterService);
 
         TileDataGrid = new TileDataGrid(FurnitureService,RoomService, CharacterService);
         
@@ -222,7 +229,7 @@ public class GameManager : MonoBehaviour {
 		//_inventoryService.PlaceInventory (tile,inv) ;
 
 
-		TileManager.InitialiseTileMap(SpriteManager);
+		BaseTileRenderer.InitialiseTileMap(SpriteManager);
 
 		TileGraph = new PathTileGraph(TileDataGrid);
 		

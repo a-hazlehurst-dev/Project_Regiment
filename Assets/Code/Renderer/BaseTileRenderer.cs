@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using System.Linq;
+﻿using UnityEngine;
 
-public class TileManager : MonoBehaviour 
+public class BaseTileRenderer : MonoBehaviour 
 {
     private SpriteManager _spriteManager;
 	private Transform gridHolder;

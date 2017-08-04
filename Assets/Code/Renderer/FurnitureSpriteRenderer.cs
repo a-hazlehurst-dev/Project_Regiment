@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class FurnitureController : MonoBehaviour 
+public class FurnitureSpriteRenderer : MonoBehaviour 
 {
 
 	//responsible for drawing furniture on int game.

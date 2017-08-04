@@ -16,7 +16,7 @@ public class GameDrawMode  : MonoBehaviour
 
 	public string FurnitureToDraw { get; set; }
 
-	//private FurnitureController _furnitureController;
+	//private FurnitureSpriteRenderer _furnitureController;
 	GameObject furniturePreview;
 	CameraScript cameraScript;
 
@@ -59,9 +59,9 @@ public class GameDrawMode  : MonoBehaviour
 
 		SpriteRenderer sr = furniturePreview.GetComponent<SpriteRenderer> ();
             
-		sr.sprite = GameManager.Instance.FurnitureController.GetSpriteForFurniture (furnitureType);
+		sr.sprite = GameManager.Instance.FurnitureSpriteRenderer.GetSpriteForFurniture (furnitureType);
 		sr.color = new Color (.2f, .2f, .2f, 0.5f);
-		if (!GameManager.Instance.FurnitureController.IsFurniturePlacementValid (furnitureType, t)) {
+		if (!GameManager.Instance.FurnitureSpriteRenderer.IsFurniturePlacementValid (furnitureType, t)) {
 			sr.color = new Color (1f, .0f, .0f, 0.5f);
 		}
 		//transparent

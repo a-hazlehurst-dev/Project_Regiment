@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterSpriteManager : MonoBehaviour {
+public class CharacterSpriteRenderer : MonoBehaviour {
 
 	Dictionary<Character, GameObject> _characterGameObjectMap;
 	SpriteManager _spriteManager;

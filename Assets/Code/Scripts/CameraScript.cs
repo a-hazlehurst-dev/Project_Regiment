@@ -49,7 +49,7 @@ public class CameraScript : MonoBehaviour
     {
 
         //if the furniture can be placed on the given tile, and their is no pending job on the tile.
-        if (GameManager.Instance.FurnitureController.IsFurniturePlacementValid(GameDrawMode.FurnitureToDraw, tile) && tile.PendingFurnitureJob == null)
+        if (GameManager.Instance.FurnitureSpriteRenderer.IsFurniturePlacementValid(GameDrawMode.FurnitureToDraw, tile) && tile.PendingFurnitureJob == null)
         {
             Job job;
             if (GameManager.Instance.FurnitureService.FindFurnitureRequirements().ContainsKey(GameDrawMode.FurnitureToDraw))

@@ -53,7 +53,7 @@ public  class FurnitureActions
 
 	public static void JobComplete_FurnitureBuilding(Job theJob)
 	    {
-	        GameManager.Instance.FurnitureController.PlaceFurniture(theJob.JobObjectType, theJob.Tile);
+	        GameManager.Instance.FurnitureSpriteRenderer.PlaceFurniture(theJob.JobObjectType, theJob.Tile);
 	        theJob.Tile.PendingFurnitureJob = null;
 	
 	    }

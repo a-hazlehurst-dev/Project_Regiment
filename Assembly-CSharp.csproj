@@ -59,13 +59,8 @@
      <Compile Include="Assets\Code\Data\JobRepository.cs" />
      <Compile Include="Assets\Code\Data\RoomRepository.cs" />
      <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
-     <Compile Include="Assets\Code\Managers\CharacterSpriteManager.cs" />
-     <Compile Include="Assets\Code\Managers\FurnitureController.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
-     <Compile Include="Assets\Code\Managers\InventorySpriteController.cs" />
-     <Compile Include="Assets\Code\Managers\JobSpriteManager.cs" />
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
-     <Compile Include="Assets\Code\Managers\TileManager.cs" />
      <Compile Include="Assets\Code\Models\Enum\JobType.cs" />
      <Compile Include="Assets\Code\Models\Furniture.cs" />
      <Compile Include="Assets\Code\Models\Inventory.cs" />
@@ -75,6 +70,10 @@
      <Compile Include="Assets\Code\Models\PeasentModel.cs" />
      <Compile Include="Assets\Code\Models\Room.cs" />
      <Compile Include="Assets\Code\Models\Tile.cs" />
+     <Compile Include="Assets\Code\Renderer\BaseTileRenderer.cs" />
+     <Compile Include="Assets\Code\Renderer\CharacterSpriteRenderer.cs" />
+     <Compile Include="Assets\Code\Renderer\FurnitureSpriteRenderer.cs" />
+     <Compile Include="Assets\Code\Renderer\InventorySpriteRenderer.cs" />
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
      <Compile Include="Assets\Code\Scripts\GameDrawMode.cs" />
@@ -100,7 +99,7 @@
      <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
      <Compile Include="Assets\FurnitureBuildMenu.cs" />
-     <Compile Include="Assets\Helpes\CharacterJobHelper.cs" />
+     <Compile Include="Assets\Helpers\CharacterJobHelper.cs" />
      <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

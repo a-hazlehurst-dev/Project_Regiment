@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySpriteController : MonoBehaviour
+public class InventorySpriteRenderer : MonoBehaviour
 {
     Dictionary<Inventory, GameObject> _inventoryGameObjectMapper;
     SpriteManager _spriteManager;
