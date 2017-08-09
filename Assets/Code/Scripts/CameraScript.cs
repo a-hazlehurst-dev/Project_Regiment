@@ -20,8 +20,7 @@ public class CameraScript : MonoBehaviour
 
     public Tile GetMouseOverTile()
     {
-        return GameManager.Instance.GetTileAt(currentMousePosition
-            );
+        return GameManager.Instance.GetTileAt( currentMousePosition  );
     }
 
     public Vector3 GetMousePosition()

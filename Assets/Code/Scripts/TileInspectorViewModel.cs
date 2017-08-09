@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class TileInspectorViewModel : MonoBehaviour {
 
-    CameraScript camScript;
-    Text[] txtTileType;
+    private CameraScript camScript;
+    private Text[] txtTileType;
 
     void Start()
     {

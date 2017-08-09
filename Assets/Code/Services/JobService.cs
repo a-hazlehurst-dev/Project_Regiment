@@ -15,12 +15,12 @@ public class JobService {
 
     public void Add(Job j)
     {
-       if(_jobRepository.Add(j)) ;
+       if(_jobRepository.Add(j))
         {
             _cbJobCreated(j);
         }
-        
     }
+
     public Job GetAndRemoveOldestJob()
     {
         var count = _jobRepository.FindAll().Count;
@@ -49,6 +49,8 @@ public class JobService {
         return _jobRepository.FindAll();
     }
 
+    #region callbacks
+
     public void Register_Job_Created(Action<Job> cbJobCreated)
     {
         _cbJobCreated += cbJobCreated;
@@ -59,5 +61,6 @@ public class JobService {
         _cbJobCreated -= cbJobCreated;
     }
 
+    #endregion
 
 }

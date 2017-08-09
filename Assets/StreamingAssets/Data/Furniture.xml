@@ -10,11 +10,11 @@
 
 
 		<BuildingJob jobTime="0.2">
-			<Inventory objectType ="clay" amount="4" />
+			<Inventory objectType ="metal_ore_copper" amount="4" />
 		</BuildingJob>
 
 		<DeconstructJob>
-			<Inventory objectType ="clay" amount="2" />
+			<Inventory objectType ="metal_ore_copper" amount="2" />
 		</DeconstructJob>
 
 	</Furniture>
@@ -28,11 +28,11 @@
 		<EnclosesRoom>true</EnclosesRoom>
 
 		<BuildingJob jobTime="1">
-			<Inventory objectType ="clay" amount="1" />
+			<Inventory objectType ="metal_ore_copper" amount="1" />
 		</BuildingJob>
 
 		<DeconstructJob>
-			<Inventory objectType ="clay" amount="0" />
+			<Inventory objectType ="metal_ore_copper" amount="0" />
 		</DeconstructJob>
 
 		<OnUpdate FunctionName="OnUpdate_Door" /> 

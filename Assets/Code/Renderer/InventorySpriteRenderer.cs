@@ -38,7 +38,6 @@ public class InventorySpriteRenderer : MonoBehaviour
             {
                 OnInventoryCreated(item);
             }
-
         }
     }
 
