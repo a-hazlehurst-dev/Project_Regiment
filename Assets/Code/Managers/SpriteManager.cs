@@ -3,27 +3,14 @@ using System.Collections.Generic;
 
 public class SpriteManager : MonoBehaviour {
 
-    public GameObject[] grassFloorTiles;
-    public GameObject[] mudFloorTiles;
-    public GameObject[] floorEmbelishmentTiles;
-    public GameObject[] naturalTiles;
-
-
-	public Dictionary<string, Sprite> FurnitureObjects;
+    public Dictionary<string, Sprite> FloorTiles;
+    public Dictionary<string, Sprite> FurnitureObjects;
 	public Dictionary<string, Sprite> CharacterObjects;
 	public Dictionary<string, Sprite> InventoryObjects;
 
-    public GameObject[] interactableTiles;
-    public GameObject[] peasentSprites;
-
-
-    public void Awake()
-    {
-		
-    }
-
     public void Init()
     {
+        FloorTiles = new Dictionary<string, Sprite>();
         FurnitureObjects = new Dictionary<string, Sprite>();
         CharacterObjects = new Dictionary<string, Sprite>();
 		InventoryObjects = new Dictionary<string, Sprite> ();
@@ -33,12 +20,25 @@ public class SpriteManager : MonoBehaviour {
 
     public void LoadResources()
     {
+        LoadFloorTiles();
 		LoadFurniture ();
 		LoadCharacters ();
 		LoadInventory ();
     }
 
-	private void LoadFurniture(){
+    private void LoadFloorTiles()
+    {
+        var floorObjects = Resources.LoadAll<Sprite>("Images/grass/");
+
+        foreach (var go in floorObjects)
+        {
+            FloorTiles.Add(go.name, go);
+        }
+
+
+    }
+
+    private void LoadFurniture(){
 
         var wallObjects = Resources.LoadAll<Sprite>("Images/wall/");
 

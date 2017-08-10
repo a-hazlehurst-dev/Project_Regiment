@@ -26,48 +26,47 @@ public class BaseTileRenderer : MonoBehaviour
             {
       
                 var tile = GameManager.Instance.TileDataGrid.GetTileAt (x, y);
-                GameObject toInstanciate = null;
+                var go  = new GameObject();
+                go.transform.position = new Vector3(tile.X, tile.Y, 0);
+                var spriteRenderer = go.AddComponent<SpriteRenderer>();
 
                 if(tile.Floor == FloorType.Grass)
                 {
-                    toInstanciate = _spriteManager.grassFloorTiles[4];
+                    spriteRenderer.sprite = _spriteManager.FloorTiles["grass_"];
                 }
                 else if (tile.Floor == FloorType.Mud)
                 {
-                    toInstanciate = _spriteManager.mudFloorTiles[4];
+                    spriteRenderer.sprite = _spriteManager.FloorTiles["mud_"];
                 }
 
-                GameObject instance = Instantiate(toInstanciate, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
-				instance.name = "tile_(" + tile.X + ", " + tile.Y + ")";
-				var sr = instance.GetComponent<SpriteRenderer> ();
-				sr.sortingLayerName = "Floor";
-                instance.transform.SetParent(gridHolder);
+                go.name = "tile_(" + tile.X + ", " + tile.Y + ")";
+				var sr = go.GetComponent<SpriteRenderer> ();
 
-				tile.RegisterFloorTypeChangedCb ( (tile_data) => { OnTileTypeChanged(tile_data, instance);});
+				sr.sortingLayerName = "Floor";
+                go.transform.SetParent(gridHolder);
+
+				tile.RegisterFloorTypeChangedCb ( (tile_data) => { OnTileTypeChanged(tile_data, go);});
             }
         }
     }
    
 	//callback that response to a change of a tile.
 	void OnTileTypeChanged(Tile tile_data, GameObject tile_go){
-		if (_spriteManager.grassFloorTiles.Length < (int)tile_data.Floor) {
+		if (_spriteManager.FloorTiles.Count < (int)tile_data.Floor) {
 			Debug.LogError ("GridManager.OnTileTypeChanged cannot find floor type with index: " + tile_data.Floor);
 		} 
 		else {
             if(tile_data.Floor == FloorType.Grass)
             {
-                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.grassFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
+                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.FloorTiles["grass_"];
             }
             else if (tile_data.Floor == FloorType.Mud)
             {
-                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.mudFloorTiles[4].GetComponent<SpriteRenderer>().sprite;
+                tile_go.GetComponent<SpriteRenderer>().sprite = _spriteManager.FloorTiles["mud_"];
             }
         }
 
 		GameManager.Instance.InvalidateTileGraph ();
 	}
-
-
-
 
 }
