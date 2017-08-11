@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Code.Data;
 
-public class JobService {
-
+public class JobService
+{
+    private JobPrototypes _jobPrototypes;
     private JobRepository _jobRepository;
 
 
@@ -11,6 +13,8 @@ public class JobService {
     public void Init()
     {
         _jobRepository = new JobRepository();
+        _jobPrototypes = new JobPrototypes();
+        _jobPrototypes.Init();
     }
 
     public void Add(Job j)

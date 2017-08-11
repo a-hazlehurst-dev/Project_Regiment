@@ -2,21 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using UnityEngine;
 
 
 [MoonSharpUserData]
-public class Job  {
+public class Job
+{
 
     // this holds info for a queued up job, placing furniture, moving inventory, working at location, maybe fighting.
 
     public Tile Tile;
+
+    public string JobType;
+    public string Name;
+
+    public List<JobTask> JobTasks { get; set; }
     public float TimeToComplete { get; protected set; }
     public bool CanTakeFromStockpile = true;
     //FIXME:  hard coded a parameter for furniture. Do not like
     public string JobObjectType { get; protected set; }
     protected float _jobTimeRequired;
-	protected bool _jobRepeats = false;
+    protected bool _jobRepeats = false;
     public bool AcceptsAnyInventoryType = false;
     public Furniture FurniturePrototype;
     public Furniture furnitureToOperate; // peice of furn that owns the h
@@ -24,26 +31,28 @@ public class Job  {
 
 
     Action<Job> _cbCJobCompleted; // job was completed, shouldnwo build item or whatever
-	List<string> _cbLuaJobCompleted;
-	Action<Job> _cbJobStopped;  // job was stopped, maybe non repeating or was cancelled.
-    Action<Job> _cbJobWorked;	// gets called each time work was performed, update ui?
-	List<string> _cbLuaJobWorked;
+    List<string> _cbLuaJobCompleted;
+    Action<Job> _cbJobStopped; // job was stopped, maybe non repeating or was cancelled.
+    Action<Job> _cbJobWorked; // gets called each time work was performed, update ui?
+    List<string> _cbLuaJobWorked;
 
     #region constructors
 
-    public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete ,  Inventory[] inventoryRequirements, bool jobRepeats = false)
-	{
-		Tile = tile;
-		TimeToComplete = timeToComplete;
-		_cbCJobCompleted += cbJobCompleted;
-		_jobTimeRequired = this.TimeToComplete = timeToComplete;
-		_jobRepeats = jobRepeats;
+    public Job(Tile tile, string jobObjectType, Action<Job> cbJobCompleted, float timeToComplete,
+        Inventory[] inventoryRequirements, bool jobRepeats = false)
+    {
+        Tile = tile;
+        TimeToComplete = timeToComplete;
+        _cbCJobCompleted += cbJobCompleted;
+        _jobTimeRequired = this.TimeToComplete = timeToComplete;
+        _jobRepeats = jobRepeats;
 
         JobObjectType = jobObjectType;
-		_cbLuaJobWorked = new List<string> ();
-		_cbLuaJobCompleted= new List<string> ();
+        _cbLuaJobWorked = new List<string>();
+        _cbLuaJobCompleted = new List<string>();
+        JobTasks = new List<JobTask>();
 
-        _inventoryRequirements = new Dictionary<string, Inventory>( );
+        _inventoryRequirements = new Dictionary<string, Inventory>();
         if (inventoryRequirements != null)
         {
             foreach (var inv in inventoryRequirements)
@@ -51,8 +60,16 @@ public class Job  {
                 _inventoryRequirements[inv.objectType] = inv.Clone();
             }
         }
-       
-	}
+
+    }
+
+    public Job()
+    {
+        _cbLuaJobWorked = new List<string>();
+        _cbLuaJobCompleted = new List<string>();
+        _inventoryRequirements = new Dictionary<string, Inventory>();
+        JobTasks = new List<JobTask>();
+    }
 
 
 
@@ -62,9 +79,10 @@ public class Job  {
         this.TimeToComplete = other.TimeToComplete;
         this._cbCJobCompleted += other._cbCJobCompleted;
         this.JobObjectType = other.JobObjectType;
+        this.JobTasks = other.JobTasks;
 
-		_cbLuaJobWorked = new List<string> (other._cbLuaJobWorked);
-		_cbLuaJobCompleted = new List<string> (other._cbLuaJobCompleted);
+        _cbLuaJobWorked = new List<string>(other._cbLuaJobWorked);
+        _cbLuaJobCompleted = new List<string>(other._cbLuaJobCompleted);
 
         this._inventoryRequirements = new Dictionary<string, Inventory>();
         if (other._inventoryRequirements != null)
@@ -75,6 +93,7 @@ public class Job  {
             }
         }
     }
+
     virtual public Job Clone()
     {
         return new Job(this);
@@ -85,23 +104,30 @@ public class Job  {
 
     #region CallBacks
 
-    public void Register_JobCompleted_Callback(Action<Job> cb){
-		_cbCJobCompleted += cb;
-	}
-	public void UnRegister_JobCompleted_Callback(Action<Job> cb){
-		_cbCJobCompleted -= cb;
-	}
-	public void Register_JobCompleted_Callback(string cb){
-		_cbLuaJobCompleted.Add (cb);
-	}
+    public void Register_JobCompleted_Callback(Action<Job> cb)
+    {
+        _cbCJobCompleted += cb;
+    }
 
-	public void UnRegister_JobCompleted_Callback(string cb){
-		_cbLuaJobCompleted.Remove (cb);
-	}
+    public void UnRegister_JobCompleted_Callback(Action<Job> cb)
+    {
+        _cbCJobCompleted -= cb;
+    }
 
-	public void Register_JobStopped_Callback(Action<Job> cb){
-		_cbJobStopped += cb;
-	}
+    public void Register_JobCompleted_Callback(string cb)
+    {
+        _cbLuaJobCompleted.Add(cb);
+    }
+
+    public void UnRegister_JobCompleted_Callback(string cb)
+    {
+        _cbLuaJobCompleted.Remove(cb);
+    }
+
+    public void Register_JobStopped_Callback(Action<Job> cb)
+    {
+        _cbJobStopped += cb;
+    }
 
     public void Register_JobWorked_Callback(Action<Job> cb)
     {
@@ -126,19 +152,21 @@ public class Job  {
     }
 
 
-   
 
-	public void UnRegister_JobStopped_Callback(Action<Job> cb){
-		_cbJobStopped -= cb;
-	}
+
+    public void UnRegister_JobStopped_Callback(Action<Job> cb)
+    {
+        _cbJobStopped -= cb;
+    }
 
     #endregion
 
     #region JobActions
 
-    public void DoWork(float workTime){
+    public void DoWork(float workTime)
+    {
 
-        if(HasAllMaterial() == false)
+        if (HasAllMaterial() == false)
         {
             //job cant actually be worked, but still call cb, so sprites/animations can be updated.
             if (_cbJobWorked != null)
@@ -146,14 +174,16 @@ public class Job  {
                 _cbJobWorked(this);
             }
 
-			if (_cbLuaJobWorked != null) {
-				foreach (var luaFunction in _cbLuaJobWorked) {
-					Debug.Log (this.Tile.inventory);
-					
-					FurnitureActions.CallFunction (luaFunction, this);
-				}
-			}
-           /// Debug.LogError("Tried to do work on a job, were the job has not got all its materials");
+            if (_cbLuaJobWorked != null)
+            {
+                foreach (var luaFunction in _cbLuaJobWorked)
+                {
+                    Debug.Log(this.Tile.inventory);
+
+                    FurnitureActions.CallFunction(luaFunction, this);
+                }
+            }
+            /// Debug.LogError("Tried to do work on a job, were the job has not got all its materials");
             return;
         }
 
@@ -164,83 +194,146 @@ public class Job  {
             _cbJobWorked(this);
         }
 
-		if (_cbLuaJobWorked != null) {
-			foreach (var luaFunction in _cbLuaJobWorked) {
-				Debug.Log ("JobWorked: " + luaFunction);
-				FurnitureActions.CallFunction (luaFunction, this);
-			}
-		}
-       
-        if (TimeToComplete <=0) {
-			//do what ever is needed when job cycle completes
-			if (_cbCJobCompleted != null) {
-				_cbCJobCompleted(this);
-			}
-			foreach (string luaFunc in _cbLuaJobCompleted) {
-				if (luaFunc != null) {
-					FurnitureActions.CallFunction (luaFunc, this);
-				}
-			}
+        if (_cbLuaJobWorked != null)
+        {
+            foreach (var luaFunction in _cbLuaJobWorked)
+            {
+                Debug.Log("JobWorked: " + luaFunction);
+                FurnitureActions.CallFunction(luaFunction, this);
+            }
+        }
+
+        if (TimeToComplete <= 0)
+        {
+            //do what ever is needed when job cycle completes
+            if (_cbCJobCompleted != null)
+            {
+                _cbCJobCompleted(this);
+            }
+            foreach (string luaFunc in _cbLuaJobCompleted)
+            {
+                if (luaFunc != null)
+                {
+                    FurnitureActions.CallFunction(luaFunc, this);
+                }
+            }
 
 
-			if (_jobRepeats == false) {
-				//let all know the job has been officially concluded
-				if (_cbJobStopped != null) {
-					_cbJobStopped (this); 
-				}
-			} else {
-				//repeating job and must be reset.s
-				TimeToComplete += _jobTimeRequired;
-			}
+            if (_jobRepeats == false)
+            {
+                //let all know the job has been officially concluded
+                if (_cbJobStopped != null)
+                {
+                    _cbJobStopped(this);
+                }
+            }
+            else
+            {
+                //repeating job and must be reset.s
+                TimeToComplete += _jobTimeRequired;
+            }
 
-		}
-	}
+        }
+    }
 
-	public void CancelJob(){
-		if (_cbJobStopped != null) 
-			_cbJobStopped(this);
+    public void CancelJob()
+    {
+        if (_cbJobStopped != null)
+            _cbJobStopped(this);
 
         GameManager.Instance.JobService.Remove(this);
-       
-	}
+
+    }
 
     #endregion
 
     #region JobRequirements
-    public bool HasAllMaterial(){
-		foreach (var inv in _inventoryRequirements.Values) {
-			if (inv.maxStackSize > inv.StackSize) {
-				return false;
-			}
-		}
-		return true;
-	}
 
-	public int DesireInventoryType(Inventory inv){
+    public bool HasAllMaterial()
+    {
+        foreach (var inv in _inventoryRequirements.Values)
+        {
+            if (inv.maxStackSize > inv.StackSize)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int DesireInventoryType(Inventory inv)
+    {
         if (AcceptsAnyInventoryType)
         {
             return inv.maxStackSize;
         }
-		if (_inventoryRequirements.ContainsKey (inv.objectType) == false) {
-			return 0;// we dont want this.
-		}
+        if (_inventoryRequirements.ContainsKey(inv.objectType) == false)
+        {
+            return 0; // we dont want this.
+        }
 
-		if (_inventoryRequirements [inv.objectType].StackSize >= _inventoryRequirements [inv.objectType].maxStackSize) {
-			//already have enough of this material.
-			return  0;
-		}
+        if (_inventoryRequirements[inv.objectType].StackSize >= _inventoryRequirements[inv.objectType].maxStackSize)
+        {
+            //already have enough of this material.
+            return 0;
+        }
 
-        return _inventoryRequirements[inv.objectType].maxStackSize - _inventoryRequirements[inv.objectType].StackSize; //we need this stuff.
-	}
+        return _inventoryRequirements[inv.objectType].maxStackSize - _inventoryRequirements[inv.objectType].StackSize;
+            //we need this stuff.
+    }
 
-	public Inventory GetFirstDesiredInventory(){
+    public Inventory GetFirstDesiredInventory()
+    {
         //FIXME: cant always just return the first one, as their may not be enough material to collect the first type.
         //TODO: probably need to check see what items are available to drop off.
         //Maybe this should be changed so that an unstored item instead creates a job and says store me.
 
-		return _inventoryRequirements.Values.FirstOrDefault (x => x.maxStackSize > x.StackSize); 
-	}
+        return _inventoryRequirements.Values.FirstOrDefault(x => x.maxStackSize > x.StackSize);
+    }
 
     #endregion
-}
 
+    public void ReadXmlPrototype(XmlReader jobReader)
+    {
+        Debug.Log("ReadXML Prototypes: Jobs");
+        JobType = JobObjectType = jobReader.GetAttribute("JobType");
+        
+        XmlReader reader = jobReader.ReadSubtree();
+
+        while (reader.Read())
+        {
+            switch (reader.Name)
+            {
+                case "Name":
+                    reader.Read();
+                    Name = reader.ReadContentAsString();
+                    break;
+                case "JobTasks":
+                    XmlReader readTasks = jobReader.ReadSubtree();
+                    while (readTasks.Read())
+                    {
+                        if (readTasks.Name == "JobTask")
+                        {
+                            Debug.Log("Writing job task");
+                            var taskType = readTasks.GetAttribute("TaskType");
+                            Debug.Log(taskType);
+                            var priority = int.Parse(readTasks.GetAttribute("Priority"));
+
+                            JobTask task = new JobTask { ParentJob = this, TaskType = taskType, Priority = priority };
+
+
+
+                            this.JobTasks.Add(task);
+                            Debug.Log(string.Format(@"Created Task Name {0} for {1}", task.TaskType, this.Name));
+                        }
+                    }
+
+
+                  
+                    break;
+
+
+            }
+        }
+    }
+}

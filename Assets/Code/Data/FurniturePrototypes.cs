@@ -16,40 +16,10 @@ public class FurniturePrototypes
         
     }
 
-//    public void InitPrototypes()
-//    {
-//		//will be loaded from xml file or json file in the feature.
-//        _furniturePrototypes.Add("FURN_WALL", new Furniture("FURN_WALL", 0, 1, 1, true, true));
-//        furnitureRequirements.Add("FURN_WALL", new Job(null, "FURN_WALL", FurnitureActions.JobComplete_FurnitureBuilding,1f,new Inventory[] { new Inventory( "clay", 5, 0)}));
-//        _furniturePrototypes["FURN_WALL"].Name = "Basic Wall";
-//
-//        _furniturePrototypes.Add("door", new Furniture("door",1, 1, 1, false, true));
-//
-//
-//        _furniturePrototypes ["door"].SetParameter ("openness", 0);
-//		_furniturePrototypes ["door"].SetParameter("is_opening",0);
-//		_furniturePrototypes ["door"].RegisterUpdateAction (FurnitureActions.Door_UpdateAction);
-//		_furniturePrototypes ["door"].isEnterable = FurnitureActions.Door_IsEnterable;
-//
-//        _furniturePrototypes.Add("stockpile", new Furniture("stockpile", 1, 1, 1, true, false));
-//        _furniturePrototypes["stockpile"].RegisterUpdateAction(FurnitureActions.Stockpile_Update_Action);
-//        _furniturePrototypes["stockpile"].Tint = new Color32(186, 30, 30, 255);
-//
-//        furnitureRequirements.Add("stockpile", new Job(null, "stockpile", FurnitureActions.JobComplete_FurnitureBuilding, -1f,null));
-//
-//        _furniturePrototypes.Add("smelter", new Furniture("smelter", 50, 2, 3, false, false));
-//		_furniturePrototypes ["smelter"].jobSpotOffset = new Vector2 (1, 0);
-//		_furniturePrototypes ["smelter"].RegisterUpdateAction (FurnitureActions.Smeltery_UpdateAction);
-//
-//
-//    }
-
     public void RegisterJobFurniturePrototype(Job j, Furniture f)
     {
         furnitureRequirements[f.ObjectType] = j;
     }
-
-
 
 	void LoadFurnitureLua(){
 		string luaPath = "";
@@ -95,12 +65,6 @@ public class FurniturePrototypes
 		} else {
 			Debug.LogError ("Did not find furnitures element in proto definition file.");
 		}
-
-
-
-		//will come from lua file in future for now we need to run as hardcoded.
-		//_furniturePrototypes ["FURN_BASIC_DOOR"].RegisterUpdateAction (FurnitureActions.Door_UpdateAction);
-		//_furniturePrototypes ["FURN_BASIC_DOOR"].isEnterable = FurnitureActions.Door_IsEnterable;
 	}
 
     public Furniture Get(string furnitureType)

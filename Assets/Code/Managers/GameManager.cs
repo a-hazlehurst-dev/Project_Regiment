@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour {
     public CharacterService CharacterService;
     public InventoryService InventoryService;
 
-
-
 	public BaseTileRenderer BaseTileRenderer { get; protected set; }
 	public SpriteManager SpriteManager { get; protected set;}
 	public TileDataGrid TileDataGrid { get; protected set; }
@@ -27,7 +25,6 @@ public class GameManager : MonoBehaviour {
     public FurnitureSpriteRenderer FurnitureSpriteRenderer { get; protected set; }
     public CharacterSpriteRenderer CharacterSpriteRenderer { get; protected set; }
 	public InventorySpriteRenderer InventorySpriteRenderer { get; protected set; }
-
 	
     public GameDrawMode GameDrawMode { get; set; }
 	public RoomService RoomService;
@@ -38,8 +35,6 @@ public class GameManager : MonoBehaviour {
     
 
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
-
-    //public JobQueue JobQueue;
 
 
 	private int _drawMode = 1;
@@ -127,10 +122,12 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update(){
-        var chars = CharacterService.FindAll();
+		if (CharacterService != null) {
+			var chars = CharacterService.FindAll ();
 
-        foreach (var c in chars) {
-			c.Update (Time.deltaTime);
+			foreach (var c in chars) {
+				c.Update (Time.deltaTime);
+			}
 		}
 
 		foreach (var f in FurnitureService.FindAll()) {
@@ -194,6 +191,10 @@ public class GameManager : MonoBehaviour {
             {
 			
                 TileDataGrid.LoadTiles(xmlReader);
+            }
+            if (xmlReader.Name == "Jobs")
+            {
+                
             }
             if (xmlReader.Name == "Furnitures")
             {

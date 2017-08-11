@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Jobs>
+  <Job JobType= "SMELT_COPPER" furnitureType ="FURN_SMELTER" CanRepeat="1">
+    <Name>Smelt Ore</Name>
+    <JobTasks>
+      <JobTask TaskType ="Collect1" Priority ="1">
+        <Inventory objectType ="metal_ore_copper" amount="1" />
+      </JobTask>
+    </JobTasks>
+
+    <OnUpdate FunctionName="OnUpdate_Smelt" />
+    
+    <Params>
+      <param name="BaseTime" value="1"></param>
+    </Params>
+
+    </Job>
+</Jobs>
+ 
