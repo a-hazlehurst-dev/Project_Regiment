@@ -53,11 +53,12 @@
      <Compile Include="Assets\Code\Data\Character.cs" />
      <Compile Include="Assets\Code\Data\CharacterDoJobAction.cs" />
      <Compile Include="Assets\Code\Data\CharacterPrototypes.cs" />
-     <Compile Include="Assets\Code\Data\CharacterRepository.cs" />
      <Compile Include="Assets\Code\Data\FurniturePrototypes.cs" />
-     <Compile Include="Assets\Code\Data\FurnitureRepository.cs" />
-     <Compile Include="Assets\Code\Data\JobRepository.cs" />
-     <Compile Include="Assets\Code\Data\RoomRepository.cs" />
+     <Compile Include="Assets\Code\Data\JobPrototypes.cs" />
+     <Compile Include="Assets\Code\Data\Repositories\CharacterRepository.cs" />
+     <Compile Include="Assets\Code\Data\Repositories\FurnitureRepository.cs" />
+     <Compile Include="Assets\Code\Data\Repositories\JobRepository.cs" />
+     <Compile Include="Assets\Code\Data\Repositories\RoomRepository.cs" />
      <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
      <Compile Include="Assets\Code\Managers\GameManager.cs" />
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
@@ -66,6 +67,7 @@
      <Compile Include="Assets\Code\Models\Inventory.cs" />
      <Compile Include="Assets\Code\Models\Job.cs" />
      <Compile Include="Assets\Code\Models\JobQueue.cs" />
+     <Compile Include="Assets\Code\Models\JobTask.cs" />
      <Compile Include="Assets\Code\Models\Peasant.cs" />
      <Compile Include="Assets\Code\Models\PeasentModel.cs" />
      <Compile Include="Assets\Code\Models\Room.cs" />
@@ -74,6 +76,7 @@
      <Compile Include="Assets\Code\Renderer\CharacterSpriteRenderer.cs" />
      <Compile Include="Assets\Code\Renderer\FurnitureSpriteRenderer.cs" />
      <Compile Include="Assets\Code\Renderer\InventorySpriteRenderer.cs" />
+     <Compile Include="Assets\Code\Renderer\JobSpriteRenderer.cs" />
      <Compile Include="Assets\Code\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
      <Compile Include="Assets\Code\Scripts\GameDrawMode.cs" />
@@ -100,6 +103,7 @@
      <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
      <Compile Include="Assets\FurnitureBuildMenu.cs" />
      <Compile Include="Assets\Helpers\CharacterJobHelper.cs" />
+     <None Include="Assets\StreamingAssets\Data\Jobs.xml" />
      <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
