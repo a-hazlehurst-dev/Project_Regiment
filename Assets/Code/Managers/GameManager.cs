@@ -32,10 +32,7 @@ public class GameManager : MonoBehaviour {
 	private int optionAction;
 	private static bool loadGameMode = false;
 
-    
-
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
-
 
 	private int _drawMode = 1;
 	private string _drawObject;

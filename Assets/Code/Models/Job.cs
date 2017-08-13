@@ -16,7 +16,9 @@ public class Job
 
     public string JobType;
     public string Name;
-
+    public string FurnitureType;
+    public bool CanRepeat; 
+   
     public List<JobTask> JobTasks { get; set; }
     public float TimeToComplete { get; protected set; }
     public bool CanTakeFromStockpile = true;
@@ -296,8 +298,10 @@ public class Job
     public void ReadXmlPrototype(XmlReader jobReader)
     {
         Debug.Log("ReadXML Prototypes: Jobs");
-        JobType = JobObjectType = jobReader.GetAttribute("JobType");
-        
+        JobObjectType = jobReader.GetAttribute("JobType");
+        FurnitureType = jobReader.GetAttribute("furnitureType");
+        CanRepeat = bool.Parse(jobReader.GetAttribute("CanRepeat"));
+
         XmlReader reader = jobReader.ReadSubtree();
 
         while (reader.Read())
@@ -312,28 +316,32 @@ public class Job
                     XmlReader readTasks = jobReader.ReadSubtree();
                     while (readTasks.Read())
                     {
-                        if (readTasks.Name == "JobTask")
+                        if (readTasks.Name == "JobTask" && readTasks.IsStartElement())
                         {
-                            Debug.Log("Writing job task");
-                            var taskType = readTasks.GetAttribute("TaskType");
-                            Debug.Log(taskType);
-                            var priority = int.Parse(readTasks.GetAttribute("Priority"));
-
-                            JobTask task = new JobTask { ParentJob = this, TaskType = taskType, Priority = priority };
-
-
-
-                            this.JobTasks.Add(task);
-                            Debug.Log(string.Format(@"Created Task Name {0} for {1}", task.TaskType, this.Name));
+                            SetTask(readTasks);
                         }
                     }
 
-
-                  
                     break;
-
+                case "JobType":
+                    reader.Read();
+                    JobType = reader.ReadContentAsString();
+                    break;
 
             }
         }
+
+    }
+    private void SetTask(XmlReader taskReader)
+    {
+        Debug.Log("Writing job task");
+        var taskType = taskReader.GetAttribute("TaskType");
+        Debug.Log(taskType);
+        var priority = int.Parse(taskReader.GetAttribute("Priority"));
+
+        JobTask task = new JobTask { ParentJob = this, TaskType = taskType, Priority = priority };
+
+        this.JobTasks.Add(task);
+        Debug.Log(string.Format(@"Created Task Name {0} for {1}", task.TaskType, this.Name));
     }
 }
