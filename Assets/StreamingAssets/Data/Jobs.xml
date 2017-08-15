@@ -2,20 +2,26 @@
 
 <Jobs>
   <Job JobType= "SMELT_COPPER" furnitureType ="FURN_SMELTER" CanRepeat="True">
-    <Name>Smelt Ore</Name>
+    <Name>Smelt Copper Ore</Name>
+    <Requirements>
+    	<Requirement qty ="2" type="metal_copper_ore" />
+    	<Requirement qty="1" type="metal_coal" />
+    </Requirements>
+
+    <Outputs>
+    	<Output  qty ="1" type="metal_copper_ingot" />
+    </Outputs>
+
     <JobTasks>
-      <JobTask TaskType ="Collect1" Priority ="1">
-        <Inventory objectType ="metal_ore_copper" amount="1" ></Inventory>
-      </JobTask>
-      <JobTask TaskType ="Collect2" Priority ="1">
-        <Inventory objectType ="metal_ore_copper" amount="1" ></Inventory>
-      </JobTask>
+      <JobTask TaskType ="Collect" Priority ="1" />
+      <JobTask TaskType ="Operate"  Priority ="2" />
     </JobTasks>
 
     <OnUpdate FunctionName="OnUpdate_Smelt" />
     
     <Params>
-      <param name="BaseTime" value="1"></param>
+      <param name="BaseTime" value="1" />
+      <param name="is_on" value ="false"/>
     </Params>
 
     </Job>

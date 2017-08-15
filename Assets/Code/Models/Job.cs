@@ -20,6 +20,7 @@ public class Job
     public bool CanRepeat; 
    
     public List<JobTask> JobTasks { get; set; }
+	public Dictionary<string, Inventory> _inventoryRequirements;
     public float TimeToComplete { get; protected set; }
     public bool CanTakeFromStockpile = true;
     //FIXME:  hard coded a parameter for furniture. Do not like
@@ -29,7 +30,7 @@ public class Job
     public bool AcceptsAnyInventoryType = false;
     public Furniture FurniturePrototype;
     public Furniture furnitureToOperate; // peice of furn that owns the h
-    public Dictionary<string, Inventory> _inventoryRequirements;
+
 
 
     Action<Job> _cbCJobCompleted; // job was completed, shouldnwo build item or whatever
@@ -298,7 +299,7 @@ public class Job
     public void ReadXmlPrototype(XmlReader jobReader)
     {
         Debug.Log("ReadXML Prototypes: Jobs");
-        JobObjectType = jobReader.GetAttribute("JobType");
+		JobType = JobObjectType = jobReader.GetAttribute ("JobType");;
         FurnitureType = jobReader.GetAttribute("furnitureType");
         CanRepeat = bool.Parse(jobReader.GetAttribute("CanRepeat"));
 
@@ -323,15 +324,36 @@ public class Job
                     }
 
                     break;
-                case "JobType":
-                    reader.Read();
-                    JobType = reader.ReadContentAsString();
-                    break;
+				case "Requirements":
+					var requirementReader = jobReader.ReadSubtree();
+					while (readTasks.Read())
+					{
+						if (readTasks.Name == "Requirement" && readTasks.IsStartElement())
+						{
+							SetRequirements (requirementReader);
+						}
+					}
+
+					break;
+	         
 
             }
         }
 
     }
+
+	private void SetRequirements(XmlReader reader){
+		Debug.Log ("Reading requirements");
+		var quantity = reader.GetAttribute("qty");
+		var type = reader.GetAttribute("type");
+
+		_inventoryRequirements.Add (type, new Inventory (type, 50, 0));
+
+
+
+
+
+	}
     private void SetTask(XmlReader taskReader)
     {
         Debug.Log("Writing job task");
