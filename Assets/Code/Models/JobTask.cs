@@ -6,7 +6,7 @@ public class JobTask
     public string TaskType { get; set; }
 
     public Job ParentJob { get; set; }
-    public Inventory RequiredInventory { get; set; }
+	public JobRequirement Requirement { get; set;}
     public int Priority { get; set; }
 
     private void IsCompleted()

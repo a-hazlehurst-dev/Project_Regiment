@@ -326,17 +326,15 @@ public class Job
                     break;
 				case "Requirements":
 					var requirementReader = jobReader.ReadSubtree();
-					while (readTasks.Read())
+					while (requirementReader.Read())
 					{
-						if (readTasks.Name == "Requirement" && readTasks.IsStartElement())
+					if (requirementReader.Name == "Requirement" && requirementReader.IsStartElement())
 						{
 							SetRequirements (requirementReader);
 						}
 					}
 
 					break;
-	         
-
             }
         }
 
@@ -349,11 +347,8 @@ public class Job
 
 		_inventoryRequirements.Add (type, new Inventory (type, 50, 0));
 
-
-
-
-
 	}
+
     private void SetTask(XmlReader taskReader)
     {
         Debug.Log("Writing job task");

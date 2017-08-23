@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Recipes>
+  	<Recipe Type= "COPPER_INGOT">
+	    <Name>Smelt Copper Ingot</Name>
+	    <ApplicableFurnitures>
+	    	<ApplicableFurniture>FURN_SMELTER</ApplicableFurniture>
+	    </ApplicableFurnitures>
+	    <Requirements>
+	    	<Requirement qty ="2" type="metal_ore" name="copper" />
+	    	<Requirement qty ="1" type="fuel" />
+	    </Requirements>
+	    <RequiredSkills>
+	    	<skill name="METAL_WORKING" value ="0" />
+	    </RequiredSkills>
+	    <Outputs>
+	    	<Output  qty ="1" type="metal_copper_ingot" />
+	    </Outputs>
+	    <Params>
+	      <param name="BaseTimeToComplete" value="1" />
+	    </Params>
+    </Recipe>
+
+    <Recipe Type= "BRONZE_INGOT">
+	    <Name>Smelt Bronze Ingot</Name>
+	    <ApplicableFurnitures>
+	    	<ApplicableFurniture>FURN_SMELTER</ApplicableFurniture>
+	    </ApplicableFurnitures>
+	    <Requirements>
+	    	<Requirement qty ="2" type="metal_ore" name="copper" />
+	    	<Requirement qty ="1" type="metal_ore" name="tin"/>
+	    	<Requirement qty="1" type="fuel" />
+	    </Requirements>
+	    <RequiredSkills>
+	    	<skill name="METAL_WORKING" value ="2" />
+	    </RequiredSkills>
+	    <Outputs>
+	    	<Output  qty ="1" type="metal_bronze_ingot" />
+	    </Outputs>
+	    <Params>
+	      <param name="BaseTimeToComplete" value="1" />
+	    </Params>
+    </Recipe>
+
+    <!-- COMPONENTS -->
+
+      <Recipe Type= "HANDLE">
+	    <Name>HANDLE</Name>
+	    <ApplicableFurnitures>
+	    	<ApplicableFurniture>FURN_ANVIL</ApplicableFurniture>
+	    </ApplicableFurnitures>
+	    <Requirements>
+	    	<Requirement qty ="1" material ="metal_ingot|wood" />
+	    	<Requirement qty ="1" material ="fuel" />
+	    </Requirements>
+	    <RequiredSkills>
+	    	<skill name="METAL_WORKING" value ="1" />
+	    </RequiredSkills>
+	    <Outputs>
+	    	<Output  qty ="1" type="metal_bronze_ingot" />
+	    </Outputs>
+	    <Params>
+	      <param name="BaseTimeToComplete" value="1" />
+	    </Params>
+    </Recipe>
+
+     <Recipe Type= "SMALL_BLADE">
+	    <Name>Small Blade</Name>
+	    <ApplicableFurnitures>
+	    	<ApplicableFurniture>FURN_ANVIL</ApplicableFurniture>
+	    </ApplicableFurnitures>
+	    <Requirements>
+	    	<Requirement qty ="2" material ="metal_ingot|wood"/>
+	    	<Requirement qty ="1" material ="fuel" />
+	    </Requirements>
+	    <RequiredSkills>
+	    	<skill name="METAL_WORKING" value ="1" />
+	    </RequiredSkills>
+	    <Outputs>
+	    	<Output  qty ="1" type="metal_bronze_ingot" />
+	    </Outputs>
+	    <Params>
+	      <param name="BaseTimeToComplete" value="1" />
+	    </Params>
+    </Recipe>
+
+
+    <!-- weapons -->
+
+    <Recipe Type= "SHORT_SWORD">
+	    <Name>Short Sword</Name>
+	    <ApplicableFurnitures>
+	    	<ApplicableFurniture>FURN_ANVIL</ApplicableFurniture>
+	    </ApplicableFurnitures>
+	    <Requirements>
+	    	<Requirement qty ="1" material ="ANY" name= "HANDLE" />
+	    	<Requirement qty ="1" material ="ANY" name= "SHORT_BLADE"/>
+	    	<Requirement qty ="1" material ="ANY" name= "HAND_GUARD"/>
+
+	    </Requirements>
+	    <RequiredSkills>
+	    	<skill name="METAL_WORKING" value ="2" />
+	    </RequiredSkills>
+	    <Outputs>
+	    	<Output  qty ="1" type="metal_bronze_ingot" />
+	    </Outputs>
+	    <Params>
+	      <param name="BaseTimeToComplete" value="1" />
+	    </Params>
+    </Recipe>
+
+
+</Recipes>
+ 

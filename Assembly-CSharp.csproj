@@ -55,6 +55,7 @@
      <Compile Include="Assets\Code\Data\CharacterPrototypes.cs" />
      <Compile Include="Assets\Code\Data\FurniturePrototypes.cs" />
      <Compile Include="Assets\Code\Data\JobPrototypes.cs" />
+     <Compile Include="Assets\Code\Data\RecipePrototypes.cs" />
      <Compile Include="Assets\Code\Data\Repositories\CharacterRepository.cs" />
      <Compile Include="Assets\Code\Data\Repositories\FurnitureRepository.cs" />
      <Compile Include="Assets\Code\Data\Repositories\JobRepository.cs" />
@@ -64,12 +65,15 @@
      <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
      <Compile Include="Assets\Code\Models\Enum\JobType.cs" />
      <Compile Include="Assets\Code\Models\Furniture.cs" />
+     <Compile Include="Assets\Code\Models\IJobRequirement.cs" />
      <Compile Include="Assets\Code\Models\Inventory.cs" />
      <Compile Include="Assets\Code\Models\Job.cs" />
      <Compile Include="Assets\Code\Models\JobQueue.cs" />
+     <Compile Include="Assets\Code\Models\JobRequirement.cs" />
      <Compile Include="Assets\Code\Models\JobTask.cs" />
      <Compile Include="Assets\Code\Models\Peasant.cs" />
      <Compile Include="Assets\Code\Models\PeasentModel.cs" />
+     <Compile Include="Assets\Code\Models\Recipe.cs" />
      <Compile Include="Assets\Code\Models\Room.cs" />
      <Compile Include="Assets\Code\Models\Tile.cs" />
      <Compile Include="Assets\Code\Renderer\BaseTileRenderer.cs" />
@@ -103,6 +107,7 @@
      <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
      <Compile Include="Assets\FurnitureBuildMenu.cs" />
      <Compile Include="Assets\Helpers\CharacterJobHelper.cs" />
+     <None Include="Assets\StreamingAssets\Data\Recipes.xml" />
      <None Include="Assets\StreamingAssets\Data\Jobs.xml" />
      <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
  <Reference Include="UnityEngine.UI">
