@@ -95,6 +95,7 @@
      <Compile Include="Assets\Code\Services\Pathfinding\PathEdge.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathNode.cs" />
      <Compile Include="Assets\Code\Services\Pathfinding\PathTileGraph.cs" />
+     <Compile Include="Assets\Code\Services\RecipeService.cs" />
      <Compile Include="Assets\Code\Services\RoomService.cs" />
      <Compile Include="Assets\Code\Utilities\FastPriorityQueue.cs" />
      <Compile Include="Assets\Code\Utilities\FastPriorityQueueNode.cs" />

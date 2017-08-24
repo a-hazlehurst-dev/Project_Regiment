@@ -3,6 +3,7 @@
 <Recipes>
   	<Recipe Type= "COPPER_INGOT">
 	    <Name>Smelt Copper Ingot</Name>
+	    <BaseCompletionTime>1</BaseCompletionTime>
 	    <ApplicableFurnitures>
 	    	<ApplicableFurniture>FURN_SMELTER</ApplicableFurniture>
 	    </ApplicableFurnitures>
@@ -16,13 +17,11 @@
 	    <Outputs>
 	    	<Output  qty ="1" type="metal_copper_ingot" />
 	    </Outputs>
-	    <Params>
-	      <param name="BaseTimeToComplete" value="1" />
-	    </Params>
     </Recipe>
 
     <Recipe Type= "BRONZE_INGOT">
 	    <Name>Smelt Bronze Ingot</Name>
+	    <BaseCompletionTime>1</BaseCompletionTime>
 	    <ApplicableFurnitures>
 	    	<ApplicableFurniture>FURN_SMELTER</ApplicableFurniture>
 	    </ApplicableFurnitures>
@@ -37,15 +36,13 @@
 	    <Outputs>
 	    	<Output  qty ="1" type="metal_bronze_ingot" />
 	    </Outputs>
-	    <Params>
-	      <param name="BaseTimeToComplete" value="1" />
-	    </Params>
     </Recipe>
 
     <!-- COMPONENTS -->
 
       <Recipe Type= "HANDLE">
 	    <Name>HANDLE</Name>
+	     <BaseCompletionTime>1</BaseCompletionTime>
 	    <ApplicableFurnitures>
 	    	<ApplicableFurniture>FURN_ANVIL</ApplicableFurniture>
 	    </ApplicableFurnitures>
@@ -59,13 +56,11 @@
 	    <Outputs>
 	    	<Output  qty ="1" type="metal_bronze_ingot" />
 	    </Outputs>
-	    <Params>
-	      <param name="BaseTimeToComplete" value="1" />
-	    </Params>
     </Recipe>
 
      <Recipe Type= "SMALL_BLADE">
 	    <Name>Small Blade</Name>
+	     <BaseCompletionTime>1</BaseCompletionTime>
 	    <ApplicableFurnitures>
 	    	<ApplicableFurniture>FURN_ANVIL</ApplicableFurniture>
 	    </ApplicableFurnitures>
@@ -79,9 +74,6 @@
 	    <Outputs>
 	    	<Output  qty ="1" type="metal_bronze_ingot" />
 	    </Outputs>
-	    <Params>
-	      <param name="BaseTimeToComplete" value="1" />
-	    </Params>
     </Recipe>
 
 
@@ -89,6 +81,7 @@
 
     <Recipe Type= "SHORT_SWORD">
 	    <Name>Short Sword</Name>
+	     <BaseCompletionTime>1</BaseCompletionTime>
 	    <ApplicableFurnitures>
 	    	<ApplicableFurniture>FURN_ANVIL</ApplicableFurniture>
 	    </ApplicableFurnitures>
@@ -104,9 +97,6 @@
 	    <Outputs>
 	    	<Output  qty ="1" type="metal_bronze_ingot" />
 	    </Outputs>
-	    <Params>
-	      <param name="BaseTimeToComplete" value="1" />
-	    </Params>
     </Recipe>
 
 

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public FurnitureService FurnitureService;
     public CharacterService CharacterService;
     public InventoryService InventoryService;
+	public RecipeService RecipeService;
 
 	public BaseTileRenderer BaseTileRenderer { get; protected set; }
 	public SpriteManager SpriteManager { get; protected set;}
@@ -45,6 +46,9 @@ public class GameManager : MonoBehaviour {
 		Instance = this;
 		FurnitureService = new FurnitureService ();
 		FurnitureService.Init ();
+
+		RecipeService = new RecipeService ();
+		RecipeService.Init ();
 
         JobService = new JobService();
         JobService.Init();
