@@ -8,15 +8,15 @@
 	    	<ApplicableFurniture>FURN_SMELTER</ApplicableFurniture>
 	    </ApplicableFurnitures>
 	    <Requirements>
-	    	<Requirement qty ="2" type="metal_ore" name="copper" />
+	    	<Requirement qty ="2" type="metal_ore" specific="copper" />
 	    	<Requirement qty ="1" type="fuel" />
 	    </Requirements>
 	    <RequiredSkills>
-	    	<skill name="METAL_WORKING" value ="0" />
+	    	<Skill type="METAL_WORKING" value ="0" />
 	    </RequiredSkills>
-	    <Outputs>
+	    <MaterialOutputs>
 	    	<Output  qty ="1" type="metal_copper_ingot" />
-	    </Outputs>
+	    </MaterialOutputs>
     </Recipe>
 
     <Recipe Type= "BRONZE_INGOT">

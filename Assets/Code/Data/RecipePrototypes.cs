@@ -21,7 +21,7 @@ public class RecipePrototypes
 	private void LoadPrototypesFromXml(){
 		//loads furn xml data
 		var filePath = System.IO.Path.Combine(Application.streamingAssetsPath, "Data");
-		filePath = System.IO.Path.Combine(filePath, "Recipe.xml");
+		filePath = System.IO.Path.Combine(filePath, "Recipes.xml");
 		var recipeXml = File.ReadAllText(filePath);
 
 		var reader = XmlTextReader.Create(new StringReader(recipeXml));

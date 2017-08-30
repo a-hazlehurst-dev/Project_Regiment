@@ -265,6 +265,9 @@ public class GameManager : MonoBehaviour {
     {
         int x = Mathf.FloorToInt(coordinate.x + .5f);
         int y = Mathf.FloorToInt(coordinate.y + .5f);
+		if (TileDataGrid == null) {
+			return null;
+		}
     
 		return TileDataGrid.GetTileAt(x, y);
     }

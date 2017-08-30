@@ -48,27 +48,98 @@ public class Recipe : MonoBehaviour {
 				RequiredSkills = GetRequiredSkills (recipeTag);
 				break;
 			case "Outputs":
-				MaterialOutput = GetMaterialOutputs (recipeTag);
+				MaterialOutputs = GetMaterialOutputs (recipeTag);
 				break;
 			case "BaseCompletionTime":
 				recipeTag.Read();
-				BaseTimeToComplete = reader.ReadContentAsFloat(recipeTag);
+				BaseTimeToComplete = reader.ReadContentAsFloat();
 				break;
 			}
 		}
 	}
 
 	private List<string> GetApplicableFurnitures(XmlReader xmlrReader){
-		return new List<string> ();
+		Debug.Log ("reading Applicable furnitures");
+		var reader = xmlrReader.ReadSubtree();
+
+		var list = new List<string> ();
+		while (reader.Read())
+		{
+			if (reader.Name == "ApplicableFurniture" && reader.IsStartElement())
+			{
+				reader.Read ();
+				var x = reader.ReadContentAsString();
+				list.Add (reader.ReadContentAsString());
+			}
+		}
+
+		return list;
 	}
 
 	private List<MaterialRequirement> GetRequirements(XmlReader xmlrReader){
-		return new List<string> ();
+
+		Debug.Log ("reading material Requirements");
+		var reader = xmlrReader.ReadSubtree();
+
+		var list = new List<MaterialRequirement> ();
+		while (reader.Read())
+		{
+			if (reader.Name == "Requirement" && reader.IsStartElement())
+			{
+				var quantity = int.Parse (reader.GetAttribute ("qty"));
+				var type = reader.GetAttribute ("type");
+				var specific = reader.GetAttribute ("specific");
+
+				var mat = new MaterialRequirement{ Quantity = quantity, Type = type, Specific = specific };
+
+				list.Add (mat);
+			}
+		}
+		return list;
+		
 	}
 	private List<RequiredSkill> GetRequiredSkills(XmlReader xmlrReader){
-		return new List<RequiredSkill> ();
+
+
+		Debug.Log ("reading Required Skills");
+		var reader = xmlrReader.ReadSubtree();
+
+		var list = new List<RequiredSkill> ();
+		while (reader.Read())
+		{
+			if (reader.Name == "Skill" && reader.IsStartElement())
+			{
+				var type = reader.GetAttribute ("type");
+				var value = float.Parse (reader.GetAttribute ("value"));
+
+				var mat = new RequiredSkill{ Type = type, Value = value};
+
+				list.Add (mat);
+			}
+		}
+		return list;
+
 	}
 	private List<MaterialOutput> GetMaterialOutputs(XmlReader xmlrReader){
+
+		Debug.Log ("reading Material Output");
+		var reader = xmlrReader.ReadSubtree();
+
+		var list = new List<MaterialOutput> ();
+		while (reader.Read())
+		{
+			if (reader.Name == "Output" && reader.IsStartElement())
+			{
+				var type = reader.GetAttribute ("type");
+				var quanitity = int.Parse (reader.GetAttribute ("qty"));
+
+				var mat = new MaterialOutput{ Type = type, Quantity = quanitity};
+
+				list.Add (mat);
+			}
+		}
+		return list;
+
 		return new List<MaterialOutput> ();
 	}
 	
@@ -77,19 +148,20 @@ public class Recipe : MonoBehaviour {
 
 public class MaterialRequirement
 {
-	public string ObjectType { get; set; } //the name of the item we want
+	public string Type { get; set; } //the name of the item we want
+	public string Specific {get;set;}
 	public int Quantity { get; set; } // the amount of the item we need to make 1 unit of product.
 }
 
 
 public class RequiredSkill{
 
-	public string SkillType { get;set;}
+	public string Type { get;set;}
 	public float Value {get;set;}
 }
 
 public class MaterialOutput
 {
-	public string ObjectType {get;set;} //name of the item that will be produced;
+	public string Type {get;set;} //name of the item that will be produced;
 	public int Quantity {get;set;} // basic number of items createed.
 }
