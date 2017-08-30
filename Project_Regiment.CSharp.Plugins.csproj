@@ -339,6 +339,7 @@
   <ItemGroup>
     <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
     <None Include="Assets\StreamingAssets\Data\Jobs.xml" />
+    <None Include="Assets\StreamingAssets\Data\Recipes.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

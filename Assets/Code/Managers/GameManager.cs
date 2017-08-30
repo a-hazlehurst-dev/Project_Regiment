@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour {
 		RecipeService = new RecipeService ();
 		RecipeService.Init ();
 
+    
+
         JobService = new JobService();
         JobService.Init();
 
@@ -84,7 +86,13 @@ public class GameManager : MonoBehaviour {
 			CreateGameFromSaveFile ();
 		}
 		GameObject.Find("CameraDolly").transform.position = new Vector3 (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight/2, -11);
-        
+
+
+        foreach (var recipe in RecipeService.RecipePrototypes.GetPrototypeNames())
+        {
+            Debug.Log(recipe);
+
+        }
 
 
     }

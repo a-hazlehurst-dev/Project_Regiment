@@ -54,7 +54,7 @@ namespace Assets.Code.Data
                 Debug.Log("Could not find Jobs in job.xml");
             }
 
-            Debug.Log("Job prototypes created "  + jobPrototypesCount);
+
         }
 
 

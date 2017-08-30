@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.IO;
 using System.Xml;
+using System.Linq;
 
 public class RecipePrototypes
 {
@@ -36,8 +37,7 @@ public class RecipePrototypes
 
 				var recipe = new Recipe();
 				recipe.ReadXmlPrototype(reader);
-
-
+                Add(recipe);
 			}
 			else
 			{
@@ -65,6 +65,25 @@ public class RecipePrototypes
 		}
 		_recipePrototypes.Remove (recipe.RecipeType);
 	}
+
+    public List<string> GetPrototypeNames()
+    {
+        return _recipePrototypes.Keys.ToList();
+    }
+
+    public Recipe Get(string name)
+    {
+        if (!_recipePrototypes.ContainsKey(name))
+        {
+            return null;
+        }
+        return _recipePrototypes[name];
+    }
+
+    public List<Recipe> GetAll()
+    {
+        return _recipePrototypes.Values.ToList();
+    }
 
 
 }

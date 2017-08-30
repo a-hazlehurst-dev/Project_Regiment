@@ -308,8 +308,6 @@ public class Furniture : IXmlSerializable {
 
     public void ReadXmlPrototype(XmlReader readerParent)
     {
-        Debug.Log("ReadXmlPrototype: Furniture");
-
         ObjectType = readerParent.GetAttribute("objectType");
 
         XmlReader xmlReader = readerParent.ReadSubtree();
@@ -379,7 +377,6 @@ public class Furniture : IXmlSerializable {
                 case "IsEnterable":
 
                     _isEnterableAction = xmlReader.GetAttribute("FunctionName");
-                    Debug.Log("setting: " + _isEnterableAction);
                     break;
                 case "Params":
                     ReadXmlParams(xmlReader);

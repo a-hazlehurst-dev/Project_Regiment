@@ -298,7 +298,7 @@ public class Job
 
     public void ReadXmlPrototype(XmlReader jobReader)
     {
-        Debug.Log("ReadXML Prototypes: Jobs");
+
 		JobType = JobObjectType = jobReader.GetAttribute ("JobType");;
         FurnitureType = jobReader.GetAttribute("furnitureType");
         CanRepeat = bool.Parse(jobReader.GetAttribute("CanRepeat"));
@@ -341,7 +341,7 @@ public class Job
     }
 
 	private void SetRequirements(XmlReader reader){
-		Debug.Log ("Reading requirements");
+
 		var quantity = reader.GetAttribute("qty");
 		var type = reader.GetAttribute("type");
 
@@ -351,14 +351,14 @@ public class Job
 
     private void SetTask(XmlReader taskReader)
     {
-        Debug.Log("Writing job task");
+
         var taskType = taskReader.GetAttribute("TaskType");
-        Debug.Log(taskType);
+
         var priority = int.Parse(taskReader.GetAttribute("Priority"));
 
         JobTask task = new JobTask { ParentJob = this, TaskType = taskType, Priority = priority };
 
         this.JobTasks.Add(task);
-        Debug.Log(string.Format(@"Created Task Name {0} for {1}", task.TaskType, this.Name));
+
     }
 }

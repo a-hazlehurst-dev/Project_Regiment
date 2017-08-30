@@ -3,149 +3,151 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 
-public class Recipe : MonoBehaviour {
+public class Recipe : MonoBehaviour
+{
 
 
-	public string RecipeType { get; set; }
-	public string DisplayName { get; set; }
-	public List<string> ApplicableFurnitures { get; set; }
-	public List<MaterialRequirement> MaterialRequirements {get;set;}
-	public List<RequiredSkill> RequiredSkills { get; set; }
-	public List<MaterialOutput> MaterialOutputs { get; set; }
+    public string RecipeType { get; set; }
+    public string DisplayName { get; set; }
+    public List<string> ApplicableFurnitures { get; set; }
+    public List<MaterialRequirement> MaterialRequirements { get; set; }
+    public List<RequiredSkill> RequiredSkills { get; set; }
+    public List<MaterialOutput> MaterialOutputs { get; set; }
+
+    public Recipe()
+    {
+        ApplicableFurnitures = new List<string>();
+        MaterialRequirements = new List<MaterialRequirement>();
+        MaterialOutputs = new List<MaterialOutput>();
+        RequiredSkills = new List<RequiredSkill>();
+    }
+
+    public float BaseTimeToComplete { get; set; }
+
+    public void ReadXmlPrototype(XmlReader reader)
+    {
+
+        RecipeType = reader.GetAttribute("Type");
+
+        var recipeTag = reader.ReadSubtree();
+
+        while (recipeTag.Read())
+        {
+            switch (recipeTag.Name)
+            {
+                case "Name":
+                    recipeTag.Read();
+                    DisplayName = reader.ReadContentAsString();
+                    break;
+                case "ApplicableFurnitures":
+                    ApplicableFurnitures = GetApplicableFurnitures(recipeTag);
+                    break;
+                case "Requirements":
+                    MaterialRequirements = GetRequirements(recipeTag);
+                    break;
+                case "RequiredSkills":
+                    RequiredSkills = GetRequiredSkills(recipeTag);
+                    break;
+                case "Outputs":
+                    MaterialOutputs = GetMaterialOutputs(recipeTag);
+                    break;
+                case "BaseCompletionTime":
+                    recipeTag.Read();
+                    BaseTimeToComplete = reader.ReadContentAsFloat();
+                    break;
+            }
+        }
+    }
+
+    private List<string> GetApplicableFurnitures(XmlReader xmlrReader)
+    {
+
+        var reader = xmlrReader.ReadSubtree();
+
+        var list = new List<string>();
+        while (reader.Read())
+        {
+            if (reader.Name == "ApplicableFurniture" && reader.IsStartElement())
+            {
+                reader.Read();
+                var x = reader.ReadContentAsString();
+                list.Add(reader.ReadContentAsString());
+            }
+        }
+
+        return list;
+    }
+    private List<MaterialRequirement> GetRequirements(XmlReader xmlrReader)
+    {
 
 
-	public float BaseTimeToComplete { get; set; }
+        var reader = xmlrReader.ReadSubtree();
 
-	public Recipe(){
-		ApplicableFurnitures = new List<string> ();
-		MaterialRequirements = new List<MaterialRequirement> ();
-		MaterialOutputs = new List<MaterialOutput> ();
-		RequiredSkills = new List<RequiredSkill> ();
-	}
+        var list = new List<MaterialRequirement>();
+        while (reader.Read())
+        {
+            if (reader.Name == "Requirement" && reader.IsStartElement())
+            {
+                var quantity = int.Parse(reader.GetAttribute("qty"));
+                var type = reader.GetAttribute("type");
+                var specific = reader.GetAttribute("specific");
 
+                var mat = new MaterialRequirement { Quantity = quantity, Type = type, Specific = specific };
 
-	public void ReadXmlPrototype (XmlReader reader){
-		Debug.Log("ReadXML Prototypes: Recipes");
-		RecipeType = reader.GetAttribute ("Type");
+                list.Add(mat);
+            }
+        }
+        return list;
 
-		var recipeTag = reader.ReadSubtree();
-
-		while (recipeTag.Read())
-		{
-			switch (recipeTag.Name)
-			{
-			case "Name":
-				recipeTag.Read();
-				DisplayName = reader.ReadContentAsString();
-				break;
-			case "ApplicableFurnitures":
-				ApplicableFurnitures = GetApplicableFurnitures (recipeTag);
-				break;
-			case "Requirements":
-				MaterialRequirements = GetRequirements (recipeTag);
-				break;
-			case "RequiredSkills":
-				RequiredSkills = GetRequiredSkills (recipeTag);
-				break;
-			case "Outputs":
-				MaterialOutputs = GetMaterialOutputs (recipeTag);
-				break;
-			case "BaseCompletionTime":
-				recipeTag.Read();
-				BaseTimeToComplete = reader.ReadContentAsFloat();
-				break;
-			}
-		}
-	}
-
-	private List<string> GetApplicableFurnitures(XmlReader xmlrReader){
-		Debug.Log ("reading Applicable furnitures");
-		var reader = xmlrReader.ReadSubtree();
-
-		var list = new List<string> ();
-		while (reader.Read())
-		{
-			if (reader.Name == "ApplicableFurniture" && reader.IsStartElement())
-			{
-				reader.Read ();
-				var x = reader.ReadContentAsString();
-				list.Add (reader.ReadContentAsString());
-			}
-		}
-
-		return list;
-	}
-
-	private List<MaterialRequirement> GetRequirements(XmlReader xmlrReader){
-
-		Debug.Log ("reading material Requirements");
-		var reader = xmlrReader.ReadSubtree();
-
-		var list = new List<MaterialRequirement> ();
-		while (reader.Read())
-		{
-			if (reader.Name == "Requirement" && reader.IsStartElement())
-			{
-				var quantity = int.Parse (reader.GetAttribute ("qty"));
-				var type = reader.GetAttribute ("type");
-				var specific = reader.GetAttribute ("specific");
-
-				var mat = new MaterialRequirement{ Quantity = quantity, Type = type, Specific = specific };
-
-				list.Add (mat);
-			}
-		}
-		return list;
-		
-	}
-	private List<RequiredSkill> GetRequiredSkills(XmlReader xmlrReader){
+    }
+    private List<RequiredSkill> GetRequiredSkills(XmlReader xmlrReader)
+    {
 
 
-		Debug.Log ("reading Required Skills");
-		var reader = xmlrReader.ReadSubtree();
 
-		var list = new List<RequiredSkill> ();
-		while (reader.Read())
-		{
-			if (reader.Name == "Skill" && reader.IsStartElement())
-			{
-				var type = reader.GetAttribute ("type");
-				var value = float.Parse (reader.GetAttribute ("value"));
+        var reader = xmlrReader.ReadSubtree();
 
-				var mat = new RequiredSkill{ Type = type, Value = value};
+        var list = new List<RequiredSkill>();
+        while (reader.Read())
+        {
+            if (reader.Name == "Skill" && reader.IsStartElement())
+            {
+                var type = reader.GetAttribute("type");
+                var value = float.Parse(reader.GetAttribute("value"));
 
-				list.Add (mat);
-			}
-		}
-		return list;
+                var mat = new RequiredSkill { Type = type, Value = value };
 
-	}
-	private List<MaterialOutput> GetMaterialOutputs(XmlReader xmlrReader){
+                list.Add(mat);
+            }
+        }
+        return list;
 
-		Debug.Log ("reading Material Output");
-		var reader = xmlrReader.ReadSubtree();
+    }
+    private List<MaterialOutput> GetMaterialOutputs(XmlReader xmlrReader)
+    {
 
-		var list = new List<MaterialOutput> ();
-		while (reader.Read())
-		{
-			if (reader.Name == "Output" && reader.IsStartElement())
-			{
-				var type = reader.GetAttribute ("type");
-				var quanitity = int.Parse (reader.GetAttribute ("qty"));
+        Debug.Log("reading Material Output");
+        var reader = xmlrReader.ReadSubtree();
 
-				var mat = new MaterialOutput{ Type = type, Quantity = quanitity};
+        var list = new List<MaterialOutput>();
+        while (reader.Read())
+        {
+            if (reader.Name == "Output" && reader.IsStartElement())
+            {
+                var type = reader.GetAttribute("type");
+                var quanitity = int.Parse(reader.GetAttribute("qty"));
 
-				list.Add (mat);
-			}
-		}
-		return list;
+                var mat = new MaterialOutput { Type = type, Quantity = quanitity };
 
-		return new List<MaterialOutput> ();
-	}
-	
+                list.Add(mat);
+            }
+        }
+        return list;
+
+        return new List<MaterialOutput>();
+    }
 
 }
-
 public class MaterialRequirement
 {
 	public string Type { get; set; } //the name of the item we want
