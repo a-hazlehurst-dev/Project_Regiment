@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour {
     public GameDrawMode GameDrawMode { get; set; }
 	public RoomService RoomService;
     public JobService JobService { get; protected set; }
+
+    public MessageListControl MessageListControl;
 	private int optionAction;
 	private static bool loadGameMode = false;
 
@@ -49,8 +51,6 @@ public class GameManager : MonoBehaviour {
 
 		RecipeService = new RecipeService ();
 		RecipeService.Init ();
-
-    
 
         JobService = new JobService();
         JobService.Init();
@@ -75,7 +75,6 @@ public class GameManager : MonoBehaviour {
 		CharacterSpriteRenderer = GetComponent<CharacterSpriteRenderer> ();
 
 		InventorySpriteRenderer.Init (SpriteManager, InventoryService);
-
 
 			
 		if (!loadGameMode) {

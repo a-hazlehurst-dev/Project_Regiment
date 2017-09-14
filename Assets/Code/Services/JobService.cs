@@ -21,7 +21,14 @@ public class JobService
     {
        if(_jobRepository.Add(j))
         {
-            _cbJobCreated(j);
+            if (_cbJobCreated != null)
+            {
+                _cbJobCreated(j);
+            }
+            if (j.CanRepeat == false)
+            {
+                GameManager.Instance.MessageListControl.AddMessage(new NotificationMessage { CooldownMax = 5f, Cooldown = 5f, Message = "Created job for " + j.JobObjectType, Parent = GameManager.Instance.MessageListControl });
+            }
         }
     }
 
@@ -63,6 +70,7 @@ public class JobService
     public void UnRegister_Job_Created(Action<Job> cbJobCreated)
     {
         _cbJobCreated -= cbJobCreated;
+      
     }
 
     #endregion

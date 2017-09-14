@@ -146,6 +146,8 @@
     <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
     <Compile Include="Assets\FurnitureBuildMenu.cs" />
     <Compile Include="Assets\Helpers\CharacterJobHelper.cs" />
+    <Compile Include="Assets\MessageListControl.cs" />
+    <Compile Include="Assets\MessageModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
