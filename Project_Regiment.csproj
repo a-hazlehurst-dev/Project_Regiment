@@ -113,6 +113,7 @@
     <Compile Include="Assets\Code\Models\Furniture.cs" />
     <Compile Include="Assets\Code\Models\IJobRequirement.cs" />
     <Compile Include="Assets\Code\Models\Inventory.cs" />
+    <Compile Include="Assets\Code\Models\ISelectableItem.cs" />
     <Compile Include="Assets\Code\Models\Job.cs" />
     <Compile Include="Assets\Code\Models\JobQueue.cs" />
     <Compile Include="Assets\Code\Models\JobRequirement.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Assets\Code\Scripts\FooterMenuViewModel.cs" />
     <Compile Include="Assets\Code\Scripts\GameDrawMode.cs" />
     <Compile Include="Assets\Code\Scripts\OptionsMenuViewModel.cs" />
+    <Compile Include="Assets\Code\Scripts\SelectionInfoTextField.cs" />
     <Compile Include="Assets\Code\Scripts\TileInspectorViewModel.cs" />
     <Compile Include="Assets\Code\Scripts\pnlStatusBottom.cs" />
     <Compile Include="Assets\Code\Services\CharacterService.cs" />

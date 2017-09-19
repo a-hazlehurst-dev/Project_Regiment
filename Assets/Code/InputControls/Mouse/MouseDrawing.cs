@@ -121,7 +121,7 @@ public class MouseDrawing
     {
         var tile = selectionInfo.Tile;
         ///ensure all the characters and plus rest of tile data is available.
-        selectionInfo.Content = new object[tile.Characters.Count + 3];
+        selectionInfo.Content = new ISelectableItem[tile.Characters.Count + 3];
 
         for (int i = 0; i < tile.Characters.Count; i++)
         {

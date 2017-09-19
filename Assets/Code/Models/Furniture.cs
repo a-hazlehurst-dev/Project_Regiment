@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using MoonSharp.Interpreter;
 
 [MoonSharpUserData]
-public class Furniture : IXmlSerializable {
+public class Furniture : IXmlSerializable , ISelectableItem {
 
     private Func<Tile, bool> _funcPositionValidation;
     private List<Job> _jobs;
@@ -454,6 +454,21 @@ public class Furniture : IXmlSerializable {
 	public void UnRegisterOnRemovedCallback(Action<Furniture> callBackFunc){
 		cbOnRemoved-= callBackFunc;
 	}
+
+    public string Getname()
+    {
+        return Name;
+    }
+
+    public string GetDescription()
+    {
+        return "some furniture";
+    }
+
+    public string GetHitPointsToString()
+    {
+        return "100/100";
+    }
 
     #endregion
 

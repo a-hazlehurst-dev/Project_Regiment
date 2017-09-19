@@ -5,6 +5,7 @@
     {
         GameDrawMode _gameDrawMode;
         MouseDrawing _mouseDrawHelper;
+  
 
         public MouseController(MouseDrawing mouseDrawHelper)
         {
@@ -12,17 +13,16 @@
             _mouseDrawHelper = mouseDrawHelper;
         }
 
-        public void OnLeftMouseButton(Vector3 currentMousePosition)
+        public void OnLeftMouseButton(Vector3 currentMousePosition, SelectionInfo selectionInfo)
         {
             if (Input.GetMouseButtonUp(0))
             {
-
-                var selection = new SelectionInfo();
+                      
                 var tile = GameManager.Instance.GetTileAt(currentMousePosition);
 
                 _mouseDrawHelper.DrawTiles(tile);
                 _mouseDrawHelper.DrawFurniture(tile);
-                _mouseDrawHelper.DrawSelect(tile, selection);
+                _mouseDrawHelper.DrawSelect(tile, selectionInfo);
 
                 if (tile.Furniture != null)
                 {

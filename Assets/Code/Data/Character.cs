@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 
-public class Character: IXmlSerializable
+public class Character: IXmlSerializable, ISelectableItem
 {
 	private Tile _destTile;
 	private Tile _nextTileInPath;  
@@ -222,5 +222,20 @@ public class Character: IXmlSerializable
     {
         writer.WriteAttributeString("X", CurrentTile.X.ToString());
         writer.WriteAttributeString("Y", CurrentTile.Y.ToString());
+    }
+
+    public string Getname()
+    {
+        return "Adam H";
+    }
+
+    public string GetDescription()
+    {
+        return "I am a description.";
+    }
+
+    public string GetHitPointsToString()
+    {
+        return "20/20";
     }
 }

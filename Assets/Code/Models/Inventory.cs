@@ -4,7 +4,9 @@ using MoonSharp.Interpreter;
 
 
 [MoonSharpUserData]
-public class Inventory {
+public class Inventory: ISelectableItem
+
+{
 
     public string objectType = "clay";
     public int maxStackSize = 50;
@@ -62,5 +64,18 @@ public class Inventory {
         cbInventoryChanged -= cb;
     }
 
+    public string Getname()
+    {
+        return objectType;
+    }
 
+    public string GetDescription()
+    {
+        return "This is an inventory";
+    }
+
+    public string GetHitPointsToString()
+    {
+        return "1/1";
+    }
 }

@@ -12,7 +12,7 @@ public enum Enterability { Ok =0, Never= 1, Wait = 2}
 
 
 [MoonSharpUserData]
-public class Tile : IXmlSerializable
+public class Tile : IXmlSerializable, ISelectableItem
 {
 	
 
@@ -281,10 +281,22 @@ public class Tile : IXmlSerializable
 		if(Furniture!= null){
 			return Furniture.IsEnterable();
 		}
-
+    
 		return Enterability.Ok;
 	}
 
+    public string Getname()
+    {
+        return Floor.ToString();
+    }
 
-		
+    public string GetDescription()
+    {
+        return "this is a floor.";
+    }
+
+    public string GetHitPointsToString()
+    {
+        return "this is indestuctable";
+    }
 }
