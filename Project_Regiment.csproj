@@ -101,6 +101,7 @@
     <Compile Include="Assets\Code\Data\Repositories\JobRepository.cs" />
     <Compile Include="Assets\Code\Data\Repositories\RoomRepository.cs" />
     <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
+    <Compile Include="Assets\Code\Enums\BuildMode.cs" />
     <Compile Include="Assets\Code\InputControls\Keyboard\KeyboardController.cs" />
     <Compile Include="Assets\Code\InputControls\Mouse\MouseController.cs" />
     <Compile Include="Assets\Code\InputControls\Mouse\MouseDrawing.cs" />

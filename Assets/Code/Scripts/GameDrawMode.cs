@@ -1,15 +1,7 @@
 ﻿
 using UnityEngine;
 
-public enum BuildMode
-{
-	None,
-    Select,
-    Floor,
-	Furniture,
-	Deconstruct,
-    
-}
+
 
 public class GameDrawMode  : MonoBehaviour
 {
@@ -22,8 +14,36 @@ public class GameDrawMode  : MonoBehaviour
 	GameObject furniturePreview;
 	CameraScript cameraScript;
 
+    void Start()
+    {
 
-	public bool IsObjectDraggable ()
+        cameraScript = GameObject.FindObjectOfType<CameraScript>();
+        if (furniturePreview == null)
+        {
+            furniturePreview = new GameObject();
+            furniturePreview.transform.SetParent(this.transform);
+            furniturePreview.AddComponent<SpriteRenderer>().sortingLayerName = "Job";
+            furniturePreview.SetActive(false);
+
+        }
+    }
+
+    void Update()
+    {
+        if (GameBuildMode == BuildMode.Furniture && string.IsNullOrEmpty(FurnitureToDraw) == false)
+        {
+            furniturePreview.GetComponent<SpriteRenderer>().enabled = true;
+            ShowFurnitureSpriteAtTile(FurnitureToDraw, MouseHelper.GetTileMouseIsOver());
+        }
+        else
+        {
+            furniturePreview.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        
+        
+    }
+
+    public bool IsObjectDraggable ()
 	{
 		if (GameBuildMode == BuildMode.Floor || GameBuildMode == BuildMode.Deconstruct)
 			return true;
@@ -31,29 +51,13 @@ public class GameDrawMode  : MonoBehaviour
 			Furniture proto = GameManager.Instance.FurnitureService.FindPrototypes () [FurnitureToDraw];
 			return proto.Width == 1 && proto.Height == 1;
 		}
+        
 
 		return false;
 	}
 
-	void Start ()
-	{
 
-		cameraScript = GameObject.FindObjectOfType<CameraScript> ();
-		if (furniturePreview == null) {
-			furniturePreview = new GameObject ();
-			furniturePreview.transform.SetParent (this.transform);
-			furniturePreview.AddComponent<SpriteRenderer> ().sortingLayerName = "Job"; 
-			furniturePreview.SetActive (false);
-
-		}
-	}
-
-	void Update ()
-	{
-		if (GameBuildMode == BuildMode.Furniture && string.IsNullOrEmpty (FurnitureToDraw) == false) {
-			ShowFurnitureSpriteAtTile (FurnitureToDraw, MouseHelper.GetTileMouseIsOver ());
-		}
-	}
+	
 
 	private void ShowFurnitureSpriteAtTile (string furnitureType, Tile t)
 	{
