@@ -114,6 +114,7 @@
     <Compile Include="Assets\Code\Models\Recipe.cs" />
     <Compile Include="Assets\Code\Models\Room.cs" />
     <Compile Include="Assets\Code\Models\Tile.cs" />
+    <Compile Include="Assets\Code\Mouse\SelectionInfo.cs" />
     <Compile Include="Assets\Code\Renderer\BaseTileRenderer.cs" />
     <Compile Include="Assets\Code\Renderer\CharacterSpriteRenderer.cs" />
     <Compile Include="Assets\Code\Renderer\FurnitureSpriteRenderer.cs" />
@@ -145,7 +146,6 @@
     <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
     <Compile Include="Assets\FurnitureBuildMenu.cs" />
-    <Compile Include="Assets\Helpers\CharacterJobHelper.cs" />
     <Compile Include="Assets\MessageListControl.cs" />
     <Compile Include="Assets\MessageModel.cs" />
   </ItemGroup>

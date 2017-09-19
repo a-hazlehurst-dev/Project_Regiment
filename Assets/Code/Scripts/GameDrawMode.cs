@@ -51,7 +51,7 @@ public class GameDrawMode  : MonoBehaviour
 	void Update ()
 	{
 		if (GameBuildMode == BuildMode.Furniture && string.IsNullOrEmpty (FurnitureToDraw) == false) {
-			ShowFurnitureSpriteAtTile (FurnitureToDraw, cameraScript.GetMouseOverTile ());
+			ShowFurnitureSpriteAtTile (FurnitureToDraw, MouseHelper.GetTileMouseIsOver ());
 		}
 	}
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TileInspectorViewModel : MonoBehaviour {
@@ -20,7 +21,7 @@ public class TileInspectorViewModel : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        Tile t = camScript.GetMouseOverTile();
+        Tile t = MouseHelper.GetTileMouseIsOver();
         if(t == null) { return; }
         txtTileType[0].text = "Tile type: " + t.Floor.ToString() + "(" + t.X + ","+t.Y +")";
 

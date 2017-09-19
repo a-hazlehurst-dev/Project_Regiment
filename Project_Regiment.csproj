@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -99,6 +101,11 @@
     <Compile Include="Assets\Code\Data\Repositories\JobRepository.cs" />
     <Compile Include="Assets\Code\Data\Repositories\RoomRepository.cs" />
     <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
+    <Compile Include="Assets\Code\InputControls\Keyboard\KeyboardController.cs" />
+    <Compile Include="Assets\Code\InputControls\Mouse\MouseController.cs" />
+    <Compile Include="Assets\Code\InputControls\Mouse\MouseDrawing.cs" />
+    <Compile Include="Assets\Code\InputControls\Mouse\MouseHelper.cs" />
+    <Compile Include="Assets\Code\InputControls\Mouse\SelectionInfo.cs" />
     <Compile Include="Assets\Code\Managers\GameManager.cs" />
     <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
     <Compile Include="Assets\Code\Models\Enum\JobType.cs" />
@@ -114,7 +121,6 @@
     <Compile Include="Assets\Code\Models\Recipe.cs" />
     <Compile Include="Assets\Code\Models\Room.cs" />
     <Compile Include="Assets\Code\Models\Tile.cs" />
-    <Compile Include="Assets\Code\Mouse\SelectionInfo.cs" />
     <Compile Include="Assets\Code\Renderer\BaseTileRenderer.cs" />
     <Compile Include="Assets\Code\Renderer\CharacterSpriteRenderer.cs" />
     <Compile Include="Assets\Code\Renderer\FurnitureSpriteRenderer.cs" />
