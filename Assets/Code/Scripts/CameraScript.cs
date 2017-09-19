@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraScript : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class CameraScript : MonoBehaviour
 
     private Vector3 currentMousePosition;
     public GameDrawMode GameDrawMode;
-
+    public SelectionInfo SelectionInfo;
+    
 
     void Start()
     {
@@ -42,6 +44,73 @@ public class CameraScript : MonoBehaviour
             floorMode = FloorType.Mud;
         }
         tile.Floor = floorMode;
+    }
+
+    void UpdateSelection()
+    {
+   
+        if(GameDrawMode.GameBuildMode != BuildMode.Select)
+        {
+            return;
+        }
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return; 
+        }
+        
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Tile tileUnderMouse = GetMouseOverTile();
+            if(SelectionInfo == null || SelectionInfo.Tile != tileUnderMouse)
+            {
+              
+                SelectionInfo = new SelectionInfo();
+                SelectionInfo.Tile = tileUnderMouse;
+                RebuildTileSelectionContent();
+
+                for (int i = 0; i < SelectionInfo.Content.Length; i++)
+                {
+
+                    if (SelectionInfo.Content[i] != null)
+                    {
+                        SelectionInfo.SubSelect = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+
+                ///rebuild - array of sub selections, incase characters move in or out.
+
+                RebuildTileSelectionContent();
+                do
+                {
+                    SelectionInfo.SubSelect = (SelectionInfo.SubSelect + 1) % SelectionInfo.Content.Length;
+                } while (SelectionInfo.Content[SelectionInfo.SubSelect] == null);
+                
+            }
+
+            Debug.Log(SelectionInfo.SubSelect);
+        }
+
+    }
+
+    void RebuildTileSelectionContent()
+    {
+        var tile = SelectionInfo.Tile;
+        ///ensure all the characters and plus rest of tile data is available.
+        SelectionInfo.Content = new object[tile.Characters.Count + 3];
+
+        for (int i = 0; i < tile.Characters.Count; i++)
+        {
+            SelectionInfo.Content[i] = tile.Characters[i];
+        }
+
+        SelectionInfo.Content[SelectionInfo.Content.Length - 3] = tile.Furniture;
+        SelectionInfo.Content[SelectionInfo.Content.Length - 2] = tile.inventory;
+        SelectionInfo.Content[SelectionInfo.Content.Length - 1] = tile;
     }
 
     public void DrawFurniture(Tile tile)
@@ -81,6 +150,24 @@ public class CameraScript : MonoBehaviour
 
     void Update()
     {
+        ///on button down,
+        /// check build mode
+
+        
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            SelectionInfo = null;
+            GameDrawMode.GameBuildMode = BuildMode.None;
+        }
+        if (Input.GetKeyUp(KeyCode.F1))
+        {
+            GameDrawMode.GameBuildMode = BuildMode.Select;
+        }
+        if(Input.GetKeyUp(KeyCode.F2))
+        {
+            GameDrawMode.GameBuildMode = BuildMode.Furniture;
+        }
+
         currentMousePosition = GetMousePosition();
         currentMousePosition.z = 0;
         Tile tileUnderMouse = GameManager.Instance.GetTileAt(currentMousePosition);
@@ -91,10 +178,12 @@ public class CameraScript : MonoBehaviour
 
         cursorPointer.transform.position = cursorPosition;
 
+        UpdateSelection();
 
         if (Input.GetMouseButtonUp(0))
         {
-            //	
+
+            new SelectionInfo();
             var tile = GameManager.Instance.GetTileAt(currentMousePosition);
 
             if (GameDrawMode.GameBuildMode == BuildMode.Floor)

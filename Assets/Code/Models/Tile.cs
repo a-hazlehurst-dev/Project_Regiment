@@ -5,6 +5,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
 using MoonSharp.Interpreter;
+using System.Collections.Generic;
 
 public enum FloorType { Grass =0, Mud=1, Water=2}
 public enum Enterability { Ok =0, Never= 1, Wait = 2}
@@ -57,6 +58,7 @@ public class Tile : IXmlSerializable
 		return GameManager.Instance.TileDataGrid.GetTileAt (X-1, Y);
 	}
 
+    public List<Character> Characters { get; set; }
 
 	 Action<Tile> cbTileFloorChanged;
 	FloorType _type =  FloorType.Grass;
@@ -90,8 +92,10 @@ public class Tile : IXmlSerializable
 		X = x;
 		Y = y;
 		Floor = floorType;
+        Characters = new List<Character>();
 
-	}
+
+    }
 
 	public void RegisterFloorTypeChangedCb(Action<Tile> callBack)
 	{

@@ -4,9 +4,11 @@ using UnityEngine;
 public enum BuildMode
 {
 	None,
-	Floor,
+    Select,
+    Floor,
 	Furniture,
-	Deconstruct
+	Deconstruct,
+    
 }
 
 public class GameDrawMode  : MonoBehaviour

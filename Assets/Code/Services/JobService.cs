@@ -6,8 +6,6 @@ public class JobService
 {
     private JobPrototypes _jobPrototypes;
     private JobRepository _jobRepository;
-
-
     private Action<Job> _cbJobCreated;
 
     public void Init()

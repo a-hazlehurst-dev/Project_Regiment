@@ -45,7 +45,24 @@ public class Character: IXmlSerializable
 	}
 
 	public Inventory Inventory { get; set; }
-	public Tile CurrentTile { get; protected set; }
+
+    private Tile _currTile;
+	public Tile CurrentTile
+    {
+        get
+        {
+            return _currTile;
+        }
+        set
+        {
+            if (_currTile != null)
+            {
+                _currTile.Characters.Remove(this);
+            }
+                _currTile = value;
+                _currTile.Characters.Add(this);
+        }
+    }
 
 	public Character(Tile currentTile){
 		CurrentTile = DestinationTile = _nextTileInPath = currentTile; 

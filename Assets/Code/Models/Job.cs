@@ -31,8 +31,6 @@ public class Job
     public Furniture FurniturePrototype;
     public Furniture furnitureToOperate; // peice of furn that owns the h
 
-
-
     Action<Job> _cbCJobCompleted; // job was completed, shouldnwo build item or whatever
     List<string> _cbLuaJobCompleted;
     Action<Job> _cbJobStopped; // job was stopped, maybe non repeating or was cancelled.
