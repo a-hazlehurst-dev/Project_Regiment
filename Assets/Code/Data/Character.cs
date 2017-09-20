@@ -4,6 +4,7 @@ using System;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
+using System.Collections.Generic;
 
 public class Character: IXmlSerializable, ISelectableItem
 {
@@ -237,5 +238,17 @@ public class Character: IXmlSerializable, ISelectableItem
     public string GetHitPointsToString()
     {
         return "20/20";
+    }
+
+    public List<Recipe> Recipes()
+    {
+        return null;
+    }
+
+    
+
+    public List<string> Buttons()
+    {
+        return new List<string>() { "Details", "Equipment", "Health" };
     }
 }

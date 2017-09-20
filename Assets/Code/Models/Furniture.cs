@@ -470,6 +470,16 @@ public class Furniture : IXmlSerializable , ISelectableItem {
         return "100/100";
     }
 
+    public List<Recipe> Recipes()
+    {
+        return new List<Recipe> { new Recipe { ApplicableFurnitures = new List<string> { "FURN_SMELTER" }, DisplayName = "Smelt Copper" } };
+    }
+
+    public List<string> Buttons()
+    {
+        return new List<string>() { "Manage" };
+    }
+
     #endregion
 
 }

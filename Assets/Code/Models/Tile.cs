@@ -299,4 +299,13 @@ public class Tile : IXmlSerializable, ISelectableItem
     {
         return "this is indestuctable";
     }
+
+    public List<Recipe> Recipes()
+    {
+        return null;
+    }
+    public List<string> Buttons()
+    {
+        return new List<string>();
+    }
 }

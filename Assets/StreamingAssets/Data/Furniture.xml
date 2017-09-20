@@ -60,7 +60,7 @@
 
   <Furniture objectType= "FURN_SMELTER">
     <Name>Smelter</Name>
-    <MovementCost>10</MovementCost>
+    <MovementCost>1</MovementCost>
     <Width>2</Width>
     <Height>3</Height>
     <LinksToNeighbour>false</LinksToNeighbour>

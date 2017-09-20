@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using MoonSharp.Interpreter;
-
+using System.Collections.Generic;
 
 [MoonSharpUserData]
 public class Inventory: ISelectableItem
@@ -77,5 +77,15 @@ public class Inventory: ISelectableItem
     public string GetHitPointsToString()
     {
         return "1/1";
+    }
+
+    public List<Recipe> Recipes()
+    {
+        return null;
+    }
+
+    public List<string> Buttons()
+    {
+        return new List<string>();
     }
 }

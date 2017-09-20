@@ -101,6 +101,7 @@ public class MouseDrawing
                         break;
                     }
                 }
+         
             }
             else
             {
@@ -113,8 +114,11 @@ public class MouseDrawing
                 } while (SelectionInfo.Content[SelectionInfo.SubSelect] == null);
 
             }
+
+           
         }
     }
+
 
     void RebuildTileSelectionContent(SelectionInfo selectionInfo)
     {

@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using System.Collections.Generic;
 
 public class SelectionInfoTextField : MonoBehaviour {
 
     CameraScript _cameraScript;
     GameDrawMode GameDrawMode;
+    public GameObject ButtonPanel;
     Text txt;
     public CanvasGroup CanvasGroup;
+    private int subSelect = -1;
 	// Use this for initialization
 	void Start () {
         _cameraScript = FindObjectOfType<CameraScript>();
@@ -31,9 +33,52 @@ public class SelectionInfoTextField : MonoBehaviour {
         CanvasGroup.alpha =1f;
         CanvasGroup.interactable = true;
         CanvasGroup.blocksRaycasts = false;
-        
-        ISelectableItem result = _cameraScript.MouseDrawing.SelectionInfo.Content[_cameraScript.MouseDrawing.SelectionInfo.SubSelect];
 
-        GetComponent<Text>().text = result.Getname() + " " + result.GetDescription() + " " + result.GetHitPointsToString();
-	}
+        if (subSelect != _cameraScript.MouseDrawing.SelectionInfo.SubSelect)
+        {
+            List<GameObject> list = new List<GameObject>();
+            for (int x = 0; x < ButtonPanel.transform.childCount; x++)
+            {
+                var child = ButtonPanel.transform.GetChild(x);
+              
+                    list.Add(child.gameObject);
+               
+            }
+
+            foreach (var item in list.ToArray())
+            {
+                Destroy(item);
+            }
+
+            subSelect = _cameraScript.MouseDrawing.SelectionInfo.SubSelect;
+            ISelectableItem result = _cameraScript.MouseDrawing.SelectionInfo.Content[_cameraScript.MouseDrawing.SelectionInfo.SubSelect];
+
+            GetComponent<Text>().text = result.Getname() + " " + result.GetDescription() + " " + result.GetHitPointsToString();
+
+            if (result.Buttons().Any())
+            {
+                foreach (var buttonName in result.Buttons())
+                {
+                    GameObject button = new GameObject();
+                    button.name = buttonName; 
+                    button.transform.SetParent(ButtonPanel.transform);
+                    button.AddComponent<RectTransform>();
+                    button.AddComponent<CanvasRenderer>();
+                    button.AddComponent<Image>();
+                    button.AddComponent<Button>();
+
+                    GameObject text = new GameObject();
+                   var textComponent =  text.AddComponent<Text>();
+                    textComponent.text = buttonName;
+                    textComponent.font = new Font("Arial");
+                    textComponent.color = new Color(0, 0, 0);
+                    text.transform.SetParent(button.transform);
+                    text.AddComponent<CanvasRenderer>();
+                }
+
+
+                // button.GetComponent<Button>().onClick.AddListener(method);
+            }
+        }
+    }
 }
