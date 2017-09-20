@@ -13,7 +13,7 @@
             _mouseDrawHelper = mouseDrawHelper;
         }
 
-        public void OnLeftMouseButton(Vector3 currentMousePosition, SelectionInfo selectionInfo)
+        public void OnLeftMouseButton(Vector3 currentMousePosition)
         {
             if (Input.GetMouseButtonUp(0))
             {
@@ -22,7 +22,7 @@
 
                 _mouseDrawHelper.DrawTiles(tile);
                 _mouseDrawHelper.DrawFurniture(tile);
-                _mouseDrawHelper.DrawSelect(tile, selectionInfo);
+                _mouseDrawHelper.DrawSelect(tile);
 
                 if (tile.Furniture != null)
                 {

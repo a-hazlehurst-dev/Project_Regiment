@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MouseDrawing
 {
+    public SelectionInfo SelectionInfo { get; set; }
     public void DrawTiles(Tile tile)
     {
         var GameDrawMode = GameManager.Instance.GameDrawMode;
@@ -66,12 +67,13 @@ public class MouseDrawing
 
         }
     }
-    public void DrawSelect(Tile tile, SelectionInfo selectionInfo)
+    public void DrawSelect(Tile tile)
     {
         var GameDrawMode = GameManager.Instance.GameDrawMode;
 
         if (GameDrawMode.GameBuildMode != BuildMode.Select)
         {
+            SelectionInfo = null;
             return;
         }
         if (EventSystem.current.IsPointerOverGameObject())
@@ -83,19 +85,19 @@ public class MouseDrawing
         if (Input.GetMouseButtonUp(0))
         {
             Tile tileUnderMouse = MouseHelper.GetTileMouseIsOver();
-            if (selectionInfo == null || selectionInfo.Tile != tileUnderMouse)
+
+            if (SelectionInfo == null || SelectionInfo.Tile != tileUnderMouse)
             {
+                SelectionInfo = new SelectionInfo();
+                SelectionInfo.Tile = tileUnderMouse;
+                RebuildTileSelectionContent(SelectionInfo);
 
-                selectionInfo = new SelectionInfo();
-                selectionInfo.Tile = tileUnderMouse;
-                RebuildTileSelectionContent(selectionInfo);
-
-                for (int i = 0; i < selectionInfo.Content.Length; i++)
+                for (int i = 0; i < SelectionInfo.Content.Length; i++)
                 {
 
-                    if (selectionInfo.Content[i] != null)
+                    if (SelectionInfo.Content[i] != null)
                     {
-                        selectionInfo.SubSelect = i;
+                        SelectionInfo.SubSelect = i;
                         break;
                     }
                 }
@@ -104,16 +106,13 @@ public class MouseDrawing
             {
 
                 ///rebuild - array of sub selections, incase characters move in or out.
-
-                RebuildTileSelectionContent(selectionInfo);
+                RebuildTileSelectionContent(SelectionInfo);
                 do
                 {
-                    selectionInfo.SubSelect = (selectionInfo.SubSelect + 1) % selectionInfo.Content.Length;
-                } while (selectionInfo.Content[selectionInfo.SubSelect] == null);
+                    SelectionInfo.SubSelect = (SelectionInfo.SubSelect + 1) % SelectionInfo.Content.Length;
+                } while (SelectionInfo.Content[SelectionInfo.SubSelect] == null);
 
             }
-
-            Debug.Log(selectionInfo.SubSelect);
         }
     }
 

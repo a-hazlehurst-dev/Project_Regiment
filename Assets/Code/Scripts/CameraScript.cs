@@ -3,11 +3,11 @@ using UnityEngine.EventSystems;
 
 public class CameraScript : MonoBehaviour
 {
-        public MouseController MouseController;
-    public MouseDrawing _mouseDrawHelper;
+    public MouseController MouseController;
+    public MouseDrawing MouseDrawing;
     public int horizontalSpeed = 1;
     public int verticalSpeed = 1;
-    public SelectionInfo SelectionInfo;
+    //public SelectionInfo SelectionInfo;
 
     public GameObject cursorPointer;
 
@@ -18,8 +18,8 @@ public class CameraScript : MonoBehaviour
     void Start()
     {
         GameDrawMode = GameObject.FindObjectOfType<GameDrawMode>();
-        _mouseDrawHelper = new MouseDrawing();
-        MouseController = new MouseController(_mouseDrawHelper);
+        MouseDrawing = new MouseDrawing();
+        MouseController = new MouseController(MouseDrawing);
     }
 
     void Update()
@@ -27,12 +27,10 @@ public class CameraScript : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            SelectionInfo = null;
             GameDrawMode.GameBuildMode = BuildMode.None;
         }
         if (Input.GetKeyUp(KeyCode.F1))
         {
-            SelectionInfo = new SelectionInfo();
             GameDrawMode.GameBuildMode = BuildMode.Select;
         }
         if (Input.GetKeyUp(KeyCode.F2))
@@ -52,7 +50,7 @@ public class CameraScript : MonoBehaviour
 
         cursorPointer.transform.position = cursorPosition;
 
-        MouseController.OnLeftMouseButton(currentMousePosition, SelectionInfo);
+        MouseController.OnLeftMouseButton(currentMousePosition);
 
         MouseController.OnRightMouseDown(verticalSpeed, horizontalSpeed, transform);
 
