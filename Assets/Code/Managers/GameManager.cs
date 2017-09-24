@@ -19,9 +19,12 @@ public class GameManager : MonoBehaviour {
     public InventoryService InventoryService;
 	public RecipeService RecipeService;
 
-	public BaseTileRenderer BaseTileRenderer { get; protected set; }
-	public SpriteManager SpriteManager { get; protected set;}
-	public TileDataGrid TileDataGrid { get; protected set; }
+    public SpriteManager SpriteManager { get; protected set; }
+    public PrefabManager PrefabManager { get; set; }
+
+    public BaseTileRenderer BaseTileRenderer { get; protected set; }
+    public TileDataGrid TileDataGrid { get; protected set; }
+
 
     public FurnitureSpriteRenderer FurnitureSpriteRenderer { get; protected set; }
     public CharacterSpriteRenderer CharacterSpriteRenderer { get; protected set; }
@@ -30,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public GameDrawMode GameDrawMode { get; set; }
 	public RoomService RoomService;
     public JobService JobService { get; protected set; }
+    
 
     public MessageListControl MessageListControl;
 	private int optionAction;
@@ -69,6 +73,9 @@ public class GameManager : MonoBehaviour {
 
 		SpriteManager = GetComponent<SpriteManager>();
         SpriteManager.Init();
+
+        PrefabManager = GetComponent<PrefabManager>();
+        PrefabManager.Init();
 
 		BaseTileRenderer = GetComponent<BaseTileRenderer> ();
 		FurnitureSpriteRenderer = GetComponent<FurnitureSpriteRenderer> ();

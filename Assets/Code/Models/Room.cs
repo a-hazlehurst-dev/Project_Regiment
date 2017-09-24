@@ -182,8 +182,7 @@ public class Room : IXmlSerializable
 
 		}
 
-		Debug.Log (tileschecked);
-		if (isConnectedToOutside) {
+        if (isConnectedToOutside) {
 
 			newRoom.ResetRoomTilesToOutside ();
             

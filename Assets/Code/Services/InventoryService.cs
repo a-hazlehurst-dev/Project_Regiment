@@ -7,7 +7,7 @@ using MoonSharp.Interpreter;
 [MoonSharpUserData]
 public class InventoryService
 {
-
+    
 	/// <summary>
 	/// list of all "live inventories", may also be organised by room in future.
 	/// </summary>

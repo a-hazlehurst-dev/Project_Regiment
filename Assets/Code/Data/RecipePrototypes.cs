@@ -37,6 +37,7 @@ public class RecipePrototypes
 
 				var recipe = new Recipe();
 				recipe.ReadXmlPrototype(reader);
+                Debug.Log(recipe.DisplayName);
                 Add(recipe);
 			}
 			else
@@ -73,7 +74,7 @@ public class RecipePrototypes
 
     public Recipe Get(string name)
     {
-        if (!_recipePrototypes.ContainsKey(name))
+        if (!_recipePrototypes.ContainsKey(name))   
         {
             return null;
         }

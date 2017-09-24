@@ -24,10 +24,6 @@
                 _mouseDrawHelper.DrawFurniture(tile);
                 _mouseDrawHelper.DrawSelect(tile);
 
-                //if (tile.Furniture != null )
-                //{
-                //    tile.Furniture.Deconstruct();
-                //}
             }
         }
 

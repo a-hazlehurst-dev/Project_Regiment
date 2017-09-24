@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 
-public class Recipe : MonoBehaviour
+public class Recipe 
 {
-
 
     public string RecipeType { get; set; }
     public string DisplayName { get; set; }
@@ -71,7 +70,7 @@ public class Recipe : MonoBehaviour
             {
                 reader.Read();
                 var x = reader.ReadContentAsString();
-                list.Add(reader.ReadContentAsString());
+                list.Add(x);
             }
         }
 

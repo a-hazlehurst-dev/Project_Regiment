@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -108,12 +106,13 @@
     <Compile Include="Assets\Code\InputControls\Mouse\MouseHelper.cs" />
     <Compile Include="Assets\Code\InputControls\Mouse\SelectionInfo.cs" />
     <Compile Include="Assets\Code\Managers\GameManager.cs" />
+    <Compile Include="Assets\Code\Managers\PrefabManager.cs" />
     <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
     <Compile Include="Assets\Code\Models\Enum\JobType.cs" />
     <Compile Include="Assets\Code\Models\Furniture.cs" />
     <Compile Include="Assets\Code\Models\IJobRequirement.cs" />
-    <Compile Include="Assets\Code\Models\Inventory.cs" />
     <Compile Include="Assets\Code\Models\ISelectableItem.cs" />
+    <Compile Include="Assets\Code\Models\Inventory.cs" />
     <Compile Include="Assets\Code\Models\Job.cs" />
     <Compile Include="Assets\Code\Models\JobQueue.cs" />
     <Compile Include="Assets\Code\Models\JobRequirement.cs" />
@@ -157,6 +156,7 @@
     <Compile Include="Assets\FurnitureBuildMenu.cs" />
     <Compile Include="Assets\MessageListControl.cs" />
     <Compile Include="Assets\MessageModel.cs" />
+    <Compile Include="Assets\pnlSelectionManagerScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
