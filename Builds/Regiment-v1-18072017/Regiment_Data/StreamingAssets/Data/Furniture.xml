@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Furnitures>
+	<Furniture objectType= "FURN_WALL">
+		<Name>Basic Wall</Name>
+		<Width>1</Width>
+		<Height>1</Height>
+		<MovementCost>0</MovementCost>
+    	<LinksToNeighbour>true</LinksToNeighbour>
+		<EnclosesRoom>true</EnclosesRoom>
+
+
+		<BuildingJob jobTime="0.2">
+			<Inventory objectType ="metal_ore_copper" amount="4" />
+		</BuildingJob>
+
+		<DeconstructJob>
+			<Inventory objectType ="metal_ore_copper" amount="2" />
+		</DeconstructJob>
+
+	</Furniture>
+
+	<Furniture objectType= "FURN_BASIC_DOOR">
+		<Name>Basic Door</Name>
+		<Width>1</Width>
+		<Height>1</Height>
+		<MovementCost>1</MovementCost>
+    	<LinksToNeighbour>false</LinksToNeighbour>
+		<EnclosesRoom>true</EnclosesRoom>
+
+		<BuildingJob jobTime="1">
+			<Inventory objectType ="metal_ore_copper" amount="1" />
+		</BuildingJob>
+
+		<DeconstructJob>
+			<Inventory objectType ="metal_ore_copper" amount="0" />
+		</DeconstructJob>
+
+		<OnUpdate FunctionName="OnUpdate_Door" /> 
+
+		<IsEnterable FunctionName="IsEnterable_Door" /> 
+
+		<Params>
+			<param name="openness" value ="0" />
+			<param name="is_opening" value ="0" />
+		</Params>
+
+
+	</Furniture>
+  <Furniture objectType= "FURN_STOCKPILE">
+  	<Width>1</Width>
+	  <Height>1</Height>
+	  	<MovementCost>1</MovementCost>
+    <Name>Stockpile</Name>
+    <LinksToNeighbour>true</LinksToNeighbour>
+    <EnclosesRoom>false</EnclosesRoom>
+    
+     <OnUpdate FunctionName="OnUpdate_Stockpile" /> 
+    
+  </Furniture>
+
+  <Furniture objectType= "FURN_SMELTER">
+    <Name>Smelter</Name>
+    <MovementCost>1</MovementCost>
+    <Width>2</Width>
+    <Height>3</Height>
+    <LinksToNeighbour>false</LinksToNeighbour>
+    <EnclosesRoom>false</EnclosesRoom>
+
+    <OnUpdate FunctionName="OnUpdate_Smelter" />
+
+    <Jobs>
+      <job name ="SMELT_COPPER"></job>
+    </Jobs>
+
+    <Params>
+      <Param name="is_on" value="false"></Param>
+    </Params>
+
+
+  </Furniture>
+</Furnitures>
+

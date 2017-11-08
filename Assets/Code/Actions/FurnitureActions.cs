@@ -33,7 +33,7 @@ public  class FurnitureActions
 				Debug.LogError("'"+fn+"'"+ " is not a lua function");
 			}
 
-			Debug.Log ("Calling: "+ fn);
+			//Debug.Log ("Calling: "+ fn);
 			var result = _Instance._lua.Call (func, furn ,deltaTime);
 		}
 

@@ -39,7 +39,7 @@ public class pnlSelectionManagerScript : MonoBehaviour {
     public void OnDropDownSelected(Dropdown target)
     {
         Debug.Log(target.value);
-        _order.ItemOrdered = recipe.ApplicableFurnitures[target.value - 1];
+        //_order.ItemOrdered = recipe.ApplicableFurnitures[target.value - 1];
 
 
         //we've selected the type of item we want to produce

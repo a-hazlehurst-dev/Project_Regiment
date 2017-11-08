@@ -12,8 +12,10 @@ public class CharacterSpriteRenderer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        characterHolder = new GameObject("CharacterHolder").transform;
+
+        characterHolder.transform.SetParent(gameObject.transform);
+    }
 
 
 	public void InitialiseCharacter(SpriteManager spriteManager, CharacterService characterService)
@@ -23,8 +25,6 @@ public class CharacterSpriteRenderer : MonoBehaviour {
         _characterService = characterService;
 
         _characterGameObjectMap = new Dictionary<Character, GameObject>();
-
-        characterHolder = new GameObject("CharacterHolder").transform;
 
         _characterService.Register_OnCharacter_Created(OnCharacterCreated);
     }

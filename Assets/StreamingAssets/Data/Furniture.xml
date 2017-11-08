@@ -73,7 +73,7 @@
     </Jobs>
 
     <Params>
-      <Param name="Is_Active" value="0"></Param>
+      <Param name="is_on" value="false"></Param>
     </Params>
 
 

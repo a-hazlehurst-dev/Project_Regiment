@@ -10,10 +10,19 @@ end
 
 function OnUpdate_Smelter(furniture, deltaTime)
 
+	if (funiture.GetParameter("is_on")~=nil ) then
+		if ( furniture.GetParameter("is_on") == false) then
+		return "not active"
+		end
+	else
+	    return "not Active"
+	end
 
 	if (furniture.tile.room == nil) then
 		return "furniture's room was null"
 	end
+
+	
 
 	if (furniture.Tile.Room.GetEnviromenntAmount("temperature")  <5.0) then
 		furniture.Tile.Room.ChangeEnvironment ("temperature", 0.1 * deltaTime)

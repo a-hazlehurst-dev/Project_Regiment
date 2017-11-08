@@ -43,7 +43,8 @@ public class InventoryService
 				_inventories [tile.inventory.objectType] = new List<Inventory> ();
 			}
 			_inventories[tile.inventory.objectType].Add(tile.inventory);
-            cbInventoryCreated(tile.inventory);
+            //if(cbInventoryCreated!=null)
+                cbInventoryCreated(tile.inventory);
 		}
 
 		return true;
@@ -146,7 +147,7 @@ public class InventoryService
 
 
     public void Register_OnInventory_Created(Action<Inventory> cb){
-		cbInventoryCreated += cb;
+            cbInventoryCreated += cb;
 	}
 
 	public void UnRegister_OnInventory_Created(Action<Inventory> cb){

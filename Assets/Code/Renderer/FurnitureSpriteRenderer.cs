@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Linq;
 
 public class FurnitureSpriteRenderer : MonoBehaviour 
 {
@@ -19,6 +17,7 @@ public class FurnitureSpriteRenderer : MonoBehaviour
 		
 
 		furnitureHolder = new GameObject ("Furniture").transform;
+        furnitureHolder.transform.SetParent(gameObject.transform);
 	}
 
 	public void InitialiseFurniture(SpriteManager spriteManager, FurnitureService furnitureService)

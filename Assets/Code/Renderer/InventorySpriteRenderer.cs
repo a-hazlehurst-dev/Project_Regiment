@@ -16,7 +16,8 @@ public class InventorySpriteRenderer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        inventoryHolder = new GameObject("InventoryHolder").transform;
+        inventoryHolder.SetParent(gameObject.transform);
     }
 
 
@@ -27,8 +28,6 @@ public class InventorySpriteRenderer : MonoBehaviour
         _inventoryService = inventoryService;
 
         _inventoryGameObjectMapper = new Dictionary<Inventory, GameObject>();
-
-        inventoryHolder = new GameObject("InventoryHolder").transform;
 
         _inventoryService.Register_OnInventory_Created(OnInventoryCreated);
 

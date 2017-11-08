@@ -60,15 +60,18 @@ public class GameDrawMode  : MonoBehaviour
 	
 
 	private void ShowFurnitureSpriteAtTile (string furnitureType, Tile t)
-	{
-		furniturePreview.SetActive (true);
+    {
+        if (t == null) { return; }
+        furniturePreview.SetActive (true);
 
 		SpriteRenderer sr = furniturePreview.GetComponent<SpriteRenderer> ();
             
 		sr.sprite = GameManager.Instance.FurnitureSpriteRenderer.GetSpriteForFurniture (furnitureType);
 		sr.color = new Color (.2f, .2f, .2f, 0.5f);
 		if (!GameManager.Instance.FurnitureSpriteRenderer.IsFurniturePlacementValid (furnitureType, t)) {
-			sr.color = new Color (1f, .0f, .0f, 0.5f);
+           
+            sr.color = new Color (1f, .0f, .0f, 0.5f);
+
 		}
 		//transparent
 

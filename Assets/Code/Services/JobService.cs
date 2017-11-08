@@ -25,7 +25,7 @@ public class JobService
             }
             if (j.CanRepeat == false)
             {
-                GameManager.Instance.MessageListControl.AddMessage(new NotificationMessage { CooldownMax = 5f, Cooldown = 5f, Message = "Created job for " + j.JobObjectType, Parent = GameManager.Instance.MessageListControl });
+               // GameManager.Instance.MessageListControl.AddMessage(new NotificationMessage { CooldownMax = 5f, Cooldown = 5f, Message = "Created job for " + j.JobObjectType, Parent = GameManager.Instance.MessageListControl });
             }
         }
     }

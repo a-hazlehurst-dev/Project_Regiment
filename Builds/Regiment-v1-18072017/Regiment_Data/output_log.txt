@@ -2,26 +2,25 @@ Initialize engine version: 5.6.1f1 (2860b30f0b54)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: Intel(R) HD Graphics 630 (ID=0x591b)
-    Vendor:   Intel
-    VRAM:     2111 MB
-    Driver:   21.20.16.4574
+    Renderer: NVIDIA GeForce GTX 970M (ID=0x13d8)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+    Driver:   22.21.13.8205
 Begin MonoManager ReloadAssembly
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.126 seconds
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\System.dll (this message is harmless)
-Platform assembly: D:\dev\other\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\System.Xml.dll (this message is harmless)
-desktop: 1920x1200 60Hz; virtual: 5760x1200 at 0,0
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.045 seconds
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\System.dll (this message is harmless)
+Platform assembly: D:\Dev\Unity\projects\Project_Regiment\Builds\Regiment-v1-18072017\Regiment_Data\Managed\System.Xml.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
-XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.

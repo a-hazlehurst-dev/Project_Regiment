@@ -11,6 +11,7 @@ public class BaseTileRenderer : MonoBehaviour
         _spriteManager = spriteManager;
 
         gridHolder = new GameObject ("Grid").transform;
+        gridHolder.SetParent(gameObject.transform);
 
 		CreateInitialTileMapGraphics();
     }

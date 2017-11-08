@@ -84,6 +84,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Brain.cs" />
+    <Compile Include="Assets\CharacterVisibleDisplay.cs" />
     <Compile Include="Assets\Code\Actions\FurnitureActions.cs" />
     <Compile Include="Assets\Code\Builders\CharacterBuilder.cs" />
     <Compile Include="Assets\Code\Builders\FurnitureBuilder.cs" />
@@ -100,11 +102,15 @@
     <Compile Include="Assets\Code\Data\Repositories\RoomRepository.cs" />
     <Compile Include="Assets\Code\Data\TileDataGrid.cs" />
     <Compile Include="Assets\Code\Enums\BuildMode.cs" />
+    <Compile Include="Assets\Code\Enums\SceneEnum.cs" />
     <Compile Include="Assets\Code\InputControls\Keyboard\KeyboardController.cs" />
     <Compile Include="Assets\Code\InputControls\Mouse\MouseController.cs" />
     <Compile Include="Assets\Code\InputControls\Mouse\MouseDrawing.cs" />
     <Compile Include="Assets\Code\InputControls\Mouse\MouseHelper.cs" />
     <Compile Include="Assets\Code\InputControls\Mouse\SelectionInfo.cs" />
+    <Compile Include="Assets\Code\Load\ILoader.cs" />
+    <Compile Include="Assets\Code\Load\LoaderCreateNewGame.cs" />
+    <Compile Include="Assets\Code\Load\LoaderStartUp.cs" />
     <Compile Include="Assets\Code\Managers\GameManager.cs" />
     <Compile Include="Assets\Code\Managers\PrefabManager.cs" />
     <Compile Include="Assets\Code\Managers\SpriteManager.cs" />
@@ -153,12 +159,20 @@
     <Compile Include="Assets\Code\Utilities\SimplePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
+    <Compile Include="Assets\Fonts\Script\scriptTexttest.cs" />
     <Compile Include="Assets\FurnitureBuildMenu.cs" />
+    <Compile Include="Assets\MainGameMenu.cs" />
     <Compile Include="Assets\MessageListControl.cs" />
     <Compile Include="Assets\MessageModel.cs" />
+    <Compile Include="Assets\Sight.cs" />
+    <Compile Include="Assets\Sound.cs" />
+    <Compile Include="Assets\UserMovement.cs" />
     <Compile Include="Assets\pnlSelectionManagerScript.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Fonts\Documentation\JazzCreateAltKeys_BubbleFont.txt" />
+    <None Include="Assets\Fonts\Documentation\JazzCreateBubble_VersionHistory_1.1.txt" />
+    <None Include="Assets\Graphics\Shaders\Blur.shader" />
     <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
     <None Include="Assets\StreamingAssets\Data\Jobs.xml" />
     <None Include="Assets\StreamingAssets\Data\Recipes.xml" />

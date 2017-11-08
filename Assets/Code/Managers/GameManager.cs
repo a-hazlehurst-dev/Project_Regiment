@@ -7,104 +7,157 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
 using MoonSharp.Interpreter;
-
+using Assets.Code.Load;
+using UnityEngine.UI;
+using System.Collections;
 
 [MoonSharpUserData]
+
+
 public class GameManager : MonoBehaviour {
 
-	public static GameManager Instance { get; protected set;}
+    public static GameManager Instance;
 
+    public void Awake()
+    {
+        if(Instance== null)
+        {
+            Instance = this;
+           
+        }
+        if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+
+        OnApplicationStart();
+        
+        ChangeScene(SceneEnum.MainMenu);
+    }
+
+    #region Services
     public FurnitureService FurnitureService;
     public CharacterService CharacterService;
     public InventoryService InventoryService;
-	public RecipeService RecipeService;
+    public RecipeService RecipeService;
+    public RoomService RoomService;
+    public JobService JobService { get; set; }
+
+
+    #endregion
+
+    #region Renderer
+    public FurnitureSpriteRenderer FurnitureSpriteRenderer { get; protected set; }
+    public CharacterSpriteRenderer CharacterSpriteRenderer { get; protected set; }
+    public InventorySpriteRenderer InventorySpriteRenderer { get; protected set; }
+    public BaseTileRenderer BaseTileRenderer { get; protected set; }
+    #endregion
+
 
     public SpriteManager SpriteManager { get; protected set; }
     public PrefabManager PrefabManager { get; set; }
-
-    public BaseTileRenderer BaseTileRenderer { get; protected set; }
     public TileDataGrid TileDataGrid { get; protected set; }
-
-
-    public FurnitureSpriteRenderer FurnitureSpriteRenderer { get; protected set; }
-    public CharacterSpriteRenderer CharacterSpriteRenderer { get; protected set; }
-	public InventorySpriteRenderer InventorySpriteRenderer { get; protected set; }
-	
     public GameDrawMode GameDrawMode { get; set; }
-	public RoomService RoomService;
-    public JobService JobService { get; protected set; }
-    
 
-    public MessageListControl MessageListControl;
-	private int optionAction;
-	private static bool loadGameMode = false;
+
+
+
+   //    public MessageListControl MessageListControl;
+    private int optionAction;
+    private static bool loadGameMode = false;
 
     public PathTileGraph TileGraph;// pathfinding graph for walkable tiles.
 
-	private int _drawMode = 1;
-	private string _drawObject;
+    private int _drawMode = 1;
+    private string _drawObject;
 
-	void OnEnable(){
-		if (Instance != null)
-        {
-		}
-        
-		Instance = this;
-		FurnitureService = new FurnitureService ();
-		FurnitureService.Init ();
 
-		RecipeService = new RecipeService ();
-		RecipeService.Init ();
 
-        JobService = new JobService();
-        JobService.Init();
-
-		CharacterService = new CharacterService ();
-		CharacterService.Init ();
-
-		RoomService = new RoomService ();
-		RoomService.Init ();
-
-		InventoryService = new InventoryService ();
-		InventoryService.Init ();
+    void OnApplicationStart()
+    {
+        LoaderStartUp startup = new LoaderStartUp();
+        startup.On_LoadStateChanged += On_LoadingStateChanged;
+        startup.Load();
 
         GameDrawMode = GetComponent<GameDrawMode>();
-        InventorySpriteRenderer = GetComponent<InventorySpriteRenderer> ();
+        InventorySpriteRenderer = GetComponent<InventorySpriteRenderer>();
+        InventorySpriteRenderer.Init(SpriteManager, InventoryService);
 
-		SpriteManager = GetComponent<SpriteManager>();
+        SpriteManager = GetComponent<SpriteManager>();
         SpriteManager.Init();
 
         PrefabManager = GetComponent<PrefabManager>();
         PrefabManager.Init();
 
-		BaseTileRenderer = GetComponent<BaseTileRenderer> ();
-		FurnitureSpriteRenderer = GetComponent<FurnitureSpriteRenderer> ();
-		CharacterSpriteRenderer = GetComponent<CharacterSpriteRenderer> ();
+        BaseTileRenderer = GetComponent<BaseTileRenderer>();
+        FurnitureSpriteRenderer = GetComponent<FurnitureSpriteRenderer>();
+        FurnitureSpriteRenderer.InitialiseFurniture(SpriteManager, FurnitureService);
 
-		InventorySpriteRenderer.Init (SpriteManager, InventoryService);
+        CharacterSpriteRenderer = GetComponent<CharacterSpriteRenderer>();
+        CharacterSpriteRenderer.InitialiseCharacter(SpriteManager,CharacterService);
 
-			
-		if (!loadGameMode) {
-			InitGame ();
-            CharacterService.Create(TileDataGrid.GridMap[TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
-        } else {
-			loadGameMode = false;
-			CreateGameFromSaveFile ();
-		}
-		GameObject.Find("CameraDolly").transform.position = new Vector3 (TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight/2, -11);
+       
+    }
 
+    void On_LoadingStateChanged(string message)
+    {
+       // LoadScreenTextMessage.text = "Loading... "+  message;
+    }
 
-        foreach (var recipe in RecipeService.RecipePrototypes.GetPrototypeNames())
+    public void StartNewGame()
+    {
+        ChangeScene(SceneEnum.Load);
+
+        InitGame();
+
+        CharacterService.Create(TileDataGrid.GridMap[TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2]);
+
+        ChangeScene(SceneEnum.GameHome);
+
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if(level == (int)SceneEnum.GameHome || level == (int)SceneEnum.GameWorld || level== (int)SceneEnum.GameBattle)
         {
-            Debug.Log(recipe);
+            var dolly = Camera.main.transform.parent;
 
+            dolly.transform.position = new Vector3(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2, -11);
         }
+    }
 
+    public void ContinueGame()
+    {
+        ChangeScene(SceneEnum.Load);
+
+        CreateGameFromSaveFile();
+
+        ChangeScene(SceneEnum.GameHome);
+    }
+
+  
+
+    void OnGameContinue()
+    {
+
+    }
+    void OnGameLoad()
+    {
 
     }
 
 
-	public Dictionary<string ,List<Inventory>> GetInventories(){
+    public void ChangeScene(SceneEnum changeSceneEnum)
+    {
+         SceneManager.LoadScene((int)changeSceneEnum);
+    }
+
+   
+
+
+    public Dictionary<string ,List<Inventory>> GetInventories(){
 		return InventoryService._inventories;
 	}
 	public void InvalidateTileGraph(){
@@ -115,7 +168,6 @@ public class GameManager : MonoBehaviour {
 	}
     public void AddRoom(Room rm)
     {
-
         RoomService.AddRoom(rm);
     }
     public Room GetOutsideRoom()
@@ -137,6 +189,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update(){
+
 		if (CharacterService != null) {
 			var chars = CharacterService.FindAll ();
 
@@ -157,8 +210,8 @@ public class GameManager : MonoBehaviour {
 		BaseTileRenderer.InitialiseTileMap(SpriteManager);
 		FurnitureSpriteRenderer.InitialiseFurniture (SpriteManager ,FurnitureService);
 
-        // DEBUGGING REMOVE LATER
-        // Create inventory item.
+        //DEBUGGING REMOVE LATER
+        //Create inventory item.
         Inventory inv = new Inventory("metal_ore_copper", 50, 50);
 
         var tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2, TileDataGrid.GridHeight / 2 + 1);
@@ -168,13 +221,12 @@ public class GameManager : MonoBehaviour {
         tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 5, TileDataGrid.GridHeight / 2 + 1);
         InventoryService.PlaceInventory(tile, inv);
 
-        //inv = inv = new Inventory("clay", 50, 22);
+        inv = inv = new Inventory("clay", 50, 22);
 
         tile = TileDataGrid.GetTileAt(TileDataGrid.GridWidth / 2 - 1, TileDataGrid.GridHeight / 2 + 2);
         InventoryService.PlaceInventory(tile, inv);
 
         TileGraph = new PathTileGraph(TileDataGrid);
-        CharacterSpriteRenderer.InitialiseCharacter (SpriteManager, CharacterService);
 
     }
 
@@ -255,6 +307,7 @@ public class GameManager : MonoBehaviour {
 		Debug.Log ("Restarting....");
 		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 	}
+
 	void SaveGame(){
 		Debug.Log ("Saving....");
 
