@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -85,7 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Brain.cs" />
-    <Compile Include="Assets\CharacterVisibleDisplay.cs" />
     <Compile Include="Assets\Code\Actions\FurnitureActions.cs" />
     <Compile Include="Assets\Code\Builders\CharacterBuilder.cs" />
     <Compile Include="Assets\Code\Builders\FurnitureBuilder.cs" />
@@ -150,6 +151,11 @@
     <Compile Include="Assets\Code\Services\Pathfinding\PathTileGraph.cs" />
     <Compile Include="Assets\Code\Services\RecipeService.cs" />
     <Compile Include="Assets\Code\Services\RoomService.cs" />
+    <Compile Include="Assets\Code\StateMachine\AttackState.cs" />
+    <Compile Include="Assets\Code\StateMachine\BattleStateMachine.cs" />
+    <Compile Include="Assets\Code\StateMachine\EngageTarget.cs" />
+    <Compile Include="Assets\Code\StateMachine\FindTargetState.cs" />
+    <Compile Include="Assets\Code\StateMachine\IState.cs" />
     <Compile Include="Assets\Code\Utilities\FastPriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\FastPriorityQueueNode.cs" />
     <Compile Include="Assets\Code\Utilities\GenericPriorityQueue.cs" />
@@ -159,14 +165,16 @@
     <Compile Include="Assets\Code\Utilities\SimplePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueue.cs" />
     <Compile Include="Assets\Code\Utilities\StablePriorityQueueNode.cs" />
+    <Compile Include="Assets\Code\World\BaseCharacter.cs" />
     <Compile Include="Assets\Fonts\Script\scriptTexttest.cs" />
     <Compile Include="Assets\FurnitureBuildMenu.cs" />
     <Compile Include="Assets\MainGameMenu.cs" />
     <Compile Include="Assets\MessageListControl.cs" />
     <Compile Include="Assets\MessageModel.cs" />
+    <Compile Include="Assets\OnWeaponHitMeTrigger.cs" />
     <Compile Include="Assets\Sight.cs" />
     <Compile Include="Assets\Sound.cs" />
-    <Compile Include="Assets\UserMovement.cs" />
+    <Compile Include="Assets\WeaponContact.cs" />
     <Compile Include="Assets\pnlSelectionManagerScript.cs" />
   </ItemGroup>
   <ItemGroup>

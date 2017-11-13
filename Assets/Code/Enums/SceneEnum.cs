@@ -5,6 +5,7 @@ public enum SceneEnum{
     MainMenu = 2,
     GameHome = 3,
     GameWorld = 4,
-    GameBattle = 5
+    GameBattle = 5,
+    GameOver = 6,
 
 }

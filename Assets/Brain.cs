@@ -1,69 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Code.StateMachine;
+using Assets.Code.World;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Brain : MonoBehaviour {
 
-    public Sight SightScript;
-    public Sound SoundScript;
+    private BattleStateMachine _battleStateMachine;
+    public BaseCharacter Character { get; set; }
+    public GameObject root;
     public Rigidbody2D rigidBody;
-
-    public Dictionary<string, GameObject> myMemoryOfSeen;
-    public Dictionary<string, GameObject> myMemoryOfHeard;
-    // Use this for initialization
-
     public GameObject target;
-    void Start() {
+    public float speed = 1f;
+    public float reach;
 
-        rigidBody =gameObject.transform.parent.gameObject.GetComponent<Rigidbody2D>();
-        myMemoryOfSeen = new Dictionary<string, GameObject>();
-        myMemoryOfHeard = new Dictionary<string, GameObject>();
-
-        SightScript.Register_SeenSomething(OnSeenSomething);
-        SightScript.Register_OnLostSight(OnLostSight);
-        SoundScript.Register_HeardSomething(OnHeardSomething);
-        SoundScript.Register_HeardingExit(OnHeardExit);
-
+    void Start()
+    {
+        _battleStateMachine = new BattleStateMachine();
+     
+        _battleStateMachine.ChangeState(new FindTargetState(root, this, 10,  LayerMask.GetMask("Battle")));
+       
     }
 
-    // Update is called once per frame
     void Update() {
-        if(target!=null)
-            rigidBody.transform.position = Vector3.MoveTowards(rigidBody.transform.position, target.transform.position, 0.1f);
-    }
 
-    public void OnSeenSomething(GameObject go)
-    {
-        Debug.Log("Seen " + go.gameObject.name);
-        if (!myMemoryOfSeen.ContainsKey(go.name)) {
-            myMemoryOfSeen.Add(go.name, go);
-        }
-        target = go;
-    }
-    public void OnLostSight(GameObject go)
-    {
-        Debug.Log("Lost sight of " + go.gameObject.name);
-        if (myMemoryOfSeen.ContainsKey(go.name))
+        _battleStateMachine.ExecuteUpdate();
+        
+        if(target != null && Vector2.Distance(root.transform.position, target.transform.position) > 1)
         {
-            myMemoryOfSeen.Remove(go.name);
+            _battleStateMachine.ChangeState(new EngageTarget(root, target, speed, OnTargetReached, reach));
+        }
+
+        if(target == null)
+        {
+            _battleStateMachine.ChangeState(new FindTargetState(root, this, 10, LayerMask.GetMask("Battle")));
         }
     }
 
-    public void OnHeardSomething(GameObject go)
+    private void OnTargetReached()
     {
-        Debug.Log("heard " + go.gameObject.name);
-        if (!myMemoryOfHeard.ContainsKey(go.name))
-        {
-            myMemoryOfHeard.Add(go.name, go);
-        }
-        target = go;
+          _battleStateMachine.ChangeState(new AttackState( target));
     }
+    
 
-    public void OnHeardExit(GameObject go)
-    {
-        Debug.Log("cannot hear " + go.gameObject.name);
-        if (myMemoryOfHeard.ContainsKey(go.name))
-        {
-            myMemoryOfHeard.Remove(go.name);
-        }
-    }
 }
