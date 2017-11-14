@@ -14,8 +14,16 @@ public class Brain : MonoBehaviour {
     public GameObject root;
     public Rigidbody2D rigidBody;
     public GameObject target;
+ 
+
     public bool IsDead;
     public float speed;
+
+    public void OnVictory()
+    {
+        _battleStateMachine.ChangeState(new CelebrationState(root));
+        Debug.Log(root.gameObject.name + " has won.");
+    }
 
     void Start()
     {
@@ -35,6 +43,8 @@ public class Brain : MonoBehaviour {
         _battleStateMachine.ChangeState(new FindTargetState(root, this, 10,  LayerMask.GetMask("Battle"), OnNewTargetFound));
        
     }
+
+  
 
     void Update()
     {
@@ -57,6 +67,7 @@ public class Brain : MonoBehaviour {
             _battleStateMachine.ChangeState(new FindTargetState(root, this, 10, LayerMask.GetMask("Battle"), OnNewTargetFound));
         }
     }
+
     public void Die()
     {
         IsDead = true;

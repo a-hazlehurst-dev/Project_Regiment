@@ -84,6 +84,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BattleController.cs" />
     <Compile Include="Assets\Brain.cs" />
     <Compile Include="Assets\CharacterCanvasView.cs" />
     <Compile Include="Assets\Code\Actions\FurnitureActions.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Assets\Code\StateMachine\BattleStateMachine.cs" />
     <Compile Include="Assets\Code\StateMachine\IState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\AttackState.cs" />
+    <Compile Include="Assets\Code\StateMachine\States\CelebrationState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\DyingState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\EngageTarget.cs" />
     <Compile Include="Assets\Code\StateMachine\States\FindTargetState.cs" />
