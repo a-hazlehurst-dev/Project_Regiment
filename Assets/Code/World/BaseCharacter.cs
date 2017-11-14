@@ -8,6 +8,9 @@ namespace Assets.Code.World
         public string Name { get; set; }
         public string Lastname { get; set; }
         public DateTime Dob { get; set; }
+        public float Reach { get; set; }
+        public float Speed { get; set; }
+        public float AttackSpeed { get; set; }
 
         public int HitPoints { get; set; }
         public int MaxHitPoints { get; set; }

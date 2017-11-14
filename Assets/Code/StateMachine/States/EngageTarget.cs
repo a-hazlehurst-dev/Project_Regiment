@@ -14,7 +14,7 @@ namespace Assets.Code.StateMachine
 
         private Action OnTargetReached;
         private readonly float _reach;
-
+        public string Name { get { return "Engaging"; } }
         public EngageTarget(GameObject self, GameObject target, float speed, Action cbTargetReached, float reach)
         {
        
@@ -34,7 +34,8 @@ namespace Assets.Code.StateMachine
         public void Execute()
         {
             float step = _speed * Time.deltaTime;
-            _self.transform.position = Vector3.MoveTowards(_self.transform.position, _target.transform.position, step);
+                _self.transform.position =
+                    Vector3.MoveTowards(_self.transform.position, _target.transform.position, step);
 
             if(Vector3.Distance(_self.transform.position, _target.transform.position) <= _reach)
             {

@@ -5,6 +5,7 @@ namespace Assets.Code.StateMachine
     {
         private IState _previousState;
         private IState _currentState;
+        public string ActiveState { get { return _currentState.Name; }}
 
         public void ChangeState(IState newState)
         {
