@@ -9,15 +9,17 @@ namespace Assets.Code.StateMachine
         private readonly GameObject _self;
         private  GameObject _target;
         private readonly float _attackSpeed;
+        private readonly float _range;
         private float _cooldownTaken;
         private readonly Action _cbOnTargetDissapeared;
         private readonly Action<int> _cbOnHit;
 
-        public AttackState(GameObject self, GameObject target,float attackSpeed, Action cbOnTargetDissapeared)
+        public AttackState(GameObject self, GameObject target,float attackSpeed, float range,Action cbOnTargetDissapeared)
         {
             _self = self;
             this._target = target;
             _attackSpeed = attackSpeed;
+            _range = range;
             _cooldownTaken = attackSpeed;
 
             _cbOnTargetDissapeared += cbOnTargetDissapeared;
@@ -36,12 +38,26 @@ namespace Assets.Code.StateMachine
                 return;
             }
 
+            if (Vector3.Distance(_self.transform.position, _target.transform.position) >= _range)
+            {
+                _cbOnTargetDissapeared();
+                return;
+            }
+
             Brain brain = _target.GetComponentInChildren<Brain>();
+
             if (brain != null)
             {
                 brain.OnHit(1);
                 Debug.Log(_self.gameObject.name + "has hit " + _target.gameObject.name);
-                _cbOnTargetDissapeared();
+
+                if (brain.Character.IsDead())
+                {
+                    _cbOnTargetDissapeared();
+
+                }
+                
+           
             }
 
             _cooldownTaken = _attackSpeed;

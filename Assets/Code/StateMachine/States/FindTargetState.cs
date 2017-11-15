@@ -11,15 +11,15 @@ namespace Assets.Code.StateMachine
         private readonly GameObject _self;
         private readonly Brain _brain;
         private readonly float _searchRadius;
-        private readonly LayerMask _layerMask;
+        private readonly string _layerMask;
         private Action<GameObject> OnNewTargetFound;
         public string Name { get { return "Searching"; } }
-        public FindTargetState(GameObject self, Brain brain, float searchRadius, LayerMask layerMask, Action<GameObject> cbOnTargetFound)
+        public FindTargetState(GameObject self, Brain brain, float searchRadius, string layerMask, Action<GameObject> cbOnTargetFound)
         {
             this._self = self;
             this._brain = brain;
             this._searchRadius = searchRadius;
-            this._layerMask = layerMask;
+            _layerMask = layerMask;
             OnNewTargetFound += cbOnTargetFound;
         }
 
@@ -31,32 +31,39 @@ namespace Assets.Code.StateMachine
         public void Execute()
         {
             var collisions = Physics.OverlapSphere(_self.transform.position + Vector3.up, _searchRadius).ToList() ;
+            
             bool shouldremoveSelf = false;
             Collider myCollider = new Collider();
             List<Collider> deadColliders = new List<Collider>();
-            foreach(var collision in collisions)
+
+            var search = collisions.Where(x => x.gameObject.layer == LayerMask.NameToLayer(_layerMask)).ToList();
+            if (_layerMask == "Battle")
             {
-                if(collision.gameObject.name == _self.name)
+                foreach (var item in search)
                 {
-                    myCollider = collision;
-                    shouldremoveSelf = true;
+                    if (item.gameObject.name == _self.name)
+                    {
+
+                        myCollider = item;
+                        shouldremoveSelf = true;
+                    }
+                   
+                        if (item.gameObject.GetComponentInChildren<Brain>().IsDead)
+                        {
+                            deadColliders.Add(item);
+                        }
+                    
                 }
-                if (collision.gameObject.GetComponentInChildren<Brain>().IsDead)
+
+                if (shouldremoveSelf)
                 {
-                    deadColliders.Add(collision);
+                    search.Remove(myCollider);
                 }
+                search = search.Except(deadColliders).ToList();
             }
-
-
-            if (shouldremoveSelf )
+            if (search.Any())
             {
-                collisions.Remove(myCollider);
-            }
-            collisions = collisions.Except(deadColliders).ToList();
-
-            if (collisions.Any())
-            {
-                OnNewTargetFound(collisions.First().gameObject);
+                OnNewTargetFound(search.First().gameObject);
             }
         }
 

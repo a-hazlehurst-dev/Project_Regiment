@@ -1,0 +1,123 @@
+interface IState
+{
+	enter()
+	execute()
+	Exit()
+}
+
+statemachine {
+
+		ChangeState(IState newState);
+		ExecuteUpdate(){
+			newState.Execute();
+		}
+
+}
+
+
+smelter : Monodevelop{
+
+
+	smelterStateMachine
+	bool isOn;
+	bool newStatel
+
+	Start(){
+		smleter.changeState(InactivateState);
+	}
+	update(){
+		if(IsOn != newState)
+		{
+			IsOn = newState;
+		}
+		
+		if(IsOn)
+		{
+			smelterStateMachine.newState(checkRequirements());
+		}
+		else
+		{
+			smeler.newState(Inactivate());
+		}
+		
+	}
+
+}
+
+checkRequirementsState: IState{
+
+	checkRequirementsState(GameObject self, recipe,action cbRequirementsMet){
+	
+	}
+
+	execute(){
+		check requrement items in recipe,
+		does self inventory fulfill requirements.
+		if not (raise job notificaion need items (x))
+		
+		else 
+			cbRequirementsMet()
+		
+	}
+
+}
+
+ActiveState : IState{
+	
+}
+
+InactiveState : IState {
+
+}
+
+
+character : Monodevelop{
+
+	GameObject root;
+	statemachine sMachine;
+	bool isDead = false;
+
+	Start(){
+		sMachine = new StateMachine();
+		sMachine.ChangeState(new SearchState()); <--something
+	}
+	
+	Update(){
+		sMachine.ExecuteUpdate();
+	
+		if(IDying){
+			
+			sMachine.ChangeState(new ExplodingDeath(root);
+		if(IsDead){
+			sMachine.ChangeState(DeadState);
+		}
+	}
+
+}
+
+public DeadState: IState{
+cool down 5 mins
+Execute(){ change color to gray;}
+}
+
+public ExplodingDeathState : IState{
+	public ExplodingDeathState(character self)
+	
+	Enter();
+	Execute(){
+		//Explosion Code
+		self.IsDead= true;
+	}
+	Exit();
+}
+
+public searchState : IState { 
+	Enter();
+	Execute(){
+		//code to find enemy;
+	}
+	Exit();
+
+}
+
+

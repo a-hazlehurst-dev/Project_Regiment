@@ -40,11 +40,14 @@ public class Brain : MonoBehaviour {
 
         Debug.Log(root.gameObject.name + "reach: " + Character.Reach);
      
-        _battleStateMachine.ChangeState(new FindTargetState(root, this, 10,  LayerMask.GetMask("Battle"), OnNewTargetFound));
+        _battleStateMachine.ChangeState(new FindTargetState(root, this, 10,  "Battle", OnNewTargetFound));
        
     }
 
-  
+    public void ExitReached()
+    {
+        
+    }
 
     void Update()
     {
@@ -52,10 +55,20 @@ public class Brain : MonoBehaviour {
 
         MyCanvas.state = _battleStateMachine.ActiveState;
 
+
         if (IsDead)
         {
             return;
         }
+
+        var hpPer = (Character.HitPoints * 100) / Character.MaxHitPoints;
+
+        if (hpPer <= 50)
+        {
+            _battleStateMachine.ChangeState(new FindTargetState(root, this, 10, "Exit", OnExitFound));
+        }
+
+
 
         if (target != null && Vector2.Distance(root.transform.position, target.transform.position) > 1)
         {
@@ -64,7 +77,7 @@ public class Brain : MonoBehaviour {
 
         if(target == null)
         {
-            _battleStateMachine.ChangeState(new FindTargetState(root, this, 10, LayerMask.GetMask("Battle"), OnNewTargetFound));
+            _battleStateMachine.ChangeState(new FindTargetState(root, this, 10, "Battle", OnNewTargetFound));
         }
     }
 
@@ -78,18 +91,23 @@ public class Brain : MonoBehaviour {
     private void OnTargetDisappeared()
     {
         Debug.Log(root.name + " target dissapeared finding new target");
-        _battleStateMachine.ChangeState(new FindTargetState(root, this, 10, LayerMask.GetMask("Battle"), OnNewTargetFound));
+        _battleStateMachine.ChangeState(new FindTargetState(root, this, 10, "Battle", OnNewTargetFound));
     }
 
+    private void OnExitFound(GameObject newTarget)
+    {
+        target = newTarget;
+        _battleStateMachine.ChangeState(new FleeState(root, target, Character.Speed, ExitReached));
+    }
     private void OnTargetReached()
     {
-        
-          _battleStateMachine.ChangeState(new AttackState(root, target,Character.AttackSpeed, OnTargetDisappeared) );
+          _battleStateMachine.ChangeState(new AttackState(root, target,Character.AttackSpeed,Character.Reach, OnTargetDisappeared) );
     }
 
     public void OnHit(int x)
     {
         Character.HitPoints -= x;
+        Debug.Log(root.name +" has "+ Character.HitPoints + " left.");
         if (Character.HitPoints <= 0)
         {
             Die();
