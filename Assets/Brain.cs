@@ -2,6 +2,7 @@
 using Assets.Code.StateMachine;
 using Assets.Code.World;
 using System.Collections.Generic;
+using Assets.Code.Builders;
 using Assets.Code.StateMachine.States;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class Brain : MonoBehaviour {
 
     private BattleStateMachine _battleStateMachine;
+    private BaseCharacterBuilder _characterBuilder;
     public CharacterCanvasView MyCanvas;
     public BaseCharacter Character { get; set; }
     public GameObject root;
@@ -28,15 +30,10 @@ public class Brain : MonoBehaviour {
     void Start()
     {
         _battleStateMachine = new BattleStateMachine();
-        Character = new BaseCharacter {Reach = UnityEngine.Random.value, Speed = UnityEngine.Random.value *5};
-        var rnd = UnityEngine.Random.value * 20;
-        if (Character.Speed < 1f)
-        {
-            Character.Speed = 1;
-        }
-        Character.HitPoints = (int)rnd;
-        Character.MaxHitPoints = (int) rnd;
-        Character.AttackSpeed = UnityEngine.Random.value * 2;
+        _characterBuilder = new BaseCharacterBuilder();
+
+        Character = _characterBuilder.Build(); 
+       
 
         Debug.Log(root.gameObject.name + "reach: " + Character.Reach);
      

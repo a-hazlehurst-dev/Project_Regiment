@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Security.Policy;
 
 namespace Assets.Code.World
 {
@@ -12,9 +13,19 @@ namespace Assets.Code.World
         public float Speed { get; set; }
         public float AttackSpeed { get; set; }
 
+
+        public float Strength { get; set; }
+        public float Agility { get; set; }
+        public float Endurance { get; set; }
+        
+
         public int HitPoints { get; set; }
         public int MaxHitPoints { get; set; }
         public int Morale { get; set; }
+        public int MaxMorale { get; set; }
+
+        public float Stamina { get; set; }
+        public float MaxStamina { get; set; }
 
         public bool IsDead()
         {

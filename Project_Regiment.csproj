@@ -90,6 +90,7 @@
     <Compile Include="Assets\Brain.cs" />
     <Compile Include="Assets\CharacterCanvasView.cs" />
     <Compile Include="Assets\Code\Actions\FurnitureActions.cs" />
+    <Compile Include="Assets\Code\Builders\BaseCharacterBuilder.cs" />
     <Compile Include="Assets\Code\Builders\CharacterBuilder.cs" />
     <Compile Include="Assets\Code\Builders\FurnitureBuilder.cs" />
     <Compile Include="Assets\Code\Builders\JobBuilder.cs" />
