@@ -16,6 +16,9 @@ public class Brain : MonoBehaviour {
     public GameObject root;
     public Rigidbody2D rigidBody;
     public GameObject target;
+
+    public Animator knifeAttack;
+
  
 
     public bool IsDead;
@@ -98,7 +101,7 @@ public class Brain : MonoBehaviour {
     }
     private void OnTargetReached()
     {
-          _battleStateMachine.ChangeState(new AttackState(root, target,Character.AttackSpeed,Character.Reach, OnTargetDisappeared) );
+          _battleStateMachine.ChangeState(new AttackState(root, target,Character.AttackSpeed,Character.Reach, OnTargetDisappeared, knifeAttack) );
     }
 
     public void OnHit(int x)

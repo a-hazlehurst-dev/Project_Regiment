@@ -12,9 +12,10 @@ namespace Assets.Code.StateMachine
         private readonly float _range;
         private float _cooldownTaken;
         private readonly Action _cbOnTargetDissapeared;
+        private readonly Animator knifeAttack;
         private readonly Action<int> _cbOnHit;
 
-        public AttackState(GameObject self, GameObject target,float attackSpeed, float range,Action cbOnTargetDissapeared)
+        public AttackState(GameObject self, GameObject target,float attackSpeed, float range,Action cbOnTargetDissapeared, Animator knifeAttack)
         {
             _self = self;
             this._target = target;
@@ -23,11 +24,12 @@ namespace Assets.Code.StateMachine
             _cooldownTaken = attackSpeed;
 
             _cbOnTargetDissapeared += cbOnTargetDissapeared;
-         
+            this.knifeAttack = knifeAttack;
         }
 
         public void Enter()
         {
+            knifeAttack.SetBool("OnAttack", true);
         }
 
         public void Execute()
@@ -37,7 +39,7 @@ namespace Assets.Code.StateMachine
             {
                 return;
             }
-
+           
             if (Vector3.Distance(_self.transform.position, _target.transform.position) >= _range)
             {
                 _cbOnTargetDissapeared();
@@ -66,6 +68,7 @@ namespace Assets.Code.StateMachine
 
         public void Exit()
         {
+            knifeAttack.SetBool("OnAttack", false);
         }
 
         public string Name { get { return "Attack"; } }

@@ -12,7 +12,7 @@ namespace Assets.Code.Builders
         public BaseCharacter Build()
         {
 
-            var character = new BaseCharacter { Reach = UnityEngine.Random.value, Speed = UnityEngine.Random.value * 5 };
+            var character = new BaseCharacter { Reach = UnityEngine.Random.value*5, Speed = UnityEngine.Random.value * 5 };
             var rnd = UnityEngine.Random.value * 20;
             if (character.Speed < 1f)
             {
