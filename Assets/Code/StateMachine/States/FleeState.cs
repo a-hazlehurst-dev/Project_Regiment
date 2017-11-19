@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Code.Services.Helper;
+using System;
 using UnityEngine;
 
 namespace Assets.Code.StateMachine.States
@@ -9,35 +10,41 @@ namespace Assets.Code.StateMachine.States
         private readonly GameObject _target;
         private readonly float _speed;
         private readonly Action _cbOnExitReached;
+        private readonly FacingHelper _facingHelper;
+        private string name;
 
 
-        public FleeState(GameObject self, GameObject target, float speed, Action cbOnExitReached)
+        public FleeState(GameObject self, GameObject target, float speed, Action cbOnExitReached, FacingHelper facingHelper)
         {
             _self = self;
             _target = target;
             _speed = speed;
             _cbOnExitReached += cbOnExitReached;
+            _facingHelper = facingHelper;
+            name = _self.gameObject.name;
         }
         public void Enter()
         {
             Debug.Log(_self.name +", is running away.");
+            _self.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
         }
 
         public void Execute()   
         {
+            Debug.Log(name + " is escaping to " );
             if (_target != null)
             {
                 float step = _speed * Time.deltaTime;
+
                 _self.transform.position = Vector3.MoveTowards(_self.transform.position, _target.transform.position, step);
                 var dist = Vector3.Distance(_self.transform.position, _target.transform.position);
+              
 
-                Debug.Log(_self + " distance to safety " + dist);
 
-                if (dist <= 2)
-
+                if (dist <= .2f)
                 {
-                    
-                    GameObject.Destroy(_self);
+                    _self.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.grey;
+                    _cbOnExitReached();
                 }
             }
 

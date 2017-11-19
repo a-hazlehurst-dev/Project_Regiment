@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Code.Services.Helper;
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,27 +15,33 @@ namespace Assets.Code.StateMachine
         private readonly Action _cbOnTargetDissapeared;
         private readonly Animator knifeAttack;
         private readonly Action<int> _cbOnHit;
+        
+        private FacingHelper _facingHelper;
 
-        public AttackState(GameObject self, GameObject target,float attackSpeed, float range,Action cbOnTargetDissapeared, Animator knifeAttack)
+        public AttackState(GameObject self, GameObject target,float attackSpeed, float range,Action cbOnTargetDissapeared, Animator knifeAttack, FacingHelper facingHelper)
         {
             _self = self;
             this._target = target;
             _attackSpeed = attackSpeed;
             _range = range;
             _cooldownTaken = attackSpeed;
-
+            _facingHelper = facingHelper;
+        
             _cbOnTargetDissapeared += cbOnTargetDissapeared;
             this.knifeAttack = knifeAttack;
         }
 
         public void Enter()
         {
+          
             knifeAttack.SetBool("OnAttack", true);
         }
 
         public void Execute()
         {
+            
             _cooldownTaken -= Time.deltaTime;
+
             if (_cooldownTaken > 0)
             {
                 return;

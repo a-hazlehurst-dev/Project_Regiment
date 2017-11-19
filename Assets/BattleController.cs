@@ -21,7 +21,7 @@ public class BattleController : MonoBehaviour {
         foreach (var item in Characters)
         {
             var brain = item.GetComponentInChildren<Brain>();
-            if (brain.IsDead)
+            if (brain.IsDead || brain.HasEscaped)
             {
                 remove.Add(item);
             }

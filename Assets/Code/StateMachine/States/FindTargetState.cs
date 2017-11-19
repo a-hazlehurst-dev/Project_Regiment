@@ -25,11 +25,13 @@ namespace Assets.Code.StateMachine
 
         public void Enter()
         {
-            Debug.Log(_self.gameObject.name + " has entered Search Mode");
+            Debug.Log(_self.gameObject.name + " is searching for " + _layerMask);
         }
 
         public void Execute()
         {
+
+         
             var collisions = Physics.OverlapSphere(_self.transform.position + Vector3.up, _searchRadius).ToList() ;
             
             bool shouldremoveSelf = false;
@@ -61,9 +63,13 @@ namespace Assets.Code.StateMachine
                 }
                 search = search.Except(deadColliders).ToList();
             }
+
             if (search.Any())
             {
-                OnNewTargetFound(search.First().gameObject);
+             
+                var picked = search[UnityEngine.Random.Range(0, search.Count())];
+
+                OnNewTargetFound(picked.gameObject);
             }
         }
 
