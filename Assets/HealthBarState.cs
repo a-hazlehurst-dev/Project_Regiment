@@ -25,7 +25,8 @@ public class HealthBarState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (currentHP == Brain.Character.HitPoints)
+            return;
         max = Brain.Character.MaxHitPoints;
         currentHP = Brain.Character.HitPoints;
 

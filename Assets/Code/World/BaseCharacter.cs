@@ -1,11 +1,13 @@
 ﻿
 using System;
 using System.Security.Policy;
+using UnityEngine;
 
 namespace Assets.Code.World
 {
     public class BaseCharacter
     {
+
         public string Name { get; set; }
         public string Lastname { get; set; }
         public DateTime Dob { get; set; }
@@ -26,6 +28,8 @@ namespace Assets.Code.World
 
         public float Stamina { get; set; }
         public float MaxStamina { get; set; }
+
+        public int AttackPower {  get { return Mathf.CeilToInt(1 + Strength); } }
 
         public bool IsDead()
         {

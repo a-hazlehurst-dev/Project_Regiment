@@ -19,11 +19,10 @@ namespace Assets.Code.StateMachine
         private readonly float _reach;
         public string Name { get { return "Engaging"; } }
 
-        public EngageTarget(GameObject self, GameObject target, float speed, Action cbTargetReached, float reach, FacingHelper facingHelper)
+        public EngageTarget(GameObject self, GameObject target, float speed, Action cbTargetReached, float reach )
         {
             this._self = self;
             this._target = target;
-            _facingHelper = facingHelper;
             _speed = speed;
             OnTargetReached += cbTargetReached;
             this._reach = reach;
@@ -41,10 +40,6 @@ namespace Assets.Code.StateMachine
             float step = _speed * Time.deltaTime;
 
             _self.transform.position =  Vector3.MoveTowards(_self.transform.position, _target.transform.position, step);
-
-
-            
-
 
             if (Vector3.Distance(_self.transform.position, _target.transform.position) <= _reach)
             {

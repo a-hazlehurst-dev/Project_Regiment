@@ -10,17 +10,15 @@ namespace Assets.Code.StateMachine.States
         private readonly GameObject _target;
         private readonly float _speed;
         private readonly Action _cbOnExitReached;
-        private readonly FacingHelper _facingHelper;
         private string name;
 
 
-        public FleeState(GameObject self, GameObject target, float speed, Action cbOnExitReached, FacingHelper facingHelper)
+        public FleeState(GameObject self, GameObject target, float speed, Action cbOnExitReached)
         {
             _self = self;
             _target = target;
             _speed = speed;
             _cbOnExitReached += cbOnExitReached;
-            _facingHelper = facingHelper;
             name = _self.gameObject.name;
         }
         public void Enter()

@@ -1,36 +1,42 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Assets.Code.StateMachine
 {
     public class BattleStateMachine
     {
         private IState _previousState;
-        private IState _currentState;
-        public string ActiveState { get { return _currentState.Name; }}
-
-        public void ChangeState(IState newState)
+        private Dictionary<string,IState> _activeStates;
+        public BattleStateMachine()
         {
-            if (_currentState != null)
-            {
-                _currentState.Exit();
-            }
-            _previousState = _currentState;
-
-            _currentState = newState;
-
-            _currentState.Enter();
+            _activeStates = new Dictionary<string, IState>();
         }
+
+     
+        public void AddState(string type, IState newState)
+        {
+            if (_activeStates != null && _activeStates.ContainsKey(type))
+            {
+                _activeStates[type].Exit();
+                _activeStates.Remove(type);
+            }
+            _activeStates.Add(type, newState);
+
+            _activeStates[type].Enter();
+        }
+
 
         public void ExecuteUpdate()
         {
-            _currentState.Execute();
+            foreach (var state in _activeStates.Keys.ToArray())
+            {
+                _activeStates[state].Execute();
+            }
+
         }
 
-        public void LoadPreviousState()
-        {
-            _currentState.Exit();
-            _currentState = _previousState;
-            _currentState.Enter();
-        }
+      
 
     }
 }

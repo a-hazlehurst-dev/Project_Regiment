@@ -1,11 +1,8 @@
-﻿using System;
-using Assets.Code.StateMachine;
+﻿using Assets.Code.StateMachine;
 using Assets.Code.World;
-using System.Collections.Generic;
 using Assets.Code.Builders;
 using Assets.Code.StateMachine.States;
 using UnityEngine;
-using UnityEngine.UI;
 using Assets.Code.Services.Helper;
 
 public class Brain : MonoBehaviour {
@@ -21,9 +18,12 @@ public class Brain : MonoBehaviour {
     public FacingHelper _facingHelper;
     public bool IsFleeing;
     public bool HasEscaped;
+    public bool HasWon;
     public Animator knifeAttack;
 
     private string facing = "oblivion";
+
+    private FindTargetState _findTargetState;
 
 
     public bool IsDead;
@@ -31,8 +31,10 @@ public class Brain : MonoBehaviour {
 
     public void OnVictory()
     {
-        _battleStateMachine.ChangeState(new CelebrationState(root));
+        _battleStateMachine.AddState("move",new CelebrationState(root));
+        
         Debug.Log(root.gameObject.name + " has won.");
+        HasWon = true;
     }
 
     void Start()
@@ -40,60 +42,57 @@ public class Brain : MonoBehaviour {
         _battleStateMachine = new BattleStateMachine();
         _characterBuilder = new BaseCharacterBuilder();
         _facingHelper = new FacingHelper(ref facing);
+        _findTargetState = new FindTargetState(root, this, 20, "Battle", OnNewTargetFound);
 
         Character = _characterBuilder.Build(); 
-       
 
         Debug.Log(root.gameObject.name + "reach: " + Character.Reach);
      
-        _battleStateMachine.ChangeState(new FindTargetState(root, this, 10,  "Battle", OnNewTargetFound));
+        _battleStateMachine.AddState("move", new FindTargetState(root, this, 10,  "Battle", OnNewTargetFound));
        
     }
 
     public void ExitReached()
     {
         Debug.Log("Exit was reached.");
+
         HasEscaped = true;
     }
 
     void Update()
     {
-
-        
-
-        _facingHelper.SetFacing(root, target, "loop");
-
         _battleStateMachine.ExecuteUpdate();
-
-        //MyCanvas.state = _battleStateMachine.ActiveState;
-
-
-        if (IsDead)
+        if (IsDead || HasEscaped || HasWon)
         {
-            _battleStateMachine.ChangeState(new FindTargetState(root, this, 20  , "Battle", OnNewTargetFound));
             return;
         }
 
-       
+        
 
-      
-        if(target == null|| target.GetComponentInChildren<Brain>().HasEscaped)
+        if (target == null || target.GetComponentInChildren<Brain>().HasEscaped || target.GetComponentInChildren<Brain>().IsDead)
         {
-            _battleStateMachine.ChangeState(new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
+            _battleStateMachine.AddState("move", new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
         }
+        _facingHelper.SetFacing(root, target, "loop");
     }
+
 
     public void Die()
     {
         IsDead = true;
         Debug.Log(root.gameObject.name + " has died.");
-        _battleStateMachine.ChangeState(new DyingState(root ));
+        _battleStateMachine.AddState("move", new DyingState(root, OnDead ));
+    }
+
+    public void OnDead()
+    {
+        
     }
 
     private void OnTargetDisappeared()
     {
         Debug.Log(root.name + " target dissapeared finding new target");
-        _battleStateMachine.ChangeState(new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
+        _battleStateMachine.AddState("move", new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
     }
 
     private void OnExitFound(GameObject newTarget)
@@ -101,11 +100,11 @@ public class Brain : MonoBehaviour {
         target = newTarget;
         IsFleeing = true;
         Debug.Log(root.gameObject.name + " has picked exit point: " + target.name);
-        _battleStateMachine.ChangeState(new FleeState(root, target, Character.Speed, ExitReached, _facingHelper));
+        _battleStateMachine.AddState("move", new FleeState(root, target, Character.Speed, ExitReached));
     }
     private void OnTargetReached()
     {
-          _battleStateMachine.ChangeState(new AttackState(root, target,Character.AttackSpeed,Character.Reach, OnTargetDisappeared, knifeAttack, _facingHelper) );
+          _battleStateMachine.AddState("move", new AttackState(root, target,Character.AttackSpeed,Character.Reach, OnTargetDisappeared, knifeAttack) );
     }
 
     public void OnHit(int x)
@@ -125,7 +124,7 @@ public class Brain : MonoBehaviour {
 
         if (hpPer <= 30 && !IsFleeing)
         {
-            _battleStateMachine.ChangeState(new FindTargetState(root, this, 20, "Exit", OnExitFound));
+            _battleStateMachine.AddState("move", new FindTargetState(root, this, 20, "Exit", OnExitFound));
         }
 
         
@@ -135,7 +134,8 @@ public class Brain : MonoBehaviour {
     {
         target = newTarget;
         Debug.Log(root.name + " has found " + target.name);
-        _battleStateMachine.ChangeState(new EngageTarget(root, target, Character.Speed, OnTargetReached, Character.Reach, _facingHelper));
+        _battleStateMachine.AddState("move", new EngageTarget(root, target, Character.Speed, OnTargetReached, Character.Reach));
+        _facingHelper.SetFacing(root, target, "loop");
     }
     
 

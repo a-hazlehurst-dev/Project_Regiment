@@ -51,17 +51,19 @@ namespace Assets.Code.Services.Helper
 
             }
 
-            Debug.Log(objectToMove.gameObject + " is facing " + _facing + " and needs to face " + dirToFace);
-
+           
             if (string.Compare(_facing, dirToFace) != 0)
             {
+               // Debug.Log(objectToMove.gameObject + " is facing " + _facing + " and needs to face " + dirToFace + string.Compare(_facing, dirToFace));
+
                 if (dirToFace == "left")
                 {
-                    facingGO.transform.Rotate(0, 180, 0);
+                    
+                    facingGO.transform.eulerAngles = new Vector3(0, 180, 0);
                 }
                 else if (dirToFace == "right")
                 {
-                    facingGO.transform.Rotate(0, 0, 0);
+                    facingGO.transform.eulerAngles = new Vector3(0, 0, 0);
                 }
             }
 

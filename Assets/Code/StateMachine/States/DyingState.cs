@@ -10,11 +10,13 @@ namespace Assets.Code.StateMachine.States
     {
         private readonly GameObject _self;
         private bool AmILyingDown = false;
+        private Action _cbOnDead;
 
         public string Name { get { return "Dying"; } }
-        public DyingState(GameObject self)
+        public DyingState(GameObject self, Action cbOnDead)
         {
             _self = self;
+            _cbOnDead += cbOnDead;
           
         }
 
@@ -33,7 +35,9 @@ namespace Assets.Code.StateMachine.States
                 renderer.gameObject.transform.Rotate(0, 0, 90);
                 AmILyingDown = true;
             }
-            
+            _cbOnDead();
+
+
         }
 
         public void Exit()
