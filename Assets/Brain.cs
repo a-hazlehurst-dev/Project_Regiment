@@ -49,7 +49,6 @@ public class Brain : MonoBehaviour {
         Debug.Log(root.gameObject.name + "reach: " + Character.Reach);
      
         _battleStateMachine.AddState("move", new FindTargetState(root, this, 10,  "Battle", OnNewTargetFound));
-       
     }
 
     public void ExitReached()
@@ -66,8 +65,6 @@ public class Brain : MonoBehaviour {
         {
             return;
         }
-
-        
 
         if (target == null || target.GetComponentInChildren<Brain>().HasEscaped || target.GetComponentInChildren<Brain>().IsDead)
         {
@@ -91,7 +88,6 @@ public class Brain : MonoBehaviour {
 
     private void OnTargetDisappeared()
     {
-        Debug.Log(root.name + " target dissapeared finding new target");
         _battleStateMachine.AddState("move", new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
     }
 
@@ -99,12 +95,11 @@ public class Brain : MonoBehaviour {
     {
         target = newTarget;
         IsFleeing = true;
-        Debug.Log(root.gameObject.name + " has picked exit point: " + target.name);
         _battleStateMachine.AddState("move", new FleeState(root, target, Character.Speed, ExitReached));
     }
     private void OnTargetReached()
     {
-          _battleStateMachine.AddState("move", new AttackState(root, target,Character.AttackSpeed,Character.Reach, OnTargetDisappeared, knifeAttack) );
+          _battleStateMachine.AddState("move", new AttackState(root, target,Character, OnTargetDisappeared, knifeAttack) );
     }
 
     public void OnHit(int x)
@@ -112,7 +107,6 @@ public class Brain : MonoBehaviour {
         if (IsDead|| HasEscaped) { return; }
      
         Character.HitPoints -= x;
-        Debug.Log(root.name +" has "+ Character.HitPoints + " left.");
 
         if (Character.HitPoints <= 0)
         {

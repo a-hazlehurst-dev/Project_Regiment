@@ -1,5 +1,6 @@
 ﻿using Assets.Code.Services.Helper;
 using System;
+using Assets.Code.World;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,21 +10,19 @@ namespace Assets.Code.StateMachine
     {
         private readonly GameObject _self;
         private  GameObject _target;
-        private readonly float _attackSpeed;
-        private readonly float _range;
+        private readonly BaseCharacter _character;
         private float _cooldownTaken;
         private readonly Action _cbOnTargetDissapeared;
         private readonly Animator knifeAttack;
         private readonly Action<int> _cbOnHit;
         
 
-        public AttackState(GameObject self, GameObject target,float attackSpeed, float range,Action cbOnTargetDissapeared, Animator knifeAttack)
+        public AttackState(GameObject self, GameObject target, BaseCharacter character,Action cbOnTargetDissapeared, Animator knifeAttack)
         {
             _self = self;
             this._target = target;
-            _attackSpeed = attackSpeed;
-            _range = range;
-            _cooldownTaken = attackSpeed;
+            _character = character;
+            _cooldownTaken = _character.AttackSpeed;
         
             _cbOnTargetDissapeared += cbOnTargetDissapeared;
             this.knifeAttack = knifeAttack;
@@ -45,7 +44,7 @@ namespace Assets.Code.StateMachine
                 return;
             }
            
-            if (Vector3.Distance(_self.transform.position, _target.transform.position) >= _range)
+            if (Vector3.Distance(_self.transform.position, _target.transform.position) >= _character.Reach)
             {
                 _cbOnTargetDissapeared();
                 return;
@@ -55,8 +54,9 @@ namespace Assets.Code.StateMachine
 
             if (brain != null)
             {
-                brain.OnHit(1);
-                Debug.Log(_self.gameObject.name + "has hit " + _target.gameObject.name);
+                brain.OnHit(_character.AttackDamage);
+                Debug.Log(_self.gameObject.name + "has hit " + _target.gameObject.name + " for " +
+                          _character.AttackDamage + " damage");
 
                 if (brain.Character.IsDead())
                 {
@@ -67,7 +67,7 @@ namespace Assets.Code.StateMachine
            
             }
 
-            _cooldownTaken = _attackSpeed;
+            _cooldownTaken = _character.AttackSpeed;
 
         }
 

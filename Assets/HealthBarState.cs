@@ -37,7 +37,7 @@ public class HealthBarState : MonoBehaviour {
         var cr = Brain.Character.HitPoints * 1.0f; ;
 
         var val = cr/ maxPerc  ;
-        Debug.Log(Brain.root.name + " HP:" + Brain.Character.HitPoints + "( "+val+")");
+
         
         slider.value = Brain.Character.HitPoints;    
 
