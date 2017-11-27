@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 using UnityEngine;
 
-namespace Assets.Code.StateMachine.States
+namespace Assets.Code.StateMachine.States.Other
 {
     public class CelebrationState : IState
     {
@@ -15,6 +12,7 @@ namespace Assets.Code.StateMachine.States
         private Color switchColorTo;
 
         public string Name { get { return "Celebrating"; } }
+        public string StateType { get { return "other"; } }
 
         public CelebrationState(GameObject self)
         {

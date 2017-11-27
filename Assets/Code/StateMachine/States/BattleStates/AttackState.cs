@@ -16,7 +16,7 @@ namespace Assets.Code.StateMachine
         private readonly Animator knifeAttack;
         private readonly Action<int> _cbOnHit;
         
-
+        public string StateType { get { return "battle"; } }
         public AttackState(GameObject self, GameObject target, BaseCharacter character,Action cbOnTargetDissapeared, Animator knifeAttack)
         {
             _self = self;

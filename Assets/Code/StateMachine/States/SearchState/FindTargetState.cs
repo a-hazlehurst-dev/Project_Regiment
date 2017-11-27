@@ -14,6 +14,7 @@ namespace Assets.Code.StateMachine
         private readonly string _layerMask;
         private Action<GameObject> OnNewTargetFound;
         public string Name { get { return "Searching"; } }
+        public string StateType {  get { return "search"; } }
         public FindTargetState(GameObject self, Brain brain, float searchRadius, string layerMask, Action<GameObject> cbOnTargetFound)
         {
             this._self = self;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.Code.StateMachine.States
+namespace Assets.Code.StateMachine.States.Other
 {
     public class DyingState : IState
     {
@@ -13,6 +13,7 @@ namespace Assets.Code.StateMachine.States
         private Action _cbOnDead;
 
         public string Name { get { return "Dying"; } }
+        public string StateType { get { return "other"; } }
         public DyingState(GameObject self, Action cbOnDead)
         {
             _self = self;

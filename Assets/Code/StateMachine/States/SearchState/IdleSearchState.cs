@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Code.StateMachine.States
+namespace Assets.Code.StateMachine.States.SearchState
 {
-    public class NonState : IState
+    public class IdleSearchState : IState
     {
-        public string Name
-        {
-            get
-            {
-                return "Non State";
-            }
-        }
-
         public void Enter()
         {
-         
+            
         }
 
         public void Execute()
         {
-           //Do Nothing
         }
 
         public void Exit()
         {
-         
         }
+
+        public string StateType { get { return "search"; } }
+        public string Name { get { return "Idle"; }}
     }
 }

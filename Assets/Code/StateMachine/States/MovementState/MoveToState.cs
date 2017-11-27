@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Code.StateMachine
 {
-    public class EngageTarget : IState
+    public class MoveToState : IState
     {
         private readonly GameObject _self;
         private  GameObject _target;
@@ -17,9 +17,10 @@ namespace Assets.Code.StateMachine
         private FacingHelper _facingHelper;
         private Action OnTargetReached;
         private readonly float _reach;
-        public string Name { get { return "Engaging"; } }
+        public string Name { get { return "Move To"; } }
+        public string StateType { get { return "move"; } }
 
-        public EngageTarget(GameObject self, GameObject target, float speed, Action cbTargetReached, float reach )
+        public MoveToState(GameObject self, GameObject target, float speed, Action cbTargetReached, float reach )
         {
             this._self = self;
             this._target = target;

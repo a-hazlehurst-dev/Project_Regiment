@@ -7,6 +7,7 @@ namespace Assets.Code.StateMachine
         void Execute();
         void Exit();
 
+        string StateType { get; }
         string Name { get; }
     }
 }
