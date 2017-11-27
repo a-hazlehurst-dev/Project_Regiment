@@ -14,10 +14,9 @@ namespace Assets.Code.World
         public float Reach { get; set; }
         public float Speed { get; set; }
         public float AttackSpeed { get; set; }
-        public int AttackDamage { get; set; }
 
 
-        public int Strength { get; set; }
+        public float Strength { get; set; }
         public float Agility { get; set; }
         public float Endurance { get; set; }
         

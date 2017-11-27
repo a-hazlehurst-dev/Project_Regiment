@@ -6,6 +6,7 @@ using UnityEngine;
 using Assets.Code.Services.Helper;
 using Assets.Code.StateMachine.States.MovementState;
 using Assets.Code.StateMachine.States.SearchState;
+using Assets.Code.StateMachine.States.Other;
 
 public class Brain : MonoBehaviour {
 
@@ -47,9 +48,9 @@ public class Brain : MonoBehaviour {
         _characterBuilder = new BaseCharacterBuilder();
         _facingHelper = new FacingHelper(ref facing);
 
-        Character = _characterBuilder.Build(); 
-
+        Character = _characterBuilder.Build();
         _battleStateMachine.AddState(new FindTargetState(root, this, 10, "Battle", OnNewTargetFound));
+
     }
 
     public void ExitReached()
@@ -68,6 +69,8 @@ public class Brain : MonoBehaviour {
         {
             return;
         }
+
+        
 
         if (target == null || target.GetComponentInChildren<Brain>().HasEscaped || target.GetComponentInChildren<Brain>().IsDead)
         {
@@ -93,13 +96,16 @@ public class Brain : MonoBehaviour {
 
     private void OnTargetDisappeared()
     {
+
         _battleStateMachine.AddState( new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
+
     }
 
     private void OnExitFound(GameObject newTarget)
     {
         target = newTarget;
         IsFleeing = true;
+
         _battleStateMachine.AddState(new FleeState(root, target, Character.Speed, ExitReached));
     }
     private void OnTargetReached()
@@ -111,6 +117,7 @@ public class Brain : MonoBehaviour {
     public void OnTargetOutOfRange(GameObject go)
     {
         _battleStateMachine.AddState(new MoveToState(root, target, Character.Speed, OnTargetReached, Character.Reach));
+
     }
 
     public void OnHit(int x)
@@ -118,6 +125,7 @@ public class Brain : MonoBehaviour {
         if (IsDead|| HasEscaped) { return; }
      
         Character.HitPoints -= x;
+        Debug.Log(root.name +" has "+ Character.HitPoints + " left.");
 
         if (Character.HitPoints <= 0)
         {

@@ -17,18 +17,16 @@ namespace Assets.Code.Builders
             character.Endurance = UnityEngine.Random.Range(2, 8);
             if(character.Reach <.07f) { character.Reach = 0.75f; }
 
-            character.Strength = UnityEngine.Random.Range(0, 4);
             var rnd = 10;
             if (character.Speed < 1f)
             {
                 character.Speed = 1;
             }
+
             character.MaxHitPoints = 10 + Mathf.CeilToInt(UnityEngine.Random.Range(4, 4+character.Endurance) * 3);
             character.HitPoints = character.MaxHitPoints;
             if(rnd<1) { rnd += 1; }
             character.AttackSpeed = UnityEngine.Random.value * 2;
-
-            character.AttackDamage = 1 + character.Strength;
             return character;
         }
     }

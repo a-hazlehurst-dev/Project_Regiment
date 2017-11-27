@@ -1,6 +1,6 @@
 ﻿using Assets.Code.Services.Helper;
-using System;
 using Assets.Code.World;
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -22,7 +22,7 @@ namespace Assets.Code.StateMachine
             _self = self;
             this._target = target;
             _character = character;
-            _cooldownTaken = _character.AttackSpeed;
+            _cooldownTaken = character.AttackSpeed;
         
             _cbOnTargetDissapeared += cbOnTargetDissapeared;
             this.knifeAttack = knifeAttack;
@@ -54,9 +54,8 @@ namespace Assets.Code.StateMachine
 
             if (brain != null)
             {
-                brain.OnHit(_character.AttackDamage);
-                Debug.Log(_self.gameObject.name + "has hit " + _target.gameObject.name + " for " +
-                          _character.AttackDamage + " damage");
+                brain.OnHit(1);
+                Debug.Log(_self.gameObject.name + "has hit " + _target.gameObject.name);
 
                 if (brain.Character.IsDead())
                 {
