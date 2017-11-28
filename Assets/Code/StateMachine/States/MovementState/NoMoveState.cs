@@ -4,31 +4,32 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.Code.StateMachine.States.BattleStates
+namespace Assets.Code.StateMachine.States.MovementState
 {
-    public class NonBattleState : IState
+    public class NoMoveState : IState
     {
         private readonly GameObject _self;
         public string Who { get { return _self.gameObject.name; } }
 
-        public NonBattleState(GameObject self)
+        public NoMoveState(GameObject self)
         {
             _self = self;
         }
         public void Enter()
         {
-            
         }
 
         public void Execute()
         {
+            
         }
 
         public void Exit()
         {
+            
         }
 
-        public string StateType { get { return "battle"; }}
-        public string Name { get { return "Non Battle"; }}
+        public string StateType { get { return "move"; } }
+        public string Name { get { return "No Move"; } }
     }
 }

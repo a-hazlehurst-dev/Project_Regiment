@@ -20,6 +20,7 @@ namespace Assets.Code.StateMachine
      
         public void AddState(IState newState)
         {
+            Debug.Log(newState.Who + " " + GetActiveStates());
             if (_activeStates != null && _activeStates.ContainsKey(newState.StateType))
             {
                 _activeStates[newState.StateType].Exit();

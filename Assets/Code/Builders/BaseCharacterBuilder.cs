@@ -13,20 +13,19 @@ namespace Assets.Code.Builders
         public BaseCharacter Build()
         {
 
-            var character = new BaseCharacter { Reach = UnityEngine.Random.value*2, Speed = UnityEngine.Random.value *3 };
+            var character = new BaseCharacter { Reach = UnityEngine.Random.value*2  };
             character.Endurance = UnityEngine.Random.Range(2, 8);
-            if(character.Reach <.07f) { character.Reach = 0.75f; }
+            character.Strength = UnityEngine.Random.Range(2, 8);
+            character.Agility = UnityEngine.Random.Range(2, 8);
+
+            if (character.Reach <.5f) { character.Reach = 0.5f; }
 
             var rnd = 10;
-            if (character.Speed < 1f)
-            {
-                character.Speed = 1;
-            }
-
+           
             character.MaxHitPoints = 10 + Mathf.CeilToInt(UnityEngine.Random.Range(4, 4+character.Endurance) * 3);
             character.HitPoints = character.MaxHitPoints;
             if(rnd<1) { rnd += 1; }
-            character.AttackSpeed = UnityEngine.Random.value * 2;
+            
             return character;
         }
     }

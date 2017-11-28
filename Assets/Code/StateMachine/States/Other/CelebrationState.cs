@@ -5,18 +5,20 @@ namespace Assets.Code.StateMachine.States.Other
 {
     public class CelebrationState : IState
     {
-        private readonly GameObject self;
+        private readonly GameObject _self;
         private float switchCooldown;
         private float cooldown;
    
         private Color switchColorTo;
-
+        public string Who { get { return _self.gameObject.name; } }
         public string Name { get { return "Celebrating"; } }
         public string StateType { get { return "other"; } }
 
+    
+
         public CelebrationState(GameObject self)
         {
-            this.self = self;
+            _self = self;
             switchCooldown = 1;
             cooldown = 1;
          
@@ -39,7 +41,7 @@ namespace Assets.Code.StateMachine.States.Other
                 {
                     switchColorTo = Color.blue;
                 }
-                var renderer = self.GetComponentInChildren<SpriteRenderer>();
+                var renderer = _self.GetComponentInChildren<SpriteRenderer>();
                 renderer.color = switchColorTo;
                 cooldown = switchCooldown;
             }

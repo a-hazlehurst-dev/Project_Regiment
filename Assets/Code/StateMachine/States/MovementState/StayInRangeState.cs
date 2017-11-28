@@ -9,6 +9,7 @@ namespace Assets.Code.StateMachine.States.MovementState
 {
     public class StayInRangeState : IState
     {
+        public string Who { get { return _self.gameObject.name; } }
         private readonly GameObject _self;
         private readonly GameObject _target;
         private readonly BaseCharacter _character;

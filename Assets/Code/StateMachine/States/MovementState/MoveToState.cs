@@ -19,6 +19,7 @@ namespace Assets.Code.StateMachine
         private readonly float _reach;
         public string Name { get { return "Move To"; } }
         public string StateType { get { return "move"; } }
+        public string Who { get { return _self.gameObject.name; } }
 
         public MoveToState(GameObject self, GameObject target, float speed, Action cbTargetReached, float reach )
         {

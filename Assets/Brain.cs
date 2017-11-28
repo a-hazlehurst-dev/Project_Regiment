@@ -4,6 +4,7 @@ using Assets.Code.Builders;
 using Assets.Code.StateMachine.States;
 using UnityEngine;
 using Assets.Code.Services.Helper;
+using Assets.Code.StateMachine.States.BattleStates;
 using Assets.Code.StateMachine.States.MovementState;
 using Assets.Code.StateMachine.States.SearchState;
 using Assets.Code.StateMachine.States.Other;
@@ -14,6 +15,8 @@ public class Brain : MonoBehaviour {
     private BaseCharacterBuilder _characterBuilder;
     public CharacterCanvasView MyCanvas;
     public BaseCharacter Character { get; set; }
+    public bool IsDefending { get; set; }
+
     public GameObject root;
     public Rigidbody2D rigidBody;
     public GameObject target;
@@ -28,7 +31,7 @@ public class Brain : MonoBehaviour {
 
     private FindTargetState _findTargetState;
     public string baseName = "";
-
+ 
 
     public bool IsDead;
     public float speed;
@@ -36,7 +39,10 @@ public class Brain : MonoBehaviour {
     public void OnVictory()
     {
         _battleStateMachine.AddState(new CelebrationState(root));
-        
+        _battleStateMachine.AddState(new IdleSearchState(root));
+        _battleStateMachine.AddState(new NonBattleState(root));
+        _battleStateMachine.AddState(new NoMoveState(root));
+
         Debug.Log( baseName+ " has won.");
         HasWon = true;
     }
@@ -51,6 +57,17 @@ public class Brain : MonoBehaviour {
         Character = _characterBuilder.Build();
         _battleStateMachine.AddState(new FindTargetState(root, this, 10, "Battle", OnNewTargetFound));
 
+   
+
+    }
+
+    public void OnBeingAttacked()
+    {
+        //im being attacked shall i turn on defensive mode
+        if (UnityEngine.Random.Range(1, 100) < 50)
+        {
+            _battleStateMachine.AddState(new DefendState(root));
+        }
     }
 
     public void ExitReached()
@@ -63,22 +80,18 @@ public class Brain : MonoBehaviour {
     void Update()
     {
 
-        Debug.Log(baseName + " " + _battleStateMachine.GetActiveStates());
+        
         _battleStateMachine.ExecuteUpdate();
         if (IsDead || HasEscaped || HasWon)
         {
             return;
         }
 
-        
-
         if (target == null || target.GetComponentInChildren<Brain>().HasEscaped || target.GetComponentInChildren<Brain>().IsDead)
         {
             _battleStateMachine.AddState(new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
         }
         _facingHelper.SetFacing(root, target, "loop");
-
-        
     }
 
 
@@ -87,6 +100,9 @@ public class Brain : MonoBehaviour {
         IsDead = true;
         Debug.Log(root.gameObject.name + " has died.");
         _battleStateMachine.AddState( new DyingState(root, OnDead ));
+        _battleStateMachine.AddState( new IdleSearchState(root));
+        _battleStateMachine.AddState(new NonBattleState(root));
+        _battleStateMachine.AddState(new NoMoveState(root));
     }
 
     public void OnDead()
@@ -107,6 +123,8 @@ public class Brain : MonoBehaviour {
         IsFleeing = true;
 
         _battleStateMachine.AddState(new FleeState(root, target, Character.Speed, ExitReached));
+        _battleStateMachine.AddState(new IdleSearchState(root));
+        _battleStateMachine.AddState(new NonBattleState(root));
     }
     private void OnTargetReached()
     {
@@ -117,15 +135,28 @@ public class Brain : MonoBehaviour {
     public void OnTargetOutOfRange(GameObject go)
     {
         _battleStateMachine.AddState(new MoveToState(root, target, Character.Speed, OnTargetReached, Character.Reach));
-
+        _battleStateMachine.AddState(new NonBattleState(root));
     }
 
     public void OnHit(int x)
     {
         if (IsDead|| HasEscaped) { return; }
-     
-        Character.HitPoints -= x;
-        Debug.Log(root.name +" has "+ Character.HitPoints + " left.");
+
+        if (IsDefending)
+        {
+            var t  = (float)x *.50f;
+            Debug.Log(baseName + " has defended reducing damage (" + t+ ", " + x );
+            x = Mathf.CeilToInt(t);
+            //reduce damage by 50
+
+            IsDefending = false;
+            _battleStateMachine.AddState(new AttackState(root, target, Character, OnTargetDisappeared, knifeAttack));
+
+            
+        }
+        
+        Character.HitPoints -= x  + UnityEngine.Random.Range(1,3);
+        
 
         if (Character.HitPoints <= 0)
         {
@@ -147,7 +178,7 @@ public class Brain : MonoBehaviour {
     {
         target = newTarget;
         
-        _battleStateMachine.AddState(new IdleSearchState());
+        _battleStateMachine.AddState(new IdleSearchState(root));
         _battleStateMachine.AddState( new MoveToState(root, target, Character.Speed, OnTargetReached, Character.Reach));
     }
     

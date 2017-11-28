@@ -9,5 +9,6 @@ namespace Assets.Code.StateMachine
 
         string StateType { get; }
         string Name { get; }
+        string Who { get; }
     }
 }

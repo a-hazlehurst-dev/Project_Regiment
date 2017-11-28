@@ -12,6 +12,7 @@ namespace Assets.Code.StateMachine.States
         private readonly Action _cbOnExitReached;
         private string name;
         public string StateType { get { return "move"; } }
+        public string Who { get { return _self.gameObject.name; } }
 
         public FleeState(GameObject self, GameObject target, float speed, Action cbOnExitReached)
         {

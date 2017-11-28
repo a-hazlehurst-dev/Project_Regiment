@@ -6,12 +6,13 @@ using UnityEngine;
 
 namespace Assets.Code.StateMachine.States.BattleStates
 {
-    public class NonBattleState : IState
+    public class DefendState : IState
     {
         private readonly GameObject _self;
         public string Who { get { return _self.gameObject.name; } }
 
-        public NonBattleState(GameObject self)
+
+        public DefendState(GameObject self)
         {
             _self = self;
         }
@@ -22,13 +23,15 @@ namespace Assets.Code.StateMachine.States.BattleStates
 
         public void Execute()
         {
+            _self.GetComponentInChildren<Brain>().IsDefending = true;
         }
 
         public void Exit()
         {
+            
         }
 
-        public string StateType { get { return "battle"; }}
-        public string Name { get { return "Non Battle"; }}
+        public string StateType { get { return "battle"; } }
+        public string Name { get { return "Defend"; } }
     }
 }

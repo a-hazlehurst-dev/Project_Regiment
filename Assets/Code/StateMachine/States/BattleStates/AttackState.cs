@@ -17,6 +17,7 @@ namespace Assets.Code.StateMachine
         private readonly Action<int> _cbOnHit;
         
         public string StateType { get { return "battle"; } }
+        public string Who { get { return _self.gameObject.name; } }
         public AttackState(GameObject self, GameObject target, BaseCharacter character,Action cbOnTargetDissapeared, Animator knifeAttack)
         {
             _self = self;
@@ -36,8 +37,9 @@ namespace Assets.Code.StateMachine
 
         public void Execute()
         {
-            
+            Brain brain = _target.GetComponentInChildren<Brain>();
             _cooldownTaken -= Time.deltaTime;
+            brain.OnBeingAttacked();
 
             if (_cooldownTaken > 0)
             {
@@ -50,11 +52,11 @@ namespace Assets.Code.StateMachine
                 return;
             }
 
-            Brain brain = _target.GetComponentInChildren<Brain>();
+            
 
             if (brain != null)
             {
-                brain.OnHit(1);
+                brain.OnHit(_character.AttackPower);
                 Debug.Log(_self.gameObject.name + "has hit " + _target.gameObject.name);
 
                 if (brain.Character.IsDead())

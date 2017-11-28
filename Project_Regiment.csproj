@@ -158,11 +158,12 @@
     <Compile Include="Assets\Code\StateMachine\BattleStateMachine.cs" />
     <Compile Include="Assets\Code\StateMachine\IState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\BattleStates\AttackState.cs" />
+    <Compile Include="Assets\Code\StateMachine\States\BattleStates\DefendState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\BattleStates\NonBattleState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\MovementState\FleeState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\MovementState\MoveToState.cs" />
+    <Compile Include="Assets\Code\StateMachine\States\MovementState\NoMoveState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\MovementState\StayInRangeState.cs" />
-    <Compile Include="Assets\Code\StateMachine\States\NoState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\Other\CelebrationState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\Other\DyingState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\SearchState\FindTargetState.cs" />

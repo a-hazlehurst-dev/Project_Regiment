@@ -14,6 +14,7 @@ namespace Assets.Code.StateMachine.States.Other
 
         public string Name { get { return "Dying"; } }
         public string StateType { get { return "other"; } }
+        public string Who { get { return _self.gameObject.name; } }
         public DyingState(GameObject self, Action cbOnDead)
         {
             _self = self;
