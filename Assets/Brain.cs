@@ -66,7 +66,8 @@ public class Brain : MonoBehaviour {
         //im being attacked shall i turn on defensive mode
         if (UnityEngine.Random.Range(1, 100) < 50)
         {
-            _battleStateMachine.AddState(new DefendState(root));
+          
+            _battleStateMachine.AddState(new DefendState(root, knifeAttack, IsDefending));
         }
     }
 
@@ -105,9 +106,10 @@ public class Brain : MonoBehaviour {
         _battleStateMachine.AddState(new NoMoveState(root));
     }
 
+  
     public void OnDead()
     {
-        
+
     }
 
     private void OnTargetDisappeared()
@@ -129,6 +131,7 @@ public class Brain : MonoBehaviour {
     private void OnTargetReached()
     {
         _battleStateMachine.AddState(new StayInRangeState(root, target, Character, OnTargetOutOfRange));
+        IsDefending = false;
           _battleStateMachine.AddState( new AttackState(root, target,Character, OnTargetDisappeared, knifeAttack) );
     }
 

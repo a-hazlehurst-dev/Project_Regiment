@@ -21,6 +21,7 @@ namespace Assets.Code.StateMachine
         public void AddState(IState newState)
         {
             Debug.Log(newState.Who + " " + GetActiveStates());
+
             if (_activeStates != null && _activeStates.ContainsKey(newState.StateType))
             {
                 _activeStates[newState.StateType].Exit();
@@ -45,7 +46,7 @@ namespace Assets.Code.StateMachine
             
         }
 
-        public string GetActiveStates()
+        private string GetActiveStates()
         {
             var states = "";
             foreach (var state in _activeStates.Keys)
