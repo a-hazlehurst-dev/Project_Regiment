@@ -15,37 +15,23 @@ public class Brain : MonoBehaviour {
     private BaseCharacterBuilder _characterBuilder;
     public CharacterCanvasView MyCanvas;
     public BaseCharacter Character { get; set; }
-    public bool IsDefending { get; set; }
-
     public GameObject root;
     public Rigidbody2D rigidBody;
     public GameObject target;
-   
     public FacingHelper _facingHelper;
+    public Animator knifeAttack;
+    private string facing = "oblivion";
+    public string baseName = "";
+    public float TickCoolDown = 1;
+
+
+    public bool IsDefending { get; set; }
     public bool IsFleeing;
     public bool HasEscaped;
     public bool HasWon;
-    public Animator knifeAttack;
-
-    private string facing = "oblivion";
-
-    private FindTargetState _findTargetState;
-    public string baseName = "";
- 
-
     public bool IsDead;
     public float speed;
 
-    public void OnVictory()
-    {
-        _battleStateMachine.AddState(new CelebrationState(root));
-        _battleStateMachine.AddState(new IdleSearchState(root));
-        _battleStateMachine.AddState(new NonBattleState(root));
-        _battleStateMachine.AddState(new NoMoveState(root));
-
-        Debug.Log( baseName+ " has won.");
-        HasWon = true;
-    }
 
     void Start()
     {
@@ -56,33 +42,25 @@ public class Brain : MonoBehaviour {
 
         Character = _characterBuilder.Build();
         _battleStateMachine.AddState(new FindTargetState(root, this, 10, "Battle", OnNewTargetFound));
-
-   
-
-    }
-
-    public void OnBeingAttacked()
-    {
-        //im being attacked shall i turn on defensive mode
-        if (UnityEngine.Random.Range(1, 100) < 50)
-        {
-          
-            _battleStateMachine.AddState(new DefendState(root, knifeAttack, IsDefending));
-        }
-    }
-
-    public void ExitReached()
-    {
-        Debug.Log("Exit was reached.");
-
-        HasEscaped = true;
+        _battleStateMachine.AddState(new NonBattleState(root));
+        _battleStateMachine.AddState(new NoMoveState(root));
     }
 
     void Update()
     {
+        TickCoolDown -= Time.deltaTime;
+        if (TickCoolDown > 0)
+        {
+            return; 
+            
+        }
+        if (Character.Stamina < 10)
+        {
+            _battleStateMachine.AddState(new BattleRestState(root));
+        }
 
-        
         _battleStateMachine.ExecuteUpdate();
+
         if (IsDead || HasEscaped || HasWon)
         {
             return;
@@ -95,6 +73,32 @@ public class Brain : MonoBehaviour {
         _facingHelper.SetFacing(root, target, "loop");
     }
 
+    public void OnBeingAttacked()
+    {
+        //im being attacked shall i turn on defensive mode
+        if (UnityEngine.Random.Range(1, 100) < 50 && Character.Stamina <10)
+        {
+            _battleStateMachine.ExecuteUpdate();
+            _battleStateMachine.AddState(new DefendState(root, knifeAttack));
+        }
+    }
+
+    public void OnVictory()
+    {
+        _battleStateMachine.AddState(new CelebrationState(root));
+        _battleStateMachine.AddState(new IdleSearchState(root));
+        _battleStateMachine.AddState(new NonBattleState(root));
+        _battleStateMachine.AddState(new NoMoveState(root));
+
+        Debug.Log(baseName + " has won.");
+        HasWon = true;
+    }
+
+    public void ExitReached()
+    {
+        Debug.Log("Exit was reached.");
+        HasEscaped = true;
+    }
 
     public void Die()
     {
@@ -114,9 +118,7 @@ public class Brain : MonoBehaviour {
 
     private void OnTargetDisappeared()
     {
-
         _battleStateMachine.AddState( new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
-
     }
 
     private void OnExitFound(GameObject newTarget)
@@ -132,7 +134,10 @@ public class Brain : MonoBehaviour {
     {
         _battleStateMachine.AddState(new StayInRangeState(root, target, Character, OnTargetOutOfRange));
         IsDefending = false;
-          _battleStateMachine.AddState( new AttackState(root, target,Character, OnTargetDisappeared, knifeAttack) );
+        if (Character.Stamina > 10)
+        {
+            _battleStateMachine.AddState(new AttackState(root, target, Character, OnTargetDisappeared, knifeAttack));
+        }
     }
 
     public void OnTargetOutOfRange(GameObject go)
@@ -154,12 +159,9 @@ public class Brain : MonoBehaviour {
 
             IsDefending = false;
             _battleStateMachine.AddState(new AttackState(root, target, Character, OnTargetDisappeared, knifeAttack));
-
-            
         }
         
         Character.HitPoints -= x  + UnityEngine.Random.Range(1,3);
-        
 
         if (Character.HitPoints <= 0)
         {
@@ -184,6 +186,22 @@ public class Brain : MonoBehaviour {
         _battleStateMachine.AddState(new IdleSearchState(root));
         _battleStateMachine.AddState( new MoveToState(root, target, Character.Speed, OnTargetReached, Character.Reach));
     }
-    
 
+   
+    /// <summary>
+    /// occurs when an opponent has completed their attack on me manouvre.
+    /// </summary>
+    public void OnFinishedBeingAttacked()
+    {
+
+        _battleStateMachine.AddState(new AttackState(root, target, Character, OnTargetDisappeared, knifeAttack));
+    }
+
+    /// <summary>
+    /// occures when I have completed an attack Manouvre on an enemy.
+    /// </summary>
+    public void OnFinishedMyAttack()
+    {
+        _battleStateMachine.AddState(new AttackState(root, target, Character, OnTargetDisappeared, knifeAttack));
+    }
 }

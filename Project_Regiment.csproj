@@ -158,6 +158,7 @@
     <Compile Include="Assets\Code\StateMachine\BattleStateMachine.cs" />
     <Compile Include="Assets\Code\StateMachine\IState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\BattleStates\AttackState.cs" />
+    <Compile Include="Assets\Code\StateMachine\States\BattleStates\BattleRestState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\BattleStates\DefendState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\BattleStates\NonBattleState.cs" />
     <Compile Include="Assets\Code\StateMachine\States\MovementState\FleeState.cs" />

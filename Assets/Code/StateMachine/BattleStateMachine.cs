@@ -20,8 +20,6 @@ namespace Assets.Code.StateMachine
      
         public void AddState(IState newState)
         {
-            Debug.Log(newState.Who + " " + GetActiveStates());
-
             if (_activeStates != null && _activeStates.ContainsKey(newState.StateType))
             {
                 _activeStates[newState.StateType].Exit();
@@ -30,20 +28,16 @@ namespace Assets.Code.StateMachine
             _activeStates.Add(newState.StateType, newState);
 
             _activeStates[newState.StateType].Enter();
+            Debug.Log(newState.Who + " " + GetActiveStates());
         }
 
 
         public void ExecuteUpdate()
         {
-            
-
             foreach (var state in _activeStates.Keys.ToArray())
             {
                 _activeStates[state].Execute();
             }
-
-            
-            
         }
 
         private string GetActiveStates()

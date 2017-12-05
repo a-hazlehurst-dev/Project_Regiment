@@ -10,6 +10,8 @@ namespace Assets.Code.StateMachine.States.BattleStates
     {
         private readonly GameObject _self;
         public string Who { get { return _self.gameObject.name; } }
+        public string StateType { get { return "battle"; } }
+        public string Name { get { return "Non Battle"; } }
 
         public NonBattleState(GameObject self)
         {
@@ -28,7 +30,5 @@ namespace Assets.Code.StateMachine.States.BattleStates
         {
         }
 
-        public string StateType { get { return "battle"; }}
-        public string Name { get { return "Non Battle"; }}
     }
 }

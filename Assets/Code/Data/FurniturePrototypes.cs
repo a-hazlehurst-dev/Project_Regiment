@@ -22,7 +22,7 @@ public class FurniturePrototypes
     }
 
 	void LoadFurnitureLua(){
-		string luaPath = "";
+		
 		string filePath = System.IO.Path.Combine (Application.streamingAssetsPath, "LUA");
 		filePath= System.IO.Path.Combine(filePath, "FurnitureActions.lua");
 		//Debug.Log (filePath);

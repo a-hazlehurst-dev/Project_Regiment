@@ -143,7 +143,6 @@ public class Recipe
         }
         return list;
 
-        return new List<MaterialOutput>();
     }
 
 }

@@ -28,8 +28,8 @@ namespace Assets.Code.World
         public int Morale { get; set; }
         public int MaxMorale { get; set; }
 
-        public float Stamina { get; set; }
-        public float MaxStamina { get; set; }
+        public int Stamina { get; set; }
+        public int MaxStamina { get; set; }
 
         public int AttackPower {  get { return Mathf.CeilToInt(1 + Strength); } }
 
@@ -56,6 +56,15 @@ namespace Assets.Code.World
                 return true;
             }
             return false;
+        }
+
+        public void SetStamina(int i)
+        {
+            if (Stamina +i <= 0)
+            {
+                Stamina = 0;
+            }
+            Stamina += i;
         }
     }
 }

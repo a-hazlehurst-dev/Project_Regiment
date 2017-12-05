@@ -21,8 +21,10 @@ namespace Assets.Code.Builders
             if (character.Reach <.5f) { character.Reach = 0.5f; }
 
             var rnd = 10;
-           
+            character.MaxStamina = 10 + Mathf.CeilToInt(UnityEngine.Random.Range(4, 4 + character.Endurance) * 3);
             character.MaxHitPoints = 10 + Mathf.CeilToInt(UnityEngine.Random.Range(4, 4+character.Endurance) * 3);
+            
+            character.Stamina = character.MaxStamina;
             character.HitPoints = character.MaxHitPoints;
             if(rnd<1) { rnd += 1; }
             

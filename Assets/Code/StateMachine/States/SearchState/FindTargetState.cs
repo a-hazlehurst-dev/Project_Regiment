@@ -32,8 +32,6 @@ namespace Assets.Code.StateMachine
 
         public void Execute()
         {
-
-         
             var collisions = Physics.OverlapSphere(_self.transform.position + Vector3.up, _searchRadius).ToList() ;
             
             bool shouldremoveSelf = false;
@@ -41,22 +39,22 @@ namespace Assets.Code.StateMachine
             List<Collider> deadColliders = new List<Collider>();
 
             var search = collisions.Where(x => x.gameObject.layer == LayerMask.NameToLayer(_layerMask)).ToList();
+
             if (_layerMask == "Battle")
             {
                 foreach (var item in search)
                 {
                     if (item.gameObject.name == _self.name)
                     {
-
                         myCollider = item;
                         shouldremoveSelf = true;
                     }
-                   
-                        if (item.gameObject.GetComponentInChildren<Brain>().IsDead)
-                        {
-                            deadColliders.Add(item);
-                        }
-                    
+
+                    if (item.gameObject.GetComponentInChildren<Brain>().IsDead || item.gameObject.GetComponentInChildren<Brain>().HasEscaped)
+                    {
+                        deadColliders.Add(item);
+                    }
+
                 }
 
                 if (shouldremoveSelf)
