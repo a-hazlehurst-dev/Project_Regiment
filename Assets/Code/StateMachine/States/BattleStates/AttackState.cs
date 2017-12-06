@@ -11,12 +11,12 @@ namespace Assets.Code.StateMachine
         private readonly GameObject _self;
         private  GameObject _target;
         private readonly BaseCharacter _character;
-        private Brain _targetBrain;
+        private readonly Brain _targetBrain;
         private Brain _myBrain;
         private float _cooldownTaken;
         private readonly Action _cbOnTargetDissapeared;
         private readonly Animator knifeAttack;
-        private readonly Action<int> _cbOnHit;
+        
         
         public string StateType { get { return "battle"; } }
         public string Name { get { return "Attack"; } }
@@ -56,11 +56,14 @@ namespace Assets.Code.StateMachine
                 return;
             }
 
+            if (knifeAttack.GetBool("OnAttack") == true)
+            {
+                return;
+            }
+
             if (_targetBrain != null)
             {
                 knifeAttack.SetBool("OnAttack", true);
-                _myBrain.Character.SetStamina(-5);
-                _targetBrain.OnHit(_character.AttackPower);
 
                 if (_targetBrain.IsDead|| _targetBrain.HasEscaped)
                 {
@@ -68,15 +71,14 @@ namespace Assets.Code.StateMachine
                 }
             }
 
-            _targetBrain.OnFinishedBeingAttacked();
-            _myBrain.OnFinishedMyAttack();
+            
             _cooldownTaken = _character.AttackSpeed;
             
         }
 
         public void Exit()
         {
-            knifeAttack.SetBool("OnAttack", false);
+            
         }
 
 

@@ -12,7 +12,7 @@ namespace Assets.Code.StateMachine.States.Other
         private bool AmILyingDown = false;
         private Action _cbOnDead;
 
-        public string Name { get { return "Dying"; } }
+        public string Name { get { return "Dead"; } }
         public string StateType { get { return "other"; } }
         public string Who { get { return _self.gameObject.name; } }
         public DyingState(GameObject self, Action cbOnDead)
@@ -36,6 +36,7 @@ namespace Assets.Code.StateMachine.States.Other
             {
                 renderer.gameObject.transform.Rotate(0, 0, 90);
                 AmILyingDown = true;
+                Debug.Log("i am dead");
             }
             _cbOnDead();
 

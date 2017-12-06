@@ -49,6 +49,7 @@ public class Brain : MonoBehaviour {
     void Update()
     {
         TickCoolDown -= Time.deltaTime;
+        _facingHelper.SetFacing(root, target, "loop");
         if (TickCoolDown > 0)
         {
             return; 
@@ -70,7 +71,7 @@ public class Brain : MonoBehaviour {
         {
             _battleStateMachine.AddState(new FindTargetState(root, this, 20, "Battle", OnNewTargetFound));
         }
-        _facingHelper.SetFacing(root, target, "loop");
+        
     }
 
     public void OnBeingAttacked()
@@ -102,18 +103,20 @@ public class Brain : MonoBehaviour {
 
     public void Die()
     {
-        IsDead = true;
+       
+        IsFleeing = false;
         Debug.Log(root.gameObject.name + " has died.");
         _battleStateMachine.AddState( new DyingState(root, OnDead ));
-        _battleStateMachine.AddState( new IdleSearchState(root));
-        _battleStateMachine.AddState(new NonBattleState(root));
-        _battleStateMachine.AddState(new NoMoveState(root));
+       
     }
 
   
     public void OnDead()
     {
-
+        _battleStateMachine.AddState(new IdleSearchState(root));
+        _battleStateMachine.AddState(new NonBattleState(root));
+        _battleStateMachine.AddState(new NoMoveState(root));
+        IsDead = true;
     }
 
     private void OnTargetDisappeared()
@@ -133,9 +136,10 @@ public class Brain : MonoBehaviour {
     private void OnTargetReached()
     {
         _battleStateMachine.AddState(new StayInRangeState(root, target, Character, OnTargetOutOfRange));
-        IsDefending = false;
+      
         if (Character.Stamina > 10)
         {
+            IsDefending = false;
             _battleStateMachine.AddState(new AttackState(root, target, Character, OnTargetDisappeared, knifeAttack));
         }
     }
@@ -203,5 +207,11 @@ public class Brain : MonoBehaviour {
     public void OnFinishedMyAttack()
     {
         _battleStateMachine.AddState(new AttackState(root, target, Character, OnTargetDisappeared, knifeAttack));
+    }
+
+    public void StopAttackAnimation()
+    {
+        knifeAttack.SetBool("OnAttack", false);
+        _battleStateMachine.AddState(new BattleRestState(root));
     }
 }

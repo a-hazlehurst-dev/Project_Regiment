@@ -12,8 +12,8 @@ namespace Assets.Code.World
         public string Lastname { get; set; }
         public DateTime Dob { get; set; }
         public float Reach { get; set; }
-        public float Speed { get { return Mathf.CeilToInt(1 + Agility/3); } }
-        public float AttackSpeed { get { return Mathf.CeilToInt(1 + Agility/3); } }
+        public float Speed { get { return Mathf.CeilToInt(1); } }
+        public float AttackSpeed { get { return Mathf.CeilToInt(1); } }
 
 
 
