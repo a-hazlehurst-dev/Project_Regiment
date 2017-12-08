@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Code.World;
 using UnityEngine;
 
 namespace Assets.Code.StateMachine
@@ -11,23 +12,20 @@ namespace Assets.Code.StateMachine
     {
         private readonly GameObject _self;
         private  GameObject _target;
-        private float _speed;
+        private readonly BaseCharacter _character;
 
-  
         private FacingHelper _facingHelper;
         private Action OnTargetReached;
-        private readonly float _reach;
         public string Name { get { return "Move To"; } }
         public string StateType { get { return "move"; } }
         public string Who { get { return _self.gameObject.name; } }
 
-        public MoveToState(GameObject self, GameObject target, float speed, Action cbTargetReached, float reach )
+        public MoveToState(GameObject self, GameObject target, BaseCharacter character, Action cbTargetReached )
         {
             this._self = self;
             this._target = target;
-            _speed = speed;
+            _character = character;
             OnTargetReached += cbTargetReached;
-            this._reach = reach;
           
         }
 
@@ -39,11 +37,11 @@ namespace Assets.Code.StateMachine
 
         public void Execute()
         {
-            float step = _speed * Time.deltaTime;
+            float step = _character.Speed * Time.deltaTime;
 
             _self.transform.position =  Vector3.MoveTowards(_self.transform.position, _target.transform.position, step);
 
-            if (Vector3.Distance(_self.transform.position, _target.transform.position) <= _reach)
+            if (Vector3.Distance(_self.transform.position, _target.transform.position) <= _character.Reach)
             {
                 OnTargetReached();
             }

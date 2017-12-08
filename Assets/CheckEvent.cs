@@ -12,11 +12,11 @@ public class CheckEvent : MonoBehaviour
         var targetBrain =brain.target.GetComponentInChildren<Brain>();
        
         brain.Character.SetStamina(-5);
-        targetBrain.OnFinishedBeingAttacked();
-        brain.OnFinishedMyAttack();
-        targetBrain.OnHit(brain.Character.AttackPower);
+        //targetBrain.OnFinishedBeingAttacked();
+        //brain.OnFinishedMyAttack();
+        //targetBrain.OnHit(brain.Character.AttackPower);
 
-        brain.StopAttackAnimation();
+        //brain.StopAttackAnimation();
     }
     
 }

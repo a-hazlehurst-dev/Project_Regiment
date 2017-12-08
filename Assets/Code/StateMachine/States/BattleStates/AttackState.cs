@@ -43,7 +43,7 @@ namespace Assets.Code.StateMachine
         public void Execute()
         {
             _cooldownTaken -= Time.deltaTime;
-            _targetBrain.OnBeingAttacked();
+            //_targetBrain.OnBeingAttacked();
 
             if (_cooldownTaken > 0)
             {

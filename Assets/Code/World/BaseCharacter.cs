@@ -41,21 +41,17 @@ namespace Assets.Code.World
             }
             return false;
         }
-        public bool IsFleeing()
+
+        public bool IsEscaped { get; set; }
+
+
+        public bool IsActive()
         {
-            if(Morale<= 10)
+            if (IsDead() || IsEscaped)
             {
-                return true;
+                return false;
             }
-            return false;
-        }
-        public bool IsUnconsious()
-        {
-            if (HitPoints <= MaxHitPoints *.10)
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
 
         public void SetStamina(int i)

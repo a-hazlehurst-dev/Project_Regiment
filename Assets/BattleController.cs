@@ -9,7 +9,7 @@ public class BattleController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Characters = new List<GameObject>();
-       var tags =  GameObject.FindGameObjectsWithTag("Character");
+        var tags =  GameObject.FindGameObjectsWithTag("Character");
         Characters.AddRange(tags);
 
     }
@@ -28,13 +28,13 @@ public class BattleController : MonoBehaviour {
         }
 
        foreach(var item in remove)
-        {
+       {
             Characters.Remove(item);
-        }
+       }
 
        if(Characters.Count == 1)
         {
-            Characters.First().GetComponentInChildren<Brain>().OnVictory();
+            //Characters.First().GetComponentInChildren<Brain>().OnVictory();
         }
     }
 }
