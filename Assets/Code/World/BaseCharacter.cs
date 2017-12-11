@@ -15,13 +15,9 @@ namespace Assets.Code.World
         public float Speed { get { return Mathf.CeilToInt(1); } }
         public float AttackSpeed { get { return Mathf.CeilToInt(1); } }
 
-
-
-
         public float Strength { get; set; }
         public float Agility { get; set; }
         public float Endurance { get; set; }
-        
 
         public int HitPoints { get; set; }
         public int MaxHitPoints { get; set; }
@@ -30,6 +26,7 @@ namespace Assets.Code.World
 
         public int Stamina { get; set; }
         public int MaxStamina { get; set; }
+        public bool IsEscaped { get; set; }
 
         public int AttackPower {  get { return Mathf.CeilToInt(1 + Strength); } }
 
@@ -42,9 +39,6 @@ namespace Assets.Code.World
             return false;
         }
 
-        public bool IsEscaped { get; set; }
-
-
         public bool IsActive()
         {
             if (IsDead() || IsEscaped)
@@ -56,11 +50,17 @@ namespace Assets.Code.World
 
         public void SetStamina(int i)
         {
-            if (Stamina +i <= 0)
-            {
-                Stamina = 0;
-            }
             Stamina += i;
+        }
+
+        public void TakeDamage(int attackPower)
+        {
+            HitPoints -= attackPower;
+
+            if (HitPoints <= 0)
+            {
+                HitPoints = 0;
+            }
         }
     }
 }

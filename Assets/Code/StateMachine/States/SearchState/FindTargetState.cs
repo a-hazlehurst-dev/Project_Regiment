@@ -50,7 +50,7 @@ namespace Assets.Code.StateMachine
                         shouldremoveSelf = true;
                     }
 
-                    if (item.gameObject.GetComponentInChildren<Brain>().IsDead || item.gameObject.GetComponentInChildren<Brain>().HasEscaped)
+                    if (item.gameObject.GetComponentInChildren<Brain>().Character.IsDead() )
                     {
                         deadColliders.Add(item);
                     }

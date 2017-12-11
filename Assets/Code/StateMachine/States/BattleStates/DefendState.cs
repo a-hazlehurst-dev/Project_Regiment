@@ -32,16 +32,12 @@ namespace Assets.Code.StateMachine.States.BattleStates
 
         public void Execute()
         {
-            _self.GetComponentInChildren<Brain>().IsDefending = true;
             _myBrain.Character.SetStamina(-1);
         }
 
         public void Exit()
         {
-            _self.GetComponentInChildren<Brain>().IsDefending = false;
             _knifeDefend.SetBool("OnDefend", false);
         }
-
-     
     }
 }

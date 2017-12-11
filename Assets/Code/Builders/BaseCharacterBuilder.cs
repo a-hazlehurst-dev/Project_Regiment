@@ -25,6 +25,7 @@ namespace Assets.Code.Builders
             character.MaxHitPoints = 10 + Mathf.CeilToInt(UnityEngine.Random.Range(4, 4+character.Endurance) * 3);
             
             character.Stamina = character.MaxStamina;
+            Debug.Log("Stamina = " + character.Stamina);
             character.HitPoints = character.MaxHitPoints;
             if(rnd<1) { rnd += 1; }
             

@@ -15,13 +15,15 @@ namespace Assets.Code.StateMachine
         private Brain _myBrain;
         private float _cooldownTaken;
         private readonly Action _cbOnTargetDissapeared;
+        private readonly Action _onRest;
         private readonly Animator knifeAttack;
         
         
         public string StateType { get { return "battle"; } }
         public string Name { get { return "Attack"; } }
         public string Who { get { return _self.gameObject.name; } }
-        public AttackState(GameObject self, GameObject target, BaseCharacter character,Action cbOnTargetDissapeared, Animator knifeAttack)
+
+        public AttackState(GameObject self, GameObject target, BaseCharacter character,Action cbOnTargetDissapeared,Action OnRest, Animator knifeAttack)
         {
             _self = self;
             this._target = target;
@@ -31,6 +33,7 @@ namespace Assets.Code.StateMachine
             _cooldownTaken = character.AttackSpeed;
         
             _cbOnTargetDissapeared += cbOnTargetDissapeared;
+            _onRest += OnRest;
             this.knifeAttack = knifeAttack;
         }
 
@@ -43,7 +46,13 @@ namespace Assets.Code.StateMachine
         public void Execute()
         {
             _cooldownTaken -= Time.deltaTime;
-            //_targetBrain.OnBeingAttacked();
+           
+            if (_character.Stamina <= 10)
+            {
+                Debug.Log("Stamina (Attacking): " + _character.Stamina);
+                knifeAttack.SetBool("OnAttack", false);
+                _onRest();
+            }
 
             if (_cooldownTaken > 0)
             {
@@ -60,12 +69,17 @@ namespace Assets.Code.StateMachine
             {
                 return;
             }
+            if (_character.Stamina - 5 <0)
+            {
+                return;
+            }
 
             if (_targetBrain != null)
             {
+                
                 knifeAttack.SetBool("OnAttack", true);
 
-                if (_targetBrain.IsDead|| _targetBrain.HasEscaped)
+                if (_targetBrain.Character.IsDead())
                 {
                     _cbOnTargetDissapeared();
                 }
@@ -73,6 +87,8 @@ namespace Assets.Code.StateMachine
 
             
             _cooldownTaken = _character.AttackSpeed;
+
+           
             
         }
 

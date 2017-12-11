@@ -19,7 +19,6 @@ namespace Assets.Code.StateMachine.States.BattleStates
         }
         public void Enter()
         {
-            
         }
 
         public void Execute()
