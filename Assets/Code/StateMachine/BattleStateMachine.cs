@@ -28,7 +28,7 @@ namespace Assets.Code.StateMachine
             _activeStates.Add(newState.StateType, newState);
 
             _activeStates[newState.StateType].Enter();
-            Debug.Log(newState.Who + " " + GetActiveStates());
+          //  Debug.Log(newState.Who + " " + GetActiveStates());
         }
 
 

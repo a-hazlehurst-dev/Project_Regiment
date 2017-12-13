@@ -19,6 +19,7 @@ namespace Assets.Code.StateMachine
         public FindTargetState(GameObject self, Brain brain, float searchRadius, string layerMask, Action<GameObject> cbOnTargetFound)
         {
             this._self = self;
+           
             this._brain = brain;
             this._searchRadius = searchRadius;
             _layerMask = layerMask;
@@ -27,7 +28,6 @@ namespace Assets.Code.StateMachine
 
         public void Enter()
         {
-            Debug.Log(_self.gameObject.name + " is searching for " + _layerMask);
         }
 
         public void Execute()
@@ -49,8 +49,8 @@ namespace Assets.Code.StateMachine
                         myCollider = item;
                         shouldremoveSelf = true;
                     }
-
-                    if (item.gameObject.GetComponentInChildren<Brain>().Character.IsDead() )
+                    var itemBrain = item.gameObject.GetComponentInChildren<Brain>();
+                    if (itemBrain.Character.IsDead()|| itemBrain.TeamName == _brain.TeamName)
                     {
                         deadColliders.Add(item);
                     }

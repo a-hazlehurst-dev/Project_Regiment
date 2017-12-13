@@ -76,13 +76,16 @@ namespace Assets.Code.StateMachine
 
             if (_targetBrain != null)
             {
-                
-                knifeAttack.SetBool("OnAttack", true);
-
-                if (_targetBrain.Character.IsDead())
+                if (_targetBrain.Character.IsActive())
                 {
-                    _cbOnTargetDissapeared();
+                    knifeAttack.SetBool("OnAttack", true);
                 }
+                
+            }
+            else
+            {
+                knifeAttack.SetBool("OnAttack", false);
+                _cbOnTargetDissapeared();
             }
 
             

@@ -8,7 +8,7 @@ public class CheckEvent : MonoBehaviour
     public void OnAttackComplete()
     {
         var brain = self.GetComponentInChildren<Brain>();
-        if(brain != null)
+        if(brain != null && brain.target!=null)
         {
             var targetBrain = brain.target.GetComponentInChildren<Brain>();
 
@@ -16,11 +16,15 @@ public class CheckEvent : MonoBehaviour
             //targetBrain.OnFinishedBeingAttacked();
             targetBrain.OnHit(brain.Character.AttackPower);
 
-            if (targetBrain.Character.IsDead())
+            if (!targetBrain.Character.IsActive())
             {
                 brain.target = null;
             }
             brain.OnFinishedMyAttack();
+        }
+        else
+        {
+            brain.knifeAttack.SetBool("OnAttack", false);
         }
     }
     

@@ -1,40 +1,81 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-public class BattleController : MonoBehaviour {
-
-
-    public List<GameObject> Characters;
+using Assets;
+using UnityEngine;
+public class BattleController : MonoBehaviour
+{
+    public List<Team> Teams;
 	// Use this for initialization
-	void Start () {
-        Characters = new List<GameObject>();
-        var tags =  GameObject.FindGameObjectsWithTag("Character");
-        Characters.AddRange(tags);
-
-    }
-   
 	
 	// Update is called once per frame
-	void Update () {
-        var remove = new List<GameObject>();
-        foreach (var item in Characters)
+    private Action OnBattleComplete;
+
+	void Update ()
+	{
+
+	    SetupTeams();
+
+	    if (Teams.Count(x => x.IsActive) ==1)
+	    {
+	        //game over.
+	        var winner = Teams.SingleOrDefault(x => x.IsActive);
+            Debug.Log("Winning Team is: " + winner.Name);
+	        OnBattleComplete();
+	    }
+	}
+
+    public void Register_OnBattleComplete(Action battleComplete)
+    {
+        OnBattleComplete += battleComplete;
+    }
+    void SetupTeams()
+    {
+        if (Teams == null)
         {
-            var brain = item.GetComponentInChildren<Brain>();
-            if (brain.Character.IsDead() )
+            Teams = new List<Team>();
+
+            var brains = FindObjectsOfType<Brain>();
+            bool swap = false;
+            var teama = new Team {Name = "Team A"};
+            var teamb = new Team {Name = "Team B"};
+            float t = -3;
+            foreach (var brain in brains)
             {
-                remove.Add(item);
+                
+                var character = brain.Character;
+
+                if (swap)
+                {
+                    brain.root.transform.position= new Vector3(-5,t);
+                    teama.TeamMembers.Add(character);
+                    brain.TeamName = teama.Name;
+                    swap = false;
+                    continue;
+                    
+                }
+                else
+                {
+                    
+                    brain.root.transform.position = new Vector3(5, t);
+                    teamb.TeamMembers.Add(character);
+                    brain.TeamName = teamb.Name;
+                    swap = true;
+                }
+
+                t += 1.5f;
             }
-        }
+            Teams.Add(teama);
+            Teams.Add(teamb);
 
-       foreach(var item in remove)
-       {
-            Characters.Remove(item);
-       }
-
-       if(Characters.Count == 1)
-        {
-            //Characters.First().GetComponentInChildren<Brain>().OnVictory();
+            foreach (var team in Teams)
+            {
+                Debug.Log(team.Name);
+                foreach (var member in team.TeamMembers)
+                {
+                    Debug.Log(member.Name);
+                }
+            }
         }
     }
 }

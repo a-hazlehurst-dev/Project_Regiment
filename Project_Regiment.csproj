@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -187,13 +189,13 @@
     <Compile Include="Assets\OnWeaponHitMeTrigger.cs" />
     <Compile Include="Assets\Sight.cs" />
     <Compile Include="Assets\Sound.cs" />
+    <Compile Include="Assets\Team.cs" />
     <Compile Include="Assets\WeaponContact.cs" />
     <Compile Include="Assets\pnlSelectionManagerScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\Documentation\JazzCreateAltKeys_BubbleFont.txt" />
     <None Include="Assets\Fonts\Documentation\JazzCreateBubble_VersionHistory_1.1.txt" />
-    <None Include="Assets\Graphics\Shaders\Blur.shader" />
     <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
     <None Include="Assets\StreamingAssets\Data\Jobs.xml" />
     <None Include="Assets\StreamingAssets\Data\Recipes.xml" />

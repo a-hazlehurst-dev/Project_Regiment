@@ -10,10 +10,12 @@ namespace Assets.Code.Builders
     public class BaseCharacterBuilder
     {
 
-        public BaseCharacter Build()
+        public BaseCharacter Build(string name)
         {
 
             var character = new BaseCharacter { Reach = UnityEngine.Random.value*2  };
+            character.Name = name;  
+                
             character.Endurance = UnityEngine.Random.Range(2, 8);
             character.Strength = UnityEngine.Random.Range(2, 8);
             character.Agility = UnityEngine.Random.Range(2, 8);

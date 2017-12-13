@@ -339,7 +339,6 @@
   <ItemGroup>
     <None Include="Assets\Fonts\Documentation\JazzCreateAltKeys_BubbleFont.txt" />
     <None Include="Assets\Fonts\Documentation\JazzCreateBubble_VersionHistory_1.1.txt" />
-    <None Include="Assets\Graphics\Shaders\Blur.shader" />
     <None Include="Assets\StreamingAssets\Data\Furniture.xml" />
     <None Include="Assets\StreamingAssets\Data\Jobs.xml" />
     <None Include="Assets\StreamingAssets\Data\Recipes.xml" />

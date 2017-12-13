@@ -16,6 +16,8 @@ public class Brain : MonoBehaviour {
     private BaseCharacterBuilder _characterBuilder;
     public CharacterCanvasView MyCanvas;
     public BaseCharacter Character { get; set; }
+    public string TeamName { get; set; }
+
     public GameObject root;
     public Rigidbody2D rigidBody;
     public GameObject target;
@@ -23,26 +25,38 @@ public class Brain : MonoBehaviour {
     public Animator knifeAttack;
     private string facing = "oblivion";
     public string baseName = "";
-
+    public BattleController battleController;
   
     public float speed;
 
 
     void Start()
     {
+        battleController.Register_OnBattleComplete(OnBattleComplete);
         baseName = root.gameObject.name;
         _battleStateMachine = new BattleStateMachine();
         _characterBuilder = new BaseCharacterBuilder();
         _facingHelper = new FacingHelper(ref facing);
 
-        Character = _characterBuilder.Build();
+        Character = _characterBuilder.Build(root.name);
         _battleStateMachine.AddState(new FindTargetState(root, this, 10, "Battle", OnNewTargetFound));
         _battleStateMachine.AddState(new NonBattleState(root));
         _battleStateMachine.AddState(new NoMoveState(root));
     }
 
+    public void OnBattleComplete()
+    {
+        _battleStateMachine.AddState(new NonBattleState(root));
+        _battleStateMachine.AddState(new NoMoveState(root));
+        if (Character.IsActive())
+        {
+            _battleStateMachine.AddState(new CelebrationState(root));
+        }
+    }
+
     void Update()
     {
+        
         _battleStateMachine.ExecuteUpdate();
 
         if (!Character.IsActive())
@@ -79,6 +93,9 @@ public class Brain : MonoBehaviour {
     public void OnRest()
     {
         _battleStateMachine.AddState(new BattleRestState(root, OnRested));
+
+        //maybe go into an evasion state. if enemy in range, move to random nearby location,
+        //or go in to defensive mode, which reduces energy recouperation, but also reduces damage.
     }
 
     public void OnRested()
