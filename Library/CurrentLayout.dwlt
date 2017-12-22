@@ -13,10 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 3848
     y: 57
     width: 1904
     height: 1095
+=======
+    x: 0
+    y: 43
+    width: 1920
+    height: 1037
+>>>>>>> origin/BattleEngine_v1
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
@@ -41,8 +48,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1904
     height: 1095
+=======
+    width: 1920
+    height: 1037
+>>>>>>> origin/BattleEngine_v1
   m_MinSize: {x: 950, y: 471}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
@@ -61,7 +73,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1904
+    width: 1920
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -81,8 +93,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 1075
-    width: 1904
+    y: 1017
+    width: 1920
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -104,12 +116,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
+<<<<<<< HEAD
     width: 1904
     height: 1045
   m_MinSize: {x: 583, y: 421}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
   controlID: 2527
+=======
+    width: 1920
+    height: 987
+  m_MinSize: {x: 681, y: 421}
+  m_MaxSize: {x: 12006, y: 8021}
+  vertical: 0
+  controlID: 2482
+>>>>>>> origin/BattleEngine_v1
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -128,12 +149,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1488
     height: 1045
   m_MinSize: {x: 306, y: 421}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
   controlID: 2528
+=======
+    width: 1501
+    height: 987
+  m_MinSize: {x: 404, y: 421}
+  m_MaxSize: {x: 8004, y: 8021}
+  vertical: 1
+  controlID: 2483
+>>>>>>> origin/BattleEngine_v1
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -152,12 +182,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1488
     height: 635
   m_MinSize: {x: 302, y: 200}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
   controlID: 2529
+=======
+    width: 1501
+    height: 600
+  m_MinSize: {x: 404, y: 221}
+  m_MaxSize: {x: 8004, y: 4021}
+  vertical: 0
+  controlID: 2484
+>>>>>>> origin/BattleEngine_v1
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -174,11 +213,19 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 856
     height: 635
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 17}
+=======
+    width: 863
+    height: 600
+  m_MinSize: {x: 202, y: 224}
+  m_MaxSize: {x: 4002, y: 4024}
+  m_ActualView: {fileID: 12}
+>>>>>>> origin/BattleEngine_v1
   m_Panes:
   - {fileID: 15}
   - {fileID: 16}
@@ -200,13 +247,21 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 856
+    x: 863
     y: 0
+<<<<<<< HEAD
     width: 632
     height: 635
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
+=======
+    width: 638
+    height: 600
+  m_MinSize: {x: 204, y: 224}
+  m_MaxSize: {x: 4004, y: 4024}
+  m_ActualView: {fileID: 16}
+>>>>>>> origin/BattleEngine_v1
   m_Panes:
   - {fileID: 18}
   m_Selected: 0
@@ -228,6 +283,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 635
     width: 1488
     height: 410
@@ -254,10 +310,17 @@ MonoBehaviour:
     width: 992
     height: 410
   m_MinSize: {x: 102, y: 121}
+=======
+    y: 600
+    width: 1501
+    height: 387
+  m_MinSize: {x: 202, y: 221}
+>>>>>>> origin/BattleEngine_v1
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 19}
+<<<<<<< HEAD
   - {fileID: 20}
   m_Selected: 1
   m_LastSelected: 0
@@ -287,6 +350,11 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
+=======
+  m_Selected: 2
+  m_LastSelected: 0
+--- !u!114 &11
+>>>>>>> origin/BattleEngine_v1
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_PrefabParentObject: {fileID: 0}
@@ -300,13 +368,21 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1488
+    x: 1501
     y: 0
+<<<<<<< HEAD
     width: 416
     height: 1045
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 22}
+=======
+    width: 419
+    height: 987
+  m_MinSize: {x: 277, y: 74}
+  m_MaxSize: {x: 4002, y: 4024}
+  m_ActualView: {fileID: 20}
+>>>>>>> origin/BattleEngine_v1
   m_Panes:
   - {fileID: 22}
   m_Selected: 0
@@ -333,11 +409,19 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 3848
     y: 106
     width: 854
     height: 614
   m_MaximizeOnPlay: 0
+=======
+    x: 0
+    y: 92
+    width: 861
+    height: 579
+  m_MaximizeOnPlay: 1
+>>>>>>> origin/BattleEngine_v1
   m_Gizmos: 0
   m_Stats: 0
   m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -345,10 +429,10 @@ MonoBehaviour:
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
-    m_HBaseRangeMin: -427
-    m_HBaseRangeMax: 427
-    m_VBaseRangeMin: -298.5
-    m_VBaseRangeMax: 298.5
+    m_HBaseRangeMin: -430.5
+    m_HBaseRangeMax: 430.5
+    m_VBaseRangeMin: -281
+    m_VBaseRangeMax: 281
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -365,25 +449,25 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 17
-      width: 854
-      height: 597
+      width: 861
+      height: 562
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 427, y: 298.5}
+    m_Translation: {x: 430.5, y: 281}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -427
-      y: -298.5
-      width: 854
-      height: 597
+      x: -430.5
+      y: -281
+      width: 861
+      height: 562
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
-  m_LastWindowPixelSize: {x: 854, y: 614}
+  m_LastWindowPixelSize: {x: 861, y: 579}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000100000100
@@ -512,19 +596,26 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 4706
     y: 106
     width: 628
     height: 614
+=======
+    x: 865
+    y: 92
+    width: 634
+    height: 579
+>>>>>>> origin/BattleEngine_v1
   m_SceneLighting: 1
-  lastFramingTime: 4920.1637141763385
+  lastFramingTime: 300.99860108420916
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.06569004, y: 0.36112213, z: -0.17363739}
+    m_Target: {x: 430.5, y: 281, z: 0}
     speed: 2
-    m_Value: {x: -0.06569004, y: 0.36112213, z: -0.17363739}
+    m_Value: {x: 430.5, y: 281, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -551,9 +642,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.12588832, y: -0.036600932, z: 0.004647737, w: -0.9913581}
   m_Size:
-    m_Target: 9.419583
+    m_Target: 661.79395
     speed: 2
-    m_Value: 9.419583
+    m_Value: 661.79395
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -586,10 +677,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 3848
     y: 741
     width: 990
     height: 389
+=======
+    x: 0
+    y: 692
+    width: 1499
+    height: 366
+>>>>>>> origin/BattleEngine_v1
   m_SearchFilter:
     m_NameFilter: 
     m_ClassNames: []
@@ -601,19 +699,34 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
+<<<<<<< HEAD
     - Assets/Code/StateMachine/States/BattleStates
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
   - Assets/Code/StateMachine/States/BattleStates
+=======
+    - Assets/Resources/Images/Panels
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets/Resources/Images/Panels
+>>>>>>> origin/BattleEngine_v1
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\dev\other\Project_Regiment
+  m_LastProjectPath: D:\Dev\Unity\projects\Project_Regiment
   m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 111}
     m_SelectedIDs: 52280000
     m_LastClickedID: 10322
     m_ExpandedIDs: 00000000a8270000ee2700006c280000722800005a2900005e290000a0290000a8290000922a00000a2c000000ca9a3bffffff7f
+=======
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: b22f0000
+    m_LastClickedID: 12210
+    m_ExpandedIDs: 00000000a8270000ee270000742800005a290000a2290000aa290000942a0000a62f0000ffffff7f
+>>>>>>> origin/BattleEngine_v1
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -641,7 +754,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000a8270000ee2700006c280000722800005a2900005e290000a0290000a8290000922a00000a2c000000ca9a3bffffff7f
+=======
+    m_ExpandedIDs: 00000000a8270000ee270000742800005a290000a2290000aa290000942a0000a62f0000ffffff7f
+>>>>>>> origin/BattleEngine_v1
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -666,10 +783,17 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
+<<<<<<< HEAD
     m_SelectedInstanceIDs: 0a280000
     m_LastClickedInstanceID: 10250
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 8e29000030280000
+=======
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: 
+>>>>>>> origin/BattleEngine_v1
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -685,7 +809,11 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
+<<<<<<< HEAD
       m_ClientGUIView: {fileID: 11}
+=======
+      m_ClientGUIView: {fileID: 10}
+>>>>>>> origin/BattleEngine_v1
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -718,11 +846,19 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 3848
     y: 741
     width: 990
     height: 389
 --- !u!114 &21
+=======
+    x: 0
+    y: 692
+    width: 1499
+    height: 366
+--- !u!114 &19
+>>>>>>> origin/BattleEngine_v1
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_PrefabParentObject: {fileID: 0}
@@ -744,6 +880,7 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 4842
     y: 741
     width: 492
@@ -753,6 +890,17 @@ MonoBehaviour:
     m_SelectedIDs: 0a280000
     m_LastClickedID: 0
     m_ExpandedIDs: cc96ffffd296ffff049effff0a9effff5eb3ffff64b3ffffb4eeffffb6eeffffe4fbffff00000000
+=======
+    x: 0
+    y: 692
+    width: 1499
+    height: 366
+  m_TreeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 24d0ffff
+    m_LastClickedID: -12252
+    m_ExpandedIDs: a2f0ffff76f4ffffe4fbffff00000000b62b00008a2d00001c2e0000
+>>>>>>> origin/BattleEngine_v1
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -797,10 +945,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 5338
     y: 106
     width: 414
     height: 1024
+=======
+    x: 1503
+    y: 92
+    width: 417
+    height: 966
+>>>>>>> origin/BattleEngine_v1
   m_ScrollPosition: {x: 0, y: 0}
   m_InspectorMode: 0
   m_PreviewResizer:
