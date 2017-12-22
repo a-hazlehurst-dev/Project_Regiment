@@ -1,13 +1,11 @@
-﻿
-using System;
-using System.Security.Policy;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Code.World
 {
     public class BaseCharacter
     {
-
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Lastname { get; set; }
         public DateTime Dob { get; set; }

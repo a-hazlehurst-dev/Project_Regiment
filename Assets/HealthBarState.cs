@@ -7,12 +7,7 @@ public class HealthBarState : MonoBehaviour
     public Slider healthBar;
     public Slider staminaBar;
     public Brain Brain;
-
-    void Start() {
-    
-    }
 	
-	// Update is called once per frame
 	void Update () {
 
 	    staminaBar.maxValue = Brain.Character.MaxStamina;
@@ -21,7 +16,6 @@ public class HealthBarState : MonoBehaviour
         CalculateHealth();
 	    CalculateStamina();
 	}
-
     private void CalculateStamina()
     {
         if (Mathf.CeilToInt(staminaBar.value) == Brain.Character.Stamina)

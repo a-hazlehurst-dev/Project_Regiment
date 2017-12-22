@@ -87,12 +87,7 @@ namespace Assets.Code.StateMachine
                 knifeAttack.SetBool("OnAttack", false);
                 _cbOnTargetDissapeared();
             }
-
-            
             _cooldownTaken = _character.AttackSpeed;
-
-           
-            
         }
 
         public void Exit()

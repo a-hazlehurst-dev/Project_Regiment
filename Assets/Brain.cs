@@ -1,14 +1,12 @@
 ﻿using Assets.Code.StateMachine;
 using Assets.Code.World;
 using Assets.Code.Builders;
-using Assets.Code.StateMachine.States;
 using UnityEngine;
 using Assets.Code.Services.Helper;
 using Assets.Code.StateMachine.States.BattleStates;
 using Assets.Code.StateMachine.States.MovementState;
 using Assets.Code.StateMachine.States.SearchState;
 using Assets.Code.StateMachine.States.Other;
-using System;
 
 public class Brain : MonoBehaviour {
 
@@ -32,16 +30,23 @@ public class Brain : MonoBehaviour {
 
     void Start()
     {
-        battleController.Register_OnBattleComplete(OnBattleComplete);
+        
+
+        
         baseName = root.gameObject.name;
         _battleStateMachine = new BattleStateMachine();
-        _characterBuilder = new BaseCharacterBuilder();
+       
         _facingHelper = new FacingHelper(ref facing);
-
-        Character = _characterBuilder.Build(root.name);
         _battleStateMachine.AddState(new FindTargetState(root, this, 10, "Battle", OnNewTargetFound));
         _battleStateMachine.AddState(new NonBattleState(root));
         _battleStateMachine.AddState(new NoMoveState(root));
+    }
+
+    public void Create(string teamName)
+    {
+        _characterBuilder = new BaseCharacterBuilder();
+        this.TeamName = teamName;
+        Character = _characterBuilder.Build(root.name);
     }
 
     public void OnBattleComplete()

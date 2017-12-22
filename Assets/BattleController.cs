@@ -2,80 +2,143 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 public class BattleController : MonoBehaviour
 {
     public List<Team> Teams;
-	// Use this for initialization
-	
-	// Update is called once per frame
+    public GameObject go_character;
+    private TeamCreator _teamCreator;
     private Action OnBattleComplete;
+
+    void Start()
+    {
+        _teamCreator = new TeamCreator();
+    }
 
 	void Update ()
 	{
-
 	    SetupTeams();
 
-	    if (Teams.Count(x => x.IsActive) ==1)
-	    {
-	        //game over.
-	        var winner = Teams.SingleOrDefault(x => x.IsActive);
-            Debug.Log("Winning Team is: " + winner.Name);
-	        OnBattleComplete();
-	    }
+	    CheckBattleCompleted();
 	}
+
+    public void CheckBattleCompleted()
+    {
+        if (Teams.Count(x => x.IsActive) == 1)
+        {
+            //game over.
+            var winner = Teams.SingleOrDefault(x => x.IsActive);
+            Debug.Log("Winning Team is: " + winner.Name);
+            OnBattleComplete();
+        }
+    }
 
     public void Register_OnBattleComplete(Action battleComplete)
     {
         OnBattleComplete += battleComplete;
     }
-    void SetupTeams()
+
+    private void SetupTeams()
     {
-        if (Teams == null)
+        if (Teams != null) return;
+
+        Teams = new List<Team>();
+
+        CreateTeams(2);
+    }
+
+    private void CreateTeams(int count)
+    {
+        if (!_teamCreator.IsRequestedTeamCountValid(count))
         {
-            Teams = new List<Team>();
+            return;
+        }
 
-            var brains = FindObjectsOfType<Brain>();
-            bool swap = false;
-            var teama = new Team {Name = "Team A"};
-            var teamb = new Team {Name = "Team B"};
-            float t = -3;
-            foreach (var brain in brains)
+        Teams = _teamCreator.CreateTeams(count);
+
+        _teamCreator.AssignPlayersTeams(Teams, go_character);
+    }
+}
+
+public class TeamCreator: MonoBehaviour
+{
+    private Dictionary<string,Color> colours;
+    private int teamMemberCount = 4;
+
+    public TeamCreator()
+    {
+        colours = new Dictionary<string, Color>
+        {
+            {"yellow", Color.yellow},
+            {"green", Color.green},
+            {"cyan", Color.cyan},
+            {"gray", Color.gray},
+            {"blue", Color.blue}
+        };
+    }
+    public bool IsRequestedTeamCountValid(int count)
+    {
+        if (count > 1 && count <= 4) return true;
+
+        Debug.Log("Wrong number of teams");
+
+        return false;
+    }
+
+    public List<Team> CreateTeams(int count)
+    {
+        var teams = new List<Team>();
+        do
+        {
+            var color = colours.ElementAt(UnityEngine.Random.Range(0, colours.Count));
+
+            var team = new Team { Name = "Team: " + teams.Count+1, TeamColor = color.Value};
+
+            teams.Add(team);
+
+            colours.Remove(color.Key);
+
+        } while (teams.Count != count);
+
+        return teams;
+    }
+
+    public void AssignPlayersTeams(List<Team> teams, GameObject go)
+    {
+        int xPos = 5;
+        int zPos = 2;
+        
+        foreach (var team in teams)
+        {
+
+            for (var x = 0; x < teamMemberCount; x++)
             {
-                
-                var character = brain.Character;
 
-                if (swap)
+                var go_instance = Instantiate(go);
+
+                go_instance.name = team.Name + "-" + x;
+
+                var brain = go_instance.GetComponentInChildren<Brain>();
+
+                brain.Create(team.Name);
+                go_instance.transform.localPosition = new Vector3(xPos,zPos,0);
+
+                var spr = go_instance.GetComponentsInChildren<SpriteRenderer>();
+
+                foreach (var sr in spr)
                 {
-                    brain.root.transform.position= new Vector3(-5,t);
-                    teama.TeamMembers.Add(character);
-                    brain.TeamName = teama.Name;
-                    swap = false;
-                    continue;
-                    
-                }
-                else
-                {
-                    
-                    brain.root.transform.position = new Vector3(5, t);
-                    teamb.TeamMembers.Add(character);
-                    brain.TeamName = teamb.Name;
-                    swap = true;
+                    if (sr.name == "Body")
+                    {
+                        sr.color = team.TeamColor;
+                    }
                 }
 
-                t += 1.5f;
+                team.AddCharacter(go_instance);
+                zPos -= 1;
             }
-            Teams.Add(teama);
-            Teams.Add(teamb);
-
-            foreach (var team in Teams)
-            {
-                Debug.Log(team.Name);
-                foreach (var member in team.TeamMembers)
-                {
-                    Debug.Log(member.Name);
-                }
-            }
+             xPos = -5;
+            zPos = 2;
         }
     }
 }
