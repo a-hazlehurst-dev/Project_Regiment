@@ -26,8 +26,6 @@ public class Brain : MonoBehaviour {
     public BattleController battleController;
   
     public float speed;
-
-
     void Start()
     {
         
@@ -41,24 +39,6 @@ public class Brain : MonoBehaviour {
         _battleStateMachine.AddState(new NonBattleState(root));
         _battleStateMachine.AddState(new NoMoveState(root));
     }
-
-    public void Create(string teamName)
-    {
-        _characterBuilder = new BaseCharacterBuilder();
-        this.TeamName = teamName;
-        Character = _characterBuilder.Build(root.name);
-    }
-
-    public void OnBattleComplete()
-    {
-        _battleStateMachine.AddState(new NonBattleState(root));
-        _battleStateMachine.AddState(new NoMoveState(root));
-        if (Character.IsActive())
-        {
-            _battleStateMachine.AddState(new CelebrationState(root));
-        }
-    }
-
     void Update()
     {
         
@@ -79,13 +59,32 @@ public class Brain : MonoBehaviour {
 
         _facingHelper.SetFacing(root, target, "loop");
     }
+    public void Create(string teamName)
+    {
+        _characterBuilder = new BaseCharacterBuilder();
+        this.TeamName = teamName;
+        Character = _characterBuilder.Build(root.name);
+    }
 
+    #region GameState
+    public void OnBattleComplete()
+    {
+        _battleStateMachine.AddState(new NonBattleState(root));
+        _battleStateMachine.AddState(new NoMoveState(root));
+        if (Character.IsActive())
+        {
+            _battleStateMachine.AddState(new CelebrationState(root));
+        }
+    }
+
+    #endregion
+
+    #region StateChanges
     public void TargetInRange()
     {
         _battleStateMachine.AddState(new StayInRangeState(root,target, Character, OnOutOfRange));
         _battleStateMachine.AddState(new AttackState(root, target, Character, Dissapeared,OnRest, knifeAttack));
     }
-
     public void OnOutOfRange(GameObject go)
     {
         _battleStateMachine.AddState(new MoveToState(root, target, Character, TargetInRange));
@@ -94,15 +93,14 @@ public class Brain : MonoBehaviour {
     {
 
     }
-
     public void OnRest()
     {
-        _battleStateMachine.AddState(new BattleRestState(root, OnRested));
+        Character.AttackStaminaRequired = Character.MaxStamina / 2;
+        _battleStateMachine.AddState(new BattleRestState(root,Character.AttackStaminaRequired, OnRested));
 
         //maybe go into an evasion state. if enemy in range, move to random nearby location,
         //or go in to defensive mode, which reduces energy recouperation, but also reduces damage.
     }
-
     public void OnRested()
     {
         _battleStateMachine.AddState(new AttackState(root, target, Character, Dissapeared, OnRest, knifeAttack));
@@ -116,7 +114,6 @@ public class Brain : MonoBehaviour {
             _battleStateMachine.AddState(new MoveToState(root, target, Character, TargetInRange));
         }
     }
-
     public void OnFinishedMyAttack()
     {
         if (target != null && !target.GetComponentInChildren<Brain>().Character.IsDead())
@@ -124,7 +121,6 @@ public class Brain : MonoBehaviour {
             _battleStateMachine.AddState(new AttackState(root, target, Character, Dissapeared, OnRest, knifeAttack));
         }
     }
-
     public void OnHit(int attackPower)
     {
         Character.TakeDamage(attackPower);
@@ -138,9 +134,10 @@ public class Brain : MonoBehaviour {
         }
 
     }
-
     public void OnDead()
     {
 
     }
+
+    #endregion
 }

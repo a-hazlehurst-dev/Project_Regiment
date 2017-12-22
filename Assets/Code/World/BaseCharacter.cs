@@ -26,6 +26,7 @@ namespace Assets.Code.World
         public int MaxStamina { get; set; }
         public bool IsEscaped { get; set; }
 
+        public int AttackStaminaRequired { get; set; }
         public int AttackPower {  get { return Mathf.CeilToInt(1 + Strength); } }
 
         public bool IsDead()

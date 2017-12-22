@@ -64,7 +64,7 @@ public class BattleController : MonoBehaviour
 public class TeamCreator: MonoBehaviour
 {
     private Dictionary<string,Color> colours;
-    private int teamMemberCount = 4;
+    private int teamMemberCount = 1;
 
     public TeamCreator()
     {
@@ -106,9 +106,9 @@ public class TeamCreator: MonoBehaviour
 
     public void AssignPlayersTeams(List<Team> teams, GameObject go)
     {
-        int xPos = 5;
-        int zPos = 2;
-        
+        var xPos = 5;
+        var zPos = 2;
+
         foreach (var team in teams)
         {
 
@@ -122,7 +122,7 @@ public class TeamCreator: MonoBehaviour
                 var brain = go_instance.GetComponentInChildren<Brain>();
 
                 brain.Create(team.Name);
-                go_instance.transform.localPosition = new Vector3(xPos,zPos,0);
+                go_instance.transform.localPosition = new Vector3(xPos, zPos, 0);
 
                 var spr = go_instance.GetComponentsInChildren<SpriteRenderer>();
 

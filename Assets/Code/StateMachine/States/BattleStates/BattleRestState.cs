@@ -13,10 +13,12 @@ namespace Assets.Code.StateMachine.States.BattleStates
         private readonly Brain _myBrain;
         private float restingCooldown;
         private float count;
-        public BattleRestState(GameObject self, Action onRestCompleted)
+        private int _restUntil;
+        public BattleRestState(GameObject self, int restUntil, Action onRestCompleted)
         {
             this._self = self;
             this._onRestCompleted += onRestCompleted;
+            this._restUntil = restUntil;
             _myBrain = _self.GetComponentInChildren<Brain>();
            
         }
@@ -32,9 +34,8 @@ namespace Assets.Code.StateMachine.States.BattleStates
             count -= Time.deltaTime;
            // Debug.Log(_self.name + " cooldown: " + count + " Stamina: "+ _myBrain.Character.Stamina + "("+ _myBrain.Character.MaxStamina+")");
 
-            if (_myBrain.Character.Stamina >= _myBrain.Character.MaxStamina)
+            if (_myBrain.Character.Stamina >= _myBrain.Character.MaxStamina || _myBrain.Character.Stamina >= _restUntil)
             {
-                _myBrain.Character.Stamina = _myBrain.Character.MaxStamina;
                 _onRestCompleted();
                 return;
             }
