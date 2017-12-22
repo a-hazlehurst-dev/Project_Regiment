@@ -32,7 +32,6 @@ namespace Assets.Code.StateMachine.States.BattleStates
         {
            
             count -= Time.deltaTime;
-           // Debug.Log(_self.name + " cooldown: " + count + " Stamina: "+ _myBrain.Character.Stamina + "("+ _myBrain.Character.MaxStamina+")");
 
             if (_myBrain.Character.Stamina >= _myBrain.Character.MaxStamina || _myBrain.Character.Stamina >= _restUntil)
             {

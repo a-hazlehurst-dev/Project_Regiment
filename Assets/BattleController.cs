@@ -64,7 +64,7 @@ public class BattleController : MonoBehaviour
 public class TeamCreator: MonoBehaviour
 {
     private Dictionary<string,Color> colours;
-    private int teamMemberCount = 1;
+    private int teamMemberCount = 10;
 
     public TeamCreator()
     {
@@ -93,7 +93,7 @@ public class TeamCreator: MonoBehaviour
         {
             var color = colours.ElementAt(UnityEngine.Random.Range(0, colours.Count));
 
-            var team = new Team { Name = "Team: " + teams.Count+1, TeamColor = color.Value};
+            var team = new Team { Name = "Team: " +color.Key, TeamColor = color.Value};
 
             teams.Add(team);
 
@@ -107,14 +107,12 @@ public class TeamCreator: MonoBehaviour
     public void AssignPlayersTeams(List<Team> teams, GameObject go)
     {
         var xPos = 5;
-        var zPos = 2;
+        var zPos = 5;
 
         foreach (var team in teams)
         {
-
             for (var x = 0; x < teamMemberCount; x++)
             {
-
                 var go_instance = Instantiate(go);
 
                 go_instance.name = team.Name + "-" + x;
@@ -138,7 +136,7 @@ public class TeamCreator: MonoBehaviour
                 zPos -= 1;
             }
              xPos = -5;
-            zPos = 2;
+            zPos = 5;
         }
     }
 }

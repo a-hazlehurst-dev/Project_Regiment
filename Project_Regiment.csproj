@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -87,7 +89,12 @@
     <Compile Include="Assets\BattleController.cs" />
     <Compile Include="Assets\Brain.cs" />
     <Compile Include="Assets\CharacterCanvasView.cs" />
-    <Compile Include="Assets\CheckEvent.cs" />
+    <Compile Include="Assets\AnimationEvent\AttackCompleteEvent.cs" />
+    <Compile Include="Assets\CodeV2\Item\IItem.cs" />
+    <Compile Include="Assets\CodeV2\Item\ItemFurnance.cs" />
+    <Compile Include="Assets\CodeV2\States\ItemOffState.cs" />
+    <Compile Include="Assets\CodeV2\Item\ItemStateMachine.cs" />
+    <Compile Include="Assets\CodeV2\States\ItemOnState.cs" />
     <Compile Include="Assets\Code\Actions\FurnitureActions.cs" />
     <Compile Include="Assets\Code\Builders\BaseCharacterBuilder.cs" />
     <Compile Include="Assets\Code\Builders\CharacterBuilder.cs" />
@@ -184,11 +191,7 @@
     <Compile Include="Assets\MainGameMenu.cs" />
     <Compile Include="Assets\MessageListControl.cs" />
     <Compile Include="Assets\MessageModel.cs" />
-    <Compile Include="Assets\OnWeaponHitMeTrigger.cs" />
-    <Compile Include="Assets\Sight.cs" />
-    <Compile Include="Assets\Sound.cs" />
     <Compile Include="Assets\Team.cs" />
-    <Compile Include="Assets\WeaponContact.cs" />
     <Compile Include="Assets\pnlSelectionManagerScript.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +201,7 @@
     <None Include="Assets\StreamingAssets\Data\Jobs.xml" />
     <None Include="Assets\StreamingAssets\Data\Recipes.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

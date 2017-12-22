@@ -10,6 +10,14 @@ public class HealthBarState : MonoBehaviour
 	
 	void Update () {
 
+	    if (!Brain.Character.IsActive())
+	    {
+	        staminaBar.gameObject.SetActive(false);
+	        healthBar.gameObject.SetActive(false);
+
+	        return;
+	    }
+
 	    staminaBar.maxValue = Brain.Character.MaxStamina;
 	    healthBar.maxValue = Brain.Character.MaxHitPoints;
 

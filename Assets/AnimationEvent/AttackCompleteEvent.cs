@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class CheckEvent : MonoBehaviour
+public class AttackCompleteEvent : MonoBehaviour
 {
     public GameObject self;
 	// Use this for initialization
@@ -13,7 +13,7 @@ public class CheckEvent : MonoBehaviour
             var targetBrain = brain.target.GetComponentInChildren<Brain>();
 
             brain.Character.SetStamina(-5);
-            //targetBrain.OnFinishedBeingAttacked();
+            
             targetBrain.OnHit(brain.Character.AttackPower);
 
             if (!targetBrain.Character.IsActive())
